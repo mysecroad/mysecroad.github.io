@@ -266,6 +266,26 @@
 </footer>
 
     </div>
+	<div class="search">
+  <input type="text" autocomplete="off" name="search" placeholder="搜索" id="local-search-input">
+  <div id="local-search-result"></div>
+</div>
+
+var inputArea = document.querySelector("#local-search-input");
+if (inputArea) {
+    inputArea.onclick = function() {
+        inputArea.placeholder = '首次搜索，需载入索引文件，请稍候';
+
+        getSearchFile();
+        this.onclick = null
+    }
+    inputArea.onkeydown = function() { if (event.keyCode == 13) return false }
+}
+
+var getSearchFile = function() {
+    var path = "/search.xml";
+    searchFunc(path, 'local-search-input', 'local-search-result');
+}
     <!-- styles -->
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
