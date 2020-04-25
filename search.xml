@@ -148,7 +148,7 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> mysecroad.github.io</span><br><span class="line">$ npm install</span><br><span class="line">$ npm install hexo-asset-image --save <span class="comment"># 图片管理</span></span><br><span class="line">$ npm install hexo-generator-feed --save <span class="comment"># RSS订阅</span></span><br><span class="line">$ npm install hexo-generator-sitemap --save <span class="comment"># 生成 sitemap.xml</span></span><br><span class="line">$ npm install hexo-deployer-git --save <span class="comment"># Git部署</span></span><br><span class="line">$ npm install hexo-generator-search --save <span class="comment"># 站内搜索</span></span><br></pre></td></tr></table></figure>
 
 <p>按前面的步骤配置好 Git 用户信息和在 Github 上加入 SSH key 后新电脑的环境就搭建好了，就可以写博客了。</p>
-<p><img src="/posts/28047/../../hexo-blog/source/_posts/Sqli-labs%E5%AD%A6%E4%B9%A0/3644661396.png" alt></p>
+<p><img src="http://39.97.251.161/usr/uploads/2020/04/3644661396.png" alt></p>
 ]]></content>
       <categories>
         <category>hexo</category>
