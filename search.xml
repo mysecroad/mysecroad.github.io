@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>日志</title>
-    <url>/posts/32353.html</url>
-    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <div class="hbe-input-container">
-  <input type="password" id="hbePass" placeholder="" />
-    <label for="hbePass">输入密码，查看文章！</label>
-    <div class="bottom-line"></div>
-  </div>
-  <script id="hbeData" type="hbeData" data-hmacdigest="f4f25515922814b31789af777e8cc081f949bd50de753aaf64e1e2b4b1866cac">8de2c04a2d70dba63f65a56a98175f4a</script>
-</div>
-<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
-  </entry>
-  <entry>
     <title>Hello World</title>
     <url>/posts/16107.html</url>
     <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -30,19 +17,6 @@
       </categories>
   </entry>
   <entry>
-    <title>易错知识</title>
-    <url>/posts/34260.html</url>
-    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <div class="hbe-input-container">
-  <input type="password" id="hbePass" placeholder="" />
-    <label for="hbePass">输入密码，查看文章！</label>
-    <div class="bottom-line"></div>
-  </div>
-  <script id="hbeData" type="hbeData" data-hmacdigest="f4f25515922814b31789af777e8cc081f949bd50de753aaf64e1e2b4b1866cac">8de2c04a2d70dba63f65a56a98175f4a</script>
-</div>
-<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
-  </entry>
-  <entry>
     <title>日常记录</title>
     <url>/posts/42951.html</url>
     <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -57,6 +31,32 @@
       <categories>
         <category>总结</category>
       </categories>
+  </entry>
+  <entry>
+    <title>易错知识</title>
+    <url>/posts/34260.html</url>
+    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder="" />
+    <label for="hbePass">输入密码，查看文章！</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="f4f25515922814b31789af777e8cc081f949bd50de753aaf64e1e2b4b1866cac">8de2c04a2d70dba63f65a56a98175f4a</script>
+</div>
+<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+  </entry>
+  <entry>
+    <title>日志</title>
+    <url>/posts/32353.html</url>
+    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder="" />
+    <label for="hbePass">输入密码，查看文章！</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="f4f25515922814b31789af777e8cc081f949bd50de753aaf64e1e2b4b1866cac">8de2c04a2d70dba63f65a56a98175f4a</script>
+</div>
+<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
   </entry>
   <entry>
     <title>使用 hexo 搭建个人博客</title>
@@ -146,7 +146,7 @@
 <p>访问 <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 查看效果，确认页面无误后执行下列命令将静态文件发布到 Github:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy ==&gt; hexo d</span><br></pre></td></tr></table></figure>
 
-<p>到这里博客就完全搭建起来了，访问 <a href="https://mysecroad.github.io/">https://mysecroad.github.io</a> 就可以看到博客了。</p>
+<p>到这里博客就完全搭建起来了，访问 <a href="https://mysecroad.github.io/" target="_blank" rel="noopener">https://mysecroad.github.io</a> 就可以看到博客了。</p>
 <h2 id="写博客"><a href="#写博客" class="headerlink" title="写博客"></a>写博客</h2><p>正式发表博客前可以先打个草稿：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new draft <span class="string">"hello-world"</span> <span class="comment"># 新建标题为 hello-world 的草稿</span></span><br></pre></td></tr></table></figure>
 
