@@ -15,11 +15,11 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://140.143.122.13/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cssh_key.png">
 <meta property="og:image" content="http://140.143.122.13/posts/28047/new_ssh.png">
-<meta property="og:image" content="http://140.143.122.13/posts/28047/F:%5Chexo-blog%5Csource_posts%5CSqli-labs%E5%AD%A6%E4%B9%A0%5Cgithub.io.png">
-<meta property="og:image" content="http://140.143.122.13/posts/28047/F:%5Chexo-blog%5Csource_posts%5CSqli-labs%E5%AD%A6%E4%B9%A0%5Cchange_brance.png">
-<meta property="og:image" content="http://140.143.122.13/posts/28047/F:%5Chexo-blog%5Csource_posts%5CSqli-labs%E5%AD%A6%E4%B9%A0%5Cdefult.png">
+<meta property="og:image" content="http://140.143.122.13/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cgithub.io.png">
+<meta property="og:image" content="http://140.143.122.13/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cchange_brance.png">
+<meta property="og:image" content="http://140.143.122.13/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cdefult.png">
 <meta property="article:published_time" content="2020-04-24T00:53:39.000Z">
-<meta property="article:modified_time" content="2020-04-25T03:02:06.117Z">
+<meta property="article:modified_time" content="2020-04-25T08:41:52.330Z">
 <meta property="article:author" content="ca5tle">
 <meta property="article:tag" content="hexo">
 <meta name="twitter:card" content="summary">
@@ -91,7 +91,7 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/posts/34260.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/posts/42951.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" href="/posts/16107.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -148,7 +148,7 @@
       
         <time datetime="2020-04-24T00:53:39.000Z" itemprop="datePublished">2020-04-24</time>
         
-        (Updated: <time datetime="2020-04-25T03:02:06.117Z" itemprop="dateModified">2020-04-25</time>)
+        (Updated: <time datetime="2020-04-25T08:41:52.330Z" itemprop="dateModified">2020-04-25</time>)
         
       
     </div>
@@ -242,7 +242,7 @@
 <p>接着连续三个回车键（不需要输入密码），然后就会生成两个文件 <code>id_rsa</code> 和 <code>id_rsa.pub</code> ，id_rsa 是密钥，id_rsa.pub 是公钥。这两个文件在 Linux/Mac 系统是在 <code>~/.ssh</code> 下，Windows 系统在 <code>C:/Users/username/.ssh</code> 下。</p>
 <p>接下来要把 id_rsa.pub 的内容添加到 GitHub 上，这样你本地的 id_rsa 密钥跟 Github 上的 id_rsa.pub 公钥进行配对，授权成功才可以提交代码。</p>
 <p>打开 Github 的 Setting 页面，点击左侧的 SSH and GPG keys：</p>
-<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cssh_key.png" alt="ssh_key"></p>
+<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cssh_key.png" alt></p>
 <p>然后点击页面右上角的 New SSH key 按钮：</p>
 <p><img src="/posts/28047/new_ssh.png" alt></p>
 <p>在 Key 那栏把 <code>id_rsa.pub</code> 文件里的内容复制粘贴进去就可以了，<code>Title</code> 不需要填写，点击 Add SSH key 按钮就 ok 了。</p>
@@ -284,11 +284,11 @@
 <p>需要注意的是本地博客文件夹根目录下的 <code>.gitignore</code> 是 Hexo 自带的文件，也要提交到仓库，里面列的是要被 Git 忽略的文件，这些文件不需要纳入 Git 的管理。</p>
 <p>这样就把本地博客项目提交到你的 Github 中 <code>mysecroad.github.io</code> 仓库的 <code>develop</code> 分支上了。然后将仓库的默认分支设置为 <code>develop</code>，因为 <code>develop</code> 分支需要手动管理。</p>
 <p>在 Github 中打开 <code>mysecorad.github.io</code> 仓库的主页面，点击上面的 2 branches:</p>
-<p><img src="/posts/28047/F:%5Chexo-blog%5Csource_posts%5CSqli-labs%E5%AD%A6%E4%B9%A0%5Cgithub.io.png" alt></p>
+<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cgithub.io.png" alt></p>
 <p>然后点击页面右上角的 Change default branch 按钮:</p>
-<p><img src="/posts/28047/F:%5Chexo-blog%5Csource_posts%5CSqli-labs%E5%AD%A6%E4%B9%A0%5Cchange_brance.png" alt></p>
+<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cchange_brance.png" alt></p>
 <p>然后按下图所示依次点击将 Default branch 设为 <code>develop</code>:</p>
-<p><img src="/posts/28047/F:%5Chexo-blog%5Csource_posts%5CSqli-labs%E5%AD%A6%E4%B9%A0%5Cdefult.png" alt></p>
+<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cdefult.png" alt></p>
 <p>每次更新完博客或者更改了源文件都要执行下列命令提交更新：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git status <span class="comment"># 检查文件状态</span></span><br><span class="line">$ git add . <span class="comment"># 将当前目录的所有更新加入暂存区</span></span><br><span class="line">$ git commit -m <span class="string">"提交说明"</span> <span class="comment"># 提交更新</span></span><br><span class="line">$ git push origin develop <span class="comment"># 推送到远程仓库 origin 的 develop 分支</span></span><br></pre></td></tr></table></figure>
 
