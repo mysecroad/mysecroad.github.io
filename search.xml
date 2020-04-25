@@ -139,13 +139,13 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git status <span class="comment"># 检查文件状态</span></span><br><span class="line">$ git add . <span class="comment"># 将当前目录的所有更新加入暂存区</span></span><br><span class="line">$ git commit -m <span class="string">"提交说明"</span> <span class="comment"># 提交更新</span></span><br><span class="line">$ git push origin develop <span class="comment"># 推送到远程仓库 origin 的 develop 分支</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="换台电脑写博客"><a href="#换台电脑写博客" class="headerlink" title="换台电脑写博客"></a>换台电脑写博客</h3><p>首先需要在新电脑上将远程仓库克隆下来：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git clone git@github.com:lihthub&#x2F;lihthub.github.io.git</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git@github.com:mysecroad/mysecroad.github.io.git</span><br></pre></td></tr></table></figure>
 
 <p>输入 <code>git branch</code> 确认一下当前分支是否为 develop 。然后安装 Node.js 和 Git 。接着执行以下命令安装 Hexo：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
 
-<p>装好 Hexo 后，进入 <code>lihthub.github.io</code> 目录，安装所需要的 Hexo 插件：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ cd lihthub.github.io</span><br><span class="line">$ npm install</span><br><span class="line">$ npm install hexo-asset-image --save # 图片管理</span><br><span class="line">$ npm install hexo-generator-feed --save # RSS订阅</span><br><span class="line">$ npm install hexo-generator-sitemap --save # 生成 sitemap.xml</span><br><span class="line">$ npm install hexo-deployer-git --save # Git部署</span><br><span class="line">$ npm install hexo-generator-search --save # 站内搜索</span><br></pre></td></tr></table></figure>
+<p>装好 Hexo 后，进入 <code>mysecroad.github.io</code> 目录，安装所需要的 Hexo 插件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> mysecroad.github.io</span><br><span class="line">$ npm install</span><br><span class="line">$ npm install hexo-asset-image --save <span class="comment"># 图片管理</span></span><br><span class="line">$ npm install hexo-generator-feed --save <span class="comment"># RSS订阅</span></span><br><span class="line">$ npm install hexo-generator-sitemap --save <span class="comment"># 生成 sitemap.xml</span></span><br><span class="line">$ npm install hexo-deployer-git --save <span class="comment"># Git部署</span></span><br><span class="line">$ npm install hexo-generator-search --save <span class="comment"># 站内搜索</span></span><br></pre></td></tr></table></figure>
 
 <p>按前面的步骤配置好 Git 用户信息和在 Github 上加入 SSH key 后新电脑的环境就搭建好了，就可以写博客了。</p>
 ]]></content>
