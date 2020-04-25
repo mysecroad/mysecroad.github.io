@@ -17,7 +17,7 @@
 <meta property="og:image" content="http://mysecroad.github.io/posts/28047/F:%5Chexo-blog%5Csource_posts%5CSqli-labs%E5%AD%A6%E4%B9%A0%5Cchange_brance.png">
 <meta property="og:image" content="http://mysecroad.github.io/posts/28047/F:%5Chexo-blog%5Csource_posts%5CSqli-labs%E5%AD%A6%E4%B9%A0%5Cdefult.png">
 <meta property="article:published_time" content="2020-04-24T00:53:39.000Z">
-<meta property="article:modified_time" content="2020-04-25T00:57:12.340Z">
+<meta property="article:modified_time" content="2020-04-25T01:17:36.306Z">
 <meta property="article:author" content="ca5tle">
 <meta property="article:tag" content="hexo">
 <meta name="twitter:card" content="summary">
@@ -144,7 +144,7 @@
       
         <time datetime="2020-04-24T00:53:39.000Z" itemprop="datePublished">2020-04-24</time>
         
-        (Updated: <time datetime="2020-04-25T00:57:12.340Z" itemprop="dateModified">2020-04-25</time>)
+        (Updated: <time datetime="2020-04-25T01:17:36.306Z" itemprop="dateModified">2020-04-25</time>)
         
       
     </div>
@@ -238,7 +238,7 @@
 <p>接着连续三个回车键（不需要输入密码），然后就会生成两个文件 <code>id_rsa</code> 和 <code>id_rsa.pub</code> ，id_rsa 是密钥，id_rsa.pub 是公钥。这两个文件在 Linux/Mac 系统是在 <code>~/.ssh</code> 下，Windows 系统在 <code>C:/Users/username/.ssh</code> 下。</p>
 <p>接下来要把 id_rsa.pub 的内容添加到 GitHub 上，这样你本地的 id_rsa 密钥跟 Github 上的 id_rsa.pub 公钥进行配对，授权成功才可以提交代码。</p>
 <p>打开 Github 的 Setting 页面，点击左侧的 SSH and GPG keys：</p>
-<p>![ssh_key](使用 hexo 搭建个人博客/ssh_key.png)</p>
+<p>![ssh_key](./使用 hexo 搭建个人博客/ssh_key.png)</p>
 <p>然后点击页面右上角的 New SSH key 按钮：</p>
 <p>![](使用 hexo 搭建个人博客/new_ssh.png)</p>
 <p>在 Key 那栏把 <code>id_rsa.pub</code> 文件里的内容复制粘贴进去就可以了，<code>Title</code> 不需要填写，点击 Add SSH key 按钮就 ok 了。</p>
