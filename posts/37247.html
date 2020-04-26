@@ -17,7 +17,7 @@
 <meta property="og:image" content="http://mysecroad.github.io/posts/37247/2.png">
 <meta property="og:image" content="http://mysecroad.github.io/posts/37247/3.png">
 <meta property="article:published_time" content="2019-07-28T01:28:04.000Z">
-<meta property="article:modified_time" content="2019-08-19T07:39:18.000Z">
+<meta property="article:modified_time" content="2020-04-26T13:34:18.897Z">
 <meta property="article:author" content="ca5tle">
 <meta property="article:tag" content="漏洞复现">
 <meta name="twitter:card" content="summary">
@@ -120,7 +120,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java序列化与反序列化"><span class="toc-number">1.1.</span> <span class="toc-text">Java序列化与反序列化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关历史漏洞"><span class="toc-number">1.2.</span> <span class="toc-text">相关历史漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#涉及版本"><span class="toc-number">1.3.</span> <span class="toc-text">涉及版本</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞复现"><span class="toc-number">2.</span> <span class="toc-text">漏洞复现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#方法一"><span class="toc-number">2.1.</span> <span class="toc-text">方法一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法二"><span class="toc-number">2.2.</span> <span class="toc-text">方法二</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Java序列化与反序列化"><span class="toc-number">1.1.</span> <span class="toc-text">Java序列化与反序列化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相关历史漏洞"><span class="toc-number">1.2.</span> <span class="toc-text">相关历史漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#涉及版本"><span class="toc-number">1.3.</span> <span class="toc-text">涉及版本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞复现"><span class="toc-number">2.</span> <span class="toc-text">漏洞复现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#方法一"><span class="toc-number">2.1.</span> <span class="toc-text">方法一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法二"><span class="toc-number">2.2.</span> <span class="toc-text">方法二</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -146,7 +146,7 @@
       
         <time datetime="2019-07-28T01:28:04.000Z" itemprop="datePublished">2019-07-28</time>
         
-        (Updated: <time datetime="2019-08-19T07:39:18.000Z" itemprop="dateModified">2019-08-19</time>)
+        (Updated: <time datetime="2020-04-26T13:34:18.897Z" itemprop="dateModified">2020-04-26</time>)
         
       
     </div>
@@ -171,11 +171,11 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>weblogic的最后一个漏洞，Java反序列化，以前没学过Java，也没学过Java反序列化。。。。</p>
-<h2 id="Java序列化与反序列化"><a href="#Java序列化与反序列化" class="headerlink" title="Java序列化与反序列化"></a>Java序列化与反序列化</h2><p>Java序列化： 即把Java对象转换为字节序列的过程</p>
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>weblogic的最后一个漏洞，Java反序列化，以前没学过Java，也没学过Java反序列化。。。。</p>
+<h3 id="Java序列化与反序列化"><a href="#Java序列化与反序列化" class="headerlink" title="Java序列化与反序列化"></a>Java序列化与反序列化</h3><p>Java序列化： 即把Java对象转换为字节序列的过程</p>
 <p>Java反序列化： 是指把字节序列恢复为Java对象的过程</p>
 <p>目的： 为了让Java对象脱离Java运行环境的一种手段，可以有效的实现多平台之间的通信，对象持久化存储</p>
-<h2 id="相关历史漏洞"><a href="#相关历史漏洞" class="headerlink" title="相关历史漏洞"></a>相关历史漏洞</h2><ul>
+<h3 id="相关历史漏洞"><a href="#相关历史漏洞" class="headerlink" title="相关历史漏洞"></a>相关历史漏洞</h3><ul>
 <li>CVE-2015-4852<br>Weblogic 直接反序列化<br>是基于Weblogic t3协议引起远程代码执行的反序列化漏洞 </li>
 <li>CVE-2016-0638<br>Weblogic 直接反序列化<br>基于Weblogic t3协议引起远程代码执行的反序列化漏洞 漏洞实为CVE-2015-4852绕过 拜Oracle一直以来的黑名单修复方式所赐 </li>
 <li>CVE-2016-3510<br>基于Weblogic t3协议引起远程代码执行的反序列化漏洞 </li>
@@ -183,9 +183,9 @@
 <li>CVE-2018-2628<br>基于Weblogic t3协议引起远程代码执行的反序列化漏洞 属于 Weblogic JRMP反序列化 </li>
 <li>CVE-2018-2893<br>基于Weblogic t3协议引起远程代码执行的反序列化漏洞 实为CVE-2018-2628绕过 同样拜Oracle一直以来的黑名单修复方式所赐 属于Weblogic JRMP反序列化</li>
 </ul>
-<h2 id="涉及版本"><a href="#涉及版本" class="headerlink" title="涉及版本"></a>涉及版本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">10.3.6.0</span><br><span class="line">12.1.3.0</span><br><span class="line">12.2.1.2</span><br><span class="line">12.2.1.3</span><br></pre></td></tr></table></figure>
+<h3 id="涉及版本"><a href="#涉及版本" class="headerlink" title="涉及版本"></a>涉及版本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">10.3.6.0</span><br><span class="line">12.1.3.0</span><br><span class="line">12.2.1.2</span><br><span class="line">12.2.1.3</span><br></pre></td></tr></table></figure>
 
-<h1 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h1><h2 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h2><ol>
+<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><ol>
 <li><p>nmap探测目标信息，是否正在使用T3协议</p>
 <p><code>nmap -n -v -p 7001 192.168.220.141 --script=weblogic-t3-info</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PORT     STATE SERVICE</span><br><span class="line">7001&#x2F;tcp open  afs3-callback</span><br><span class="line">|_weblogic-t3-info: T3 protocol in use (WebLogic version: 10.3.6.0)</span><br></pre></td></tr></table></figure>
@@ -216,7 +216,7 @@
 <p><img src="/posts/37247/1.jpg" alt="执行成功"></p>
 </li>
 </ol>
-<h2 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h2><p>来自github上的一个python脚本，可以使用该方法执行一些命令</p>
+<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>来自github上的一个python脚本，可以使用该方法执行一些命令</p>
 <p>地址：<a href="https://github.com/jas502n/CVE-2018-2628" target="_blank" rel="noopener">https://github.com/jas502n/CVE-2018-2628</a></p>
 <ol>
 <li><p>执行脚本：(基于python2)</p>
@@ -236,7 +236,7 @@
 <li><p>不难发现，上面的test11变为了test12，是因为在进行多次测试的时候发现，生成完一次脚本的连接仅能访问一次，第二次访问会返回404…</p>
 </li>
 </ol>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>虽然上面的复现都执行成功了，但是我还是不太理解，脚本还不明白，以后要继续看，最好是能够自己学习写脚本。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>虽然上面的复现都执行成功了，但是我还是不太理解，脚本还不明白，以后要继续看，最好是能够自己学习写脚本。</p>
 
   </div>
 </article>
@@ -283,7 +283,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java序列化与反序列化"><span class="toc-number">1.1.</span> <span class="toc-text">Java序列化与反序列化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关历史漏洞"><span class="toc-number">1.2.</span> <span class="toc-text">相关历史漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#涉及版本"><span class="toc-number">1.3.</span> <span class="toc-text">涉及版本</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞复现"><span class="toc-number">2.</span> <span class="toc-text">漏洞复现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#方法一"><span class="toc-number">2.1.</span> <span class="toc-text">方法一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法二"><span class="toc-number">2.2.</span> <span class="toc-text">方法二</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Java序列化与反序列化"><span class="toc-number">1.1.</span> <span class="toc-text">Java序列化与反序列化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相关历史漏洞"><span class="toc-number">1.2.</span> <span class="toc-text">相关历史漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#涉及版本"><span class="toc-number">1.3.</span> <span class="toc-text">涉及版本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞复现"><span class="toc-number">2.</span> <span class="toc-text">漏洞复现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#方法一"><span class="toc-number">2.1.</span> <span class="toc-text">方法一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法二"><span class="toc-number">2.2.</span> <span class="toc-text">方法二</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
