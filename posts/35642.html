@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Active Directory(活动目录)Active Directory（简称AD。）是微软Windows Server中，负责架构中大型网路环境的集中式目录管理服务（Directory Services），在Windows 2000 Server开始内建于Windows Server产品中，它处理在组织中的网路物件，物件可以是使用者，群组，电脑，网域控制站，邮件，设定档，组织单元，树系等等，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Active_Directory">
+<meta property="og:url" content="http://mysecroad.github.io/posts/35642.html">
+<meta property="og:site_name" content="忆时光">
+<meta property="og:description" content="Active Directory(活动目录)Active Directory（简称AD。）是微软Windows Server中，负责架构中大型网路环境的集中式目录管理服务（Directory Services），在Windows 2000 Server开始内建于Windows Server产品中，它处理在组织中的网路物件，物件可以是使用者，群组，电脑，网域控制站，邮件，设定档，组织单元，树系等等，">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://mysecroad.github.io/posts/35642/1.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/35642/2.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/35642/3.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/35642/4.png">
+<meta property="article:published_time" content="2019-09-15T10:18:36.000Z">
+<meta property="article:modified_time" content="2019-09-16T03:58:03.191Z">
+<meta property="article:author" content="ca5tle">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://mysecroad.github.io/posts/35642/1.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Active_Directory</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="忆时光" type="application/atom+xml" />
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/images/">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/posts/20144.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/posts/9511.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://mysecroad.github.io/posts/35642.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://mysecroad.github.io/posts/35642.html&text=Active_Directory" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://mysecroad.github.io/posts/35642.html&title=Active_Directory" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://mysecroad.github.io/posts/35642.html&is_video=false&description=Active_Directory" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Active_Directory&body=Check out this article: http://mysecroad.github.io/posts/35642.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://mysecroad.github.io/posts/35642.html&title=Active_Directory" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://mysecroad.github.io/posts/35642.html&title=Active_Directory" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://mysecroad.github.io/posts/35642.html&title=Active_Directory" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://mysecroad.github.io/posts/35642.html&title=Active_Directory" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://mysecroad.github.io/posts/35642.html&name=Active_Directory&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://mysecroad.github.io/posts/35642.html&t=Active_Directory" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Active-Directory-活动目录"><span class="toc-number">1.</span> <span class="toc-text">Active Directory(活动目录)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#目录结构"><span class="toc-number">1.1.</span> <span class="toc-text">目录结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#物件"><span class="toc-number">1.1.1.</span> <span class="toc-text">物件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WMIEXEC"><span class="toc-number">1.2.</span> <span class="toc-text">WMIEXEC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用命令"><span class="toc-number">1.3.</span> <span class="toc-text">常用命令</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Active_Directory
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">忆时光</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-09-15T10:18:36.000Z" itemprop="datePublished">2019-09-15</time>
+        
+        (Updated: <time datetime="2019-09-16T03:58:03.191Z" itemprop="dateModified">2019-09-16</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Active-Directory-活动目录"><a href="#Active-Directory-活动目录" class="headerlink" title="Active Directory(活动目录)"></a>Active Directory(活动目录)</h1><p><strong>Active Directory</strong>（简称AD。）是微软Windows Server中，负责架构中大型网路环境的集中式目录管理服务（Directory Services），在Windows 2000 Server开始内建于Windows Server产品中，它处理在组织中的网路物件，物件可以是使用者，群组，电脑，网域控制站，邮件，设定档，组织单元，树系等等，只要是在Active Directory结构定义档（schema）中定义的物件，就可以储存在Active Directory资料档中，并利用Active Directory Service Interface来存取。</p>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><p>Active Directory(AD)以树状的资料结构来组成网路服务的资讯，在简单的网路环境中（例如小公司），通常网域都只有一个，在中型或大型的网路中，网域可能会有很多个，或是和其他公司或组织的AD相互连结（此连结称为信任关系）。</p>
+<p><img src="/posts/35642/1.png" alt></p>
+<h3 id="物件"><a href="#物件" class="headerlink" title="物件"></a>物件</h3><p>Active Directory的最小储存单元为物件（object），每个物件均有自己的schema属性，可以储存不同的资料，像是使用者、群组、电脑、信箱或其他的基本物件等。</p>
+<p>一个网域底下的基本物件有：</p>
+<ul>
+<li>Domain Controllers，储存网域所属的网域控制站（简称DC、域控）。</li>
+<li>Computers，储存加入网域的电脑物件。</li>
+<li>Builtin，储存内建的帐户群组。</li>
+<li>Users，储存AD中的使用者物件。</li>
+</ul>
+<p>域与活动目录的关系：</p>
+<ul>
+<li>域是一种逻辑的组织形式；</li>
+<li>活动目录是实现域的方法</li>
+<li>活动目录是域的基础</li>
+</ul>
+<h2 id="WMIEXEC"><a href="#WMIEXEC" class="headerlink" title="WMIEXEC"></a>WMIEXEC</h2><p>内网渗透中经常用到psexec这个工具，可以很方便的得到一个半交互式的cmd shell。</p>
+<p>psexec 首次执行需要验证，这在Shell中使用起来非常不便，可以使用如下命令，避免出面上述问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">psexec &#x2F;accepteula</span><br></pre></td></tr></table></figure>
+<p>但是psexec也有一些问题：psexec需要对方开启ADMIN$共享，而且需要安装服务，安装服务会留下明显的日志；另外，psexec退出时有可能服务删除失败。</p>
+<p>WMI可以远程执行命令可以用VBS脚本调用WMI来模拟psexec的功能。</p>
+<p><img src="/posts/35642/2.png" alt></p>
+<p>WMIEXEC支持两种模式，一种是半交互式shell模式，另一种是执行单条命令模式。</p>
+<p>WMIEXEC需要提供账号密码进行远程连接，但是如果没有破解出账号密码，也可以配合WCE的hash注入功能一起使用，先进行hash注入，然后再使用WMIEXEC即可。</p>
+<p><strong>半交互式shell模式</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cscript.exe &#x2F;&#x2F;nologo wmiexec.vbs &#x2F;shell 192.168.72.14 username password</span><br></pre></td></tr></table></figure>
+
+<p><img src="/posts/35642/3.png" alt></p>
+<p><strong>单个命令执行的模式</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cscript.exe wmiexec.vbs &#x2F;cmd 192.168.1.1 username password &quot;command&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/posts/35642/4.png" alt></p>
+<p>下载地址： <a href="http://www.secpulse.com/wp-content/uploads/2015/05/cache-a360611dc24d240989799c29c555e4b7_wmiexec-v1_1.rar" target="_blank" rel="noopener">wmiexec v1.1.rar</a></p>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">echo</td>
+<td align="center">查看系统版本位数</td>
+</tr>
+<tr>
+<td align="center">set</td>
+<td align="center">查看系统环境变量</td>
+</tr>
+<tr>
+<td align="center">netstat -ano</td>
+<td align="center">查看开放端口</td>
+</tr>
+<tr>
+<td align="center">ipconfig /all</td>
+<td align="center">查询本机IP段，所在域等</td>
+</tr>
+<tr>
+<td align="center">net config Workstation</td>
+<td align="center">当前计算机名，全名，用户名，系统版本，工作站域，登陆域</td>
+</tr>
+<tr>
+<td align="center">net user</td>
+<td align="center">本机用户列表</td>
+</tr>
+<tr>
+<td align="center">net localhroup administrators</td>
+<td align="center">本机管理员[通常含有域用户]</td>
+</tr>
+<tr>
+<td align="center">net user /domain</td>
+<td align="center">查询域用户</td>
+</tr>
+<tr>
+<td align="center">net user 用户名 /domain</td>
+<td align="center">获取指定用户的账户信息</td>
+</tr>
+<tr>
+<td align="center">net user /domain b404 pass</td>
+<td align="center">修改域内用户密码，需要管理员权限</td>
+</tr>
+<tr>
+<td align="center">net group /domain</td>
+<td align="center">查询域里面的工作组</td>
+</tr>
+<tr>
+<td align="center">net group 组名 /domain</td>
+<td align="center">查询域中的某工作组</td>
+</tr>
+<tr>
+<td align="center">net group “domain admins” /domain</td>
+<td align="center">查询域管理员列表</td>
+</tr>
+<tr>
+<td align="center">net group “enterprise admins” /domain</td>
+<td align="center">获得企业管理员列表</td>
+</tr>
+<tr>
+<td align="center">net group 组名 /del /domain</td>
+<td align="center">删除域中的某组</td>
+</tr>
+<tr>
+<td align="center">net group 组名 组成员名 /del /domain</td>
+<td align="center">删除域中的某组的组成员</td>
+</tr>
+<tr>
+<td align="center">net localgroup administrators /domain</td>
+<td align="center">登录本机的域管理员</td>
+</tr>
+<tr>
+<td align="center">net group 组名 /add</td>
+<td align="center">增加域中的组</td>
+</tr>
+<tr>
+<td align="center">net localgroup administrators workgroup\user001 /add</td>
+<td align="center">域用户添加到本机</td>
+</tr>
+<tr>
+<td align="center">net group “domain controllers” /domain</td>
+<td align="center">查看域控制器(如果有多台)</td>
+</tr>
+<tr>
+<td align="center">net time /domain</td>
+<td align="center">判断主域，主域服务器都做时间服务器</td>
+</tr>
+<tr>
+<td align="center">net session</td>
+<td align="center">查看当前会话</td>
+</tr>
+<tr>
+<td align="center">net use \ip\ipc$ pawword /user:username@domain</td>
+<td align="center">建立IPC会话[空连接-***]</td>
+</tr>
+<tr>
+<td align="center">net view</td>
+<td align="center">查询同一域内机器列表</td>
+</tr>
+<tr>
+<td align="center">net view /domain</td>
+<td align="center">查询域列表</td>
+</tr>
+<tr>
+<td align="center">net view \ip</td>
+<td align="center">查询某IP共享</td>
+</tr>
+<tr>
+<td align="center">net view /domain:test</td>
+<td align="center">查看test域中计算机列表</td>
+</tr>
+<tr>
+<td align="center">net view \DC的机器名字</td>
+<td align="center">查看域控共享情况</td>
+</tr>
+<tr>
+<td align="center">net use z: \192.168.200.21\文件夹名</td>
+<td align="center">建立映射到本机Z盘</td>
+</tr>
+<tr>
+<td align="center">net share</td>
+<td align="center">查看SMB指向的路径[即共享]</td>
+</tr>
+<tr>
+<td align="center">at \192.168.200.21:50 c:\windows\xx.exe</td>
+<td align="center">在共享主机上执行</td>
+</tr>
+<tr>
+<td align="center">nltest /domain_trusts</td>
+<td align="center">获取域信任信息</td>
+</tr>
+<tr>
+<td align="center">net start</td>
+<td align="center">查看当前运行的服务</td>
+</tr>
+<tr>
+<td align="center">net time /domain</td>
+<td align="center">查询主域服务器的时间</td>
+</tr>
+<tr>
+<td align="center">net time \192.168.200.21</td>
+<td align="center">查看192.168.200.21机器的时间</td>
+</tr>
+<tr>
+<td align="center">echo %logonserver%</td>
+<td align="center">查看登陆到这台服务器的计算机</td>
+</tr>
+<tr>
+<td align="center">net accounts</td>
+<td align="center">查看本地密码策略</td>
+</tr>
+<tr>
+<td align="center">nbtstat –A ip</td>
+<td align="center">netbios 查询</td>
+</tr>
+<tr>
+<td align="center">netstat –an/ano/anb</td>
+<td align="center">网络连接查询</td>
+</tr>
+<tr>
+<td align="center">netsh firewall show config</td>
+<td align="center">查看防火墙策略</td>
+</tr>
+<tr>
+<td align="center">netsh firewall show state</td>
+<td align="center">查看防火墙策略</td>
+</tr>
+<tr>
+<td align="center">route print</td>
+<td align="center">路由表</td>
+</tr>
+<tr>
+<td align="center">tracert IP</td>
+<td align="center">路由跟踪</td>
+</tr>
+<tr>
+<td align="center">arp -a</td>
+<td align="center">列出本网段内所有活跃的IP地址</td>
+</tr>
+<tr>
+<td align="center">arp -s (ip + mac)</td>
+<td align="center">绑定mac和IP</td>
+</tr>
+<tr>
+<td align="center">arp -d (iP + mac)</td>
+<td align="center">解绑IP和Mac</td>
+</tr>
+<tr>
+<td align="center">tasklist /V</td>
+<td align="center">查看进程[显示对应用户]</td>
+</tr>
+<tr>
+<td align="center">tasklist /S ip /U domain\username /P /V</td>
+<td align="center">查看远程计算机进程列表</td>
+</tr>
+<tr>
+<td align="center">psexec \192.168.200.21 -u administrator -p b404pass -c gsecdump.exe -u</td>
+<td align="center">从域服务器密码存储文件windows/ntds/ntds.dit导出hash值出来</td>
+</tr>
+<tr>
+<td align="center">gsecdump -a</td>
+<td align="center">获取域登管理员登录过得hash值，这里gescdump为第三方导出AD域的hash值</td>
+</tr>
+<tr>
+<td align="center">tasklist /S IP地址 /U 域名\用户名 /P /V</td>
+<td align="center">查看远程计算机进程</td>
+</tr>
+<tr>
+<td align="center">tasklist /svc</td>
+<td align="center">查看进程</td>
+</tr>
+<tr>
+<td align="center">taskkill /im 进程名称(cmd.exe)</td>
+<td align="center">结束进程</td>
+</tr>
+<tr>
+<td align="center">taskkill /pid[进程码]</td>
+<td align="center">-t(结束该进程) -f(强制结束该进程以及所有子进程)</td>
+</tr>
+<tr>
+<td align="center">ping 主机名</td>
+<td align="center">显示IP</td>
+</tr>
+<tr>
+<td align="center">qprocess *</td>
+<td align="center">类似tasklist</td>
+</tr>
+<tr>
+<td align="center">qprocess /SERVER:IP</td>
+<td align="center">远程查看计算机进程列表</td>
+</tr>
+<tr>
+<td align="center">nslookup –qt-MX Yahoo.com</td>
+<td align="center">查看邮件服务器</td>
+</tr>
+<tr>
+<td align="center">whoami /all</td>
+<td align="center">查询当前用户权限等</td>
+</tr>
+<tr>
+<td align="center">systeminfo</td>
+<td align="center">查看系统信息</td>
+</tr>
+<tr>
+<td align="center">qwinsta</td>
+<td align="center">查看登录情况</td>
+</tr>
+<tr>
+<td align="center">qwinsta /SERVER:IP</td>
+<td align="center">查看远程登录情况</td>
+</tr>
+<tr>
+<td align="center">fsutil fsinfo drives</td>
+<td align="center">查看所有盘符</td>
+</tr>
+<tr>
+<td align="center">gpupdate /force</td>
+<td align="center">更新域策略</td>
+</tr>
+</tbody></table>
+<p><strong>dsquery的AD查询工具</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">dsquery user domainroot -limit 65535 &amp;&amp; net user /domain</td>
+<td align="center">列出该域内所有用户名</td>
+</tr>
+<tr>
+<td align="center">dsquery contact</td>
+<td align="center">寻找目录中的联系人</td>
+</tr>
+<tr>
+<td align="center">dsquery subnet</td>
+<td align="center">列出该域内网段划分</td>
+</tr>
+<tr>
+<td align="center">query user</td>
+<td align="center">查询那些用户在线</td>
+</tr>
+<tr>
+<td align="center">dsquery group &amp;&amp; net group /domain</td>
+<td align="center">列出该域内分组</td>
+</tr>
+<tr>
+<td align="center">dsquery ou</td>
+<td align="center">列出该域内组织单位</td>
+</tr>
+<tr>
+<td align="center">dsquery server &amp;&amp; net time /domain</td>
+<td align="center">列出该域内域控制器</td>
+</tr>
+<tr>
+<td align="center">dsquery site -o rdn</td>
+<td align="center">搜索域中所有站点的名称</td>
+</tr>
+<tr>
+<td align="center">psloggedon.exe</td>
+<td align="center">查询那台主机和用户登录到该主机上</td>
+</tr>
+<tr>
+<td align="center">netsess.exe //192.168.1.115</td>
+<td align="center">远程主机上无需管理员权限,查询到主机名和用户</td>
+</tr>
+<tr>
+<td align="center">reg query “HKEY_CURRENT_USER\SOFTWARE\MICROSOFT\TERMINAL SERVERCLIENT\DEFAULT”</td>
+<td align="center">获取最近mstsc登录的记录</td>
+</tr>
+</tbody></table>
+<p>更多命令查看： <a href="https://www.t00ls.net/articles-39285.html" target="_blank" rel="noopener">《内网命令大全》</a></p>
+
+  </div>
+</article>
+
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <div id="vcomments" class="blog-post-comments"></div>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            visitor: true,
+            appId: 'euAQjqlW2tS4fVHxsmyLkdLj-gzGzoHsz',
+            appKey: 'Fmn6CIIN9yyDif6AC2hxSglA',
+            placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+            avatar: 'robohash'
+        })
+    </script>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/images/">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Active-Directory-活动目录"><span class="toc-number">1.</span> <span class="toc-text">Active Directory(活动目录)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#目录结构"><span class="toc-number">1.1.</span> <span class="toc-text">目录结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#物件"><span class="toc-number">1.1.1.</span> <span class="toc-text">物件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WMIEXEC"><span class="toc-number">1.2.</span> <span class="toc-text">WMIEXEC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用命令"><span class="toc-number">1.3.</span> <span class="toc-text">常用命令</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://mysecroad.github.io/posts/35642.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://mysecroad.github.io/posts/35642.html&text=Active_Directory" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://mysecroad.github.io/posts/35642.html&title=Active_Directory" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://mysecroad.github.io/posts/35642.html&is_video=false&description=Active_Directory" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Active_Directory&body=Check out this article: http://mysecroad.github.io/posts/35642.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://mysecroad.github.io/posts/35642.html&title=Active_Directory" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://mysecroad.github.io/posts/35642.html&title=Active_Directory" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://mysecroad.github.io/posts/35642.html&title=Active_Directory" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://mysecroad.github.io/posts/35642.html&title=Active_Directory" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://mysecroad.github.io/posts/35642.html&name=Active_Directory&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://mysecroad.github.io/posts/35642.html&t=Active_Directory" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2018-2020
+    ca5tle
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/images/">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

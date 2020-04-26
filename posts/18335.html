@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="0x00 前言昨天我们学习了如何创建版本库，如何上传文件到版本库等，今天我们来学习如何对版本库的文件进行管理，修改，删除等操作。 0x01 版本回退我们已经成功提交README.txt文件，我们继续修改README.txt 123Git is a version control system.This is my first test for Git!hahaha 使用git status查看结果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git学习（二）">
+<meta property="og:url" content="http://mysecroad.github.io/posts/18335.html">
+<meta property="og:site_name" content="忆时光">
+<meta property="og:description" content="0x00 前言昨天我们学习了如何创建版本库，如何上传文件到版本库等，今天我们来学习如何对版本库的文件进行管理，修改，删除等操作。 0x01 版本回退我们已经成功提交README.txt文件，我们继续修改README.txt 123Git is a version control system.This is my first test for Git!hahaha 使用git status查看结果">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/uzfw7MQ.jpg">
+<meta property="og:image" content="https://i.imgur.com/lUcN5yh.jpg">
+<meta property="article:published_time" content="2019-09-04T14:30:36.000Z">
+<meta property="article:modified_time" content="2019-09-05T13:03:33.676Z">
+<meta property="article:author" content="ca5tle">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/uzfw7MQ.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Git学习（二）</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="忆时光" type="application/atom+xml" />
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/images/">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/posts/19430.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/posts/55269.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://mysecroad.github.io/posts/18335.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://mysecroad.github.io/posts/18335.html&text=Git学习（二）" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://mysecroad.github.io/posts/18335.html&title=Git学习（二）" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://mysecroad.github.io/posts/18335.html&is_video=false&description=Git学习（二）" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Git学习（二）&body=Check out this article: http://mysecroad.github.io/posts/18335.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://mysecroad.github.io/posts/18335.html&title=Git学习（二）" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://mysecroad.github.io/posts/18335.html&title=Git学习（二）" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://mysecroad.github.io/posts/18335.html&title=Git学习（二）" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://mysecroad.github.io/posts/18335.html&title=Git学习（二）" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://mysecroad.github.io/posts/18335.html&name=Git学习（二）&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://mysecroad.github.io/posts/18335.html&t=Git学习（二）" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x00-前言"><span class="toc-number">1.</span> <span class="toc-text">0x00 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01-版本回退"><span class="toc-number">2.</span> <span class="toc-text">0x01 版本回退</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02-工作区和暂存区"><span class="toc-number">3.</span> <span class="toc-text">0x02 工作区和暂存区</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x03-总结"><span class="toc-number">4.</span> <span class="toc-text">0x03 总结</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Git学习（二）
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">忆时光</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-09-04T14:30:36.000Z" itemprop="datePublished">2019-09-04</time>
+        
+        (Updated: <time datetime="2019-09-05T13:03:33.676Z" itemprop="dateModified">2019-09-05</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Github/">Github</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Git/" rel="tag">Git</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>昨天我们学习了如何创建版本库，如何上传文件到版本库等，今天我们来学习如何对版本库的文件进行管理，修改，删除等操作。</p>
+<h1 id="0x01-版本回退"><a href="#0x01-版本回退" class="headerlink" title="0x01 版本回退"></a>0x01 版本回退</h1><p>我们已经成功提交README.txt文件，我们继续修改README.txt</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Git is a version control system.</span><br><span class="line">This is my first test for Git!</span><br><span class="line">hahaha</span><br></pre></td></tr></table></figure>
+<p>使用<code>git status</code>查看结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Changes not staged for commit:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">  (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line"></span><br><span class="line">        modified:   README.txt</span><br><span class="line"></span><br><span class="line">no changes added to commit (use &quot;git add&quot; and&#x2F;or &quot;git commit -a&quot;)</span><br></pre></td></tr></table></figure>
+<p><code>git status</code>命令可以让我们时刻掌握仓库当前的状态，上面的命令输出告诉我们，README.txt被修改过了，但还没有被提交。</p>
+<p>如果我们忘记了修改了什么地方，我们可以使用<code>git diff</code>命令查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ git diff</span><br><span class="line">diff --git a&#x2F;README.txt b&#x2F;README.txt</span><br><span class="line">index 2237ae3..fe9c47a 100644</span><br><span class="line">--- a&#x2F;README.txt</span><br><span class="line">+++ b&#x2F;README.txt</span><br><span class="line">@@ -1,2 +1,3 @@</span><br><span class="line"> Git is a version control system.</span><br><span class="line"> This is my first test for Git!</span><br><span class="line">+hahaha</span><br><span class="line">\ No newline at end of file</span><br></pre></td></tr></table></figure>
+<p>其中 <code>-</code>代表的是旧版本，<code>+</code>代表的是新版本</p>
+<p>在实际生活中，我们不可能记住所有的修改，每次修改了什么，这个时候就知道版本控制的好处了。</p>
+<p><code>git log</code>命令可以查看我们提交的历史记录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ git log</span><br><span class="line">commit a78dd792ca848cf12c9ce93ecec4af510a697650 (HEAD -&gt; master)</span><br><span class="line">Author: imysec &lt;1395851238@qq.com&gt;</span><br><span class="line">Date:   Thu Sep 5 17:08:43 2019 +0800</span><br><span class="line"></span><br><span class="line">    change the README.txt</span><br><span class="line"></span><br><span class="line">commit d4892a639ae1c9acbf21635e6c0d88ff35b3a94b</span><br><span class="line">Author: imysec &lt;1395851238@qq.com&gt;</span><br><span class="line">Date:   Wed Sep 4 23:19:16 2019 +0800</span><br><span class="line"></span><br><span class="line">    add a new README.txt file</span><br></pre></td></tr></table></figure>
+<p><code>git log</code>显示的是从最近到最远的提交日志，也就是说，最上面的记录是最近一次提交的。</p>
+<p>如果嫌输出信息太多，看得眼花缭乱的，可以试试加上<code>--pretty=oneline</code>参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git log --pretty&#x3D;oneline</span><br><span class="line">a78dd792ca848cf12c9ce93ecec4af510a697650 (HEAD -&gt; master) change the README.txt</span><br><span class="line">d4892a639ae1c9acbf21635e6c0d88ff35b3a94b add a new README.txt file</span><br></pre></td></tr></table></figure>
+<p>现在我们要回到上一个版本，也就是“add a new README.txt file”这个版本。</p>
+<p>首先，我们要知道自己当前所处的版本，在Git中，用<code>HEAD</code>表示当前版本，<code>HEAD^</code>表示上一个版本，<code>HEAD^^</code>表示上上一个版本，以此类推，第100个版本，总不能用100个<code>^</code>吧，所以我们可以用<code>HEAD~100</code>表示。</p>
+<p>我们先查看<code>README.txt</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ cat README.txt</span><br><span class="line">Git is a version control system.</span><br><span class="line">This is my first test for Git!</span><br><span class="line">hahaha</span><br><span class="line">ennnnn</span><br></pre></td></tr></table></figure>
+<p>现在我们用<code>git reset</code>命令回退到上一个版本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git reset --hard HEAD^</span><br><span class="line">HEAD is now at d4892a6 add a new README.txt file</span><br></pre></td></tr></table></figure>
+<p>再查看<code>README.txt</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cat README.txt</span><br><span class="line">Git is a version control system.</span><br><span class="line">This is my first test for Git!</span><br></pre></td></tr></table></figure>
+<p>果然回到了上一版本。</p>
+<p>再用<code>git log</code>查看日志</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git log</span><br><span class="line">commit d4892a639ae1c9acbf21635e6c0d88ff35b3a94b (HEAD -&gt; master)</span><br><span class="line">Author: imysec &lt;1395851238@qq.com&gt;</span><br><span class="line">Date:   Wed Sep 4 23:19:16 2019 +0800</span><br><span class="line"></span><br><span class="line">    add a new README.txt file</span><br></pre></td></tr></table></figure>
+<p>发现第二次提交的不见了，那我们要想回到那个版本该怎么办呢？？？<br>其实还是有办法的，只要你以前使用<code>git log</code>命令的窗口没有关闭，往上翻，就可以找到以前的版本ID，再使用<code>git reset --hard ID</code>即可回到那个版本。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git reset --hard a78dd792</span><br><span class="line">HEAD is now at a78dd79 change the README.txt</span><br><span class="line"></span><br><span class="line">$ cat README.txt</span><br><span class="line">Git is a version control system.</span><br><span class="line">This is my first test for Git!</span><br><span class="line">hahaha</span><br><span class="line">ennnnn</span><br></pre></td></tr></table></figure>
+<p>这里要说一点，就是版本ID没必要写全，写前面几位就够了，Git会自动匹配，but也不能太少，5,6位就行。</p>
+<p>可以看到Git版本回退的速度非常快，其实在Git内部有一个<code>HEAD</code>指针，指向当前版本，当你想改变版本的时候，仅仅是移动<code>HEAD</code>指针。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">┌────┐</span><br><span class="line">│HEAD│</span><br><span class="line">└────┘</span><br><span class="line">   │           </span><br><span class="line">   └──&gt; ○ change the README.txt</span><br><span class="line">        │</span><br><span class="line">        ○ add a new README.txt file</span><br></pre></td></tr></table></figure>
+<p>回到上一个版本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">┌────┐</span><br><span class="line">│HEAD│</span><br><span class="line">└────┘</span><br><span class="line">   │           </span><br><span class="line">   └──&gt; ○ change the README.txt</span><br><span class="line">        │</span><br><span class="line">        ○ add a new README.txt file</span><br></pre></td></tr></table></figure>
+<p>在更改版本库的时候，也把本地工作目录也更改了。</p>
+<p>但是，如果我们把<code>git log</code>的窗口关闭了，该怎么办呢？</p>
+<p>稳住，别慌！</p>
+<p><code>git reflog</code>可以记录你的每一次命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git reflog</span><br><span class="line">a78dd79 (HEAD -&gt; master) HEAD@&#123;0&#125;: reset: moving to a78dd792</span><br><span class="line">d4892a6 HEAD@&#123;1&#125;: reset: moving to d4892a639</span><br><span class="line">d4892a6 HEAD@&#123;2&#125;: reset: moving to HEAD^</span><br><span class="line">a78dd79 (HEAD -&gt; master) HEAD@&#123;3&#125;: commit: change the README.txt</span><br><span class="line">d4892a6 HEAD@&#123;4&#125;: commit (initial): add a new README.txt file</span><br></pre></td></tr></table></figure>
+<p>即可找到commit ID。</p>
+<h1 id="0x02-工作区和暂存区"><a href="#0x02-工作区和暂存区" class="headerlink" title="0x02 工作区和暂存区"></a>0x02 工作区和暂存区</h1><p>前面我们学到了，添加文件到Git版本库的时候，是分两步的</p>
+<p>第一步： 用<code>git add</code>将文件添加进去，实际上是把文件修改添加到暂存区<br>第二步： 用<code>git commit</code>提交，实际上就是把暂存区的所有内容一次性提交的当前分支</p>
+<p>当我们在创建版本库时，Git自动为我们创建了唯一的master分支，所以，<code>git commit</code>就是往<code>master</code>上提交更改。</p>
+<p>我们现在对<code>README.txt</code>文件进行修改：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Git is a version control system.</span><br><span class="line">This is my first test for Git!</span><br><span class="line">Git is so good!</span><br></pre></td></tr></table></figure>
+<p>然后再新建一个<code>LICENSE</code>文件</p>
+<p>先用<code>git status</code>查看一下仓库的状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Changes not staged for commit:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">  (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line"></span><br><span class="line">        modified:   README.txt</span><br><span class="line"></span><br><span class="line">Untracked files:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span><br><span class="line"></span><br><span class="line">        LICENSE</span><br><span class="line"></span><br><span class="line">no changes added to commit (use &quot;git add&quot; and&#x2F;or &quot;git commit -a&quot;)</span><br></pre></td></tr></table></figure>
+<p>Git告诉我们，<code>README.txt</code>被修改了，而<code>LICENSE</code>还从来没有被添加过，所以它的状态是<code>Untracked</code>。</p>
+<p>使用两次命令<code>git add</code>，把<code>README.txt</code>和<code>LICENSE</code>都添加后，用<code>git status</code>再查看一下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Changes to be committed:</span><br><span class="line">  (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)</span><br><span class="line"></span><br><span class="line">        new file:   LICENSE</span><br><span class="line">        modified:   README.txt</span><br></pre></td></tr></table></figure>
+<p>now,暂存区的状态就变成了这样：<br><img src="https://i.imgur.com/uzfw7MQ.jpg" alt></p>
+<p>所以，<code>git add</code>命令实际上就是把要提交的所有修改放到暂存区（Stage），然后，执行<code>git commit</code>就可以一次性把暂存区的所有修改提交到分支。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m &quot;modify README.txt &amp; add LICENSE&quot;</span><br><span class="line">[master 081378e] modify README.txt &amp; add LICENSE</span><br><span class="line"> 2 files changed, 3 insertions(+), 2 deletions(-)</span><br><span class="line"> create mode 100644 LICENSE</span><br></pre></td></tr></table></figure>
+<p>提交后，如果你又没有对工作区做任何修改，那么工作区就是“空”的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">nothing to commit, working tree clean</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/lUcN5yh.jpg" alt></p>
+<h1 id="0x03-总结"><a href="#0x03-总结" class="headerlink" title="0x03 总结"></a>0x03 总结</h1><ul>
+<li><code>git status</code>查看当前工作区的状态</li>
+<li><code>git diff</code>对比发现文件修改前后的修改了哪些内容</li>
+<li><code>HEAD</code>指向当前版本，Git可以在历史版本之间来回穿梭，使用<code>git reset --hard commit_id</code></li>
+<li><code>git log</code>可以查看提交的历史，找到commit_id</li>
+<li><code>git reflog</code>可以查看历史命令，可以回到未来的版本</li>
+<li>工作区指仓库的本地目录</li>
+</ul>
+
+  </div>
+</article>
+
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <div id="vcomments" class="blog-post-comments"></div>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            visitor: true,
+            appId: 'euAQjqlW2tS4fVHxsmyLkdLj-gzGzoHsz',
+            appKey: 'Fmn6CIIN9yyDif6AC2hxSglA',
+            placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+            avatar: 'robohash'
+        })
+    </script>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/images/">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x00-前言"><span class="toc-number">1.</span> <span class="toc-text">0x00 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01-版本回退"><span class="toc-number">2.</span> <span class="toc-text">0x01 版本回退</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02-工作区和暂存区"><span class="toc-number">3.</span> <span class="toc-text">0x02 工作区和暂存区</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x03-总结"><span class="toc-number">4.</span> <span class="toc-text">0x03 总结</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://mysecroad.github.io/posts/18335.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://mysecroad.github.io/posts/18335.html&text=Git学习（二）" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://mysecroad.github.io/posts/18335.html&title=Git学习（二）" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://mysecroad.github.io/posts/18335.html&is_video=false&description=Git学习（二）" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Git学习（二）&body=Check out this article: http://mysecroad.github.io/posts/18335.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://mysecroad.github.io/posts/18335.html&title=Git学习（二）" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://mysecroad.github.io/posts/18335.html&title=Git学习（二）" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://mysecroad.github.io/posts/18335.html&title=Git学习（二）" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://mysecroad.github.io/posts/18335.html&title=Git学习（二）" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://mysecroad.github.io/posts/18335.html&name=Git学习（二）&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://mysecroad.github.io/posts/18335.html&t=Git学习（二）" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2018-2020
+    ca5tle
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/images/">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

