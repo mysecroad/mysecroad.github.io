@@ -84,7 +84,7 @@
     <link href="http://mysecroad.github.io/posts/46185.html"/>
     <id>http://mysecroad.github.io/posts/46185.html</id>
     <published>2020-04-27T13:31:06.000Z</published>
-    <updated>2020-04-27T14:37:17.649Z</updated>
+    <updated>2020-04-27T14:38:40.736Z</updated>
     
     <content type="html"><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>跨站脚本(Cross-Site Scripting,简称为XSS或跨站脚本或跨站脚本攻击)是一种针对网站应用程序的安全漏洞攻击技术，是代码注入的一种。它允许恶意用户将代码注入网页，其他用户在浏览网页时就会受到影响。恶意用户利用xss代码攻击成功后，可能得到很高的权限、私密网页内容、会话和cookie等各种内容。</p><p>XSS攻击可以分为三种： 反射型、存储型和DOM型。</p><h2 id="0x01-反射型XSS"><a href="#0x01-反射型XSS" class="headerlink" title="0x01 反射型XSS"></a>0x01 反射型XSS</h2><p>反射型XSS又称非持久型XSS，这种攻击方式往往具有一次性。</p><p>攻击方式： 攻击者通过电子邮件等方式将包含XSS代码的恶意连接发送给目标用户。当目标用户访问该链接时，服务器接收该目标用户的请求并进行处理，然后服务器把带有xss代码的数据发送给目标用户的浏览器，浏览器解析这段xss代码，就会触发xss漏洞。</p><h2 id="0x02-存储型XSS"><a href="#0x02-存储型XSS" class="headerlink" title="0x02 存储型XSS"></a>0x02 存储型XSS</h2><h2 id="0x03-DOM型XSS"><a href="#0x03-DOM型XSS" class="headerlink" title="0x03 DOM型XSS"></a>0x03 DOM型XSS</h2>]]></content>
     
