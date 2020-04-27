@@ -15,7 +15,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://mysecroad.github.io/posts/35270/HP1.jpg">
 <meta property="article:published_time" content="2018-07-27T13:15:29.000Z">
-<meta property="article:modified_time" content="2020-04-26T09:24:33.113Z">
+<meta property="article:modified_time" content="2020-04-27T00:41:59.581Z">
 <meta property="article:author" content="ca5tle">
 <meta property="article:tag" content="web">
 <meta property="article:tag" content="HTTP">
@@ -119,7 +119,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#请求头"><span class="toc-number">2.</span> <span class="toc-text">请求头</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#响应头"><span class="toc-number">3.</span> <span class="toc-text">响应头</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#请求头"><span class="toc-number">2.</span> <span class="toc-text">请求头</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -145,7 +145,7 @@
       
         <time datetime="2018-07-27T13:15:29.000Z" itemprop="datePublished">2018-07-27</time>
         
-        (Updated: <time datetime="2020-04-26T09:24:33.113Z" itemprop="dateModified">2020-04-26</time>)
+        (Updated: <time datetime="2020-04-27T00:41:59.581Z" itemprop="dateModified">2020-04-27</time>)
         
       
     </div>
@@ -170,8 +170,8 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>HTTP消息头是指，在超文本传输协议（ Hypertext Transfer Protocol ，HTTP）的请求和响应消息中，协议头部分的那些组件。HTTP消息头用来准确描述正在获取的资源、服务器或者客户端的行为，定义了HTTP事务中的具体操作参数。</p>
-<h1 id="请求头"><a href="#请求头" class="headerlink" title="请求头"></a>请求头</h1><p>HTTP请求报文由3部分组成：<code>请求行</code>+<code>请求头</code>+<code>请求体</code><br><img src="/posts/35270/HP1.jpg" alt="HTTP请求报文"><br>①是请求方法，GET和POST是最常见的HTTP方法，除此以外还包括DELETE、HEAD、OPTIONS、PUT、TRACE。</p>
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>HTTP消息头是指，在超文本传输协议（ Hypertext Transfer Protocol ，HTTP）的请求和响应消息中，协议头部分的那些组件。HTTP消息头用来准确描述正在获取的资源、服务器或者客户端的行为，定义了HTTP事务中的具体操作参数。</p>
+<h2 id="请求头"><a href="#请求头" class="headerlink" title="请求头"></a>请求头</h2><p>HTTP请求报文由3部分组成：<code>请求行</code>+<code>请求头</code>+<code>请求体</code><br><img src="/posts/35270/HP1.jpg" alt="HTTP请求报文"><br>①是请求方法，GET和POST是最常见的HTTP方法，除此以外还包括DELETE、HEAD、OPTIONS、PUT、TRACE。</p>
 <p>②是请求对于的URL地址，它和报文头的HOST属性组成完整的请求URL。</p>
 <p>③是协议名称和版本号。</p>
 <p>④是HTTP的报文头，报文头包含若干个属性，格式为“属性名：属性值”，服务端据此获取客户端的信息。</p>
@@ -193,12 +193,9 @@
 </li>
 <li><p><strong>Content-Encoding</strong><br>由于发送的数据可以是任何格式，因此可以把数据压缩后再发送。Content-Encoding字段说明数据的压缩方法。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  Content-Encoding: gzip</span><br><span class="line">Content-Encoding: compress</span><br><span class="line">Content-Encoding: deflate</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>Content-Length</strong><br>一个TCP连接现在可以传送多个回应，势必就要有一种机制，区分数据包是属于哪一个回应的。这就是Content-length字段的作用，声明本次回应的数据长度。</p>
-<p><code>Content-Length: 3495</code><br>上面代码告诉浏览器，本次回应的长度是3495个字节，后面的字节就属于下一个回应了。</p>
-</li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* **Content-Length**</span><br><span class="line">  一个TCP连接现在可以传送多个回应，势必就要有一种机制，区分数据包是属于哪一个回应的。这就是Content-length字段的作用，声明本次回应的数据长度。</span><br><span class="line"></span><br><span class="line"> &#96;Content-Length: 3495&#96;</span><br><span class="line"> 上面代码告诉浏览器，本次回应的长度是3495个字节，后面的字节就属于下一个回应了。</span><br><span class="line"></span><br><span class="line"># 响应头</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h1 id="响应头"><a href="#响应头" class="headerlink" title="响应头"></a>响应头</h1>
+
   </div>
 </article>
 
@@ -244,7 +241,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#请求头"><span class="toc-number">2.</span> <span class="toc-text">请求头</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#响应头"><span class="toc-number">3.</span> <span class="toc-text">响应头</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#请求头"><span class="toc-number">2.</span> <span class="toc-text">请求头</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
