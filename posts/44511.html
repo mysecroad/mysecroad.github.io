@@ -9,23 +9,23 @@
     <meta name="description" content="0x00 前言信息收集分为：被动信息收集和主动信息收集。 被动信息收集不会与目标服务器做直接的交互，在不被目标系统察觉的情况下，通过搜索引擎、社交媒体等方式对目标外围的信息进行收集。 主动信息收集和被动信息收集相反，主动收集会与目标系统有直接的交互，从而得到目标系统相关的一些情报信息。 没有一种方式是最完美的，每个方式都有自己的优势，主动方式，你能获取更多的信息，但是目标主机可能会记录你的操作记录">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Web渗透测试-信息收集总结">
-<meta property="og:url" content="http://mysecroad.github.io/posts/44511.html">
+<meta property="og:url" content="http://140.143.122.13/posts/44511.html">
 <meta property="og:site_name" content="忆时光">
 <meta property="og:description" content="0x00 前言信息收集分为：被动信息收集和主动信息收集。 被动信息收集不会与目标服务器做直接的交互，在不被目标系统察觉的情况下，通过搜索引擎、社交媒体等方式对目标外围的信息进行收集。 主动信息收集和被动信息收集相反，主动收集会与目标系统有直接的交互，从而得到目标系统相关的一些情报信息。 没有一种方式是最完美的，每个方式都有自己的优势，主动方式，你能获取更多的信息，但是目标主机可能会记录你的操作记录">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://mysecroad.github.io/posts/44511/%E6%94%B6%E9%9B%862.png">
-<meta property="og:image" content="http://mysecroad.github.io/posts/44511/1.png">
-<meta property="og:image" content="http://mysecroad.github.io/posts/44511/%E6%94%B6%E9%9B%863.png">
-<meta property="og:image" content="http://mysecroad.github.io/posts/44511/2.png">
-<meta property="og:image" content="http://mysecroad.github.io/posts/44511/3.png">
-<meta property="og:image" content="http://mysecroad.github.io/posts/44511/4.png">
-<meta property="og:image" content="http://mysecroad.github.io/posts/44511/5.png">
+<meta property="og:image" content="http://140.143.122.13/posts/44511/%E6%94%B6%E9%9B%862.png">
+<meta property="og:image" content="http://140.143.122.13/posts/44511/1.png">
+<meta property="og:image" content="http://140.143.122.13/posts/44511/%E6%94%B6%E9%9B%863.png">
+<meta property="og:image" content="http://140.143.122.13/posts/44511/2.png">
+<meta property="og:image" content="http://140.143.122.13/posts/44511/3.png">
+<meta property="og:image" content="http://140.143.122.13/posts/44511/4.png">
+<meta property="og:image" content="http://140.143.122.13/posts/44511/5.png">
 <meta property="article:published_time" content="2019-03-23T06:30:22.000Z">
 <meta property="article:modified_time" content="2020-04-26T09:24:33.120Z">
 <meta property="article:author" content="ca5tle">
 <meta property="article:tag" content="渗透">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://mysecroad.github.io/posts/44511/%E6%94%B6%E9%9B%862.png">
+<meta name="twitter:image" content="http://140.143.122.13/posts/44511/%E6%94%B6%E9%9B%862.png">
     
     
         
@@ -109,17 +109,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://mysecroad.github.io/posts/44511.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://mysecroad.github.io/posts/44511.html&text=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://mysecroad.github.io/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://mysecroad.github.io/posts/44511.html&is_video=false&description=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Web渗透测试-信息收集总结&body=Check out this article: http://mysecroad.github.io/posts/44511.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://mysecroad.github.io/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://mysecroad.github.io/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://mysecroad.github.io/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://mysecroad.github.io/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://mysecroad.github.io/posts/44511.html&name=Web渗透测试-信息收集总结&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://mysecroad.github.io/posts/44511.html&t=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://140.143.122.13/posts/44511.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://140.143.122.13/posts/44511.html&text=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://140.143.122.13/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://140.143.122.13/posts/44511.html&is_video=false&description=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Web渗透测试-信息收集总结&body=Check out this article: http://140.143.122.13/posts/44511.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://140.143.122.13/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://140.143.122.13/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://140.143.122.13/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://140.143.122.13/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://140.143.122.13/posts/44511.html&name=Web渗透测试-信息收集总结&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://140.143.122.13/posts/44511.html&t=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -279,17 +279,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://mysecroad.github.io/posts/44511.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://mysecroad.github.io/posts/44511.html&text=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://mysecroad.github.io/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://mysecroad.github.io/posts/44511.html&is_video=false&description=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Web渗透测试-信息收集总结&body=Check out this article: http://mysecroad.github.io/posts/44511.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://mysecroad.github.io/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://mysecroad.github.io/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://mysecroad.github.io/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://mysecroad.github.io/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://mysecroad.github.io/posts/44511.html&name=Web渗透测试-信息收集总结&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://mysecroad.github.io/posts/44511.html&t=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://140.143.122.13/posts/44511.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://140.143.122.13/posts/44511.html&text=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://140.143.122.13/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://140.143.122.13/posts/44511.html&is_video=false&description=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Web渗透测试-信息收集总结&body=Check out this article: http://140.143.122.13/posts/44511.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://140.143.122.13/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://140.143.122.13/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://140.143.122.13/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://140.143.122.13/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://140.143.122.13/posts/44511.html&name=Web渗透测试-信息收集总结&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://140.143.122.13/posts/44511.html&t=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

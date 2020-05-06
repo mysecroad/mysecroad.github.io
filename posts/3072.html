@@ -9,17 +9,17 @@
     <meta name="description" content="前言PHP伪协议在CTF中经常出现，也经常跟文件包含，文件上传，命令执行等漏洞结合在一起，所以本文章对常见的一些协议进行总结。 123456789101112file:&#x2F;&#x2F; — 访问本地文件系统http:&#x2F;&#x2F; — 访问 HTTP(s) 网址ftp:&#x2F;&#x2F; — 访问 FTP(s) URLsphp:&#x2F;&#x2F; — 访问各个输入&amp;#">
 <meta property="og:type" content="article">
 <meta property="og:title" content="php伪协议">
-<meta property="og:url" content="http://mysecroad.github.io/posts/3072.html">
+<meta property="og:url" content="http://140.143.122.13/posts/3072.html">
 <meta property="og:site_name" content="忆时光">
 <meta property="og:description" content="前言PHP伪协议在CTF中经常出现，也经常跟文件包含，文件上传，命令执行等漏洞结合在一起，所以本文章对常见的一些协议进行总结。 123456789101112file:&#x2F;&#x2F; — 访问本地文件系统http:&#x2F;&#x2F; — 访问 HTTP(s) 网址ftp:&#x2F;&#x2F; — 访问 FTP(s) URLsphp:&#x2F;&#x2F; — 访问各个输入&amp;#">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://mysecroad.github.io/posts/3072/%E4%BC%AA%E5%8D%8F%E8%AE%AE1.jpg">
+<meta property="og:image" content="http://140.143.122.13/posts/3072/%E4%BC%AA%E5%8D%8F%E8%AE%AE1.jpg">
 <meta property="article:published_time" content="2019-03-30T13:15:28.000Z">
 <meta property="article:modified_time" content="2020-04-27T00:48:29.254Z">
 <meta property="article:author" content="ca5tle">
 <meta property="article:tag" content="php">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://mysecroad.github.io/posts/3072/%E4%BC%AA%E5%8D%8F%E8%AE%AE1.jpg">
+<meta name="twitter:image" content="http://140.143.122.13/posts/3072/%E4%BC%AA%E5%8D%8F%E8%AE%AE1.jpg">
     
     
         
@@ -103,17 +103,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://mysecroad.github.io/posts/3072.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://mysecroad.github.io/posts/3072.html&text=php伪协议" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://mysecroad.github.io/posts/3072.html&title=php伪协议" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://mysecroad.github.io/posts/3072.html&is_video=false&description=php伪协议" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=php伪协议&body=Check out this article: http://mysecroad.github.io/posts/3072.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://mysecroad.github.io/posts/3072.html&title=php伪协议" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://mysecroad.github.io/posts/3072.html&title=php伪协议" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://mysecroad.github.io/posts/3072.html&title=php伪协议" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://mysecroad.github.io/posts/3072.html&title=php伪协议" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://mysecroad.github.io/posts/3072.html&name=php伪协议&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://mysecroad.github.io/posts/3072.html&t=php伪协议" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://140.143.122.13/posts/3072.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://140.143.122.13/posts/3072.html&text=php伪协议" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://140.143.122.13/posts/3072.html&title=php伪协议" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://140.143.122.13/posts/3072.html&is_video=false&description=php伪协议" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=php伪协议&body=Check out this article: http://140.143.122.13/posts/3072.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://140.143.122.13/posts/3072.html&title=php伪协议" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://140.143.122.13/posts/3072.html&title=php伪协议" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://140.143.122.13/posts/3072.html&title=php伪协议" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://140.143.122.13/posts/3072.html&title=php伪协议" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://140.143.122.13/posts/3072.html&name=php伪协议&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://140.143.122.13/posts/3072.html&t=php伪协议" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -270,17 +270,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://mysecroad.github.io/posts/3072.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://mysecroad.github.io/posts/3072.html&text=php伪协议" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://mysecroad.github.io/posts/3072.html&title=php伪协议" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://mysecroad.github.io/posts/3072.html&is_video=false&description=php伪协议" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=php伪协议&body=Check out this article: http://mysecroad.github.io/posts/3072.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://mysecroad.github.io/posts/3072.html&title=php伪协议" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://mysecroad.github.io/posts/3072.html&title=php伪协议" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://mysecroad.github.io/posts/3072.html&title=php伪协议" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://mysecroad.github.io/posts/3072.html&title=php伪协议" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://mysecroad.github.io/posts/3072.html&name=php伪协议&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://mysecroad.github.io/posts/3072.html&t=php伪协议" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://140.143.122.13/posts/3072.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://140.143.122.13/posts/3072.html&text=php伪协议" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://140.143.122.13/posts/3072.html&title=php伪协议" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://140.143.122.13/posts/3072.html&is_video=false&description=php伪协议" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=php伪协议&body=Check out this article: http://140.143.122.13/posts/3072.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://140.143.122.13/posts/3072.html&title=php伪协议" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://140.143.122.13/posts/3072.html&title=php伪协议" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://140.143.122.13/posts/3072.html&title=php伪协议" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://140.143.122.13/posts/3072.html&title=php伪协议" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://140.143.122.13/posts/3072.html&name=php伪协议&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://140.143.122.13/posts/3072.html&t=php伪协议" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
