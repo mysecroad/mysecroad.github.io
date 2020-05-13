@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="0x00 前言信息收集分为：被动信息收集和主动信息收集。 被动信息收集不会与目标服务器做直接的交互，在不被目标系统察觉的情况下，通过搜索引擎、社交媒体等方式对目标外围的信息进行收集。 主动信息收集和被动信息收集相反，主动收集会与目标系统有直接的交互，从而得到目标系统相关的一些情报信息。 没有一种方式是最完美的，每个方式都有自己的优势，主动方式，你能获取更多的信息，但是目标主机可能会记录你的操作记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web渗透测试-信息收集总结">
+<meta property="og:url" content="http://140.143.122.13/posts/44511.html">
+<meta property="og:site_name" content="忆时光">
+<meta property="og:description" content="0x00 前言信息收集分为：被动信息收集和主动信息收集。 被动信息收集不会与目标服务器做直接的交互，在不被目标系统察觉的情况下，通过搜索引擎、社交媒体等方式对目标外围的信息进行收集。 主动信息收集和被动信息收集相反，主动收集会与目标系统有直接的交互，从而得到目标系统相关的一些情报信息。 没有一种方式是最完美的，每个方式都有自己的优势，主动方式，你能获取更多的信息，但是目标主机可能会记录你的操作记录">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://140.143.122.13/posts/44511/%E6%94%B6%E9%9B%862.png">
+<meta property="og:image" content="http://140.143.122.13/posts/44511/1.png">
+<meta property="og:image" content="http://140.143.122.13/posts/44511/%E6%94%B6%E9%9B%863.png">
+<meta property="og:image" content="http://140.143.122.13/posts/44511/2.png">
+<meta property="og:image" content="http://140.143.122.13/posts/44511/3.png">
+<meta property="og:image" content="http://140.143.122.13/posts/44511/4.png">
+<meta property="og:image" content="http://140.143.122.13/posts/44511/5.png">
+<meta property="article:published_time" content="2019-03-23T06:30:22.000Z">
+<meta property="article:modified_time" content="2020-04-26T09:24:33.120Z">
+<meta property="article:author" content="ca5tle">
+<meta property="article:tag" content="渗透">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://140.143.122.13/posts/44511/%E6%94%B6%E9%9B%862.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Web渗透测试-信息收集总结</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="忆时光" type="application/atom+xml" />
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://www.sectime.top:8888" target="_blank" rel="noopener">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/posts/52358.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/posts/29867.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://140.143.122.13/posts/44511.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://140.143.122.13/posts/44511.html&text=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://140.143.122.13/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://140.143.122.13/posts/44511.html&is_video=false&description=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Web渗透测试-信息收集总结&body=Check out this article: http://140.143.122.13/posts/44511.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://140.143.122.13/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://140.143.122.13/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://140.143.122.13/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://140.143.122.13/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://140.143.122.13/posts/44511.html&name=Web渗透测试-信息收集总结&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://140.143.122.13/posts/44511.html&t=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x00-前言"><span class="toc-number">1.</span> <span class="toc-text">0x00 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01-信息收集"><span class="toc-number">2.</span> <span class="toc-text">0x01 信息收集</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS域名信息收集"><span class="toc-number">2.1.</span> <span class="toc-text">DNS域名信息收集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作系统类型"><span class="toc-number">2.2.</span> <span class="toc-text">操作系统类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网站容器-Apache-Nginx-Tomcat-IIS"><span class="toc-number">2.3.</span> <span class="toc-text">网站容器(Apache&#x2F;Nginx&#x2F;Tomcat&#x2F;IIS)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#脚本类型-php-jsp-asp-aspx"><span class="toc-number">2.4.</span> <span class="toc-text">脚本类型(php&#x2F;jsp&#x2F;asp&#x2F;aspx)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库类型-Mysql-Oracle-Accees-Mqlserver"><span class="toc-number">2.5.</span> <span class="toc-text">数据库类型(Mysql&#x2F;Oracle&#x2F;Accees&#x2F;Mqlserver)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主机扫描-AWVS、Nessus"><span class="toc-number">2.6.</span> <span class="toc-text">主机扫描(AWVS、Nessus)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CMS类型"><span class="toc-number">2.7.</span> <span class="toc-text">CMS类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#旁站和C段扫描"><span class="toc-number">2.8.</span> <span class="toc-text">旁站和C段扫描</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开放端口"><span class="toc-number">2.9.</span> <span class="toc-text">开放端口</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Web渗透测试-信息收集总结
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">忆时光</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-03-23T06:30:22.000Z" itemprop="datePublished">2019-03-23</time>
+        
+        (Updated: <time datetime="2020-04-26T09:24:33.120Z" itemprop="dateModified">2020-04-26</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Web/">Web</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/%E6%B8%97%E9%80%8F/" rel="tag">渗透</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>信息收集分为：被动信息收集和主动信息收集。</p>
+<p><strong>被动信息收集</strong><br>不会与目标服务器做直接的交互，在不被目标系统察觉的情况下，通过搜索引擎、社交媒体等方式对目标外围的信息进行收集。</p>
+<p><strong>主动信息收集</strong><br>和被动信息收集相反，主动收集会与目标系统有直接的交互，从而得到目标系统相关的一些情报信息。</p>
+<p>没有一种方式是最完美的，每个方式都有自己的优势，主动方式，你能获取更多的信息，但是目标主机可能会记录你的操作记录。被动方式，你收集的信息会相对较少，但是你的行动并不会被目标主机发现。一般在一个渗透项目下，你需要有多次的信息收集，同时也要运用不同的收集方式，才能保证信息收集的完整性。</p>
+<h1 id="0x01-信息收集"><a href="#0x01-信息收集" class="headerlink" title="0x01 信息收集"></a>0x01 信息收集</h1><h2 id="DNS域名信息收集"><a href="#DNS域名信息收集" class="headerlink" title="DNS域名信息收集"></a>DNS域名信息收集</h2><p>我们需要收集域名对应的 ip，域名注册人、DNS记录、子域名等等一系列与域名相关的信息。<br>扫描域名信息的工具由很多，比如：Whois、DIG、Layer、Dnsenum、dnsmap、Fierce、Dmitry、Maltego等等<br>传送门：</p>
+<p><a href="https://blog.csdn.net/qq_36119192/article/details/84068625" target="_blank" rel="noopener">DNS域名探测工具的使用whois、DIG、Layer、dnsenum</a></p>
+<p>在线子域名查询地址：<a href="https://phpinfo.me/domain/" target="_blank" rel="noopener">https://phpinfo.me/domain/</a></p>
+<h2 id="操作系统类型"><a href="#操作系统类型" class="headerlink" title="操作系统类型"></a>操作系统类型</h2><p>服务器信息包括服务器用的操作系统：Linux 还是 Windows 。现在企业网站服务器的操作系统有百分之九十以上用的是Linux操作系统。知道了服务器的操作系统之后，还需要知道操作系统使用的具体版本。因为很多低版本的操作系统都存在已知的漏洞。</p>
+<ul>
+<li><p>判断是Linux还是Windows最简单就是通过ping来探测，Windows的TTL值都是一般是128，Linux则是64。所以大于100的肯定是Windows，而几十的肯定是Linux。<br><img src="/posts/44511/%E6%94%B6%E9%9B%862.png" alt></p>
+</li>
+<li><p>可以使用nmap的“-O”参数，来初步判断服务器系统类型：<br><img src="/posts/44511/1.png" alt></p>
+</li>
+<li><p>大小写<br>访问网站：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;www.xxx.com&#x2F;index.html</span><br><span class="line">http:&#x2F;&#x2F;www.xxx.com&#x2F;inDex.html</span><br></pre></td></tr></table></figure>
+<p>Windows操作系统不区分大小写，Linux系统大小写敏感，用此方法能够判断是Windows还是Linux系统。</p>
+</li>
+</ul>
+<h2 id="网站容器-Apache-Nginx-Tomcat-IIS"><a href="#网站容器-Apache-Nginx-Tomcat-IIS" class="headerlink" title="网站容器(Apache/Nginx/Tomcat/IIS)"></a>网站容器(Apache/Nginx/Tomcat/IIS)</h2><p>知道了这些信息之后，我们就需要知道网站用的web服务器是什么类型的：Apache、Nginx、Tomcat 还是 IIS。知道了web服务器是哪种类型后，我们还要探测web服务器具体的版本。比如Ngnix版本&lt;0.83会有解析漏洞 ，IIS6.0会有文件名解析漏洞、IIS7.0会有畸形解析漏洞等。不同的web服务器版本，存在着不同漏洞。</p>
+<p>探测网站是哪种web服务器，可以使用工具 whatweb 。</p>
+<p>传送门：<a href="https://blog.csdn.net/qq_36119192/article/details/84061734" target="_blank" rel="noopener">网站指纹识别工具Whatweb的使用</a></p>
+<h2 id="脚本类型-php-jsp-asp-aspx"><a href="#脚本类型-php-jsp-asp-aspx" class="headerlink" title="脚本类型(php/jsp/asp/aspx)"></a>脚本类型(php/jsp/asp/aspx)</h2><p>我们需要知道网站用的脚本类型：php 、Jsp 、Asp 、Aspx 。</p>
+<ul>
+<li><p>可以根据网站URL来判断</p>
+</li>
+<li><p>site:xxx  filetype:php</p>
+</li>
+<li><p>可以根据Firefox的插件来判断</p>
+<p><img src="/posts/44511/%E6%94%B6%E9%9B%863.png" alt></p>
+</li>
+</ul>
+<h2 id="数据库类型-Mysql-Oracle-Accees-Mqlserver"><a href="#数据库类型-Mysql-Oracle-Accees-Mqlserver" class="headerlink" title="数据库类型(Mysql/Oracle/Accees/Mqlserver)"></a>数据库类型(Mysql/Oracle/Accees/Mqlserver)</h2><p>我们需要知道网站用的是哪种类型的数据库：Mysql、Oracle、SqlServer 还是 Access 。虽然这几种数据库的语法大体上相同，但是还是有区别的。所以我们还是要知道目标网站用的是哪种数据库，并且数据库是哪个版本的.</p>
+<h2 id="主机扫描-AWVS、Nessus"><a href="#主机扫描-AWVS、Nessus" class="headerlink" title="主机扫描(AWVS、Nessus)"></a>主机扫描(AWVS、Nessus)</h2><p>对目标主机进行扫描，而不仅仅是对网站进行扫描，扫描目标主机开放了哪些端口，扫描端口运行的服务，目标主机上有哪些漏洞。</p>
+<p>传送门：<br><a href="https://l1395851238.github.io/2019/03/20/awvs-de-ji-ben-shi-yong/" target="_blank" rel="noopener">AWVS的基本使用</a><br><a href="https://blog.csdn.net/qq_36119192/article/details/82852117" target="_blank" rel="noopener">Nessus扫描器的使用</a></p>
+<h2 id="CMS类型"><a href="#CMS类型" class="headerlink" title="CMS类型"></a>CMS类型</h2><ul>
+<li><p>robots.txt文件</p>
+<p><img src="/posts/44511/2.png" alt></p>
+<p>从wp路径可以看出这个是WordPress的cms</p>
+</li>
+<li><p>通过版权信息进行查询<br>一般直接拉到底部查看版权信息，有些站点会显示出来</p>
+</li>
+<li><p>通过查看网页源码的方式<br><img src="/posts/44511/3.png" alt></p>
+</li>
+</ul>
+<h2 id="旁站和C段扫描"><a href="#旁站和C段扫描" class="headerlink" title="旁站和C段扫描"></a>旁站和C段扫描</h2><p>旁站指的是同一服务器上的其他网站，很多时候，有些网站可能不是那么容易入侵。那么，可以查看该网站所在的服务器上是否还有其他网站。如果有其他网站的话，可以先拿下其他网站的webshell，然后再提权拿到服务器的权限，最后就自然可以拿下该网站了！</p>
+<p>C段指的是同一内网段内的其他服务器，每个IP有ABCD四个段，举个例子，192.168.0.1，A段就是192，B段是168，C段是0，D段是1，而C段嗅探的意思就是拿下它同一C段中的其中一台服务器，也就是说是D段1-255中的一台服务器，然后利用工具嗅探拿下该服务器。<br>旁站和C段在线查询地址：<br><a href="http://www.webscan.cc/" target="_blank" rel="noopener">http://www.webscan.cc/</a><br><a href="http://www.5kik.com/" target="_blank" rel="noopener">http://www.5kik.com/</a></p>
+<ul>
+<li><p>在线查询网站<br><a href="https://phpinfo.me/bing.php" target="_blank" rel="noopener">https://phpinfo.me/bing.php</a><br><img src="/posts/44511/4.png" alt></p>
+</li>
+<li><p>站长之家<br><a href="http://tool.chinaz.com/" target="_blank" rel="noopener">http://tool.chinaz.com/</a><br><img src="/posts/44511/5.png" alt></p>
+</li>
+</ul>
+<h2 id="开放端口"><a href="#开放端口" class="headerlink" title="开放端口"></a>开放端口</h2><p>nmap扫描<br><code>nmap -F -sT -v -n 45.33.49.119-120</code></p>
+
+  </div>
+</article>
+
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <div id="vcomments" class="blog-post-comments"></div>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            visitor: true,
+            appId: 'euAQjqlW2tS4fVHxsmyLkdLj-gzGzoHsz',
+            appKey: 'Fmn6CIIN9yyDif6AC2hxSglA',
+            placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+            avatar: 'robohash'
+        })
+    </script>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://www.sectime.top:8888" target="_blank" rel="noopener">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x00-前言"><span class="toc-number">1.</span> <span class="toc-text">0x00 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01-信息收集"><span class="toc-number">2.</span> <span class="toc-text">0x01 信息收集</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS域名信息收集"><span class="toc-number">2.1.</span> <span class="toc-text">DNS域名信息收集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作系统类型"><span class="toc-number">2.2.</span> <span class="toc-text">操作系统类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网站容器-Apache-Nginx-Tomcat-IIS"><span class="toc-number">2.3.</span> <span class="toc-text">网站容器(Apache&#x2F;Nginx&#x2F;Tomcat&#x2F;IIS)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#脚本类型-php-jsp-asp-aspx"><span class="toc-number">2.4.</span> <span class="toc-text">脚本类型(php&#x2F;jsp&#x2F;asp&#x2F;aspx)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库类型-Mysql-Oracle-Accees-Mqlserver"><span class="toc-number">2.5.</span> <span class="toc-text">数据库类型(Mysql&#x2F;Oracle&#x2F;Accees&#x2F;Mqlserver)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主机扫描-AWVS、Nessus"><span class="toc-number">2.6.</span> <span class="toc-text">主机扫描(AWVS、Nessus)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CMS类型"><span class="toc-number">2.7.</span> <span class="toc-text">CMS类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#旁站和C段扫描"><span class="toc-number">2.8.</span> <span class="toc-text">旁站和C段扫描</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开放端口"><span class="toc-number">2.9.</span> <span class="toc-text">开放端口</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://140.143.122.13/posts/44511.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://140.143.122.13/posts/44511.html&text=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://140.143.122.13/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://140.143.122.13/posts/44511.html&is_video=false&description=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Web渗透测试-信息收集总结&body=Check out this article: http://140.143.122.13/posts/44511.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://140.143.122.13/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://140.143.122.13/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://140.143.122.13/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://140.143.122.13/posts/44511.html&title=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://140.143.122.13/posts/44511.html&name=Web渗透测试-信息收集总结&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://140.143.122.13/posts/44511.html&t=Web渗透测试-信息收集总结" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2018-2020
+    ca5tle
+	<img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png">
+	<a href="http://www.beian.miit.gov.cn/"  style="color:#f72b07" target="_blank">你自己的备案号</a>
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://www.sectime.top:8888" target="_blank" rel="noopener">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

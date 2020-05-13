@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="0x00 前言前面已经学习了：Git学习（三）Git学习（二）Git学习（一） 什么是分支呢？ 举个例子吧，就好像你一边写着代码，同时也在带着耳机听歌，最后你的代码写完了，歌也听了。 分支有什么用呢？ 比如说，你和别人在开发一个东西，但是，由于你没有写完，导致别人不能写了，这个时候，你可以创建一个分支，你在这个分支上写，不管你写的快慢，都不影响别人的开发，这样，当你们都开发完了，再把分支合并，这样">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git学习（四）">
+<meta property="og:url" content="http://140.143.122.13/posts/9511.html">
+<meta property="og:site_name" content="忆时光">
+<meta property="og:description" content="0x00 前言前面已经学习了：Git学习（三）Git学习（二）Git学习（一） 什么是分支呢？ 举个例子吧，就好像你一边写着代码，同时也在带着耳机听歌，最后你的代码写完了，歌也听了。 分支有什么用呢？ 比如说，你和别人在开发一个东西，但是，由于你没有写完，导致别人不能写了，这个时候，你可以创建一个分支，你在这个分支上写，不管你写的快慢，都不影响别人的开发，这样，当你们都开发完了，再把分支合并，这样">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://140.143.122.13/posts/9511/1.png">
+<meta property="og:image" content="http://140.143.122.13/posts/9511/2.png">
+<meta property="og:image" content="http://140.143.122.13/posts/9511/3.png">
+<meta property="og:image" content="http://140.143.122.13/posts/9511/4.png">
+<meta property="og:image" content="http://140.143.122.13/posts/9511/5.png">
+<meta property="og:image" content="http://140.143.122.13/posts/9511/6.png">
+<meta property="og:image" content="http://140.143.122.13/posts/9511/7.png">
+<meta property="og:image" content="http://140.143.122.13/posts/9511/7.png">
+<meta property="article:published_time" content="2019-09-08T07:39:20.000Z">
+<meta property="article:modified_time" content="2020-04-27T00:56:05.677Z">
+<meta property="article:author" content="ca5tle">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://140.143.122.13/posts/9511/1.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Git学习（四）</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="忆时光" type="application/atom+xml" />
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://www.sectime.top:8888" target="_blank" rel="noopener">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/posts/35642.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/posts/55656.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://140.143.122.13/posts/9511.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://140.143.122.13/posts/9511.html&text=Git学习（四）" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://140.143.122.13/posts/9511.html&title=Git学习（四）" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://140.143.122.13/posts/9511.html&is_video=false&description=Git学习（四）" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Git学习（四）&body=Check out this article: http://140.143.122.13/posts/9511.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://140.143.122.13/posts/9511.html&title=Git学习（四）" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://140.143.122.13/posts/9511.html&title=Git学习（四）" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://140.143.122.13/posts/9511.html&title=Git学习（四）" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://140.143.122.13/posts/9511.html&title=Git学习（四）" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://140.143.122.13/posts/9511.html&name=Git学习（四）&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://140.143.122.13/posts/9511.html&t=Git学习（四）" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00-前言"><span class="toc-number">1.</span> <span class="toc-text">0x00 前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-创建、合并分支"><span class="toc-number">2.</span> <span class="toc-text">0x01 创建、合并分支</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-解决冲突"><span class="toc-number">3.</span> <span class="toc-text">0x02 解决冲突</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-分支管理策略"><span class="toc-number">4.</span> <span class="toc-text">0x03 分支管理策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-总结"><span class="toc-number">5.</span> <span class="toc-text">0x04 总结</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Git学习（四）
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">忆时光</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-09-08T07:39:20.000Z" itemprop="datePublished">2019-09-08</time>
+        
+        (Updated: <time datetime="2020-04-27T00:56:05.677Z" itemprop="dateModified">2020-04-27</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Git/" rel="tag">Git</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>前面已经学习了：<br><a href="https://www.sectime.top/posts/19430.html" target="_blank" rel="noopener">Git学习（三）</a><br><a href="https://www.sectime.top/posts/18335.html" target="_blank" rel="noopener">Git学习（二）</a><br><a href="https://www.sectime.top/posts/55269.html" target="_blank" rel="noopener">Git学习（一）</a></p>
+<p>什么是分支呢？</p>
+<p>举个例子吧，就好像你一边写着代码，同时也在带着耳机听歌，最后你的代码写完了，歌也听了。</p>
+<p>分支有什么用呢？</p>
+<p>比如说，你和别人在开发一个东西，但是，由于你没有写完，导致别人不能写了，这个时候，你可以创建一个分支，你在这个分支上写，不管你写的快慢，都不影响别人的开发，这样，当你们都开发完了，再把分支合并，这样就组成了完整的代码。</p>
+<h2 id="0x01-创建、合并分支"><a href="#0x01-创建、合并分支" class="headerlink" title="0x01 创建、合并分支"></a>0x01 创建、合并分支</h2><p>在使用Git的时候，会自动创建一条分支，这条分支叫<code>master</code>分支。<code>HEAD</code>严格来说并不是指向提交，而是指向<code>master</code>，<code>master</code>才是指向提交的，所以，<code>HEAD</code>指向的就是当前分支。<br><img src="/posts/9511/1.png" alt><br>每次提交，master分支都会向前移动一步，这样，随着你不断提交，master分支的线也越来越长。</p>
+<p>假如我们新建了一个分支 <code>test</code> ，Git新建了一个指针叫 <code>test</code> ，<code>master</code> 指向相同的提交，再把 <code>HEAD</code> 指向 <code>test</code>，就表示当前分支在 <code>test</code> 上。<br><img src="/posts/9511/2.png" alt></p>
+<p>Git创建一个分支很快，因为除了增加一个 <code>test</code> 指针，改改<code>HEAD</code>的指向，工作区的文件都没有任何变化！</p>
+<p>不过，从现在开始，对工作区的修改和提交就是针对test分支了，比如新提交一次后，test指针往前移动一步，而master指针不变：<br><img src="/posts/9511/3.png" alt></p>
+<p>假如我们在test上的工作完成了，就可以把test并到master上。Git怎么合并呢？最简单的方法，就是直接把master指向test的当前提交，就完成了合并：<br><img src="/posts/9511/4.png" alt></p>
+<p>合并完分支后，甚至可以删除dev分支。删除dev分支就是把dev指针给删掉，删掉后，我们就剩下了一条master分支：<br><img src="/posts/9511/5.png" alt></p>
+<p>实战到了！！！</p>
+<p>先创建一个test分支，然后切换过去</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b test</span><br><span class="line">Switched to a new branch &#39;test&#39;</span><br></pre></td></tr></table></figure>
+<p><code>git checkout</code> 命令加上 <code>-b</code> 参数表示创建并切换，相当于以下两条命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git branch test</span><br><span class="line">$ git checkout test</span><br><span class="line">Switch to branch &#39;test&#39;</span><br></pre></td></tr></table></figure>
+
+<p><code>git branch</code>查看当前分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br><span class="line">  master</span><br><span class="line">* test</span><br></pre></td></tr></table></figure>
+<p><code>git branch</code>列出所有分支，当前分支前面会标一个 <code>*</code> 号</p>
+<p>然后我们正常在 test 分支上操作，比如对 <code>README.txt</code> 添加一行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Creating a new branch</span><br></pre></td></tr></table></figure>
+<p>提交</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git add README.txt</span><br><span class="line"></span><br><span class="line">$ git commit -m &quot;branch test&quot;</span><br><span class="line">[test 00fecf0] branch test</span><br><span class="line"> 1 file changed, 1 insertion(+)</span><br></pre></td></tr></table></figure>
+<p>切换回 master 分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">Switch to branch &#39;master&#39;</span><br></pre></td></tr></table></figure>
+<p>切换回 master 分支后，再查看一个<code>README.txt</code>文件，刚才添加的内容不见了！</p>
+<p>因为那个提交是在test分支上，而master分支此刻的提交点并没有变：<br><img src="/posts/9511/6.png" alt></p>
+<p>现在，我们把dev分支的工作成果合并到master分支上：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git merge test</span><br><span class="line">Updating d43cb00..00fecf0</span><br><span class="line">Fast-forward</span><br><span class="line"> README.txt | 1 +</span><br><span class="line"> 1 file changed, 1 insertion(+)</span><br></pre></td></tr></table></figure>
+<p><code>git merge</code> 命令用于合并指定分支到当前分支。合并后，再查看<code>README.txt</code>的内容，就可以看到，和dev分支的最新提交是完全一样的。</p>
+<p>注意到上面的<code>Fast-forward</code>信息，Git告诉我们，这次合并是“快进模式”，也就是直接把master指向test的当前提交，所以合并速度非常快。</p>
+<p>合并完成后，就可以删除 test 分支了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -d test</span><br><span class="line">Deleted branch test (was 00fecf0).</span><br></pre></td></tr></table></figure>
+<p>删除后，查看branch，就只剩下master分支了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br><span class="line">* master</span><br></pre></td></tr></table></figure>
+<h2 id="0x02-解决冲突"><a href="#0x02-解决冲突" class="headerlink" title="0x02 解决冲突"></a>0x02 解决冲突</h2><p>我们新建一个分支<code>feature1</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b feature1</span><br><span class="line">Switched to a new branch &#39;feature1&#39;</span><br></pre></td></tr></table></figure>
+<p>修改<code>README.txt</code>最后一行为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Creating a new branch is quick AND simple!</span><br></pre></td></tr></table></figure>
+<p>在<code>feature1</code>上提交。</p>
+<p>切换到 master 分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br></pre></td></tr></table></figure>
+
+<p>在 master 分支上把 <code>README.txt</code> 的最后一行改为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Creating a new branch is quick &amp; simple!</span><br></pre></td></tr></table></figure>
+<p>提交</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m &quot;AND &amp;&quot;</span><br><span class="line">On branch master</span><br><span class="line">nothing to commit, working tree clean</span><br></pre></td></tr></table></figure>
+<p>现在， master 分支和 feature1 分支各自都分别提交了新的内容<br><img src="/posts/9511/7.png" alt></p>
+<p>但是，这样Git在合并分支的时候就会出现冲突，我们看一下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git merge feature1</span><br><span class="line">Auto-merging README.txt</span><br><span class="line">CONFLICT (content): Merge conflict in README.txt</span><br><span class="line">Automatic merge failed; fix conflicts and then commit the result.</span><br></pre></td></tr></table></figure>
+<p>果然冲突了！Git告诉我们，<code>README.txt</code>文件存在冲突，必须手动解决冲突后再提交。<code>git status</code>也可以告诉我们冲突的文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">You have unmerged paths.</span><br><span class="line">  (fix conflicts and run &quot;git commit&quot;)</span><br><span class="line">  (use &quot;git merge --abort&quot; to abort the merge)</span><br><span class="line"></span><br><span class="line">Unmerged paths:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to mark resolution)</span><br><span class="line"></span><br><span class="line">        both modified:   README.txt</span><br><span class="line"></span><br><span class="line">no changes added to commit (use &quot;git add&quot; and&#x2F;or &quot;git commit -a&quot;)</span><br></pre></td></tr></table></figure>
+<p>我们看一下 <code>README.txt</code> 中的内容:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ cat README.txt</span><br><span class="line">Git is a version control system.</span><br><span class="line">This is my first test for Git!</span><br><span class="line">Git is so good!</span><br><span class="line">Git管理的是修改</span><br><span class="line">test test test</span><br><span class="line">It is wrong!</span><br><span class="line">hahaha</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span><br><span class="line">Creating a new branch quick &amp; simple!</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Creating a new branch is quick AND simple!</span><br><span class="line">&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature1</span><br></pre></td></tr></table></figure>
+<p>Git用 <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>，<code>=======</code>，<code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> 标记出不同分支的内容，我们修改如下后保存：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Creating a new branch is quick and simple!</span><br></pre></td></tr></table></figure>
+<p>再提交</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git add readme.txt </span><br><span class="line">$ git commit -m &quot;conflict fixed&quot;</span><br><span class="line">[master cf810e4] conflict fixed</span><br></pre></td></tr></table></figure>
+<p>带参数的git log也可以看到分支的合并情况：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ git log --graph --pretty&#x3D;oneline --abbrev-commit</span><br><span class="line">*   db2c0fe (HEAD -&gt; master) and</span><br><span class="line">|\</span><br><span class="line">| * 5134c13 (feature1) quick AND simple</span><br><span class="line">* | 0133d12 AND &amp;</span><br><span class="line">|&#x2F;</span><br><span class="line">* 00fecf0 branch test</span><br><span class="line">* d43cb00 test branch</span><br><span class="line">* b2f143d remove test.txt</span><br><span class="line">* 2a4c645 add test.txt</span><br><span class="line">* 4c574a8 add a line test</span><br><span class="line">* 9f9c092 modify README.txt</span><br><span class="line">* 081378e modify README.txt &amp; add LICENSE</span><br><span class="line">* a78dd79 change the README.txt</span><br><span class="line">* d4892a6 add a new README.txt file</span><br></pre></td></tr></table></figure>
+<p>最后删除feature1分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -d feature1</span><br><span class="line">Deleted branch feature1 (was 5134c13).</span><br></pre></td></tr></table></figure>
+<h2 id="0x03-分支管理策略"><a href="#0x03-分支管理策略" class="headerlink" title="0x03 分支管理策略"></a>0x03 分支管理策略</h2><p>通常，合并分支时，如果可能，Git会用<code>Fast forward</code>模式，但这种模式下，删除分支后，会丢掉分支信息。</p>
+<p>如果要强制禁用<code>Fast forward</code>模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息。</p>
+<p><code>--no-ff</code>表示禁用<code>Fast Forward</code>模式<br>首先，创建并切换到dev分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b dev</span><br><span class="line">Switched to a new branch &#39;dev&#39;</span><br></pre></td></tr></table></figure>
+<p>修改 README.txt 并提交commit<br>切换回 master 分支</p>
+<p>合并分支，使用<code>--no-ff</code>参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git merge --no-ff -m &quot;merge with no-ff&quot; dev</span><br><span class="line">Merge made by the &#39;recursive&#39; strategy.</span><br><span class="line"> README.txt | 1 -</span><br><span class="line"> 1 file changed, 1 deletion(-)</span><br></pre></td></tr></table></figure>
+<p>因为本次合并要创建一个新的commit，所以加上-m参数，把commit描述写进去。</p>
+<p>合并后，我们用git log看看分支历史：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git log --graph --pretty&#x3D;oneline --abbrev-commit</span><br><span class="line">*   41d9b17 (HEAD -&gt; master) merge with no-ff</span><br><span class="line">|\</span><br><span class="line">| * 20a127c (dev) add branch</span><br><span class="line">|&#x2F;</span><br><span class="line">* 6a76d54 modify README.txt</span><br><span class="line">*   db2c0fe and</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>可以看到，不使用Fast forward模式，merge后就像这样：<br><img src="/posts/9511/7.png" alt></p>
+<h2 id="0x04-总结"><a href="#0x04-总结" class="headerlink" title="0x04 总结"></a>0x04 总结</h2><ol>
+<li><ul>
+<li>查看分支： <code>git branch</code></li>
+<li>创建分支： <code>git checkout -b &lt;branch name&gt;</code></li>
+<li>切换分支： <code>git checkout &lt;branch name&gt;</code></li>
+<li>创建+切换分支： <code>git checkout -b &lt;branch name&gt;</code></li>
+<li>合并分支到当前分支： <code>git merge &lt;branch name&gt;</code></li>
+<li>删除分支： <code>git branch -d &lt;branch name&gt;</code></li>
+</ul>
+</li>
+<li><p>当Git无法自动合并分支时，就必须首先解决冲突。解决冲突后，再提交，合并完成。</p>
+<p>解决冲突就是把Git合并失败的文件手动编辑为我们希望的内容，再提交。</p>
+<p>用<code>git log --graph</code>命令可以看到分支合并图。</p>
+</li>
+<li><p>合并分支时，加上<code>--no-ff</code>参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而<code>fast forward</code>合并就看不出来曾经做过合并。</p>
+</li>
+</ol>
+
+  </div>
+</article>
+
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <div id="vcomments" class="blog-post-comments"></div>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            visitor: true,
+            appId: 'euAQjqlW2tS4fVHxsmyLkdLj-gzGzoHsz',
+            appKey: 'Fmn6CIIN9yyDif6AC2hxSglA',
+            placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+            avatar: 'robohash'
+        })
+    </script>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://www.sectime.top:8888" target="_blank" rel="noopener">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00-前言"><span class="toc-number">1.</span> <span class="toc-text">0x00 前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-创建、合并分支"><span class="toc-number">2.</span> <span class="toc-text">0x01 创建、合并分支</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-解决冲突"><span class="toc-number">3.</span> <span class="toc-text">0x02 解决冲突</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-分支管理策略"><span class="toc-number">4.</span> <span class="toc-text">0x03 分支管理策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-总结"><span class="toc-number">5.</span> <span class="toc-text">0x04 总结</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://140.143.122.13/posts/9511.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://140.143.122.13/posts/9511.html&text=Git学习（四）" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://140.143.122.13/posts/9511.html&title=Git学习（四）" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://140.143.122.13/posts/9511.html&is_video=false&description=Git学习（四）" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Git学习（四）&body=Check out this article: http://140.143.122.13/posts/9511.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://140.143.122.13/posts/9511.html&title=Git学习（四）" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://140.143.122.13/posts/9511.html&title=Git学习（四）" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://140.143.122.13/posts/9511.html&title=Git学习（四）" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://140.143.122.13/posts/9511.html&title=Git学习（四）" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://140.143.122.13/posts/9511.html&name=Git学习（四）&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://140.143.122.13/posts/9511.html&t=Git学习（四）" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2018-2020
+    ca5tle
+	<img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png">
+	<a href="http://www.beian.miit.gov.cn/"  style="color:#f72b07" target="_blank">你自己的备案号</a>
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://www.sectime.top:8888" target="_blank" rel="noopener">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

