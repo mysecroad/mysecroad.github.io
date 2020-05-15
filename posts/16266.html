@@ -6,13 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言Vulnstack是红日安全团队出品的一个实战环境，本次测试的红日安全 ATT&amp;CK实战系列——红队评估（四）靶场环境，下载地址：http:&#x2F;&#x2F;vulnstack.qiyuanxuetang.net&#x2F;vuln&#x2F;detail&#x2F;6&#x2F; 环境搭建网络拓扑如下：  IP如下： 1234kali linux  192.168.150.141web(ubuntu) 192.168.150.160(外">
+    <meta name="description" content="前言Vulnstack是红日安全团队出品的一个实战环境，本次测试的红日安全 ATT&amp;CK实战系列——红队评估（四）靶场环境，下载地址：http:&#x2F;&#x2F;vulnstack.qiyuanxuetang.net&#x2F;vuln&#x2F;detail&#x2F;6&#x2F;  环境搭建网络拓扑如下：  IP如下： 1234kali linux  192.168.150.141web(ubuntu) 192.168.150.160(">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ATT&amp;CK实战系列一">
 <meta property="og:url" content="http://140.143.122.13/posts/16266.html">
 <meta property="og:site_name" content="忆时光">
-<meta property="og:description" content="前言Vulnstack是红日安全团队出品的一个实战环境，本次测试的红日安全 ATT&amp;CK实战系列——红队评估（四）靶场环境，下载地址：http:&#x2F;&#x2F;vulnstack.qiyuanxuetang.net&#x2F;vuln&#x2F;detail&#x2F;6&#x2F; 环境搭建网络拓扑如下：  IP如下： 1234kali linux  192.168.150.141web(ubuntu) 192.168.150.160(外">
+<meta property="og:description" content="前言Vulnstack是红日安全团队出品的一个实战环境，本次测试的红日安全 ATT&amp;CK实战系列——红队评估（四）靶场环境，下载地址：http:&#x2F;&#x2F;vulnstack.qiyuanxuetang.net&#x2F;vuln&#x2F;detail&#x2F;6&#x2F;  环境搭建网络拓扑如下：  IP如下： 1234kali linux  192.168.150.141web(ubuntu) 192.168.150.160(">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://140.143.122.13/posts/16266/attck413.png">
 <meta property="og:image" content="http://www.sectime.top:8888/images/2020/05/14/ATT-CK-2.png">
 <meta property="og:image" content="http://www.sectime.top:8888/images/2020/05/14/ATT-CK-1006440fbf2833079.png">
 <meta property="og:image" content="http://www.sectime.top:8888/images/2020/05/14/attck4-3.png">
@@ -21,7 +22,7 @@
 <meta property="og:image" content="http://www.sectime.top:8888/images/2020/05/15/attck47.png">
 <meta property="og:image" content="http://www.sectime.top:8888/images/2020/05/15/attck48.png">
 <meta property="og:image" content="http://www.sectime.top:8888/images/2020/05/15/attck49.png">
-<meta property="og:image" content="http://140.143.122.13/posts/16266/attck410.png">
+<meta property="og:image" content="http://www.sectime.top:8888/images/2020/05/15/attck410.png">
 <meta property="og:image" content="http://140.143.122.13/posts/16266/attck411.png">
 <meta property="og:image" content="http://140.143.122.13/posts/16266/attck412.png">
 <meta property="og:image" content="http://140.143.122.13/posts/16266/attck413.png">
@@ -36,10 +37,10 @@
 <meta property="og:image" content="http://140.143.122.13/posts/16266/attck422.png">
 <meta property="og:image" content="http://140.143.122.13/posts/16266/attck423.png">
 <meta property="article:published_time" content="2020-05-14T07:24:32.000Z">
-<meta property="article:modified_time" content="2020-05-15T04:26:08.497Z">
+<meta property="article:modified_time" content="2020-05-15T07:41:12.330Z">
 <meta property="article:author" content="ca5tle">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.sectime.top:8888/images/2020/05/14/ATT-CK-2.png">
+<meta name="twitter:image" content="http://140.143.122.13/posts/16266/attck413.png">
     
     
         
@@ -164,7 +165,7 @@
       
         <time datetime="2020-05-14T07:24:32.000Z" itemprop="datePublished">2020-05-14</time>
         
-        (Updated: <time datetime="2020-05-15T04:26:08.497Z" itemprop="dateModified">2020-05-15</time>)
+        (Updated: <time datetime="2020-05-15T07:41:12.330Z" itemprop="dateModified">2020-05-15</time>)
         
       
     </div>
@@ -180,6 +181,7 @@
 
   <div class="content" itemprop="articleBody">
     <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Vulnstack是红日安全团队出品的一个实战环境，本次测试的红日安全 ATT&amp;CK实战系列——红队评估（四）靶场环境，下载地址：<a href="http://vulnstack.qiyuanxuetang.net/vuln/detail/6/" target="_blank" rel="noopener">http://vulnstack.qiyuanxuetang.net/vuln/detail/6/</a></p>
+<p><img src="/posts/16266/attck413.png" alt></p>
 <h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>网络拓扑如下：</p>
 <p><img src="http://www.sectime.top:8888/images/2020/05/14/ATT-CK-2.png" alt="ATT-CK-2.png"></p>
 <p>IP如下：</p>
@@ -221,7 +223,7 @@
 <p>用<code>-u</code>参数检测是否存在漏洞</p>
 <p><img src="http://www.sectime.top:8888/images/2020/05/15/attck49.png" alt="attck49.png"></p>
 <p>存在漏洞，访问<code>http://192.168.150.160:2002/Poc.jsp</code>看一下</p>
-<p><img src="/posts/16266/attck410.png" alt></p>
+<p><img src="http://www.sectime.top:8888/images/2020/05/15/attck410.png" alt="attck410.png"></p>
 <p>我们就用自带的工具利用漏洞</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python 42966.py -u http:&#x2F;&#x2F;192.168.150.160:2002&#x2F; -p pwn</span><br></pre></td></tr></table></figure>
 
