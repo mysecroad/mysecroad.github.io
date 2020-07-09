@@ -109,7 +109,7 @@
     <link href="http://imysec.github.io/posts/65258.html"/>
     <id>http://imysec.github.io/posts/65258.html</id>
     <published>2020-05-22T07:07:47.000Z</published>
-    <updated>2020-05-22T09:10:23.236Z</updated>
+    <updated>2020-07-09T00:03:03.927Z</updated>
     
     <content type="html"><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>CSRF (Cross-site request forgery，跨站请求伪造)也被称为 One Click Attack或者Session Riding，通常缩写为CSRF或者XSRF，是一种对网站的恶意利用。与 XSS 不同的是，XSS利用站点内的信任用户，而CSRF通过伪装成受信任用户请求受信任的网站，也就是攻击者盗用你的身份，以你的名义发送恶意请求。</p><p>CSRF能够做的事情包括以目标用户的名义发送邮件、发消息，盗取目标用户的账号，甚至购买商品、虚拟货币转账等。</p><h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p><strong>举个例子</strong></p><p>你想给某用户转账100元，单击“转账”按钮之后，发出的HTTP请求会与<code>http://www.xxbank.com/pay.php?user=xx&amp;money=100</code>类似。攻击者构造链接<code>http://www.xxbank.com/pay.php?user=hacker&amp;money=100</code>，当目标用户访问了该URL后，就会自动向hacker账号转账100元，而且这只涉及目标用户的操作，攻击者并没有获取目标用户的cookie或其他信息。</p><p>CSRF攻击过程有两个重点：</p><ul><li>目标用户已经登录了网站，能够执行网站的功能</li><li>目标用户访问了攻击者构造的URL</li></ul><h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2>]]></content>
     
