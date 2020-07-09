@@ -9,21 +9,21 @@
     <meta name="description" content="0x00 Apache Solr介绍Solr是一个独立的企业级搜索应用服务器，它对外提供类似于Web-service的API接口。用户可以通过http请求，向搜索引擎服务器提交一定格式的XML文件，生成索引；也可以通过Http Get操作提出查找请求，并得到XML格式的返回结果。 0x01 漏洞描述Solr中存在VelocityResponseWriter组件,攻击者可以构造特定请求修改相关配置,">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Apache Solr Velocity Template RCE漏洞复现">
-<meta property="og:url" content="http://imysec.github.io/posts/57536.html">
+<meta property="og:url" content="http://mysecroad.github.io/posts/57536.html">
 <meta property="og:site_name" content="忆时光">
 <meta property="og:description" content="0x00 Apache Solr介绍Solr是一个独立的企业级搜索应用服务器，它对外提供类似于Web-service的API接口。用户可以通过http请求，向搜索引擎服务器提交一定格式的XML文件，生成索引；也可以通过Http Get操作提出查找请求，并得到XML格式的返回结果。 0x01 漏洞描述Solr中存在VelocityResponseWriter组件,攻击者可以构造特定请求修改相关配置,">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://imysec.github.io/posts/57536/1.png">
-<meta property="og:image" content="http://imysec.github.io/posts/57536/2.png">
-<meta property="og:image" content="http://imysec.github.io/posts/57536/3.png">
-<meta property="og:image" content="http://imysec.github.io/posts/57536/4.png">
-<meta property="og:image" content="http://imysec.github.io/posts/57536/5.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/57536/1.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/57536/2.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/57536/3.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/57536/4.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/57536/5.png">
 <meta property="article:published_time" content="2019-11-06T10:53:57.000Z">
 <meta property="article:modified_time" content="2020-05-13T11:24:30.270Z">
 <meta property="article:author" content="ca5tle">
 <meta property="article:tag" content="漏洞复现">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://imysec.github.io/posts/57536/1.png">
+<meta name="twitter:image" content="http://mysecroad.github.io/posts/57536/1.png">
     
     
         
@@ -107,17 +107,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://imysec.github.io/posts/57536.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://imysec.github.io/posts/57536.html&text=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://imysec.github.io/posts/57536.html&title=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://imysec.github.io/posts/57536.html&is_video=false&description=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Apache Solr Velocity Template RCE漏洞复现&body=Check out this article: http://imysec.github.io/posts/57536.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://imysec.github.io/posts/57536.html&title=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://imysec.github.io/posts/57536.html&title=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://imysec.github.io/posts/57536.html&title=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://imysec.github.io/posts/57536.html&title=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://imysec.github.io/posts/57536.html&name=Apache Solr Velocity Template RCE漏洞复现&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://imysec.github.io/posts/57536.html&t=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://mysecroad.github.io/posts/57536.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://mysecroad.github.io/posts/57536.html&text=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://mysecroad.github.io/posts/57536.html&title=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://mysecroad.github.io/posts/57536.html&is_video=false&description=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Apache Solr Velocity Template RCE漏洞复现&body=Check out this article: http://mysecroad.github.io/posts/57536.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://mysecroad.github.io/posts/57536.html&title=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://mysecroad.github.io/posts/57536.html&title=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://mysecroad.github.io/posts/57536.html&title=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://mysecroad.github.io/posts/57536.html&title=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://mysecroad.github.io/posts/57536.html&name=Apache Solr Velocity Template RCE漏洞复现&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://mysecroad.github.io/posts/57536.html&t=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -249,17 +249,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://imysec.github.io/posts/57536.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://imysec.github.io/posts/57536.html&text=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://imysec.github.io/posts/57536.html&title=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://imysec.github.io/posts/57536.html&is_video=false&description=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Apache Solr Velocity Template RCE漏洞复现&body=Check out this article: http://imysec.github.io/posts/57536.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://imysec.github.io/posts/57536.html&title=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://imysec.github.io/posts/57536.html&title=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://imysec.github.io/posts/57536.html&title=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://imysec.github.io/posts/57536.html&title=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://imysec.github.io/posts/57536.html&name=Apache Solr Velocity Template RCE漏洞复现&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://imysec.github.io/posts/57536.html&t=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://mysecroad.github.io/posts/57536.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://mysecroad.github.io/posts/57536.html&text=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://mysecroad.github.io/posts/57536.html&title=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://mysecroad.github.io/posts/57536.html&is_video=false&description=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Apache Solr Velocity Template RCE漏洞复现&body=Check out this article: http://mysecroad.github.io/posts/57536.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://mysecroad.github.io/posts/57536.html&title=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://mysecroad.github.io/posts/57536.html&title=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://mysecroad.github.io/posts/57536.html&title=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://mysecroad.github.io/posts/57536.html&title=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://mysecroad.github.io/posts/57536.html&name=Apache Solr Velocity Template RCE漏洞复现&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://mysecroad.github.io/posts/57536.html&t=Apache Solr Velocity Template RCE漏洞复现" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
