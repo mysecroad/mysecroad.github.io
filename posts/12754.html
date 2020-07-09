@@ -9,55 +9,55 @@
     <meta name="description" content="内网信息收集概述首先需要对当前所处的网络环境进行判断。判断涉及三个方面：  我是谁？ —— 对当前机器角色的判断  ​       判断当前机器是普通的web服务器、开发测试服务器、文件服务器等。具体判断根据机器的主机名、文件、网络连接等情况综合完成。  这是哪？ —— 对当前机器所处的网络环境的拓扑结构进行分析和判断 对所处的内网进行全面的数据收集和分析整理，绘制出大致的内网整体拓扑结构图。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="内网信息收集">
-<meta property="og:url" content="http://140.143.122.13/posts/12754.html">
+<meta property="og:url" content="http://imysec.github.io/posts/12754.html">
 <meta property="og:site_name" content="忆时光">
 <meta property="og:description" content="内网信息收集概述首先需要对当前所处的网络环境进行判断。判断涉及三个方面：  我是谁？ —— 对当前机器角色的判断  ​       判断当前机器是普通的web服务器、开发测试服务器、文件服务器等。具体判断根据机器的主机名、文件、网络连接等情况综合完成。  这是哪？ —— 对当前机器所处的网络环境的拓扑结构进行分析和判断 对所处的内网进行全面的数据收集和分析整理，绘制出大致的内网整体拓扑结构图。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/Users/PanLv/AppData/Roaming/Typora/typora-user-images/image-20200320131051116.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200320170458113.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200320170803258.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200320171109489.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200320171356318.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200320171545322.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200320171800764.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200320171913377.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200320172134213.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200320172338158.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200320172516571.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200320172619261.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200320172850280.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200320173015257.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200320173231595.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200320173416455.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200320173519555.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200320173846237.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200320174007610.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200320174108057.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200320203520428.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200320203601604.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/images/image-20200320210146225.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200320210727867.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/images/image-20200321150034222.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200321150415512.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200321151122737.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200321150920756.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/images/image-20200321162551515.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/images/image-20200321162905059.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/images/image-20200321163459590.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200321163655780.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200321163851946.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/images/image-20200321164309260.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200321164434781.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200321164840696.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200321164821261.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/F:%5Cimages%5Cimage-20200322174613782.png">
-<meta property="og:image" content="http://140.143.122.13/posts/12754/images/image-20200322181818410.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/Users/PanLv/AppData/Roaming/Typora/typora-user-images/image-20200320131051116.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200320170458113.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200320170803258.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200320171109489.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200320171356318.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200320171545322.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200320171800764.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200320171913377.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200320172134213.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200320172338158.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200320172516571.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200320172619261.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200320172850280.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200320173015257.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200320173231595.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200320173416455.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200320173519555.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200320173846237.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200320174007610.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200320174108057.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200320203520428.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200320203601604.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/images/image-20200320210146225.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200320210727867.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/images/image-20200321150034222.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200321150415512.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200321151122737.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200321150920756.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/images/image-20200321162551515.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/images/image-20200321162905059.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/images/image-20200321163459590.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200321163655780.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200321163851946.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/images/image-20200321164309260.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200321164434781.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200321164840696.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200321164821261.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/F:%5Cimages%5Cimage-20200322174613782.png">
+<meta property="og:image" content="http://imysec.github.io/posts/12754/images/image-20200322181818410.png">
 <meta property="article:published_time" content="2020-04-08T03:31:22.000Z">
 <meta property="article:modified_time" content="2020-04-26T09:24:33.174Z">
 <meta property="article:author" content="ca5tle">
 <meta property="article:tag" content="内网渗透">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://140.143.122.13/posts/12754/Users/PanLv/AppData/Roaming/Typora/typora-user-images/image-20200320131051116.png">
+<meta name="twitter:image" content="http://imysec.github.io/posts/12754/Users/PanLv/AppData/Roaming/Typora/typora-user-images/image-20200320131051116.png">
     
     
         
@@ -141,17 +141,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://140.143.122.13/posts/12754.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://140.143.122.13/posts/12754.html&text=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://140.143.122.13/posts/12754.html&title=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://140.143.122.13/posts/12754.html&is_video=false&description=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=内网信息收集&body=Check out this article: http://140.143.122.13/posts/12754.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://140.143.122.13/posts/12754.html&title=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://140.143.122.13/posts/12754.html&title=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://140.143.122.13/posts/12754.html&title=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://140.143.122.13/posts/12754.html&title=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://140.143.122.13/posts/12754.html&name=内网信息收集&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://140.143.122.13/posts/12754.html&t=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://imysec.github.io/posts/12754.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://imysec.github.io/posts/12754.html&text=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://imysec.github.io/posts/12754.html&title=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://imysec.github.io/posts/12754.html&is_video=false&description=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=内网信息收集&body=Check out this article: http://imysec.github.io/posts/12754.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://imysec.github.io/posts/12754.html&title=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://imysec.github.io/posts/12754.html&title=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://imysec.github.io/posts/12754.html&title=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://imysec.github.io/posts/12754.html&title=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://imysec.github.io/posts/12754.html&name=内网信息收集&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://imysec.github.io/posts/12754.html&t=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -513,17 +513,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://140.143.122.13/posts/12754.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://140.143.122.13/posts/12754.html&text=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://140.143.122.13/posts/12754.html&title=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://140.143.122.13/posts/12754.html&is_video=false&description=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=内网信息收集&body=Check out this article: http://140.143.122.13/posts/12754.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://140.143.122.13/posts/12754.html&title=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://140.143.122.13/posts/12754.html&title=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://140.143.122.13/posts/12754.html&title=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://140.143.122.13/posts/12754.html&title=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://140.143.122.13/posts/12754.html&name=内网信息收集&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://140.143.122.13/posts/12754.html&t=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://imysec.github.io/posts/12754.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://imysec.github.io/posts/12754.html&text=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://imysec.github.io/posts/12754.html&title=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://imysec.github.io/posts/12754.html&is_video=false&description=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=内网信息收集&body=Check out this article: http://imysec.github.io/posts/12754.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://imysec.github.io/posts/12754.html&title=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://imysec.github.io/posts/12754.html&title=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://imysec.github.io/posts/12754.html&title=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://imysec.github.io/posts/12754.html&title=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://imysec.github.io/posts/12754.html&name=内网信息收集&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://imysec.github.io/posts/12754.html&t=内网信息收集" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

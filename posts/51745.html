@@ -9,21 +9,21 @@
     <meta name="description" content="漏洞简介通达OA是北京通达信科科技有限公司出品的 “Office Anywhere 通达网络智能办公系统”。该漏洞可获取任意用户session，包括系统管理员。 影响范围12通达OA 2017V11.3 &lt; V11.5  漏洞复现本次实验所用版本是通达V11.3 链接：https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1nm-kBi4zOwXDZFtjmf7n2Q 提取码：z863 下载好源">
 <meta property="og:type" content="article">
 <meta property="og:title" content="通达OA任意用户登录复现">
-<meta property="og:url" content="http://140.143.122.13/posts/51745.html">
+<meta property="og:url" content="http://imysec.github.io/posts/51745.html">
 <meta property="og:site_name" content="忆时光">
 <meta property="og:description" content="漏洞简介通达OA是北京通达信科科技有限公司出品的 “Office Anywhere 通达网络智能办公系统”。该漏洞可获取任意用户session，包括系统管理员。 影响范围12通达OA 2017V11.3 &lt; V11.5  漏洞复现本次实验所用版本是通达V11.3 链接：https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1nm-kBi4zOwXDZFtjmf7n2Q 提取码：z863 下载好源">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://140.143.122.13/posts/51745/login.png">
-<meta property="og:image" content="http://140.143.122.13/posts/51745/logincheck.png">
-<meta property="og:image" content="http://140.143.122.13/posts/51745/get_sessid.png">
-<meta property="og:image" content="http://140.143.122.13/posts/51745/success.png">
-<meta property="og:image" content="http://140.143.122.13/posts/51745/poc.png">
+<meta property="og:image" content="http://imysec.github.io/posts/51745/login.png">
+<meta property="og:image" content="http://imysec.github.io/posts/51745/logincheck.png">
+<meta property="og:image" content="http://imysec.github.io/posts/51745/get_sessid.png">
+<meta property="og:image" content="http://imysec.github.io/posts/51745/success.png">
+<meta property="og:image" content="http://imysec.github.io/posts/51745/poc.png">
 <meta property="article:published_time" content="2020-04-27T09:25:35.000Z">
 <meta property="article:modified_time" content="2020-04-27T12:16:41.290Z">
 <meta property="article:author" content="ca5tle">
 <meta property="article:tag" content="漏洞复现">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://140.143.122.13/posts/51745/login.png">
+<meta name="twitter:image" content="http://imysec.github.io/posts/51745/login.png">
     
     
         
@@ -107,17 +107,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://140.143.122.13/posts/51745.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://140.143.122.13/posts/51745.html&text=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://140.143.122.13/posts/51745.html&title=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://140.143.122.13/posts/51745.html&is_video=false&description=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=通达OA任意用户登录复现&body=Check out this article: http://140.143.122.13/posts/51745.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://140.143.122.13/posts/51745.html&title=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://140.143.122.13/posts/51745.html&title=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://140.143.122.13/posts/51745.html&title=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://140.143.122.13/posts/51745.html&title=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://140.143.122.13/posts/51745.html&name=通达OA任意用户登录复现&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://140.143.122.13/posts/51745.html&t=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://imysec.github.io/posts/51745.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://imysec.github.io/posts/51745.html&text=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://imysec.github.io/posts/51745.html&title=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://imysec.github.io/posts/51745.html&is_video=false&description=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=通达OA任意用户登录复现&body=Check out this article: http://imysec.github.io/posts/51745.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://imysec.github.io/posts/51745.html&title=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://imysec.github.io/posts/51745.html&title=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://imysec.github.io/posts/51745.html&title=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://imysec.github.io/posts/51745.html&title=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://imysec.github.io/posts/51745.html&name=通达OA任意用户登录复现&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://imysec.github.io/posts/51745.html&t=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -265,17 +265,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://140.143.122.13/posts/51745.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://140.143.122.13/posts/51745.html&text=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://140.143.122.13/posts/51745.html&title=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://140.143.122.13/posts/51745.html&is_video=false&description=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=通达OA任意用户登录复现&body=Check out this article: http://140.143.122.13/posts/51745.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://140.143.122.13/posts/51745.html&title=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://140.143.122.13/posts/51745.html&title=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://140.143.122.13/posts/51745.html&title=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://140.143.122.13/posts/51745.html&title=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://140.143.122.13/posts/51745.html&name=通达OA任意用户登录复现&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://140.143.122.13/posts/51745.html&t=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://imysec.github.io/posts/51745.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://imysec.github.io/posts/51745.html&text=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://imysec.github.io/posts/51745.html&title=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://imysec.github.io/posts/51745.html&is_video=false&description=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=通达OA任意用户登录复现&body=Check out this article: http://imysec.github.io/posts/51745.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://imysec.github.io/posts/51745.html&title=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://imysec.github.io/posts/51745.html&title=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://imysec.github.io/posts/51745.html&title=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://imysec.github.io/posts/51745.html&title=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://imysec.github.io/posts/51745.html&name=通达OA任意用户登录复现&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://imysec.github.io/posts/51745.html&t=通达OA任意用户登录复现" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

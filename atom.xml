@@ -5,9 +5,9 @@
   <subtitle>忆时光</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://140.143.122.13/"/>
+  <link href="http://imysec.github.io/"/>
   <updated>2020-05-16T10:29:55.834Z</updated>
-  <id>http://140.143.122.13/</id>
+  <id>http://imysec.github.io/</id>
   
   <author>
     <name>ca5tle</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>日志</title>
-    <link href="http://140.143.122.13/posts/32353.html"/>
-    <id>http://140.143.122.13/posts/32353.html</id>
+    <link href="http://imysec.github.io/posts/32353.html"/>
+    <id>http://imysec.github.io/posts/32353.html</id>
     <published>2099-12-31T16:00:00.000Z</published>
     <updated>2020-05-16T10:29:55.834Z</updated>
     
@@ -32,17 +32,17 @@
     </summary>
     
     
-      <category term="日志" scheme="http://140.143.122.13/categories/%E6%97%A5%E5%BF%97/"/>
+      <category term="日志" scheme="http://imysec.github.io/categories/%E6%97%A5%E5%BF%97/"/>
     
     
-      <category term="日志" scheme="http://140.143.122.13/tags/%E6%97%A5%E5%BF%97/"/>
+      <category term="日志" scheme="http://imysec.github.io/tags/%E6%97%A5%E5%BF%97/"/>
     
   </entry>
   
   <entry>
     <title>日常记录</title>
-    <link href="http://140.143.122.13/posts/42951.html"/>
-    <id>http://140.143.122.13/posts/42951.html</id>
+    <link href="http://imysec.github.io/posts/42951.html"/>
+    <id>http://imysec.github.io/posts/42951.html</id>
     <published>2099-12-31T15:59:59.000Z</published>
     <updated>2020-05-13T10:20:55.193Z</updated>
     
@@ -55,17 +55,17 @@
     </summary>
     
     
-      <category term="总结" scheme="http://140.143.122.13/categories/%E6%80%BB%E7%BB%93/"/>
+      <category term="总结" scheme="http://imysec.github.io/categories/%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="备忘录" scheme="http://140.143.122.13/tags/%E5%A4%87%E5%BF%98%E5%BD%95/"/>
+      <category term="备忘录" scheme="http://imysec.github.io/tags/%E5%A4%87%E5%BF%98%E5%BD%95/"/>
     
   </entry>
   
   <entry>
     <title>易错知识</title>
-    <link href="http://140.143.122.13/posts/34260.html"/>
-    <id>http://140.143.122.13/posts/34260.html</id>
+    <link href="http://imysec.github.io/posts/34260.html"/>
+    <id>http://imysec.github.io/posts/34260.html</id>
     <published>2099-12-31T15:59:59.000Z</published>
     <updated>2020-04-25T03:09:14.921Z</updated>
     
@@ -83,8 +83,8 @@
   
   <entry>
     <title>常用工具列表</title>
-    <link href="http://140.143.122.13/posts/51461.html"/>
-    <id>http://140.143.122.13/posts/51461.html</id>
+    <link href="http://imysec.github.io/posts/51461.html"/>
+    <id>http://imysec.github.io/posts/51461.html</id>
     <published>2020-12-31T10:41:19.000Z</published>
     <updated>2020-05-05T12:45:45.676Z</updated>
     
@@ -97,19 +97,45 @@
     </summary>
     
     
-      <category term="Tools" scheme="http://140.143.122.13/categories/Tools/"/>
+      <category term="Tools" scheme="http://imysec.github.io/categories/Tools/"/>
     
     
-      <category term="Tools" scheme="http://140.143.122.13/tags/Tools/"/>
+      <category term="Tools" scheme="http://imysec.github.io/tags/Tools/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CSRF从0到1</title>
+    <link href="http://imysec.github.io/posts/65258.html"/>
+    <id>http://imysec.github.io/posts/65258.html</id>
+    <published>2020-05-22T07:07:47.000Z</published>
+    <updated>2020-05-22T09:10:23.236Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>CSRF (Cross-site request forgery，跨站请求伪造)也被称为 One Click Attack或者Session Riding，通常缩写为CSRF或者XSRF，是一种对网站的恶意利用。与 XSS 不同的是，XSS利用站点内的信任用户，而CSRF通过伪装成受信任用户请求受信任的网站，也就是攻击者盗用你的身份，以你的名义发送恶意请求。</p><p>CSRF能够做的事情包括以目标用户的名义发送邮件、发消息，盗取目标用户的账号，甚至购买商品、虚拟货币转账等。</p><h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p><strong>举个例子</strong></p><p>你想给某用户转账100元，单击“转账”按钮之后，发出的HTTP请求会与<code>http://www.xxbank.com/pay.php?user=xx&amp;money=100</code>类似。攻击者构造链接<code>http://www.xxbank.com/pay.php?user=hacker&amp;money=100</code>，当目标用户访问了该URL后，就会自动向hacker账号转账100元，而且这只涉及目标用户的操作，攻击者并没有获取目标用户的cookie或其他信息。</p><p>CSRF攻击过程有两个重点：</p><ul><li>目标用户已经登录了网站，能够执行网站的功能</li><li>目标用户访问了攻击者构造的URL</li></ul><h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;CSRF (Cross-site request forgery，跨站请求伪造)也被称为 One Click Attack或者Session
+      
+    
+    </summary>
+    
+    
+      <category term="WEB" scheme="http://imysec.github.io/categories/WEB/"/>
+    
+    
+      <category term="WEB" scheme="http://imysec.github.io/tags/WEB/"/>
     
   </entry>
   
   <entry>
     <title>chisel使用</title>
-    <link href="http://140.143.122.13/posts/13593.html"/>
-    <id>http://140.143.122.13/posts/13593.html</id>
+    <link href="http://imysec.github.io/posts/13593.html"/>
+    <id>http://imysec.github.io/posts/13593.html</id>
     <published>2020-05-17T03:39:38.000Z</published>
-    <updated>2020-05-17T09:05:25.807Z</updated>
+    <updated>2020-05-17T09:23:07.418Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近在练习靶场的时候了解到了这个工具，感觉挺好用的，所以就学习一下。</p><p>项目地址：<a href="https://github.com/jpillora/chisel" target="_blank" rel="noopener">https://github.com/jpillora/chisel</a></p><p><strong>Chisel 是一款Go语言编写开源的通信加密的用于绕过防火墙使用 HTTP? 协议进行传输的快速 TCP 隧道工具</strong></p><p>特点：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- 使用方便</span><br><span class="line">- 高性能</span><br><span class="line">- 使用SSH协议的加密连接（通过crypto&#x2F;ssh）</span><br><span class="line">- 支持身份验证</span><br><span class="line">- 客户端自动重新连接</span><br><span class="line">- 客户端可以通过一个 TCP 连接创建多个隧道</span><br><span class="line">- 客户端可以创建 HTTP CONNECT 代理</span><br><span class="line">- 服务端可选择兼作反向代理</span><br><span class="line">- 服务端可选择创建 SOCKS5 代理</span><br><span class="line">- 支持反向端口转发</span><br></pre></td></tr></table></figure><p>关键是<code>Chisel</code>的服务器端和客户端集成在一块，这就很方便了，不想<code>frp</code>还需要配置。</p><p>但是，<code>Chisel</code>的缺点就是，它的文件比较大。</p><h2 id="使用-Chisel-反弹-Socks5-代理"><a href="#使用-Chisel-反弹-Socks5-代理" class="headerlink" title="使用 Chisel 反弹 Socks5 代理"></a>使用 Chisel 反弹 Socks5 代理</h2><p><strong>公网主机上启动 chisel server</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chisel server -p 5555 --socks5  # 在本地 5555 端口启动 Socks5 服务</span><br></pre></td></tr></table></figure><p><strong>本地执行 chisel client</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chisel client IP:5555 socks</span><br></pre></td></tr></table></figure><h2 id="Chisel-进行端口映射"><a href="#Chisel-进行端口映射" class="headerlink" title="Chisel 进行端口映射"></a>Chisel 进行端口映射</h2><p><strong>公网主机上启动 chisel server</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chisel server -p 1337 --reverse</span><br></pre></td></tr></table></figure><p><strong>内网主机上启动 chisel client</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chisel client WANIP:1337 R:1234:LANIP:3389</span><br><span class="line">WANIP 是公网主机的公网 IP，LANIP 是内网主机的内网 IP</span><br></pre></td></tr></table></figure><p>如果 <code>server1</code> 上启动 <code>Chisel</code> 的 <code>client</code> 模式，且 <code>LANIP</code> 为 <code>server1</code> 的 <code>IP</code> 时，<code>server1</code> 的 <code>3389</code> 端口映射到了公网主机的 <code>1234</code> 端口</p><p><img src="https://xaaxblog.s3.amazonaws.com/2019-04-17-143105.jpg" alt="img"></p><p>如果 <code>server1</code> 上运行 <code>Chisel</code> 的 <code>client</code> 模式，但 <code>LANIP</code> 为 <code>server2</code> 的 <code>IP</code> 时，通过 <code>server1</code> 把<code>server2</code>的 <code>3389</code> 端口映射到了公网主机的 <code>1234</code>端口</p><p><img src="https://xaaxblog.s3.amazonaws.com/2019-04-17-151947.jpg" alt="img"></p><p>从第二种用法可以看出 Chisel 的端口转发功能比 lcx 更强大</p><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://0xdf.gitlab.io/2019/01/28/tunneling-with-chisel-and-ssf.html" target="_blank" rel="noopener">Tunneling with Chisel and SSF</a></p><p><a href="https://runsisi.com/2019-09-21/chisel-proxy" target="_blank" rel="noopener">https://runsisi.com/2019-09-21/chisel-proxy</a></p><p><a href="https://runsisi.com/2019-09-20/chisel-reverse-proxy" target="_blank" rel="noopener">https://runsisi.com/2019-09-20/chisel-reverse-proxy</a></p>]]></content>
     
@@ -124,17 +150,17 @@
     </summary>
     
     
-      <category term="Tools" scheme="http://140.143.122.13/categories/Tools/"/>
+      <category term="Tools" scheme="http://imysec.github.io/categories/Tools/"/>
     
     
-      <category term="Tools" scheme="http://140.143.122.13/tags/Tools/"/>
+      <category term="Tools" scheme="http://imysec.github.io/tags/Tools/"/>
     
   </entry>
   
   <entry>
     <title>ATT&amp;CK实战系列四</title>
-    <link href="http://140.143.122.13/posts/50306.html"/>
-    <id>http://140.143.122.13/posts/50306.html</id>
+    <link href="http://imysec.github.io/posts/50306.html"/>
+    <id>http://imysec.github.io/posts/50306.html</id>
     <published>2020-05-16T08:17:49.000Z</published>
     <updated>2020-05-16T08:31:43.756Z</updated>
     
@@ -150,17 +176,17 @@
     </summary>
     
     
-      <category term="实战" scheme="http://140.143.122.13/categories/%E5%AE%9E%E6%88%98/"/>
+      <category term="实战" scheme="http://imysec.github.io/categories/%E5%AE%9E%E6%88%98/"/>
     
     
-      <category term="实战" scheme="http://140.143.122.13/tags/%E5%AE%9E%E6%88%98/"/>
+      <category term="实战" scheme="http://imysec.github.io/tags/%E5%AE%9E%E6%88%98/"/>
     
   </entry>
   
   <entry>
     <title>CVE-2020-2555复现</title>
-    <link href="http://140.143.122.13/posts/36799.html"/>
-    <id>http://140.143.122.13/posts/36799.html</id>
+    <link href="http://imysec.github.io/posts/36799.html"/>
+    <id>http://imysec.github.io/posts/36799.html</id>
     <published>2020-05-12T12:42:45.000Z</published>
     <updated>2020-05-13T10:23:22.067Z</updated>
     
@@ -173,19 +199,19 @@
     </summary>
     
     
-      <category term="漏洞复现" scheme="http://140.143.122.13/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+      <category term="漏洞复现" scheme="http://imysec.github.io/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
     
     
-      <category term="漏洞复现" scheme="http://140.143.122.13/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+      <category term="漏洞复现" scheme="http://imysec.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
     
-      <category term="CVE" scheme="http://140.143.122.13/tags/CVE/"/>
+      <category term="CVE" scheme="http://imysec.github.io/tags/CVE/"/>
     
   </entry>
   
   <entry>
     <title>XSS靶场练习二</title>
-    <link href="http://140.143.122.13/posts/6855.html"/>
-    <id>http://140.143.122.13/posts/6855.html</id>
+    <link href="http://imysec.github.io/posts/6855.html"/>
+    <id>http://imysec.github.io/posts/6855.html</id>
     <published>2020-05-04T09:39:19.000Z</published>
     <updated>2020-05-04T13:08:57.300Z</updated>
     
@@ -201,17 +227,17 @@
     </summary>
     
     
-      <category term="WEB" scheme="http://140.143.122.13/categories/WEB/"/>
+      <category term="WEB" scheme="http://imysec.github.io/categories/WEB/"/>
     
     
-      <category term="XSS" scheme="http://140.143.122.13/tags/XSS/"/>
+      <category term="XSS" scheme="http://imysec.github.io/tags/XSS/"/>
     
   </entry>
   
   <entry>
     <title>XSS靶场练习一</title>
-    <link href="http://140.143.122.13/posts/32710.html"/>
-    <id>http://140.143.122.13/posts/32710.html</id>
+    <link href="http://imysec.github.io/posts/32710.html"/>
+    <id>http://imysec.github.io/posts/32710.html</id>
     <published>2020-05-02T12:54:12.000Z</published>
     <updated>2020-05-06T02:22:51.963Z</updated>
     
@@ -227,17 +253,17 @@
     </summary>
     
     
-      <category term="WEB" scheme="http://140.143.122.13/categories/WEB/"/>
+      <category term="WEB" scheme="http://imysec.github.io/categories/WEB/"/>
     
     
-      <category term="XSS" scheme="http://140.143.122.13/tags/XSS/"/>
+      <category term="XSS" scheme="http://imysec.github.io/tags/XSS/"/>
     
   </entry>
   
   <entry>
     <title>XSS_payload收集</title>
-    <link href="http://140.143.122.13/posts/63039.html"/>
-    <id>http://140.143.122.13/posts/63039.html</id>
+    <link href="http://imysec.github.io/posts/63039.html"/>
+    <id>http://imysec.github.io/posts/63039.html</id>
     <published>2020-05-02T12:22:34.000Z</published>
     <updated>2020-05-02T12:31:54.330Z</updated>
     
@@ -254,17 +280,17 @@
     </summary>
     
     
-      <category term="WEB" scheme="http://140.143.122.13/categories/WEB/"/>
+      <category term="WEB" scheme="http://imysec.github.io/categories/WEB/"/>
     
     
-      <category term="XSS" scheme="http://140.143.122.13/tags/XSS/"/>
+      <category term="XSS" scheme="http://imysec.github.io/tags/XSS/"/>
     
   </entry>
   
   <entry>
     <title>MySql注入点写webshell</title>
-    <link href="http://140.143.122.13/posts/23798.html"/>
-    <id>http://140.143.122.13/posts/23798.html</id>
+    <link href="http://imysec.github.io/posts/23798.html"/>
+    <id>http://imysec.github.io/posts/23798.html</id>
     <published>2020-04-29T11:27:37.000Z</published>
     <updated>2020-04-29T13:11:41.269Z</updated>
     
@@ -280,19 +306,19 @@
     </summary>
     
     
-      <category term="WEB" scheme="http://140.143.122.13/categories/WEB/"/>
+      <category term="WEB" scheme="http://imysec.github.io/categories/WEB/"/>
     
     
-      <category term="webshell" scheme="http://140.143.122.13/tags/webshell/"/>
+      <category term="webshell" scheme="http://imysec.github.io/tags/webshell/"/>
     
-      <category term="MySql" scheme="http://140.143.122.13/tags/MySql/"/>
+      <category term="MySql" scheme="http://imysec.github.io/tags/MySql/"/>
     
   </entry>
   
   <entry>
     <title>端口漏洞备忘录</title>
-    <link href="http://140.143.122.13/posts/39451.html"/>
-    <id>http://140.143.122.13/posts/39451.html</id>
+    <link href="http://imysec.github.io/posts/39451.html"/>
+    <id>http://imysec.github.io/posts/39451.html</id>
     <published>2020-04-28T02:17:19.000Z</published>
     <updated>2020-04-28T08:50:06.118Z</updated>
     
@@ -305,17 +331,17 @@
     </summary>
     
     
-      <category term="备忘录" scheme="http://140.143.122.13/categories/%E5%A4%87%E5%BF%98%E5%BD%95/"/>
+      <category term="备忘录" scheme="http://imysec.github.io/categories/%E5%A4%87%E5%BF%98%E5%BD%95/"/>
     
     
-      <category term="备忘录" scheme="http://140.143.122.13/tags/%E5%A4%87%E5%BF%98%E5%BD%95/"/>
+      <category term="备忘录" scheme="http://imysec.github.io/tags/%E5%A4%87%E5%BF%98%E5%BD%95/"/>
     
   </entry>
   
   <entry>
     <title>XSS从0到1</title>
-    <link href="http://140.143.122.13/posts/46185.html"/>
-    <id>http://140.143.122.13/posts/46185.html</id>
+    <link href="http://imysec.github.io/posts/46185.html"/>
+    <id>http://imysec.github.io/posts/46185.html</id>
     <published>2020-04-27T13:31:06.000Z</published>
     <updated>2020-05-02T12:27:46.736Z</updated>
     
@@ -331,17 +357,17 @@
     </summary>
     
     
-      <category term="WEB" scheme="http://140.143.122.13/categories/WEB/"/>
+      <category term="WEB" scheme="http://imysec.github.io/categories/WEB/"/>
     
     
-      <category term="XSS" scheme="http://140.143.122.13/tags/XSS/"/>
+      <category term="XSS" scheme="http://imysec.github.io/tags/XSS/"/>
     
   </entry>
   
   <entry>
     <title>通达OA任意用户登录复现</title>
-    <link href="http://140.143.122.13/posts/51745.html"/>
-    <id>http://140.143.122.13/posts/51745.html</id>
+    <link href="http://imysec.github.io/posts/51745.html"/>
+    <id>http://imysec.github.io/posts/51745.html</id>
     <published>2020-04-27T09:25:35.000Z</published>
     <updated>2020-04-27T12:16:41.290Z</updated>
     
@@ -358,17 +384,17 @@
     </summary>
     
     
-      <category term="漏洞复现" scheme="http://140.143.122.13/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+      <category term="漏洞复现" scheme="http://imysec.github.io/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
     
     
-      <category term="漏洞复现" scheme="http://140.143.122.13/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+      <category term="漏洞复现" scheme="http://imysec.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
     
   </entry>
   
   <entry>
     <title>反弹shell备忘录</title>
-    <link href="http://140.143.122.13/posts/40232.html"/>
-    <id>http://140.143.122.13/posts/40232.html</id>
+    <link href="http://imysec.github.io/posts/40232.html"/>
+    <id>http://imysec.github.io/posts/40232.html</id>
     <published>2020-04-27T01:30:53.000Z</published>
     <updated>2020-04-27T07:27:35.531Z</updated>
     
@@ -381,17 +407,17 @@
     </summary>
     
     
-      <category term="备忘录" scheme="http://140.143.122.13/categories/%E5%A4%87%E5%BF%98%E5%BD%95/"/>
+      <category term="备忘录" scheme="http://imysec.github.io/categories/%E5%A4%87%E5%BF%98%E5%BD%95/"/>
     
     
-      <category term="shell" scheme="http://140.143.122.13/tags/shell/"/>
+      <category term="shell" scheme="http://imysec.github.io/tags/shell/"/>
     
   </entry>
   
   <entry>
     <title>通达OA任意文件上传+文件包含导致RCE漏洞复现</title>
-    <link href="http://140.143.122.13/posts/38272.html"/>
-    <id>http://140.143.122.13/posts/38272.html</id>
+    <link href="http://imysec.github.io/posts/38272.html"/>
+    <id>http://imysec.github.io/posts/38272.html</id>
     <published>2020-04-26T09:39:04.000Z</published>
     <updated>2020-04-28T01:54:24.524Z</updated>
     
@@ -409,17 +435,17 @@
     </summary>
     
     
-      <category term="漏洞复现" scheme="http://140.143.122.13/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+      <category term="漏洞复现" scheme="http://imysec.github.io/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
     
     
-      <category term="漏洞复现" scheme="http://140.143.122.13/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+      <category term="漏洞复现" scheme="http://imysec.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
     
   </entry>
   
   <entry>
     <title>使用 hexo 搭建个人博客</title>
-    <link href="http://140.143.122.13/posts/28047.html"/>
-    <id>http://140.143.122.13/posts/28047.html</id>
+    <link href="http://imysec.github.io/posts/28047.html"/>
+    <id>http://imysec.github.io/posts/28047.html</id>
     <published>2020-04-24T00:53:39.000Z</published>
     <updated>2020-04-25T08:41:52.330Z</updated>
     
@@ -436,17 +462,17 @@
     </summary>
     
     
-      <category term="hexo" scheme="http://140.143.122.13/categories/hexo/"/>
+      <category term="hexo" scheme="http://imysec.github.io/categories/hexo/"/>
     
     
-      <category term="hexo" scheme="http://140.143.122.13/tags/hexo/"/>
+      <category term="hexo" scheme="http://imysec.github.io/tags/hexo/"/>
     
   </entry>
   
   <entry>
     <title>Sqli-labs学习</title>
-    <link href="http://140.143.122.13/posts/20471.html"/>
-    <id>http://140.143.122.13/posts/20471.html</id>
+    <link href="http://imysec.github.io/posts/20471.html"/>
+    <id>http://imysec.github.io/posts/20471.html</id>
     <published>2020-04-12T04:12:44.000Z</published>
     <updated>2020-04-27T00:49:45.837Z</updated>
     
@@ -463,14 +489,14 @@
     
     
     
-      <category term="SQL注入" scheme="http://140.143.122.13/tags/SQL%E6%B3%A8%E5%85%A5/"/>
+      <category term="SQL注入" scheme="http://imysec.github.io/tags/SQL%E6%B3%A8%E5%85%A5/"/>
     
   </entry>
   
   <entry>
     <title>Cobalt Strike 4.0学习</title>
-    <link href="http://140.143.122.13/posts/7578.html"/>
-    <id>http://140.143.122.13/posts/7578.html</id>
+    <link href="http://imysec.github.io/posts/7578.html"/>
+    <id>http://imysec.github.io/posts/7578.html</id>
     <published>2020-04-08T03:34:55.000Z</published>
     <updated>2020-04-26T09:24:33.105Z</updated>
     
@@ -479,30 +505,6 @@
     </summary>
     
     
-    
-  </entry>
-  
-  <entry>
-    <title>内网信息收集</title>
-    <link href="http://140.143.122.13/posts/12754.html"/>
-    <id>http://140.143.122.13/posts/12754.html</id>
-    <published>2020-04-08T03:31:22.000Z</published>
-    <updated>2020-04-26T09:24:33.174Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="内网信息收集"><a href="#内网信息收集" class="headerlink" title="内网信息收集"></a>内网信息收集</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>首先需要对当前所处的网络环境进行判断。判断涉及三个方面：</p><ul><li>我是谁？ —— 对当前机器角色的判断</li></ul><p>​       判断当前机器是普通的web服务器、开发测试服务器、文件服务器等。具体判断根据机器的主机名、文件、网络连接等情况综合完成。</p><ul><li><p>这是哪？ —— 对当前机器所处的网络环境的拓扑结构进行分析和判断</p><p>对所处的内网进行全面的数据收集和分析整理，绘制出大致的内网整体拓扑结构图。</p></li><li><p>我在哪？ —— 对当前机器所处区域的判断</p><p>判断机器处于网络拓扑中的哪个区域，是在DMZ、办公区还是核心区。</p></li></ul><h2 id="收集本机信息"><a href="#收集本机信息" class="headerlink" title="收集本机信息"></a>收集本机信息</h2><h3 id="手动收集信息"><a href="#手动收集信息" class="headerlink" title="手动收集信息"></a>手动收集信息</h3><p>本机信息包括操作系统、权限、内网IP地址段、杀毒软件、端口、服务、补丁更新频率、网络连接、共享、会话等。如果是域内主机，操作系统、应用软件、补丁、服务、杀毒软件一般都是批量安装的。</p><p>通过本机的相关信息，进一步了解整个域的操作系统版本、软件及补丁安装情况、用户命名方式等。</p><ol><li><p>查询网络配置信息</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ipconfig &#x2F;all</span><br></pre></td></tr></table></figure><img src="/posts/12754/Users\PanLv\AppData\Roaming\Typora\typora-user-images\image-20200320131051116.png" alt="ipconfig /all" style="zoom:67%;"></li><li><p>查询操作系统及软件信息</p><p>查询操作系统和版本信息</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systeminfo | findstr &#x2F;B &#x2F;C:&quot;OS Name&quot; &#x2F;C:&quot;OS Version&quot;</span><br><span class="line">中文版</span><br><span class="line">systeminfo | findstr &#x2F;B &#x2F;C:&quot;OS 名称&quot; &#x2F;C:&quot;OS 版本&quot;</span><br></pre></td></tr></table></figure><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200320170458113.png" alt="image-20200320170458113"></p><p>查看系统体系结构</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo %PROCESSOR_ARCHITECTURE%</span><br></pre></td></tr></table></figure><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200320170803258.png" alt="image-20200320170803258"></p><p>查看安装的软件及版本、路径等</p><p>利用<code>wmic</code>命令，将输出结果到文本文件中</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wmic product get name,version</span><br></pre></td></tr></table></figure><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200320171109489.png" alt="image-20200320171109489"></p><p>利用powershell命令，收集软件的版本信息</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell.exe <span class="string">"Get-WmiObject -class Win32_Product |Select-Object -Property name,version"</span></span><br></pre></td></tr></table></figure><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200320171356318.png" alt="image-20200320171356318"></p><p>查询本机服务信息</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wmic service list brief</span><br></pre></td></tr></table></figure><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200320171545322.png" alt="image-20200320171545322"></p><p>查询进程列表</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tasklist</span><br></pre></td></tr></table></figure><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200320171800764.png" alt="当前进程"></p><p>查看进程信息</p><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200320171913377.png" alt="进程信息"></p><p>查看启动程序信息</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wmic startup get command,caption</span><br></pre></td></tr></table></figure><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200320172134213.png" alt="启动程序信息"></p><p>查看计划任务</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schtasks &#x2F;query &#x2F;fo LIST &#x2F;v</span><br></pre></td></tr></table></figure><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200320172338158.png" alt="计划任务"></p><p>查看主机开机时间</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net statistics workstation</span><br></pre></td></tr></table></figure><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200320172516571.png" alt="主机开机时间"></p><p>查询用户列表（可以找出内网机器的命令规则）</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net user</span><br></pre></td></tr></table></figure><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200320172619261.png" alt="用户列表"></p><p>获取本地管理员信息（通常包含域用户）</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net localgroup administrators</span><br></pre></td></tr></table></figure><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200320172850280.png" alt="本地管理员"></p><p>查询当前在线用户</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">query user || qwinsta</span><br></pre></td></tr></table></figure><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200320173015257.png" alt="在线用户"></p><p>列出或断开本地计算机与所连接的客户端之间的会话</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net session</span><br></pre></td></tr></table></figure><p>查询端口列表</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -ano</span><br></pre></td></tr></table></figure><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200320173231595.png" alt="端口列表"></p><p>查看补丁列表</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systeminfo</span><br></pre></td></tr></table></figure><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200320173416455.png" alt="补丁列表"></p><p>需要注意系统的版本、位数、域、补丁信息及更新频率等。域内主机的补丁通常是批量安装的通过查看本机的补丁列表，就可以找到为打补丁的漏洞。</p><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200320173519555.png" alt="补丁"></p><p>使用wmic命令查看安装在系统中的补丁</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wmic qfe get Caption,Description,HotFixID,InstalledOn</span><br></pre></td></tr></table></figure><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200320173846237.png" alt="更新补丁"></p><p>查看本机共享列表和可访问的域共享列表</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net share</span><br></pre></td></tr></table></figure><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200320174007610.png" alt="共享列表"></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wmic share get name,path,status</span><br></pre></td></tr></table></figure><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200320174108057.png" alt="wmic共享列表"></p><p>查询路由表及所有可用接口的ARP（地址解析协议）缓存表</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">route <span class="built_in">print</span></span><br><span class="line">arp -a</span><br></pre></td></tr></table></figure><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200320203520428.png" alt="路由表"></p><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200320203601604.png" alt="arp缓存表"></p><p>查询防火墙相关配置</p><ul><li><p>关闭防火墙（管理员权限）</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh firewall <span class="built_in">set</span> opmode <span class="built_in">disable</span>  <span class="comment"># win server 2003及之前的版本</span></span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh advfirewall <span class="built_in">set</span> allprofiles state off <span class="comment"># win server 2003之后版本</span></span><br></pre></td></tr></table></figure></li><li><p>查看防火墙配置</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh firewall show config</span><br></pre></td></tr></table></figure></li><li><p>修改防火墙配置</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># win server 2003及之前版本，允许指定程序全部连接</span></span><br><span class="line">netsh firewall add allowedprogram c:\nc.exe <span class="string">"allow nc"</span> <span class="built_in">enable</span></span><br><span class="line"><span class="comment"># win server 2003之后版本</span></span><br><span class="line">netsh advfirewall firewall add rule name=<span class="string">"pass nc"</span> dir <span class="keyword">in</span> action=allow program=<span class="string">"c:\nc.exe"</span>  <span class="comment"># 允许指定程序进入</span></span><br><span class="line"></span><br><span class="line">netsh advfirewall firewall add rule name=<span class="string">"Allow nc"</span> dir=out action=allow program=<span class="string">"c:\nc.exe"</span>  <span class="comment"># 允许指定程序退出</span></span><br><span class="line"></span><br><span class="line">netsh advfirewall firewall add rule name=<span class="string">"Remote Desktop"</span> protocol=TCP dir=<span class="keyword">in</span> localport=3389 action=allow  <span class="comment"># 允许3389端口放行</span></span><br></pre></td></tr></table></figure></li><li><p>自定义防火墙日志的存储位置</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh advfirewall <span class="built_in">set</span> currentprofile logging filename <span class="string">"c:\windows\temp\fw.log"</span></span><br></pre></td></tr></table></figure></li></ul><p>查看代理配置情况</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reg query <span class="string">"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings"</span>   <span class="comment"># 可以看到服务器127.0.0.1的1080端口的代理配置信息</span></span><br></pre></td></tr></table></figure><img src="/posts/12754/images\image-20200320210146225.png" alt="image-20200320210146225" style="zoom:80%;"><p>查询并开启远程连接服务</p><ul><li><p>查看远程连接端口</p><p>在命令行环境中执行注册表查询语句</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">REG QUERY <span class="string">"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp"</span> /V PortNumber</span><br></pre></td></tr></table></figure><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200320210727867.png" alt="远程端口"></p><p>连接的端口为0xd3d，转换后为3389</p></li><li><p>在Windows server 2003中开启3389</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wmic path win32_terminalservicesetting <span class="built_in">where</span> (_CLASS !=<span class="string">""</span>) callsetallowtsconnections 1</span><br></pre></td></tr></table></figure></li><li><p>在Windows server 2008和Windows server 2012中开启3389</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wmic/namespace:\\root\cimv2\terminalservices path win32_terminalservicesetting <span class="built_in">where</span> (_CLASS !=<span class="string">""</span>) call setallowsconnections 1</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wmic/namespace:\\root\cimv2\terminalservices path win32_terminalservicesetting <span class="built_in">where</span> (TerminalName=<span class="string">'RDP-Tcp'</span>) call setuserauthenticationrequired 1</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reg add <span class="string">"HKLM\SYSTEM\CURRENT\CONTROLSET\CONTROL\TERMINAL SERVER"</span> /v fSingleSessionPerUser /t REG_DWORD /d 0 /f</span><br></pre></td></tr></table></figure></li></ul></li></ol><h3 id="自动收集信息"><a href="#自动收集信息" class="headerlink" title="自动收集信息"></a>自动收集信息</h3><p>为了简化操作，可以创建一个脚本，在目标机器上述完成流程、服务、用户账号、用户组、网络接口、硬盘信息、网络共享信息、操作系统、安装补丁、安装软件、启动时运行的程序、时区等信息的查询工作。</p><p>推荐使用利用<code>WMIC</code>收集目标信息。在默认情况下，任何版本的Windows XP的低权限用户不能访问wmic，Windows 7以上版本的低权限用户允许访问wmic并执行相关查询操作。</p><p><a href="http://www.fuzzysecurity.com/scripts/files/wmic_info.rar" target="_blank" rel="noopener">http://www.fuzzysecurity.com/scripts/files/wmic_info.rar</a> 执行该脚本后会将所有结果写入一个 html 文件。</p><img src="/posts/12754/images\image-20200321150034222.png" alt="image-20200321150034222" style="zoom:80%;"><h3 id="Empire下主机信息收集"><a href="#Empire下主机信息收集" class="headerlink" title="Empire下主机信息收集"></a>Empire下主机信息收集</h3><p>Empire提供了用于收集主机信息的模块。输入命令<code>usemodule situational_awareness/host/winenum</code>，即可查看本机用户、域成员、密码设置时间、剪切板内容、系统基本信息、网络适配器信息、共享信息等。</p><p>另外，<code>situational_awareness/host/winenum</code>模块激活包含了系统中所有有用的信息，例如目标主机事件日志、应用程序控制策略日志，包含RDP登录信息、powershell脚本运行和保存的信息等。</p><p><strong>运行这个模块需要管理员权限。</strong></p><h2 id="查询当前权限"><a href="#查询当前权限" class="headerlink" title="查询当前权限"></a>查询当前权限</h2><ol><li><p>查看当前权限</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whoami</span><br></pre></td></tr></table></figure><p>本地普通用户（commando本机的fireeye用户）</p><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200321150415512.png" alt="image-20200321150415512"></p><p>本地管理员用户（win-nmcuole3s38本机的administrator用户）</p><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200321151122737.png" alt="image-20200321151122737"></p><p>域内用户（test域内administrator用户）</p><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200321150920756.png" alt="image-20200321150920756"></p><p>如果当前内网中存在域，那么本地普通用户只能查询本机相关信息，不能查询域内信息，而本地管理员用户和域内用户可以查询域内信息。其原理是：域内的所有查询都是通过域控制器实现的（基于LDAP协议），而这个查询需要经过权限认证，所以只有域用户才有这个权限；当域用户执行查询命令时，会自动使用Kerberos协议进行认证，无需额外输入账号密码。</p><p>本地管理员administrator权限可以直接提升为Ntauthority或system权限，因此在域中，除普通用户外，所以的机器都有一个机器用户（用户名是机器名+$）。在本质上，机器的system用户对应的就是域里面的机器用户。所以使用system权限可运行域内的查询命令。</p></li><li><p>获取域SID</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whoami /all</span><br></pre></td></tr></table></figure><img src="/posts/12754/images\image-20200321162551515.png" alt="image-20200321162551515" style="zoom:80%;"><p>500 为域用户administrator的SID，前面的是test域的SID</p></li><li><p>查询指定用户的详细信息</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net user xxx /domain</span><br></pre></td></tr></table></figure><img src="/posts/12754/images\image-20200321162905059.png" alt="image-20200321162905059" style="zoom:67%;"></li></ol><h2 id="判断是否存在域"><a href="#判断是否存在域" class="headerlink" title="判断是否存在域"></a>判断是否存在域</h2><p>获得了本机的相关信息后，就要判断当前内网中是否存在域，如果存在，就要判断所控主机是否在域内。</p><ol><li><p>使用 ipconfig 命令</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ipconfig /all</span><br></pre></td></tr></table></figure><p>查看网关IP、DNSIP、域名、本机是否和DNS服务器处于同一网段</p><img src="/posts/12754/images\image-20200321163459590.png" alt="image-20200321163459590" style="zoom:60%;"><p>用 nslookup 解析域名的IP地址。用解析得到的IP地址进行对比，判断域控制器和DNS服务器是否在同一台机器上。</p><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200321163655780.png" alt="image-20200321163655780"></p></li><li><p>查看系统详细信息</p><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200321163851946.png" alt="image-20200321163851946"></p><p>”域“即域名test.com、“登录服务器”为域控制器，如果“域”为“WORKGROUP”，表示当前机器不在域内。</p></li><li><p>查询当前登录域及登录用户信息</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net config workstation</span><br></pre></td></tr></table></figure><img src="/posts/12754/images\image-20200321164309260.png" alt="image-20200321164309260" style="zoom:80%;"></li><li><p>判断主域(域服务器通常会同时作为时间服务器使用)</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net time /domain</span><br></pre></td></tr></table></figure><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200321164434781.png" alt="image-20200321164434781"></p><p>执行上面的命令，通常有3中情况：</p><ul><li><p>存在域，当前用户不是域用户</p><p>发生系统错误 5。拒绝访问。</p></li><li><p>存在域，当前用户是域用户</p><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200321164840696.png" alt="image-20200321164840696"></p></li><li><p>不存在域</p><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200321164821261.png" alt="image-20200321164821261"></p></li></ul></li></ol><h2 id="探测域内存活主机"><a href="#探测域内存活主机" class="headerlink" title="探测域内存活主机"></a>探测域内存活主机</h2><h3 id="利用NetBIOS快速探测内网"><a href="#利用NetBIOS快速探测内网" class="headerlink" title="利用NetBIOS快速探测内网"></a>利用NetBIOS快速探测内网</h3><p>NetBIOS是局域网程序使用的一种应用程序编程接口，为程序提供了请求低级服务的统一的命令集，为局域网提供了网络及其他特殊功能。NetBIOS也是计算机的命名标识，主要用于局域网中计算机的互访。NetBIOS的工作流程就是正常的机器名解析查询应答过程，因此<strong>推荐使用</strong>。</p><p>nbtscan是一个命令行工具，用于扫描本地或远程TCP/IP网络上的开放NetBIOS名称服务器。有Windows和Linux两个版本，体积很小，不需要安装特殊的库或DLL就能使用。</p><p>将其上传的目标上，然后直接输入IP地址范围并运行。输入<code>nbtscan.exe</code>查看帮助文档。</p><h3 id="利用ICMP协议快速探测内网"><a href="#利用ICMP协议快速探测内网" class="headerlink" title="利用ICMP协议快速探测内网"></a>利用ICMP协议快速探测内网</h3><p>一次对内网中的每个IP地址执行ping命令，可以快速找到内网存活主机。在渗透测试中可以探测整个C段。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> /L %I <span class="keyword">in</span> (1,1,254) DO @ping -w 1 -n 1 192.168.1.%I | findstr <span class="string">"TTL="</span></span><br></pre></td></tr></table></figure><p><img src="/posts/12754/F:%5Cimages%5Cimage-20200322174613782.png" alt="icmp探测"></p><p>vbs脚本</p><figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">strSubNet = <span class="string">"192.168.1."</span></span><br><span class="line"><span class="keyword">Set</span> objFSO = <span class="built_in">CreateObject</span>(<span class="string">"Scripting.FileSystemObject"</span>)</span><br><span class="line"><span class="keyword">Set</span> objTS = Objfso.CreateTextFile(<span class="string">"C:\Windows\Temp\Result.txt"</span>)</span><br><span class="line"><span class="keyword">For</span> i = <span class="number">1</span> <span class="keyword">To</span> <span class="number">254</span></span><br><span class="line">strComputer = strSubNet &amp; i</span><br><span class="line">blnResult = Ping(strComputer)</span><br><span class="line"><span class="keyword">If</span> blnResult = <span class="literal">True</span> <span class="keyword">Then</span></span><br><span class="line">objTS.WriteLine strComputer &amp; <span class="string">" is alived ! :)"</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">If</span></span><br><span class="line"><span class="keyword">Next</span></span><br><span class="line"></span><br><span class="line">objTS.close</span><br><span class="line">WScript.Echo <span class="string">"All Ping Scan , All Done ! :)"</span></span><br><span class="line"><span class="keyword">Function</span> Ping(strComputer)</span><br><span class="line"><span class="keyword">Set</span> objWMIService = <span class="built_in">GetObject</span>(<span class="string">"winmgmts:\\.\root\cimv2"</span>)</span><br><span class="line"><span class="keyword">Set</span> colItems = objWMIService.ExecQuery(<span class="string">"Select * From Win32_PingStatus Where Address='"</span> &amp; strComputer &amp; <span class="string">"'"</span>)</span><br><span class="line"><span class="keyword">For</span> <span class="keyword">Each</span> objItem <span class="keyword">In</span> colItems</span><br><span class="line"><span class="keyword">Select</span> <span class="keyword">case</span> objItem.StatusCode</span><br><span class="line"><span class="keyword">Case</span> <span class="number">0</span></span><br><span class="line">Ping = <span class="literal">True</span></span><br><span class="line"><span class="keyword">Case</span> <span class="keyword">Else</span></span><br><span class="line">Ping = <span class="literal">False</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">select</span></span><br><span class="line"><span class="keyword">Exit</span> <span class="keyword">For</span></span><br><span class="line"><span class="keyword">Next</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Function</span></span><br></pre></td></tr></table></figure><img src="/posts/12754/images\image-20200322181818410.png" alt="image-20200322181818410" style="zoom:80%;"><h3 id="通过ARP扫描探测内网"><a href="#通过ARP扫描探测内网" class="headerlink" title="通过ARP扫描探测内网"></a>通过ARP扫描探测内网</h3><ol><li><p>arp-scan工具</p><p>直接把arp.exe上传到目标机器中运行，可以自定义掩码、指定扫描范围等</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arp.exe -t 192.168.1.0/20</span><br></pre></td></tr></table></figure></li><li><p>Empire中的arpscan模块</p><p>该模块用于在局域网内发送ARP数据包、收集活跃主机的IP地址和MAC地址信息。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useodule situational_awareness/network/arpscan</span><br></pre></td></tr></table></figure></li><li><p>Nishang中的Invoke-ARPScan.ps1脚本</p><p>将脚本上传到目标机器上运行，也可以直接远程加载脚本、自定义掩码和扫描范围</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell.exe -<span class="built_in">exec</span> bypass -Command <span class="string">"&amp; &#123;Import-Module C:\windows\temp\Invoke-ARPScan.ps1; Invoke-ARPScan -CIDR 192.168.1.0/20&#125;"</span> &gt;&gt; C:\windows\temp\log.txt</span><br></pre></td></tr></table></figure></li><li><p>通过常规TCP/UDP端口扫描探测内网</p><p>ScanLine是一款经典的端口扫描工具，可以在所有版本的Windows操作系统中使用，体积小，仅使用单个文件，同时支持TCP/UDP端口扫描</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scanline -h -t 22,80-89,110,389,445,3389,1099,1433,2049,6379,7001,8080,1521,3306,5432 -u 53,161,137,139 -O c:\windows\temp\log.txt -p 192.168.1.1-254 /b</span><br></pre></td></tr></table></figure></li></ol><h3 id="扫描域内端口"><a href="#扫描域内端口" class="headerlink" title="扫描域内端口"></a>扫描域内端口</h3><p>注意以下几点：</p><ul><li>端口的Banner信息</li><li>端口上运行的服务</li><li>常见应用的默认端口</li></ul><h3 id="利用telnet命令进行扫描"><a href="#利用telnet命令进行扫描" class="headerlink" title="利用telnet命令进行扫描"></a>利用telnet命令进行扫描</h3>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;内网信息收集&quot;&gt;&lt;a href=&quot;#内网信息收集&quot; class=&quot;headerlink&quot; title=&quot;内网信息收集&quot;&gt;&lt;/a&gt;内网信息收集&lt;/h1&gt;&lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;
-      
-    
-    </summary>
-    
-    
-    
-      <category term="内网渗透" scheme="http://140.143.122.13/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/"/>
     
   </entry>
   
