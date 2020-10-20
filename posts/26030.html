@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="0x00 基础正则表达式是一种用来匹配字符串的强有力的武器。它的设计思想是用一种描述性的语言来给字符串定义一个规则，凡是符合规则的字符串，我们就认为它“匹配”了，否则，该字符串就是不合法的。 在正则表达式中，如果直接给出字符，就是精确匹配。用\d可以匹配一个数字，\w可以匹配一个字母或数字&#39;00\d&#39;可以匹配&#39;002&#39;、&#39;003&#39;等，但是无法匹配&amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python正则表达式">
+<meta property="og:url" content="http://mysecroad.github.io/posts/26030.html">
+<meta property="og:site_name" content="忆时光">
+<meta property="og:description" content="0x00 基础正则表达式是一种用来匹配字符串的强有力的武器。它的设计思想是用一种描述性的语言来给字符串定义一个规则，凡是符合规则的字符串，我们就认为它“匹配”了，否则，该字符串就是不合法的。 在正则表达式中，如果直接给出字符，就是精确匹配。用\d可以匹配一个数字，\w可以匹配一个字母或数字&#39;00\d&#39;可以匹配&#39;002&#39;、&#39;003&#39;等，但是无法匹配&amp;#">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-10-20T07:31:02.000Z">
+<meta property="article:modified_time" content="2020-10-20T09:20:40.399Z">
+<meta property="article:author" content="ca5tle">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Python正则表达式</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="忆时光" type="application/atom+xml" />
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://www.sectime.top:8888" target="_blank" rel="noopener">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/posts/51461.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/posts/65258.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://mysecroad.github.io/posts/26030.html" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://mysecroad.github.io/posts/26030.html&text=Python正则表达式" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://mysecroad.github.io/posts/26030.html&title=Python正则表达式" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://mysecroad.github.io/posts/26030.html&is_video=false&description=Python正则表达式" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Python正则表达式&body=Check out this article: http://mysecroad.github.io/posts/26030.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://mysecroad.github.io/posts/26030.html&title=Python正则表达式" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://mysecroad.github.io/posts/26030.html&title=Python正则表达式" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://mysecroad.github.io/posts/26030.html&title=Python正则表达式" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://mysecroad.github.io/posts/26030.html&title=Python正则表达式" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://mysecroad.github.io/posts/26030.html&name=Python正则表达式&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://mysecroad.github.io/posts/26030.html&t=Python正则表达式" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00-基础"><span class="toc-number">1.</span> <span class="toc-text">0x00 基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-进阶"><span class="toc-number">2.</span> <span class="toc-text">0x01 进阶</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-re模块"><span class="toc-number">3.</span> <span class="toc-text">0x02 re模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-切分字符串"><span class="toc-number">4.</span> <span class="toc-text">0x03 切分字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-分组"><span class="toc-number">5.</span> <span class="toc-text">0x04 分组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-贪婪匹配"><span class="toc-number">6.</span> <span class="toc-text">0x05 贪婪匹配</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x06-写在最后"><span class="toc-number">7.</span> <span class="toc-text">0x06 写在最后</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Python正则表达式
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">ca5tle</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-10-20T07:31:02.000Z" itemprop="datePublished">2020-10-20</time>
+        
+        (Updated: <time datetime="2020-10-20T09:20:40.399Z" itemprop="dateModified">2020-10-20</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Python/">Python</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/python/" rel="tag">python</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="0x00-基础"><a href="#0x00-基础" class="headerlink" title="0x00 基础"></a>0x00 基础</h2><p>正则表达式是一种用来匹配字符串的强有力的武器。它的设计思想是用一种描述性的语言来给字符串定义一个规则，凡是符合规则的字符串，我们就认为它“匹配”了，否则，该字符串就是不合法的。</p>
+<p>在正则表达式中，如果直接给出字符，就是精确匹配。用<code>\d</code>可以匹配一个数字，<code>\w</code>可以匹配一个字母或数字<br><code>&#39;00\d&#39;</code>可以匹配<code>&#39;002&#39;</code>、<code>&#39;003&#39;</code>等，但是无法匹配<code>&#39;00a&#39;</code><br><code>&#39;\d\d\d&#39;</code>可以匹配长度为3的字符串或数字，比如<code>&#39;123&#39;</code>、<code>&#39;111&#39;</code>等<br><code>&#39;\w\w\d&#39;</code>可以匹配长度为3的字符串，比如<code>&#39;aa1&#39;</code>、<code>&#39;ds0&#39;</code>等<br><code>.</code>可以匹配任意一个字符，比如<code>&#39;ab.&#39;</code>可以匹配<code>&#39;ab1&#39;</code>、<code>&#39;abd&#39;</code>等</p>
+<p>要匹配变长的字符，<br>用<code>*</code>表示任意个字符，包括0个，<br>用<code>+</code>表示至少一个字符，<br>用<code>?</code>表示0个或1个字符，<br>用<code>{n}</code>表示n个字符，<br>用<code>{n,m}</code>表示n-m个字符</p>
+<p>例如，<code>\d{3}\s+\d{3,8}</code></p>
+<ul>
+<li><code>\d{3}</code>代表3个数字</li>
+<li><code>\s</code>代表匹配一个空格（包括Tab等空白符），所以<code>\s+</code>表示至少有一个空格</li>
+<li><code>\d{3,8}</code>表示3到8个数字</li>
+</ul>
+<p>综上，上面的正则表达式可以匹配前面3个数字，中间至少一个空格，后面3到8个数字的字符串</p>
+<p>如果要匹配特殊字符，比如<code>-</code>，需要用<code>\</code>转义，即<code>\-</code></p>
+<h2 id="0x01-进阶"><a href="#0x01-进阶" class="headerlink" title="0x01 进阶"></a>0x01 进阶</h2><p>要做到更精确的匹配，可以用<code>[]</code>表示范围</p>
+<ul>
+<li><code>[0-9a-zA-Z\_]</code>可以匹配一个数字、或一个字母或者一个下划线</li>
+<li><code>[0-9a-zA-Z\_]+</code>可以匹配至少由一个数字、字母或下划线组成的字符串</li>
+<li><code>[a-zA-Z\_][0-9a-zA-Z\_]*</code>可以匹配由字母或下划线开头，后接任意个由一个数字、字母或下划线组成的字符串</li>
+<li><code>[a-zA-Z\_][0-9a-zA-Z\_]{0,19}</code>更精确地限制了变量的长度是1-20个字符（前面一个字符+后面最多19个字符）</li>
+</ul>
+<p><code>A|B</code>可以匹配A或B<br><code>(P|p)ython</code>可以匹配<code>Python</code>或<code>python</code><br><code>^</code>表示行的开头，<code>^\d</code>表示必须以数字开头<br><code>$</code>表示行的结束，<code>\d$</code>表示必须以数字结尾</p>
+<h2 id="0x02-re模块"><a href="#0x02-re模块" class="headerlink" title="0x02 re模块"></a>0x02 re模块</h2><p>下面用Python的re库使用正则表达式<br>由于Python的字符串本身也用<code>\</code>转义，所以要特别注意：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">str &#x3D; &#39;abc\\-111&#39;</span><br><span class="line">print(str)</span><br><span class="line"></span><br><span class="line">结果： abc\-111</span><br></pre></td></tr></table></figure>
+<p>所以我们可以使用<code>r</code>前缀，原始字符串，不用考虑转义的问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">str &#x3D; r&#39;abc\-111&#39;</span><br><span class="line">print(str)</span><br><span class="line"></span><br><span class="line">结果： abc-111</span><br></pre></td></tr></table></figure>
+<p>判断正则表达式是否匹配</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import re</span><br><span class="line">&gt;&gt;&gt; re.match(r&#39;^\d&#123;3&#125;\-\d&#123;3,8&#125;$&#39;, &#39;010-12345&#39;)</span><br><span class="line">&lt;_sre.SRE_Match object; span&#x3D;(0, 9), match&#x3D;&#39;010-12345&#39;&gt;</span><br><span class="line">&gt;&gt;&gt; re.match(r&#39;^\d&#123;3&#125;\-\d&#123;3,8&#125;$&#39;, &#39;010 12345&#39;)</span><br></pre></td></tr></table></figure>
+<p><code>match()</code>方法判断是否匹配，如果匹配成功，返回一个<code>Match</code>对象，否则返回<code>None</code>。常见的判断方法是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test &#x3D; &#39;用户输入的字符串&#39;</span><br><span class="line">if re.match(r&#39;正则表达式&#39;, test):</span><br><span class="line">    print(&#39;ok&#39;)</span><br><span class="line">else:</span><br><span class="line">    print(&#39;failed&#39;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="0x03-切分字符串"><a href="#0x03-切分字符串" class="headerlink" title="0x03 切分字符串"></a>0x03 切分字符串</h2><p>用正则表达式切片更加灵活</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; &#39;a b     c&#39;.split(&#39; &#39;)</span><br><span class="line">[&#39;a&#39;, &#39;b&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;c&#39;]</span><br></pre></td></tr></table></figure>
+<p>无法识别连续的空格，用正则表达式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ss &#x3D; &#39;a b     c&#39;</span><br><span class="line">res &#x3D; re.split(r&#39;\s+&#39;, ss)</span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line">结果： [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span><br></pre></td></tr></table></figure>
+<p>切分空格、,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ss &#x3D; &#39;a,b     c,d  e&#39;</span><br><span class="line">res &#x3D; re.split(r&#39;[\s\,]+&#39;, ss)</span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line">结果： [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;]</span><br></pre></td></tr></table></figure>
+<p>再加上<code>;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ss &#x3D; &#39;a,b     c;;d  e;test&#39;</span><br><span class="line">res &#x3D; re.split(r&#39;[\s\,\;]+&#39;, ss)</span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line">结果： [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;, &#39;test&#39;]</span><br></pre></td></tr></table></figure>
+
+<h2 id="0x04-分组"><a href="#0x04-分组" class="headerlink" title="0x04 分组"></a>0x04 分组</h2><p>提取子串<br>用<code>()</code>表示的就是要提取的分组(Group)。<br><code>^(\d{3})-(\d{3,8})$</code>分别定义了两个组，可以直接从匹配的字符串中提取出两个字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">str &#x3D; &#39;010-5832360&#39;</span><br><span class="line">if re.match(r&#39;^(\d&#123;3&#125;)-(\d&#123;3,8&#125;)$&#39;, str):</span><br><span class="line">    print(&quot;匹配成功&quot;)</span><br><span class="line">else:</span><br><span class="line">    print(&quot;匹配失败&quot;)</span><br><span class="line">res &#x3D; re.match(r&#39;^(\d&#123;3&#125;)-(\d&#123;3,8&#125;)$&#39;, str)</span><br><span class="line">print(res.group(0))</span><br><span class="line">print(res.group(1))</span><br><span class="line">print(res.group(2))</span><br><span class="line"></span><br><span class="line">结果：</span><br><span class="line">匹配成功</span><br><span class="line">010-5832360</span><br><span class="line">010</span><br><span class="line">5832360</span><br></pre></td></tr></table></figure>
+<p>如果正则表达式中定义了组，就可以在Match对象上用group()方法提取出子串来。</p>
+<p>注意到group(0)永远是原始字符串，group(1)、group(2)……表示第1、2、……个子串。</p>
+<h2 id="0x05-贪婪匹配"><a href="#0x05-贪婪匹配" class="headerlink" title="0x05 贪婪匹配"></a>0x05 贪婪匹配</h2><p>最后需要特别指出的是，正则匹配默认是贪婪匹配，也就是匹配尽可能多的字符。举例如下，匹配出数字后面的0：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; re.match(r&#39;^(\d+)(0*)$&#39;, &#39;102300&#39;).groups()</span><br><span class="line">(&#39;102300&#39;, &#39;&#39;)</span><br></pre></td></tr></table></figure>
+<p>由于<code>\d+</code>采用贪婪匹配，直接把后面的0全部匹配了，结果<code>0*</code>只能匹配空字符串了。</p>
+<p>必须让<code>\d+</code>采用非贪婪匹配（也就是尽可能少匹配），才能把后面的0匹配出来，加个<code>?</code>就可以让<code>\d+</code>采用非贪婪匹配：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; re.match(r&#39;^(\d+?)(0*)$&#39;, &#39;102300&#39;).groups()</span><br><span class="line">(&#39;1023&#39;, &#39;00&#39;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="0x06-写在最后"><a href="#0x06-写在最后" class="headerlink" title="0x06 写在最后"></a>0x06 写在最后</h2><p>正则表达式的内容绝不止这些，这些只是基本的用法。<br>后面会接着学习。</p>
+
+  </div>
+</article>
+
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <div id="vcomments" class="blog-post-comments"></div>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            visitor: true,
+            appId: 'euAQjqlW2tS4fVHxsmyLkdLj-gzGzoHsz',
+            appKey: 'Fmn6CIIN9yyDif6AC2hxSglA',
+            placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+            avatar: 'robohash'
+        })
+    </script>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://www.sectime.top:8888" target="_blank" rel="noopener">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00-基础"><span class="toc-number">1.</span> <span class="toc-text">0x00 基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-进阶"><span class="toc-number">2.</span> <span class="toc-text">0x01 进阶</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-re模块"><span class="toc-number">3.</span> <span class="toc-text">0x02 re模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-切分字符串"><span class="toc-number">4.</span> <span class="toc-text">0x03 切分字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-分组"><span class="toc-number">5.</span> <span class="toc-text">0x04 分组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-贪婪匹配"><span class="toc-number">6.</span> <span class="toc-text">0x05 贪婪匹配</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x06-写在最后"><span class="toc-number">7.</span> <span class="toc-text">0x06 写在最后</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://mysecroad.github.io/posts/26030.html" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://mysecroad.github.io/posts/26030.html&text=Python正则表达式" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://mysecroad.github.io/posts/26030.html&title=Python正则表达式" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://mysecroad.github.io/posts/26030.html&is_video=false&description=Python正则表达式" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Python正则表达式&body=Check out this article: http://mysecroad.github.io/posts/26030.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://mysecroad.github.io/posts/26030.html&title=Python正则表达式" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://mysecroad.github.io/posts/26030.html&title=Python正则表达式" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://mysecroad.github.io/posts/26030.html&title=Python正则表达式" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://mysecroad.github.io/posts/26030.html&title=Python正则表达式" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://mysecroad.github.io/posts/26030.html&name=Python正则表达式&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://mysecroad.github.io/posts/26030.html&t=Python正则表达式" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2018-2020
+	<img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png">
+	<a href="http://www.beian.miit.gov.cn/"  style="color:#f72b07" target="_blank">豫ICP备20012507号</a>
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://www.sectime.top:8888" target="_blank" rel="noopener">Img</a></li>
+         
+          <li><a href="/links/">Links</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="http://github.com/mysecroad" target="_blank" rel="noopener">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
