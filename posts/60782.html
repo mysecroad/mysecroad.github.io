@@ -6,18 +6,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="输入密码，查看文章！">
+    <meta name="description" content="前言Fuzz一直是渗透测试中比较重要的技术，之前一直是听说并没有学习过，今天在漏洞银行看了一期视频[87期]看Fuzz与漏洞挖掘擦出火花，感觉讲的挺好的。在此记录一下。 目录Fuzz(base)Fuzz敏感目录御剑一款经典的目录扫描工具。 它的工作原理就是： http:&#x2F;&#x2F;domain.com&#x2F;+目录字典 一般我们的目录字典是这样子的  那么这种扫描有什么好处呢？就是针对一部分网站可以扫描的全面，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Fuzz与漏洞挖掘">
 <meta property="og:url" content="http://mysecroad.github.io/posts/60782.html">
 <meta property="og:site_name" content="忆时光">
-<meta property="og:description" content="输入密码，查看文章！">
+<meta property="og:description" content="前言Fuzz一直是渗透测试中比较重要的技术，之前一直是听说并没有学习过，今天在漏洞银行看了一期视频[87期]看Fuzz与漏洞挖掘擦出火花，感觉讲的挺好的。在此记录一下。 目录Fuzz(base)Fuzz敏感目录御剑一款经典的目录扫描工具。 它的工作原理就是： http:&#x2F;&#x2F;domain.com&#x2F;+目录字典 一般我们的目录字典是这样子的  那么这种扫描有什么好处呢？就是针对一部分网站可以扫描的全面，">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://mysecroad.github.io/posts/60782/1.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/60782/2.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/60782/3.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/60782/4.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/60782/5.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/60782/6.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/60782/7.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/60782/8.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/60782/9.png">
+<meta property="og:image" content="http://mysecroad.github.io/posts/60782/10.png">
 <meta property="article:published_time" content="2020-12-09T02:23:42.000Z">
-<meta property="article:modified_time" content="2020-12-09T02:24:15.308Z">
+<meta property="article:modified_time" content="2020-12-09T08:01:08.682Z">
 <meta property="article:author" content="ca5tle">
-<meta property="article:tag" content="博客文章密码">
+<meta property="article:tag" content="Fuzz">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://mysecroad.github.io/posts/60782/1.png">
     
     
         
@@ -110,13 +121,13 @@
   <li><a class="icon" href="http://reddit.com/submit?url=http://mysecroad.github.io/posts/60782.html&title=Fuzz与漏洞挖掘" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://mysecroad.github.io/posts/60782.html&title=Fuzz与漏洞挖掘" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://digg.com/submit?url=http://mysecroad.github.io/posts/60782.html&title=Fuzz与漏洞挖掘" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://mysecroad.github.io/posts/60782.html&name=Fuzz与漏洞挖掘&description=输入密码，查看文章！" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://mysecroad.github.io/posts/60782.html&name=Fuzz与漏洞挖掘&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://mysecroad.github.io/posts/60782.html&t=Fuzz与漏洞挖掘" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目录Fuzz-base"><span class="toc-number">2.</span> <span class="toc-text">目录Fuzz(base)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Fuzz敏感目录"><span class="toc-number">2.1.</span> <span class="toc-text">Fuzz敏感目录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#御剑"><span class="toc-number">2.1.1.</span> <span class="toc-text">御剑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Dirsearch"><span class="toc-number">2.1.2.</span> <span class="toc-text">Dirsearch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Dirb"><span class="toc-number">2.1.3.</span> <span class="toc-text">Dirb</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#wfuzz"><span class="toc-number">2.1.4.</span> <span class="toc-text">wfuzz</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#案例"><span class="toc-number">2.2.</span> <span class="toc-text">案例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#403"><span class="toc-number">2.2.1.</span> <span class="toc-text">403</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hidden-XSS"><span class="toc-number">2.2.2.</span> <span class="toc-text">Hidden XSS</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参数Fuzz"><span class="toc-number">3.</span> <span class="toc-text">参数Fuzz</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Payload-Fuzz-bypass"><span class="toc-number">4.</span> <span class="toc-text">Payload Fuzz(bypass)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URL跳转与SSRF"><span class="toc-number">5.</span> <span class="toc-text">URL跳转与SSRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后缀名Fuzz"><span class="toc-number">6.</span> <span class="toc-text">后缀名Fuzz</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CRLF-Fuzz"><span class="toc-number">7.</span> <span class="toc-text">CRLF Fuzz</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS-Payload-Fuzz"><span class="toc-number">8.</span> <span class="toc-text">XSS Payload Fuzz</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">9.</span> <span class="toc-text">总结</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -135,38 +146,95 @@
 
     <div class="meta">
       <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">忆时光</span>
+        <span itemprop="name">ca5tle</span>
       </span>
       
     <div class="postdate">
       
         <time datetime="2020-12-09T02:23:42.000Z" itemprop="datePublished">2020-12-09</time>
         
-        (Updated: <time datetime="2020-12-09T02:24:15.308Z" itemprop="dateModified">2020-12-09</time>)
+        (Updated: <time datetime="2020-12-09T08:01:08.682Z" itemprop="dateModified">2020-12-09</time>)
         
       
     </div>
 
 
       
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E6%B8%97%E9%80%8F/">渗透</a>
+    </div>
+
 
       
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Fuzz/" rel="tag">Fuzz</a>
+    </div>
+
 
     </div>
   </header>
   
 
   <div class="content" itemprop="articleBody">
-    <div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <div class="hbe-input-container">
-  <input type="password" id="hbePass" placeholder="" />
-    <label for="hbePass">输入密码，查看文章！</label>
-    <div class="bottom-line"></div>
-  </div>
-  <script id="hbeData" type="hbeData" data-hmacdigest="f4f25515922814b31789af777e8cc081f949bd50de753aaf64e1e2b4b1866cac">8de2c04a2d70dba63f65a56a98175f4a</script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-</div>
-<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Fuzz一直是渗透测试中比较重要的技术，之前一直是听说并没有学习过，今天在漏洞银行看了一期视频<a href="https://www.bugbank.cn/live/view.html?id=111909" target="_blank" rel="noopener">[87期]看Fuzz与漏洞挖掘擦出火花</a>，感觉讲的挺好的。在此记录一下。</p>
+<h2 id="目录Fuzz-base"><a href="#目录Fuzz-base" class="headerlink" title="目录Fuzz(base)"></a>目录Fuzz(base)</h2><h3 id="Fuzz敏感目录"><a href="#Fuzz敏感目录" class="headerlink" title="Fuzz敏感目录"></a>Fuzz敏感目录</h3><h4 id="御剑"><a href="#御剑" class="headerlink" title="御剑"></a>御剑</h4><p>一款经典的目录扫描工具。</p>
+<p>它的工作原理就是： <code>http://domain.com/+目录字典</code></p>
+<p>一般我们的目录字典是这样子的</p>
+<p><img src="/posts/60782/1.png" alt="目录字典"></p>
+<p>那么这种扫描有什么好处呢？就是针对一部分网站可以扫描的全面，只要你的字典足够强大就可以扫描到绝大多部分的目录和文件，来自<code>Blasting_dictionary</code>的爆破字典很好，github地址<code>https://github.com/rootphantomer/Blasting_dictionary</code>这里的103w+目录字典就很符合御剑的模式，其实也就是看程序员的命名。</p>
+<h4 id="Dirsearch"><a href="#Dirsearch" class="headerlink" title="Dirsearch"></a>Dirsearch</h4><p>dirsearch是一个基于python的命令行工具，旨在暴力扫描页面结构，包括网页中的目录和文件</p>
+<p><a href="https://github.com/maurosoria/dirsearch" target="_blank" rel="noopener">下载地址</a></p>
+<p>使用方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 dirsearch.py -u url -e php</span><br></pre></td></tr></table></figure>
+
+<h4 id="Dirb"><a href="#Dirb" class="headerlink" title="Dirb"></a>Dirb</h4><p>使用方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dirb url 字典</span><br></pre></td></tr></table></figure>
+
+<p>kali自带字典<code>/usr/share/wordlist/dirb/...</code></p>
+<h4 id="wfuzz"><a href="#wfuzz" class="headerlink" title="wfuzz"></a>wfuzz</h4><p>wfuzz据说是最好用的一款fuzz工具，不过每个人喜欢的都不一样，适合自己的才是最好的。</p>
+<p>使用方法：<a href="https://blog.csdn.net/JBlock/article/details/88619117" target="_blank" rel="noopener">wfuzz使用教程</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wfuzz -z file,&#x2F;root&#x2F;Desktop&#x2F;Fuzzing&#x2F;dic.txt URL&#x2F;test&#x2F;FUZZ</span><br><span class="line">wfuzz -z file,&#x2F;root&#x2F;Desktop&#x2F;Fuzzing&#x2F;dic.txt URL&#x2F;test&#x2F;FUZZ -hc 404</span><br><span class="line">wfuzz -z file,&#x2F;root&#x2F;Desktop&#x2F;Fuzzing&#x2F;dic.txt URL&#x2F;test&#x2F;FUZZ -hw 123 返回包大小</span><br><span class="line">wfuzz -z file,&#x2F;root&#x2F;Desktop&#x2F;Fuzzing&#x2F;dic.txt URL&#x2F;test&#x2F;FUZZ -hs &quot;Not found&quot; 返回内容</span><br><span class="line">wfuzz -c -z file,&#x2F;root&#x2F;dic1.txt -z file,&#x2F;root&#x2F;dic2.txt -hs xx1 -hs xx2 -d &quot;log&#x3D;FUZZ&amp;pwd&#x3D;FUZ2Z&quot; http:&#x2F;&#x2F;ip&#x2F;wp-login.php</span><br></pre></td></tr></table></figure>
+
+<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><h4 id="403"><a href="#403" class="headerlink" title="403"></a>403</h4><p><img src="/posts/60782/2.png" alt="403"></p>
+<h4 id="Hidden-XSS"><a href="#Hidden-XSS" class="headerlink" title="Hidden XSS"></a>Hidden XSS</h4><p>原文链接：<a href="https://markitzeroday.com/xss/finding/2018/02/03/hidden-xss.html" target="_blank" rel="noopener">https://markitzeroday.com/xss/finding/2018/02/03/hidden-xss.html</a></p>
+<p><img src="/posts/60782/3.png" alt></p>
+<p>用<code>Nikto</code>做目录Fuzz，发现了<code>/test/</code>目录，访问<code>/test/</code></p>
+<p><img src="/posts/60782/4.png" alt></p>
+<p>返回<code>NULL</code>，接着使用<code>wfuzz</code>做参数Fuzz</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ wfuzz -w &#x2F;usr&#x2F;share&#x2F;wordlists&#x2F;dirb&#x2F;common.txt --hh 53 &#39;http:&#x2F;&#x2F;rob-sec-1.com&#x2F;test&#x2F;?FUZZ&#x3D;&lt;script&gt;alert(&quot;xss&quot;)&lt;&#x2F;script&gt;&#39;</span><br><span class="line">********************************************************</span><br><span class="line">* Wfuzz 2.2.3 - The Web Fuzzer                         *</span><br><span class="line">********************************************************</span><br><span class="line"></span><br><span class="line">Target: HTTP:&#x2F;&#x2F;rob-sec-1.com&#x2F;test&#x2F;?FUZZ&#x3D;&lt;script&gt;alert(&quot;xss&quot;)&lt;&#x2F;script&gt;</span><br><span class="line">Total requests: 4614</span><br><span class="line"></span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">ID	Response   Lines      Word         Chars          Payload    </span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">02127:  C&#x3D;200      9 L	       8 W	     84 Ch	  &quot;item&quot;</span><br><span class="line"></span><br><span class="line">Total time: 14.93025</span><br><span class="line">Processed Requests: 4614</span><br><span class="line">Filtered Requests: 4613</span><br><span class="line">Requests&#x2F;sec.: 309.0369</span><br></pre></td></tr></table></figure>
+
+<p>发现了<code>item</code>参数，访问<code>http://domain/test/?item=&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;</code>，成功弹窗</p>
+<p><img src="/posts/60782/5.png" alt></p>
+<h2 id="参数Fuzz"><a href="#参数Fuzz" class="headerlink" title="参数Fuzz"></a>参数Fuzz</h2><p>以sqli-labs第29关为例</p>
+<p>使用wfuzz自带的sqlfuzzer测试参数</p>
+<p><img src="/posts/60782/6.png" alt="wfuzz"></p>
+<p>把结果导出为html文件</p>
+<p><img src="/posts/60782/7.png" alt="wfuzz"></p>
+<p>看一下fuzz的结果</p>
+<p><img src="/posts/60782/8.png" alt="wfuzz"></p>
+<p><img src="/posts/60782/9.png" alt="wfuzz"></p>
+<p>通过fuzz就发现这一关存在sql语句的报错！那么就有可能存在报错注入！fuzz更多时就会发现一些绕过它waf的情况。</p>
+<h2 id="Payload-Fuzz-bypass"><a href="#Payload-Fuzz-bypass" class="headerlink" title="Payload Fuzz(bypass)"></a>Payload Fuzz(bypass)</h2><p>参考：<a href="https://blog.csdn.net/JBlock/article/details/88617906" target="_blank" rel="noopener">FUZZ过某狗</a></p>
+<p>所谓payload fuzz其实就是通过大量测试枚举字符组合，最终得到能够绕过WAF的有效载荷！</p>
+<h2 id="URL跳转与SSRF"><a href="#URL跳转与SSRF" class="headerlink" title="URL跳转与SSRF"></a>URL跳转与SSRF</h2><p>参数Fuzz和payload fuzz</p>
+<h2 id="后缀名Fuzz"><a href="#后缀名Fuzz" class="headerlink" title="后缀名Fuzz"></a>后缀名Fuzz</h2><p>文件上传，fuzz允许上传的后缀名</p>
+<h2 id="CRLF-Fuzz"><a href="#CRLF-Fuzz" class="headerlink" title="CRLF Fuzz"></a>CRLF Fuzz</h2><p><code>CRLF</code>是<code>Carriage-Return Line-Feed</code>的缩写，意思是回车换行，回车(CR, ASCII 13, \r)，换行(LF, ASCII 10, \n)，CRLF字符(%0d%0a)</p>
+<h2 id="XSS-Payload-Fuzz"><a href="#XSS-Payload-Fuzz" class="headerlink" title="XSS Payload Fuzz"></a>XSS Payload Fuzz</h2><p><a href="https://github.com/NytroRST/XSSFuzzer" target="_blank" rel="noopener">XSS Fuzzer</a></p>
+<p><img src="/posts/60782/10.png" alt="wfuzz"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>感觉Fuzz还是枚举吧，关键在于字典是否强大。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Fuzzdb</span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;Fuzzdb-project&#x2F;Fuzzdb</span><br><span class="line">seclist</span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;danielmiessler&#x2F;SecLists</span><br><span class="line">某大牛的字典</span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;bl4de&#x2F;dictionaries&#x2F;</span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;1N3&#x2F;IntruderPayloads&#x2F;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
   </div>
 </article>
 
@@ -212,7 +280,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目录Fuzz-base"><span class="toc-number">2.</span> <span class="toc-text">目录Fuzz(base)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Fuzz敏感目录"><span class="toc-number">2.1.</span> <span class="toc-text">Fuzz敏感目录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#御剑"><span class="toc-number">2.1.1.</span> <span class="toc-text">御剑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Dirsearch"><span class="toc-number">2.1.2.</span> <span class="toc-text">Dirsearch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Dirb"><span class="toc-number">2.1.3.</span> <span class="toc-text">Dirb</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#wfuzz"><span class="toc-number">2.1.4.</span> <span class="toc-text">wfuzz</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#案例"><span class="toc-number">2.2.</span> <span class="toc-text">案例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#403"><span class="toc-number">2.2.1.</span> <span class="toc-text">403</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hidden-XSS"><span class="toc-number">2.2.2.</span> <span class="toc-text">Hidden XSS</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参数Fuzz"><span class="toc-number">3.</span> <span class="toc-text">参数Fuzz</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Payload-Fuzz-bypass"><span class="toc-number">4.</span> <span class="toc-text">Payload Fuzz(bypass)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URL跳转与SSRF"><span class="toc-number">5.</span> <span class="toc-text">URL跳转与SSRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后缀名Fuzz"><span class="toc-number">6.</span> <span class="toc-text">后缀名Fuzz</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CRLF-Fuzz"><span class="toc-number">7.</span> <span class="toc-text">CRLF Fuzz</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS-Payload-Fuzz"><span class="toc-number">8.</span> <span class="toc-text">XSS Payload Fuzz</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">9.</span> <span class="toc-text">总结</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -226,7 +294,7 @@
   <li><a class="icon" href="http://reddit.com/submit?url=http://mysecroad.github.io/posts/60782.html&title=Fuzz与漏洞挖掘" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://mysecroad.github.io/posts/60782.html&title=Fuzz与漏洞挖掘" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://digg.com/submit?url=http://mysecroad.github.io/posts/60782.html&title=Fuzz与漏洞挖掘" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://mysecroad.github.io/posts/60782.html&name=Fuzz与漏洞挖掘&description=输入密码，查看文章！" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://mysecroad.github.io/posts/60782.html&name=Fuzz与漏洞挖掘&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://mysecroad.github.io/posts/60782.html&t=Fuzz与漏洞挖掘" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
